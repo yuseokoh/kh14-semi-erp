@@ -14,9 +14,6 @@ public class VacationDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-//	@Autowired
-//	private StatusMapper statusMapper;
-//	
 	@Autowired
 	private VacaReqMapper vacaReqMapper;
 	
@@ -35,15 +32,15 @@ public class VacationDao {
 		jdbcTemplate.update(sql, data);
  	}
 
+	public int sequence() {
+		String sql = "select vaca_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
 	public void connect(int newVacano, int attachmentNo) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public int sequence() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	public void insertWithSequence(VacaReqDto vacaReqDto) {
 		// TODO Auto-generated method stub

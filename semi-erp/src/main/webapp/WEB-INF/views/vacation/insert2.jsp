@@ -464,7 +464,6 @@
         </nav>
     </aside>
 
-    <div id="body">
         <div id="content">
 
 

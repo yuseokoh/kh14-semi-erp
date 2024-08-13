@@ -14,14 +14,14 @@
  
     <!-- font awesome icon cdn -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
- 
+  
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
     <link rel="stylesheet" type="text/css" href="./test.css">
     <style>
-        html, body {
+        html, body { 
             width: 100%;
-            height: 100%;
+            height: 100%; 
             margin: 0; 
             padding: 0;
             font-family: 'Noto Sans KR', sans-serif;

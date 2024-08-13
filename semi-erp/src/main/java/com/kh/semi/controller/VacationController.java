@@ -27,34 +27,6 @@ public class VacationController {
 	
 	@Autowired
 	private AttachmentService attachmentService;
-	
-	@GetMapping("/insert")
-	public String insert() {
-		return "/WEB-INF/views/vacation/insert.jsp";
-	}
-	
-	@Transactional
-	@PostMapping("/insert")
-	public String insert(@ModelAttribute VacaReqDto vacaReqDto,
-			@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
-		int newVacano = vacationDao.sequence();
-		vacaReqDto.setVacaNo(newVacano); 
-		
-	
-		vacationDao.insertWithSequence(vacaReqDto);
-		
-		if(attach.isEmpty() == false) {
-			int attachmentNo = attachmentService.save(attach);			
-			vacationDao.connect(newVacano, attachmentNo);
-		}
-		return "redirect:insertComplete";
-	}
-	
-	@RequestMapping("/insertComplete")
-	public String insertComplete() {
-		return "/WEB-INF/views/vacation/list.jsp";
-	}
-	
 	//list
 	@RequestMapping("/list")
 	public String list(Model model, 
@@ -68,7 +40,35 @@ public class VacationController {
 		model.addAttribute("column", column);//검색분류
 		model.addAttribute("keyword", keyword);//검색어
 		model.addAttribute("list", list);//조회결과
-		return "/WEB-INF/views/poketmon/list.jsp";
+		return "/WEB-INF/views/vacation/draftList.jsp";
 	}
+	
+	@GetMapping("/insert")
+	public String insert() {
+		return "/WEB-INF/views/vacation/insert2.jsp";
+	}
+	
+	@Transactional
+	@PostMapping("/insert")
+	public String insert(@ModelAttribute VacaReqDto vacaReqDto,
+						@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
+		int newVacano = vacationDao.sequence();
+		vacaReqDto.setVacaNo(newVacano); 
+		
+	
+		vacationDao.insertWithSequence(vacaReqDto);
+		
+//		if(attach.isEmpty() == false) {
+//			int attachmentNo = attachmentService.save(attach);			
+//			vacationDao.connect(newVacano, attachmentNo);
+//		}
+		return "redirect:insertComplete";
+	}
+	
+	@RequestMapping("/insertComplete")
+	public String insertComplete() {
+		return "/WEB-INF/views/vacation/draftList.jsp";
+	}
+	
 	
 }

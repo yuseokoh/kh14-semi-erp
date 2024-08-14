@@ -45,13 +45,14 @@ public class VacationController {
 	
 	@GetMapping("/insert")
 	public String insert() {
-		return "/WEB-INF/views/vacation/insert2.jsp";
+		return "/WEB-INF/views/vacation/insert.jsp";
 	}
 	
-	@Transactional
+//	@Transactional
 	@PostMapping("/insert")
-	public String insert(@ModelAttribute VacaReqDto vacaReqDto,
-						@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
+	public String insert(@ModelAttribute VacaReqDto vacaReqDto
+						/*@RequestParam MultipartFile attach*/
+							) throws IllegalStateException, IOException {
 		int newVacano = vacationDao.sequence();
 		vacaReqDto.setVacaNo(newVacano); 
 		

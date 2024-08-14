@@ -17,5 +17,5 @@ public class VacaReqDto { //휴가신청
 	private String approYN; //결재여부
 	private int approNo; //결재번호
 	private String approBos; //결재자
-	private String loginID; //사번
+	private int approNo2; //사번
 }

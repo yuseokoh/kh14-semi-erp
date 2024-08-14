@@ -27,7 +27,7 @@ public class VacaReqMapper implements RowMapper<VacaReqDto>{
 		vacaReqDto.setApproYN(rs.getString("appro_yn")); //결재여부
 		vacaReqDto.setApproNo(rs.getInt("appro_no"));//결재번호
 		vacaReqDto.setApproBos(rs.getString("appro_bos"));//결재자
-		vacaReqDto.setLoginID(rs.getString("loginID"));//사번
+		vacaReqDto.setApproNo2(rs.getInt("appro_no2"));//사번
 		
 		return vacaReqDto;
 	}

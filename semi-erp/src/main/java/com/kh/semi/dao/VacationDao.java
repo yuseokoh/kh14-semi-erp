@@ -48,7 +48,7 @@ public class VacationDao {
 		String sql = "insert into tb_vaca_req("
 				+ "	vaca_no, vaca_tel, vaca_sdate, vaca_edate, vaca_reason,vaca_req_date" + ")"
 				+ "values(" 
-				+ "vaca_seq, ?, ?, ?, ?, sysdate " + ")";
+				+ "vaca_seq.nextVal , ?, ?, ?, ?, sysdate " + ")";
 		Object[] data = { vacaReqDto.getVacaSdate(), vacaReqDto.getVacaTel(), vacaReqDto.getVacaEdate(),
 				vacaReqDto.getVacaReason() };
 		jdbcTemplate.update(sql, data);

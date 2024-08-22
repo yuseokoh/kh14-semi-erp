@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="./commons.css">
     <link rel="stylesheet" type="text/css" href="./test.css">
     <style>
-        html, body {
+        html, body { 
             width: 100%;
             height: 100%;
             margin: 0;

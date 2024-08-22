@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.mapper.TbEmpMapper;
+import com.kh.erp.vo.PageVO;
 
 
 @Repository
@@ -46,19 +47,19 @@ public class TbEmpDao {
 	//이름,비밀번호,전화번호,이메일,생일,최종학력,비고,계좌번호,은행,주소,세전급여
 	public boolean updateEmp(TbEmpDto tbEmpDto) {
 		String sql = "update tb_emp set "
-				+ "name=?,password=?, "
-				+ "emp_hp=?,emp_email=?,emp_birth=?,emp_edu=?"
-				+ "emp_memo=?,emp_account_number=?,emp_bank=?,emp_post=?,emp_address1=?,emp_address2=?,"
-				+ "sal_pre=?";
-		Object[] data = {tbEmpDto.getName(),tbEmpDto.getPassword(),
+				+ "name=?,"
+				+ "emp_hp=?,emp_email=?,emp_birth=?,emp_edu=?,"
+				+ "emp_memo=?,emp_account_number=?,emp_bank=?,emp_post=?,emp_address1=?,emp_address2=? "
+				+ "where loginId=?";
+		Object[] data = {tbEmpDto.getName(),
 		tbEmpDto.getEmpHp(),tbEmpDto.getEmpEmail(),tbEmpDto.getEmpBirth(),tbEmpDto.getEmpBirth(),
 		tbEmpDto.getEmpMemo(),tbEmpDto.getEmpAccountNumber(),tbEmpDto.getEmpBank(),
 		tbEmpDto.getEmpPost(),tbEmpDto.getEmpAddress1(),tbEmpDto.getEmpAddress2(),
-		tbEmpDto.getSalPre()
+		tbEmpDto.getLoginId()
 		};
 		return jdbcTemplate.update(sql,data)>0;
 	}
-	//사원 탈퇴(delete)
+	//사원 퇴사(delete)
 	public boolean deleteEmp(String loginId) {
 		String sql = "delete tb_emp where login_id=?";
 		Object[] data = {loginId};
@@ -87,5 +88,41 @@ public class TbEmpDao {
 						+ "order by "+column+" asc, emp_dept asc, emp_level asc, name asc";
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, tbEmpMapper,data);
+	}
+	public List<TbEmpDto> empListbyPaging(PageVO pageVO) {
+		if(pageVO.isSearch()) {//검색
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+					+ "select * from tb_emp where instr(#1, ?) > 0 "
+					+ "order by #1 asc, emp_dept asc, emp_level asc, name asc"
+				+ ")TMP"
+			+ ") where rn between ? and ?";
+		sql = sql.replace("#1", pageVO.getColumn());
+		Object[] data = {
+				pageVO.getKeyword(), 
+				pageVO.getBeginRow(), pageVO.getEndRow()
+			};
+		return jdbcTemplate.query(sql, tbEmpMapper,data);
+		}
+		else {//목록
+			String sql = "select * from ("
+								+ "select rownum rn, TMP.* from ("
+									+ "select * from tb_emp order by emp_dept asc, emp_level asc, name asc"
+								+ ")TMP"
+							+ ") where rn between ? and ?";
+			Object[] data = {pageVO.getBeginRow(), pageVO.getEndRow()};
+			return jdbcTemplate.query(sql, tbEmpMapper, data);
+		}
+	}
+	public int countPage(PageVO pageVO) {
+		if(pageVO.isSearch()) {
+			String sql ="select count(*) from tb_emp where instr("+pageVO.getColumn()+",?) > 0";
+			Object[] data = {pageVO.getKeyword()};
+			return jdbcTemplate.queryForObject(sql,int.class,data);
+		}
+		else {
+			String sql = "select count(*) from tb_emp";
+			return jdbcTemplate.queryForObject(sql,int.class);			
+		}
 	}
 }

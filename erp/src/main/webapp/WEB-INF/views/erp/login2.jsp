@@ -918,10 +918,10 @@ opacity: 0;
 </head>
 <body>
     <div class="container">
-        <form class="form" action="#">
+        <form class="form" action="login" method="post">
             <p class="title">Login</p>
-            <input placeholder="Username" class="username input" type="text">
-            <input placeholder="Password" class="password input" type="password">
+            <input placeholder="Username" class="username input" type="text" name="loginId">
+            <input placeholder="Password" class="password input" type="password" name="password">
             <span class="span"><a href="#">Forgot password?</a></span>
             <button class="btn" type="submit">Login</button>
             <span class="span">Don't have an account?
@@ -932,7 +932,7 @@ opacity: 0;
                 </form>
                 
       
-<form class="form1">
+<form class="form1" action="join" method="post">
     <p class="title1">ERP </p>
     <p class="message1">ERP 가입을 위해 정보를 적으세요</p>
         
@@ -1031,7 +1031,7 @@ opacity: 0;
 
     
     <button class="submit1">Submit</button>
-    <p class="signin1">Already have an acount ? <a href="#">Sign in</a> </p>
+    <p class="signin1">Already have an account ? <a href="#">Sign in</a> </p>
 </form>
 
                 </div>

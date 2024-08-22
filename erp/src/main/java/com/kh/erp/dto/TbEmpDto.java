@@ -11,7 +11,7 @@ public class TbEmpDto {
 		private String empLevel;
 		private String empDept;
 		private String empGender;
-		private int empHp;
+		private String empHp;
 		private String empEmail;
 		private String empBirth;
 		private String empEdu;
@@ -20,7 +20,7 @@ public class TbEmpDto {
 		private int empFinalMoney;
 		private String empReason;
 		private String empMemo;
-		private int empAccountNumber;
+		private String empAccountNumber;
     	private String empBank;
     	private String empPost;
     	private String empAddress1;

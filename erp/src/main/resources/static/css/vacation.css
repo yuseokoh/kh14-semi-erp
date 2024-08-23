@@ -1,0 +1,103 @@
+/*
+휴가신청서 양식 스타일 
+*/
+
+.title {
+    border: 1px solid;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    padding: .60rem 1.25rem;
+    background-color: gainsboro;
+    border-color: #fff;
+    color: #495057;
+    font-weight: 700;
+    text-align: center !important;
+    width: 100%; 
+    box-sizing: border-box;
+    margin-top: 60px;
+}
+
+.form:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.form {
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 18px;
+    line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-bottom: 0.5rem; /* Add margin bottom to create space between input fields */
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.row > div {
+    flex: 1;
+    min-width: 150px; 
+    margin-right: 1rem; /* Add margin-right for spacing between columns */
+}
+
+.row label {
+    display: block;
+    margin-bottom: .5rem;
+}
+
+.row input, .row select, .row textarea {
+    width: 100%;
+}
+
+.table-container {
+    position: relative;
+    top: 5px;
+    margin-left: 588px;
+    width: 300px; /* Adjust width as needed */
+    
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+
+table th, table td {
+    border: 1px solid #ced4da;
+    padding: .5rem;
+    text-align: left;
+    background-color: #f8f9fa; 
+}
+
+table th {
+    background-color: #f8f9fa;
+}
+
+.btn-positive {
+    position: absolute;
+    bottom: -40px; /* Adjust as needed */
+    right: 15px;
+}
+.filed{
+    margin-right: 67.7%;
+}

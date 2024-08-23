@@ -4,9 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
 
 import com.kh.erp.dto.NoticeDto;
-
+@Service
 public class NoticeDetailMapper implements RowMapper<NoticeDto> {
 	@Override
 	public NoticeDto mapRow(ResultSet rs, int rowNum) throws SQLException {

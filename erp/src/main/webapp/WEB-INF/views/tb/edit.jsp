@@ -7,7 +7,7 @@
 	<div>
 		<h1>정보 수정하기</h1>
 	</div>
-	이름,전화번호,이메일,생일,최종학력,비고,계좌번호,은행,주소
+	이름,전화번호,이메일,생일,최종학력,비고,주소
 	<div>
 		<label>이름</label><input value="${tbEmpDto.name }" name="name" type="text">
 		<label>전화번호</label><input value="${tbEmpDto.empHp }" name="empHp" type="text">
@@ -15,8 +15,7 @@
 		<label>생일</label><input value="${tbEmpDto.empBirth}" name="empBirth" type="date">
 		<label>최종학력</label><input value="${tbEmpDto.empEdu}" name="empEdu" type="text">
 		<label>비고</label><input value="${tbEmpDto.empMemo}" name="empMemo" type="text">
-		<label>계좌번호</label><input value="${tbEmpDto.empAccountNumber}" name="empAccountNumber" type="number">
-		<label>은행</label><input value="${tbEmpDto.empBank}" name="empBank" type="text">
+		
 	</div>
 	<div>
 		<label>우편번호</label><input value="${tbEmpDto.empPost}" name="empPost" type="number">

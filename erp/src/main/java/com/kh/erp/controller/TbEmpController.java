@@ -1,5 +1,7 @@
 package com.kh.erp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,7 @@ public class TbEmpController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute TbEmpDto tbEmpDto) {
 		tbEmpDao.insert(tbEmpDto);
+		
 		return "redirect:/";	
 	}
 	//일반 회원 수정 페이지
@@ -64,7 +67,11 @@ public class TbEmpController {
 	//회원 목록+조회
 	@RequestMapping("/list")
 	public String list(@ModelAttribute PageVO pageVO,Model model) {
-		model.addAttribute("list",tbEmpDao.empListbyPaging(pageVO));
+		List<TbEmpDto> list = tbEmpDao.empListbyPaging(pageVO);
+		for(int i=0;i<list.size();i++) {
+		list.get(i).setEmpDept(nameChangeService.deptChange(list.get(i).getEmpDept()));
+		}
+		model.addAttribute("list",list);
 		pageVO.setCount(tbEmpDao.countPage(pageVO));
 		return "/WEB-INF/views/tb/list.jsp";
 	}
@@ -87,6 +94,12 @@ public class TbEmpController {
 	session.setAttribute("userType", tbEmpDto.getUserType());
 	//session.setAttribute("createdLevel", memberDto.getMemberLevel());
 	return "redirect:/";// 홈으로 이동
+	}
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("createdUser");
+		session.removeAttribute("userType");
+		return "redirect:/";
 	}
 	//상세 페이지
 	@RequestMapping("/detail")

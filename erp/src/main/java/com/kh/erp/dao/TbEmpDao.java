@@ -49,11 +49,11 @@ public class TbEmpDao {
 		String sql = "update tb_emp set "
 				+ "name=?,"
 				+ "emp_hp=?,emp_email=?,emp_birth=?,emp_edu=?,"
-				+ "emp_memo=?,emp_account_number=?,emp_bank=?,emp_post=?,emp_address1=?,emp_address2=? "
+				+ "emp_memo=?,emp_post=?,emp_address1=?,emp_address2=? "
 				+ "where loginId=?";
 		Object[] data = {tbEmpDto.getName(),
 		tbEmpDto.getEmpHp(),tbEmpDto.getEmpEmail(),tbEmpDto.getEmpBirth(),tbEmpDto.getEmpBirth(),
-		tbEmpDto.getEmpMemo(),tbEmpDto.getEmpAccountNumber(),tbEmpDto.getEmpBank(),
+		tbEmpDto.getEmpMemo(),
 		tbEmpDto.getEmpPost(),tbEmpDto.getEmpAddress1(),tbEmpDto.getEmpAddress2(),
 		tbEmpDto.getLoginId()
 		};
@@ -61,7 +61,7 @@ public class TbEmpDao {
 	}
 	//사원 퇴사(delete)
 	public boolean deleteEmp(String loginId) {
-		String sql = "delete tb_emp where login_id=?";
+		String sql = "delete tb_emp where loginId = ?";
 		Object[] data = {loginId};
 		return jdbcTemplate.update(sql,data)>0;
 	}
@@ -70,9 +70,10 @@ public class TbEmpDao {
 	public boolean updateEmpByAdmin(TbEmpDto tbEmpDto) { 
 		String sql = "update tb_emp set "
 				+ "emp_level=?,emp_dept=?,emp_memo=?,sal_san=?,"
-				+ "sal_ko=?,sal_kun=?,sal_kuk=?,sal_date=?,sal_after=?";
+				+ "sal_ko=?,sal_kun=?,sal_kuk=?,sal_date=?,sal_after=? where loginId=?";
 		Object[] data = {tbEmpDto.getEmpLevel(),tbEmpDto.getEmpDept(),tbEmpDto.getEmpMemo(),tbEmpDto.getSalSan(),
 				tbEmpDto.getSalSan(),tbEmpDto.getSalKun(),tbEmpDto.getSalKuk(),tbEmpDto.getSalDate(),tbEmpDto.getSalAfter()
+				,tbEmpDto.getLoginId()
 		};
 		return jdbcTemplate.update(sql,data)>0;
 	}

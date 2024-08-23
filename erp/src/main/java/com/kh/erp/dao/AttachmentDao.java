@@ -12,11 +12,11 @@ import com.kh.erp.mapper.AttachmentMapper;
 @Repository
 public class AttachmentDao {
 
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	
-	@Autowired
-	private AttachmentMapper attachmentMapper;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private AttachmentMapper attachmentMapper;
 	
 	public int sequence() {
 		String sql = "select attachment_seq.nextval from dual";

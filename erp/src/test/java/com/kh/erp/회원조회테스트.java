@@ -12,7 +12,7 @@ public class 회원조회테스트 {
 	@Autowired 
 	private TbEmpDao tbEmpDao;
 	
-	@Test
+	@Test 
 	public void test() {
 		PageVO pageVO = new PageVO();
 		System.out.println(tbEmpDao.empListbyPaging(pageVO));

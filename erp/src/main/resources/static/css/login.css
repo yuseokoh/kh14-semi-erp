@@ -1,0 +1,110 @@
+@charset "UTF-8";
+/*
+로그인  스타일
+*/
+::selection {
+    background-color: gray;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #222; 
+    display: flex;
+    flex-direction: column;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.form {
+    width: 400px;
+    height: 400px;
+    background-image: linear-gradient(to bottom, #424242, #212121);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 0.5rem;
+}
+
+.title {
+    color: wheat !important;
+    margin: 3rem 0;
+    font-size: 2rem;
+}
+
+.input {
+    margin: 0.5rem 0;
+    padding: 1rem 0.5rem;
+    width: 20rem;
+    background-color: inherit;
+    color: wheat;
+    border: none;
+    outline: none;
+}
+
+.username {
+    border-bottom: 1px solid wheat;
+    transition: all 400ms;
+}
+
+.username:hover {
+    background-color: #424242;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.password {
+    border-bottom: 1px solid wheat;
+    transition: all 400ms;
+}
+
+.password:hover {
+    background-color: #424242;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+   .btn {
+    height: 3rem;
+    width: 20rem;
+    margin-top: 3rem;
+    background-color: wheat;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1.2rem;
+    transition: all 400ms;
+    box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
+    position: relative; 
+    top: -1.5rem; 
+}
+
+.btn:hover {
+    background-color: antiquewhite;
+    box-shadow: none;
+}
+
+        .span {
+text-decoration: none;
+color: white;
+width: 100%;
+display: flex;
+justify-content: center;
+}
+.span a {
+color: antiquewhite;
+box-shadow: none;
+
+}
+
+.span:last-of-type {
+margin-top: 0.5rem;
+position: relative; 
+    top: -1rem; 
+}

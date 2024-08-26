@@ -1,13 +1,13 @@
-package com.kh.erp;
+package com.kh.semi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ErpGroupwareApplication {
+public class Spring01Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ErpGroupwareApplication.class, args);
+		SpringApplication.run(Spring01Application.class, args);
 	}
 
 }

@@ -1,0 +1,374 @@
+@charset "UTF-8";
+/*
+회원가입 스타일
+*/
+
+.form1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    background-color: #1a1a1a;
+    color: #fff;
+    background-image: linear-gradient(to bottom, #424242, #212121);
+    }
+
+.title1 {
+font-size: 28px;
+font-weight: 600;
+letter-spacing: -1px;
+position: relative;
+display: flex;
+align-items: center;
+padding-left: 30px;
+color: antiquewhite;
+}
+
+.title1::before {
+width: 18px;
+height: 18px;
+}
+
+.title1::after {
+width: 18px;
+height: 18px;
+animation: pulse 1s linear infinite;
+}
+
+.title1::before,
+.title1::after {
+position: absolute;
+content: "";
+height: 16px;
+width: 16px;
+border-radius: 50%;
+left: 0px;
+background-color: wheat;
+}
+
+.message1, 
+.signin1 {
+font-size: 14.5px;
+color: rgba(255, 255, 255, 0.7);
+}
+
+.signin1 {
+text-align: center;
+}
+
+.signin1 a:hover {
+text-decoration: underline wheat;
+}
+
+.signin1 a {
+color: wheat;
+}
+
+.flex1 {
+display: flex;
+width: 100%;
+gap: 6px;
+}
+
+.form1 label {
+position: relative;
+}
+
+.form1 label .input1 {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 100%;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+.form1 label .select1  {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 152px;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+.form1 label .join1  {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 152px;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+.form1 label .birthday1  {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 152px;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+.form1 label .address {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 40%;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+
+}
+
+.form1 label .address1 {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 100%;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+
+}
+
+.form1 label .address2 {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 100%;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+
+}
+
+.form1 label .input1 + span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+.form1 label .select1+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+.form1 label .join1+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+.form1 label .birthday1+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+.form1 label .address+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+.form1 label .address1+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+.form1 label .address2+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+
+
+
+.form1 label .address+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+.form1 label .input1:placeholder-shown + span {
+top: 12.5px;
+font-size: 0.9em;
+}
+
+.form1 label .select1:placeholder-shown + span {
+top: 12.5px;
+font-size: 0.9em;
+}
+
+.form1 label .address:placeholder-shown + span {
+top: 12.5px;
+font-size: 0.9em;
+}
+
+.form1 label .address1:placeholder-shown + span {
+top: 12.5px;
+font-size: 0.9em;
+}
+
+.form1 label .address2:placeholder-shown + span {
+top: 12.5px;
+font-size: 0.9em;
+}
+.form1 label .input1:focus + span,
+.form1 label .input1:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.form1 label .select1:focus + span,
+.form1 label .input1:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.form1 label .join1:focus + span,
+.form1 label .input1:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+.form1 label .birthday1:focus + span,
+.form1 label .input1:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.form1 label .address:focus + span,
+.form1 label .address:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.form1 label .address1:focus + span,
+.form1 label .address1:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.form1 label .address2:focus + span,
+.form1 label .address2:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.input1 {
+font-size: medium;
+}
+
+.select1,
+.join1,
+.birthday1
+{
+font-size: medium;
+}
+
+.address,
+.address1,
+.address2 {
+font-size: medium;
+}
+
+.submit1 {
+border: none;
+outline: none;
+padding: 10px;
+border-radius: 10px;
+color: black;
+font-size: 16px;
+transform: .3s ease;
+background-color: wheat;
+transition: all 400ms;
+box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
+}
+
+.submit1:hover {
+    background-color: antiquewhite;
+    box-shadow: none;
+}
+
+@keyframes pulse {
+from {
+transform: scale(0.9);
+opacity: 1;
+}
+
+to {
+transform: scale(1.8);
+opacity: 0;
+}
+}
+
+
+.btn-address{
+ display: none;
+}
+
+
+.success {
+    border-color: wheat !important;
+}
+
+.fail, .fail2, .fail3
+{
+    border-color: #d63031 !important;
+}

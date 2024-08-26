@@ -1,4 +1,4 @@
-package com.kh.erp.VO;
+package com.kh.erp.vo;
 
 import lombok.Data;
 

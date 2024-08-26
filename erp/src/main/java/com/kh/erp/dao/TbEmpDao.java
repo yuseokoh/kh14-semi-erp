@@ -7,9 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.kh.erp.VO.PageVO;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.mapper.TbEmpMapper;
+import com.kh.erp.vo.PageVO;
 
 
 @Repository

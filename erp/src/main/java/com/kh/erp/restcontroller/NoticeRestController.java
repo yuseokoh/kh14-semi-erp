@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.erp.VO.NoticeLikeVO;
 import com.kh.erp.dao.NoticeDao;
 import com.kh.erp.dao.NoticeLikeDao;
 import com.kh.erp.service.AttachmentService;
+import com.kh.erp.vo.NoticeLikeVO;
 import com.kh.erp.error.TargetNotFoundException;
 
 import jakarta.servlet.http.HttpSession;

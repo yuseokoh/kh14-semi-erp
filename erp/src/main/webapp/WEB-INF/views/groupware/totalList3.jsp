@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- 전자결재 리스트  -->
 <!DOCTYPE html>
 <html lang="ko">
@@ -207,7 +206,7 @@
                    </div>
            
            <hr class="row mt-15 mb-50">
-           ${list}
+           
                    <div class="tb-box">
                        <table class="tb">
                            <thead>
@@ -220,20 +219,25 @@
                                    <th>진행상태</th>
                                </tr>
                            </thead>
-                           
                            <tbody class="tbody">
-                           <c:forEach var="TbEmpVacaReqDto" items="${list}">
                             <tr class="row center">
-                            	
                                    <td><input type="checkbox" class="check-item"></td>
-                                   <td>${TbEmpVacaReqDto.vacaReqDate}</td>
-                                   <td class="name">${TbEmpVacaReqDto.vacaType}</td>
-                                   <td>${TbEmpVacaReqDto.applicantId} </td>
-<!--                                    <td>TbEmpVacaReqDto의 결재자</td> -->
-<!--                                    <td>TbEmpVacaReqDto의 진행상태</td> -->
-                                
+                                   <td>${전자결재Dto.작성일}</td>
+                                   <td class="name">${전자결재Dto.제목}</td>
+                                   <td>${전자결재Dto.작성자}</td>
+                                   <td>${전자결재Dto.결재자}</td>
+                                   <td>${전자결재Dto.진행상태}</td>
                                </tr>
-                               </c:forEach>
+                           </tbody>
+                           <tbody lass="tbody">
+                            <tr class="row center">
+                                   <td><input type="checkbox" class="check-item"></td>
+                                   <td>연습용</td>
+                                   <td class="name">실제적용시</td>
+                                   <td>위에 tbody부터 </td>
+                                   <td>아래tbody까지 지워야함</td>
+                                   <td>아래tbody까지 지워야함</td>
+                               </tr>
                            </tbody>
                        </table>
            

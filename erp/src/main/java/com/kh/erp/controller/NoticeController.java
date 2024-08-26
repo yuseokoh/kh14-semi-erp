@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.erp.VO.PageVO;
 import com.kh.erp.dao.NoticeDao;
 import com.kh.erp.dto.NoticeDto;
 import com.kh.erp.error.TargetNotFoundException;
 import com.kh.erp.service.AttachmentService;
-import com.kh.erp.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
 

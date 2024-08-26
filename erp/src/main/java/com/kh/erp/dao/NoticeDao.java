@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.erp.VO.PageVO;
 import com.kh.erp.dto.NoticeDto;
 import com.kh.erp.mapper.NoticeDetailMapper;
 import com.kh.erp.mapper.NoticeListMapper;
-import com.kh.erp.vo.PageVO;
 
 @Repository
 public class NoticeDao {

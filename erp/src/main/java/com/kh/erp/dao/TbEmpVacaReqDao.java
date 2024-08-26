@@ -81,4 +81,16 @@ public class TbEmpVacaReqDao {
 //
 //	}
 
+	public int countPage(PageVO pageVO) {
+		if(pageVO.isSearch()) {
+			String sql ="select count(*) from tb_VacaReq where instr("+pageVO.getColumn()+",?) > 0";
+			Object[] data = {pageVO.getKeyword()};
+			return jdbcTemplate.queryForObject(sql,int.class,data);
+		}
+		else {
+			String sql = "select count(*) from tb_VacaReq";
+			return jdbcTemplate.queryForObject(sql,int.class);			
+		}
+	}
+
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.erp.VO.PageVO;
 import com.kh.erp.dto.TbEmpApprovalDto;
 import com.kh.erp.mapper.TbEmpApprovalMapper;
 
@@ -56,5 +57,45 @@ public class TbEmpApprovalDao {
 //	public void insert() {
 //
 //	}
+
+	// 페이징이 적용된 승인 상태 리스트
+	public List<TbEmpApprovalDto> approListByPaging(PageVO pageVO) {
+		if(pageVO.isSearch()) {//검색
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+						+ "select * from tb_Approval where instr(#1, ?) > 0 "
+						+ "order by #1 asc, appro_No asc, appro_Date asc"
+					+ ")TMP"
+				+ ") where rn between ? and ?";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] data = {
+					pageVO.getKeyword(), 
+					pageVO.getBeginRow(), pageVO.getEndRow()
+				};
+			return jdbcTemplate.query(sql, tbEmpApprovalMapper,data);
+			}
+			else {//목록
+				String sql = "select * from ("
+									+ "select rownum rn, TMP.* from ("
+										+ "select * from tb_Approval order by appro_No asc, appro_Date asc"
+									+ ")TMP"
+								+ ") where rn between ? and ?";
+				Object[] data = {pageVO.getBeginRow(), pageVO.getEndRow()};
+				return jdbcTemplate.query(sql, tbEmpApprovalMapper, data);
+			}
+	}
+
+	//페이징 관련
+	public int countPage(PageVO pageVO) {
+		if(pageVO.isSearch()) {
+			String sql ="select count(*) from tb_Approval where instr("+pageVO.getColumn()+",?) > 0";
+			Object[] data = {pageVO.getKeyword()};
+			return jdbcTemplate.queryForObject(sql,int.class,data);
+		}
+		else {
+			String sql = "select count(*) from tb_Approval";
+			return jdbcTemplate.queryForObject(sql,int.class);			
+		}
+	}
 
 }

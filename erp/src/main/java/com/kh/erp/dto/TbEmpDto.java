@@ -29,7 +29,7 @@ public class TbEmpDto {
     	private int salKo;
     	private int salKun;
     	private int salKuk;
-    	private Date salDate;
+    	private String salDate;
     	private int salPre;
     	private int salAfter;
 }

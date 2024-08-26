@@ -40,7 +40,7 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setSalKo(rs.getInt("sal_ko"));
 		tbEmpDto.setSalKun(rs.getInt("sal_kun"));
 		tbEmpDto.setSalKuk(rs.getInt("sal_kuk"));
-		tbEmpDto.setSalDate(rs.getDate("sal_date"));
+		tbEmpDto.setSalDate(rs.getString("sal_date"));
 		tbEmpDto.setSalPre(rs.getInt("sal_pre"));
 		tbEmpDto.setSalAfter(rs.getInt("sal_after"));
 		return tbEmpDto;

@@ -1,4 +1,4 @@
-package com.kh.erp.vo;
+package com.kh.erp.VO;
 
 import java.util.List;
 

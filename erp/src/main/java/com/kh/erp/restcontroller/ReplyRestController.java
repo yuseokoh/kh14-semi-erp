@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.erp.vo.ReplyListVO;
+import com.kh.erp.VO.ReplyListVO;
 import com.kh.erp.dao.NoticeDao;
 import com.kh.erp.dao.ReplyDao;
 import com.kh.erp.dto.ReplyDto;

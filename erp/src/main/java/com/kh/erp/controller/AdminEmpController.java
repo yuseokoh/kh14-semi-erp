@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.erp.VO.PageVO;
 import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.service.NameChangeService;
-import com.kh.erp.vo.PageVO;
 
 @Controller
 @RequestMapping("/admin/emp")

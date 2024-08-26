@@ -925,7 +925,7 @@ opacity: 0;
             <span class="span"><a href="#">Forgot password?</a></span>
             <button class="btn" type="submit">Login</button>
             <span class="span">Don't have an account?
-                <button id="openModal">  Sign up</button></span>
+                <button id="openModal" type="button">  Sign up</button></span>
             <div id="myModal" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
@@ -937,12 +937,12 @@ opacity: 0;
     <p class="message1">ERP 가입을 위해 정보를 적으세요</p>
         
     <label>
-        <input class="input1" type="text" name="memberId" placeholder="" required="">
+        <input class="input1" type="text" name="loginId" placeholder="" required="">
         <span class="span1">아이디</span>
     </label>
 
     <label>
-        <input class="input1" type="password" name="memberPw" placeholder="" required="">
+        <input class="input1" type="password" name="password" placeholder="" required="">
         <span class="span1">비밀번호</span>
     </label>
     <label>
@@ -956,33 +956,29 @@ opacity: 0;
     
     <div class="flex1">
         <label>
-            <input class="input1" name="memberCompanyName" type="text" placeholder="" required="">
-            <span class="span1">회사이름</span>
-        </label>
-
-        <label>
-            <input class="input1" name="memberName" type="text" placeholder="" required="">
+            <input class="input1" name="name" type="text" placeholder="" required="">
             <span class="span1">이름</span>
         </label>
     </div>  
 
     <div class="flex1">
         <label>
-            <select class="select1" name="memberRank">
+            <select class="select1" name="empLevel">
                 <option value="">직급선택</option>
-                <option value="어쩌고">어쩌고</option>
-                <option value="저쩌고">저쩌고</option>
-                <option value="직급">직급</option>
+                <option value="인턴">인턴</option>
+                
             </select>
             <span class="span1">직급</span>
         </label>
 
         <label>
-            <select class="select1" name="memberDept">
+            <select class="select1" name="empDept">
                 <option value="">부서선택</option>
-                <option value="어쩌고">어쩌고</option>
-                <option value="저쩌고">저쩌고</option>
-                <option value="부서">부서</option>
+                <option value="a00">인사팀</option>
+                <option value="a01">총무팀</option>
+                <option value="a02">영업팀</option>
+                <option value="a03">개발팀</option>
+                <option value="a04">생산팀</option>
             </select>
             <span class="span1">부서</span>
         </label>
@@ -990,39 +986,39 @@ opacity: 0;
 
     <div class="flex1">
         <label>
-            <input class="birthday1" name="memberBirth" type="date" placeholder="" required="">
+            <input class="birthday1" name="empBirth" type="date" placeholder="" required="">
             <span class="span1">생일</span>
         </label>
 
         <label>
-            <input class="join1" name="memberJoin" type="date" placeholder="" required="">
+            <input class="join1" name="empSdate" type="date" placeholder="" required="">
             <span class="span1">입사일</span>
         </label>
     </div>  
 
     
     <label>
-        <input class="input1" name="memberContact" type="text" placeholder="" required="">
+        <input class="input1" name="empHp" type="text" placeholder="" required="">
         <span class="span1">핸드폰번호</span>
     </label> 
     <label>
-        <input class="input1" name="memberEmail" type="email" placeholder="" required="">
+        <input class="input1" name="empEmail" type="email" placeholder="" required="">
         <span class="span1">이메일</span>
     </label> 
     
     <label>
-        <input class="address" name="memberPost" type="text" placeholder="" required="">
+        <input class="address" name="empPost" type="text" placeholder="">
         <span class="span1">우편번호</span>
         <button class="btn-address">
         </button>
     </label>
 
     <label>
-        <input class="address1" name="memberAddress1" type="text" placeholder="" required="">
+        <input class="address1" name="empAddress1" type="text" placeholder="">
         <span class="span1">주소</span>
     </label>
     <label>
-        <input class="address1" name="memberAddress2" type="text" placeholder="" required="">
+        <input class="address1" name="empAddress2" type="text" placeholder="">
         <span class="span1">상세주소</span>
     </label>
 

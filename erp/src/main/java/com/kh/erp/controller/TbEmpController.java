@@ -34,7 +34,7 @@ public class TbEmpController {
 	//회원 가입 페이지
 	@GetMapping("/join")
 	public String join() {
-		return "/WEB-INF/views/erp/login2.jsp"; 
+		return "/WEB-INF/views/tb/join.jsp"; 
 	}
 	@PostMapping("/join")
 	public String join(@ModelAttribute TbEmpDto tbEmpDto) {
@@ -83,13 +83,9 @@ public class TbEmpController {
 	@PostMapping("/login")
 	public String login(@RequestParam String loginId, @RequestParam String password, HttpSession session) {
 	//아이디에 해당하는 정보를 불러와서 없으면 에러
-	TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
+	TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId,password);
 	if (tbEmpDto == null)return "redirect:login?error";
-	//tbEmpDto에서 불러온 정보와 비밀번호를 비교해 안맞으면 에러
-	boolean isValid = password.equals(tbEmpDto.getPassword());
-	if (isValid == false)
-	return "redirect:login?error";
-	
+
 	session.setAttribute("createdUser", loginId);
 	session.setAttribute("userType", tbEmpDto.getUserType());
 	//session.setAttribute("createdLevel", memberDto.getMemberLevel());

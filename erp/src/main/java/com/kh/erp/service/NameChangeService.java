@@ -11,7 +11,6 @@ public class NameChangeService {
 	 
 	 public String deptChange(String nameCode) {
 		 map = new HashMap<>();
-		 map.put("a", "뎁트서비스 잘들어갑니다");
 		 map.put("a00", "인사팀");
 		 map.put("a01", "총무팀");
 		 map.put("a02", "영업팀");

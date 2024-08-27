@@ -17,6 +17,7 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		TbEmpDto tbEmpDto = new TbEmpDto();
 		tbEmpDto.setLoginId(rs.getString("loginId"));
 		tbEmpDto.setUserType(rs.getString("user_type"));
+		tbEmpDto.setEmpNo(rs.getString("emp_no"));
 		tbEmpDto.setName(rs.getString("name"));
 		tbEmpDto.setPassword(rs.getString("password"));
 		tbEmpDto.setEmpLevel(rs.getString("emp_level"));

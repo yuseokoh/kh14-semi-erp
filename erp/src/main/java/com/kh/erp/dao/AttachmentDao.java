@@ -47,4 +47,5 @@ public class AttachmentDao {
 		Object[] data = {attachmentNo};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+	
 }

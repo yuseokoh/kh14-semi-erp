@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.erp.configuration.CustomFileuploadProperties;
 import com.kh.erp.dao.AttachmentDao;
+
 import com.kh.erp.dto.AttachmentDto;
 import com.kh.erp.error.TargetNotFoundException;
 
@@ -39,8 +40,10 @@ public class AttachmentService {
 	private AttachmentDao attachmentDao;
 	
 	public int save(MultipartFile attach) throws IllegalStateException, IOException {
+		
 		//[1] 시퀀스생성
 		int attachmentNo = attachmentDao.sequence();
+		
 		//[2] 실물파일저장
 		File target = new File(dir, String.valueOf(attachmentNo));
 		attach.transferTo(target);

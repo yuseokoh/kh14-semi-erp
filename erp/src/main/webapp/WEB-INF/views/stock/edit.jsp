@@ -168,10 +168,10 @@
             </div>
 
             <div class="form-group">
-                <label class="current-expiration-date">
+                <%-- <label class="current-expiration-date">
                     현재 유통 기한: 
                     <fmt:formatDate value="${dto.expirationDate}" pattern="yyyy-MM-dd" />
-                </label>
+                </label> --%>
                 <label for="expirationDate">수정할 유통기한을 입력하세요 (선택)</label>
                 <input type="date" id="expirationDate" name="expirationDate" value="${dto.expirationDate != null ? fn:escapeXml(dto.expirationDate) : ''}">
             </div>

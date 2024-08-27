@@ -7,8 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.erp.VO.PageVO;
+import com.kh.erp.VO.TbVacRecVO;
 import com.kh.erp.dto.TbEmpVacaReqDto;
 import com.kh.erp.mapper.TbEmpVacaReqMapper;
+import com.kh.erp.mapper.TbVacRecMapper;
 
 @Repository
 public class TbEmpVacaReqDao {
@@ -18,6 +20,9 @@ public class TbEmpVacaReqDao {
 
 	@Autowired
 	private TbEmpVacaReqMapper tbEmpVacaReqMapper;
+	
+	@Autowired
+	private TbVacRecMapper tbVacRecMapper;
 
 	// seq
 	public int sequence() {
@@ -27,11 +32,10 @@ public class TbEmpVacaReqDao {
 
 	// C
 	public void insert(TbEmpVacaReqDto tbEmpVacaReqDto) {
-		String sql = "INSET INTO tb_VacaReq(vaca_No, applicantId, vaca_Tel, vaca_Sdate, vaca_Edate, vaca_Type, vaca_Reason, vaca_Reject) "
-				+ "(?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] data = { tbEmpVacaReqDto.getVacaNo(), tbEmpVacaReqDto.getApplicantId(), tbEmpVacaReqDto.getVacaSdate(),
-				tbEmpVacaReqDto.getVacaEdate(), tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaReason(),
-				tbEmpVacaReqDto.getVacaReject() };
+		String sql = "INSERT INTO tb_VacaReq (vaca_No, applicantId, vaca_Tel, vaca_Title, vaca_Sdate, vaca_Edate, vaca_Type, vaca_Reason) "
+				+ "VALUES (tb_VAcaReq_seq.nextval, ?, ?, ?, ?, ?, ?, ?)";
+		Object[] data = { tbEmpVacaReqDto.getApplicantId(), tbEmpVacaReqDto.getVacaTel(), tbEmpVacaReqDto.getVacaTitle(), tbEmpVacaReqDto.getVacaSdate(),
+				tbEmpVacaReqDto.getVacaEdate(), tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaReason()};
 		jdbcTemplate.update(sql, data);
 	}
 
@@ -66,6 +70,12 @@ public class TbEmpVacaReqDao {
 	public void selectOneByColumn() {
 
 	}
+	
+	public List<TbVacRecVO> selectVacaLogListByPaging() {
+		String sql = "select v.vaca_ReqDate, v.vaca_Title, v.applicantId, a.appro_Bos1, a.appro_Bos2, a.appro_Bos3, a.appro_No1, a.appro_No2, a.appro_No3, a.appro_YN  from tb_VacaReq v join tb_Approval a on v.appro_No = a.appro_No order by v.vaca_No ASC, \r\n"
+				+ "    v.vaca_Sdate ASC";
+		return jdbcTemplate.query(sql, tbVacRecMapper);
+	}
 
 	// U
 	// 휴가신청서 작성시 -> 결재테이블 구성 후-> 결재테이블에서 appro_No가져와서 현재 존재하는 db appro_No 갱신
@@ -76,7 +86,7 @@ public class TbEmpVacaReqDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 //
-//	// D
+//	// D 여기선 삭제는 필요없음
 //	public void insert() {
 //
 //	}

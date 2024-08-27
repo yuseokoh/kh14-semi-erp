@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+.noticbox{
+    margin-left: auto;
+    margin-right: auto;
+}
+        .btn{
+         color: white;
+         background-color: #80bdff;
+        border-color: #7f8c8d;
+         border-radius: 4px;
+         height: 35px; /* Ensure consistent height */
+        }
+        .search, 
+        .delete, 
+        .write {
+          width: 100%;
+       }
+       .search{
+        font-size: 16px;
+       }
+       .actions1{
+        font-size: 16px;
+       }
+       .button{
+        text-decoration: none; /* 밑줄 제거 */
+        display: inline-block;/* 한줄에 여러개 배치 + 폭 설정 가능하게 */
+         font-size: 16px; /* 입력창과 동일하게 */
+        padding: 0.5em 0.75em; /*입력창과 동일하게*/
+        color: white;
+        background-color: #80bdff;
+        border: 1px solid #7f8c8d;
+        border-radius: 0.2em;
+        cursor: pointer; /* 커서모양 변경 */
+        text-align: center;
+        line-height: 1.2;
+       }
+
+        .notice {
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: center; 
+             }
+     
+             .notice .noticname {
+                 font-weight: bold;
+             }
+     
+             .notice .actions {
+                 display: flex;
+                 align-items: center; 
+                
+             }
+
+
+        
+             .notice select, .notice input, .notice button {
+                 margin-left: 0px; 
+                 max-width: 150px; 
+                 height: 35px;
+             }
+     
+             .tb-box .flex-box {
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: center;
+             }
+           
+             .tb{
+                 border-top: 1px solid #7f8c8d;
+                 border-bottom: 1px solid #7f8c8d;  
+                 width: 100%;
+                 border-collapse: collapse;
+                 font-size: 16px;
+             }
+             .tb > thead {
+         border-bottom: 1px solid #7f8c8d;
+         }
+         .name{
+              color: #80bdff;
+              font-weight: bold;
+          }
+             
+          .tbody{
+            border-bottom: 1px solid #7f8c8d;
+          }

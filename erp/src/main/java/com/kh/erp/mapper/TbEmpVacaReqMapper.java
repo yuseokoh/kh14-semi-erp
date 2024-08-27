@@ -18,6 +18,7 @@ public class TbEmpVacaReqMapper implements RowMapper<TbEmpVacaReqDto> {
 		tbEmpVacaReqDto.setVacaNo(rs.getInt("vaca_No"));
 		tbEmpVacaReqDto.setApplicantId(rs.getString("applicantId"));
 		tbEmpVacaReqDto.setVacaTel(rs.getString("vaca_Tel"));
+		tbEmpVacaReqDto.setVacaTitle(rs.getString("vaca_Title"));
 		tbEmpVacaReqDto.setVacaReqDate(rs.getDate("vaca_Sdate"));
 		tbEmpVacaReqDto.setVacaEdate(rs.getDate("vaca_Edate"));
 		tbEmpVacaReqDto.setVacaType(rs.getString("vaca_Type"));

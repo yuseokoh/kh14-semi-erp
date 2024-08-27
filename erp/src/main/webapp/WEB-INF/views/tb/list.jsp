@@ -44,7 +44,7 @@
                         <%-- 결과가 있을 때 --%>
                         <c:forEach var="tbEmpDto" items="${list}">
                         <tr>
-                        	<td>사진</td>
+                        	<td><img src="/tb/myImage" width="25"></td>
                             <td>
                                 <a href="detail?loginId=${tbEmpDto.loginId}">
                                     ${tbEmpDto.name}

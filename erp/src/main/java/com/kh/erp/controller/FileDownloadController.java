@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.erp.dao.AttachmentDao;
-import com.kh.erp.dto.AttachmentDto;
+import com.kh.erp.dao.DocumentDao;
+import com.kh.erp.dto.DocumentDto;
 import com.kh.erp.error.TargetNotFoundException;
-import com.kh.erp.service.AttachmentService;
+import com.kh.erp.service.DocumentService;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -28,14 +28,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class FileDownloadController {
 	
 	@Autowired
-	private AttachmentDao attachmentDao;
+	private DocumentDao documentDao;
 	
 	@Autowired
-	private AttachmentService attachmentService;
+	private DocumentService documentService;
 	
 	@RequestMapping("/download")
 	public ResponseEntity<ByteArrayResource> download(
-				@RequestParam int attachmentNo) throws IOException {
-		return attachmentService.find(attachmentNo);
+				@RequestParam int documentNo) throws IOException {
+		return documentService.find(documentNo);
 	}
 }

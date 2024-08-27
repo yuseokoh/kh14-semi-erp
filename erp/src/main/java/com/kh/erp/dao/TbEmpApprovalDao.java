@@ -24,8 +24,8 @@ public class TbEmpApprovalDao {
 	// [2] 결재란 후에 작성
 	// [3] 존재하는 휴가 신청서에 생성된 번호 추가 해서 이쪽으로 전달(DTO형식)
 	public void insert(TbEmpApprovalDto tbEmpApprovalDto) {
-		String sql = "INSERT INTO tb_Approval(appro_No, appro_Type, appro_YN) values(tb_Approval_seq.nextval, ?, 'N')";
-		Object[] data = { tbEmpApprovalDto.getApproType() };
+		String sql = "INSERT INTO tb_Approval(appro_No, appro_Type, appro_YN, applicantId) values(tb_Approval_seq.nextval, ?, 'N', ?)";
+		Object[] data = { tbEmpApprovalDto.getApproType(), tbEmpApprovalDto.getApplicantId() };
 		jdbcTemplate.update(sql, data);
 	}
 
@@ -53,7 +53,7 @@ public class TbEmpApprovalDao {
 		
 	}
 //
-//	// D
+//	// D 여기선 삭제는 필요없음
 //	public void insert() {
 //
 //	}

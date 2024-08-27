@@ -1,6 +1,7 @@
 package com.kh.erp.controller;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -20,7 +21,7 @@ import com.kh.erp.VO.PageVO;
 import com.kh.erp.dao.NoticeDao;
 import com.kh.erp.dto.NoticeDto;
 import com.kh.erp.error.TargetNotFoundException;
-import com.kh.erp.service.AttachmentService;
+import com.kh.erp.service.DocumentService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -89,7 +90,7 @@ public class NoticeController {
 	}
 	
 	@Autowired
-	private AttachmentService attachmentService;
+	private DocumentService documentService;
 	
 	//삭제 페이지(글 안에 있는 이미지 파일까지 찾아서 삭제)
 	@RequestMapping("/delete")
@@ -104,8 +105,8 @@ public class NoticeController {
 		Elements elements = document.select(".notice-attach");
 		for(Element element : elements) {
 			String key = elements.attr("data-key");
-			int attachmentNo = Integer.parseInt(key);
-			attachmentService.delete(attachmentNo);
+			int documentNo = Integer.parseInt(key);
+			documentService.delete(documentNo);
 		}
 		boolean result = noticeDao.delete(noticeNo);
 		return "redirect:list";
@@ -128,7 +129,7 @@ public class NoticeController {
 		//수정 전
 		Set<Integer> before = new HashSet<>();
 		Document beforeDocument = Jsoup.parse(originDto.getNoticeCont());//이전글 내용 해석
-		for(Element el : beforeDocument.select(".board-attach")) {//.board-attach 찾아 반복
+		for(Element el : beforeDocument.select(".noticer-attach")) {//.board-attach 찾아 반복
 			String keyStr = el.attr("data-key");//data-key 속성 추출
 			int key = Integer.parseInt(keyStr);//int로 변환
 			before.add(key);//저장소에 추가
@@ -136,7 +137,7 @@ public class NoticeController {
 		//수정 후
 		Set<Integer> after = new HashSet<>();
 		Document afterDocument = Jsoup.parse(noticeDto.getNoticeCont());//수정글 내용 해석
-		for(Element el : afterDocument.select(".board-attach")) {//.board-attach 찾아 반복
+		for(Element el : afterDocument.select(".notice-attach")) {//.board-attach 찾아 반복
 			String keyStr = el.attr("data-key");//data-key 속성 추출
 			int key = Integer.parseInt(keyStr);//int로 변환
 			after.add(key);//저장소에 추가
@@ -146,8 +147,8 @@ public class NoticeController {
 		before.removeAll(after);
 		
 		//before에 남아있는 번호에 해당하는 파일을 모두 삭제
-		for(int attachmentNo : before) {
-			attachmentService.delete(attachmentNo);
+		for(int documentNo : before) {
+			documentService.delete(documentNo);
 		}
 		//수정 처리
 		noticeDao.update(noticeDto);

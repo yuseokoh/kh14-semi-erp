@@ -33,7 +33,7 @@ public class TbEmpDao {
 		String rawPw =tbEmpDto.getPassword();
 		String encPw = encoder.encode(rawPw);
 		tbEmpDto.setPassword(encPw); //없어도 됨 똑같은거임
-		Object[] data = {tbEmpDto.getLoginId(),tbEmpDto.getName(),tbEmpDto.getPassword(),
+		Object[] data = {tbEmpDto.getLoginId(), tbEmpDto.getName(),tbEmpDto.getPassword(),
 					tbEmpDto.getEmpLevel(),tbEmpDto.getEmpDept(),tbEmpDto.getEmpHp(),
 					tbEmpDto.getEmpEmail(),tbEmpDto.getEmpBirth(),tbEmpDto.getEmpSdate(),
 					tbEmpDto.getEmpPost(),

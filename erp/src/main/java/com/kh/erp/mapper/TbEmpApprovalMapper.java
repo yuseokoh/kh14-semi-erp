@@ -24,6 +24,7 @@ public class TbEmpApprovalMapper implements RowMapper<TbEmpApprovalDto>{
 		tbEmpApprovalDto.setApproNo1(rs.getString("appro_No1"));
 		tbEmpApprovalDto.setApproNo2(rs.getString("appro_No2"));
 		tbEmpApprovalDto.setApproNo3(rs.getString("appro_No3"));
+		tbEmpApprovalDto.setApplicantId(rs.getString("applicantId"));
 		return tbEmpApprovalDto;
 	}
 

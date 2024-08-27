@@ -22,7 +22,7 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setEmpLevel(rs.getString("emp_level"));
 		tbEmpDto.setEmpDept(rs.getString("emp_dept"));
 		tbEmpDto.setEmpGender(rs.getString("emp_gender"));
-		tbEmpDto.setEmpHp(rs.getInt("emp_hp"));
+		tbEmpDto.setEmpHp(rs.getString("emp_hp"));
 		tbEmpDto.setEmpEmail(rs.getString("emp_email"));
 		tbEmpDto.setEmpBirth(rs.getString("emp_birth"));
 		tbEmpDto.setEmpEdu(rs.getString("emp_edu"));
@@ -31,7 +31,7 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setEmpFinalMoney(rs.getInt("emp_final_money"));
 		tbEmpDto.setEmpReason(rs.getString("emp_reason"));
 		tbEmpDto.setEmpMemo(rs.getString("emp_memo"));
-		tbEmpDto.setEmpAccountNumber(rs.getInt("emp_account_number"));
+		tbEmpDto.setEmpAccountNumber(rs.getString("emp_account_number"));
 		tbEmpDto.setEmpBank(rs.getString("emp_bank"));
 		tbEmpDto.setEmpPost(rs.getString("emp_post"));
 		tbEmpDto.setEmpAddress1(rs.getString("emp_address1"));
@@ -40,7 +40,7 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setSalKo(rs.getInt("sal_ko"));
 		tbEmpDto.setSalKun(rs.getInt("sal_kun"));
 		tbEmpDto.setSalKuk(rs.getInt("sal_kuk"));
-		tbEmpDto.setSalDate(rs.getDate("sal_date"));
+		tbEmpDto.setSalDate(rs.getString("sal_date"));
 		tbEmpDto.setSalPre(rs.getInt("sal_pre"));
 		tbEmpDto.setSalAfter(rs.getInt("sal_after"));
 		return tbEmpDto;

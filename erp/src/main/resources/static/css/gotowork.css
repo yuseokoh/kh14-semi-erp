@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/*
+    출퇴근버튼 스타일 
+*/
+
+
+#commute-wrap {
+    margin-top: 20px;
+}
+#date-wrap {
+    font-size: 18px;
+}
+#start-time, #end-time {
+    margin-top: 10px;
+}
+#attendance-btns button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    background-color: #2d3436;
+    transition: background 0.3s ease;
+}
+#attendance-btns button.on {
+    background-color: #1abc9c;
+}
+#attendance-btns button.off {
+    background-color: #e74c3c;
+}

@@ -147,7 +147,27 @@ a:hover {
     font-weight: bold; /* 텍스트를 두껍게 설정 */
     white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
+
+/* 화살표 스타일 */
+.arrow {
+    display: inline-block;
+    font-size: 16px; /* 화살표 크기 설정 */
+    margin: 0 9px; /* 화살표 간격 조정 */
+    color: #f48fb1; /* 화살표 색상 */
+}
+
+/* 변경 정보 스타일 */
+.change-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333; /* 텍스트 색상 */
+}
 </style>
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <h1>재고 목록</h1>
@@ -168,7 +188,7 @@ a:hover {
                     <td>
                         <div class="product-container">
                             <img src="${pageContext.request.contextPath}/stock/uploaded-images?filename=${item.imageUrl}" alt="${item.stockName}" class="product-image">
-                            <c:if test="${item.stockQuantity < 10}">
+                            <c:if test="${item.stockQuantity < 5}">
                                 <span class="low-stock">재고 부족</span>
                             </c:if>
                         </div>
@@ -195,7 +215,7 @@ a:hover {
                                         <c:if test="${fn:length(oldQuantityNumber) > 0 && fn:length(newQuantityNumber) > 0}">
                                             <div class="change-info">
                                                 <c:out value="${oldQuantityNumber}" />
-                                                <span class="arrow">→</span>
+                                                <span class="arrow"><i class="fas fa-arrow-right"></i></span> <!-- Font Awesome 화살표 아이콘 -->
                                                 <c:out value="${newQuantityNumber}" />
                                             </div>
                                         </c:if>
@@ -205,7 +225,7 @@ a:hover {
                                         <c:if test="${fn:length(oldQuantity) > 0 && fn:length(newQuantity) > 0}">
                                             <div class="change-info">
                                                 <c:out value="${oldQuantity}" />
-                                                <span class="arrow">→</span>
+                                                <span class="arrow"><i class="fas fa-arrow-right"></i></span> <!-- Font Awesome 화살표 아이콘 -->
                                                 <c:out value="${newQuantity}" />
                                             </div>
                                         </c:if>

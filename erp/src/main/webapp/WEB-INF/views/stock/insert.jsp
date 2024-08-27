@@ -45,8 +45,9 @@
         }
 
         .form-group input[type="text"],
-        .form-group input[type="file"],
-        .form-group input[type="date"] { /* 날짜 입력 필드 추가 */
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group input[type="file"] { /* 날짜 입력 필드 추가 */
             padding: 10px;
             border: 1px solid #ddd; /* 연한 회색 테두리 */
             border-radius: 5px;
@@ -69,7 +70,35 @@
         button:hover {
             background-color: #f48fb1; /* 버튼 호버 시 약간 어두운 핑크색 */
         }
+
+        .image-preview {
+            max-width: 150px; /* 이미지 최대 너비를 늘려서 보기 쉽게 */
+            max-height: auto;
+            border-radius: 5px; /* 이미지 모서리를 둥글게 */
+            margin-bottom: 10px; /* 이미지와 다른 요소 간의 여백 */
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 사용자가 이미지를 업로드하면 즉시 미리보기 표시
+            $('#image').change(function() {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').attr('src', e.target.result); // 미리보기 이미지 설정
+                    $('#imagePreview').show(); // 미리보기 이미지 표시
+                }
+                reader.readAsDataURL(this.files[0]); // 파일 읽기
+            });
+
+            // 폼 제출 시 확인 대화상자
+            $('form').submit(function(event) {
+                if (!confirm('정말 등록하시겠습니까?')) {
+                    event.preventDefault(); // 사용자가 취소를 클릭하면 폼 제출을 막음
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -88,7 +117,7 @@
 
             <div class="form-group">
                 <label for="stockQuantity">수량:</label>
-                <input type="text" id="stockQuantity" name="stockQuantity" required>
+                <input type="number" id="stockQuantity" name="stockQuantity" required>
             </div>
 
             <!-- 유통기한 입력 필드 추가 -->
@@ -99,8 +128,12 @@
 
             <!-- 이미지 업로드 필드 추가 -->
             <div class="form-group">
-                <label for="image">이미지:</label>
+                <label for="image">이미지(업로드 사진을 미리 확인하세요)</label>
                 <input type="file" id="image" name="image" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <img id="imagePreview" class="image-preview" style="display:none;" />
             </div>
 
             <button type="submit">등록</button>

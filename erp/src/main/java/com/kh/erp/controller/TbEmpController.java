@@ -1,5 +1,6 @@
 package com.kh.erp.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
  
 import com.kh.erp.VO.PageVO;
+import com.kh.erp.configuration.CustomCertProperties;
+import com.kh.erp.dao.CertDao;
 import com.kh.erp.dao.TbEmpDao;
+import com.kh.erp.dto.CertDto;
 import com.kh.erp.dto.TbEmpDto;
+import com.kh.erp.error.TargetNotFoundException;
+import com.kh.erp.service.EmailService;
 import com.kh.erp.service.NameChangeService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -30,6 +37,13 @@ public class TbEmpController {
 	
 	@Autowired
 	private NameChangeService nameChangeService;
+	
+	@Autowired
+	private CertDao certDao;
+	@Autowired
+	private CustomCertProperties customCertProperties;
+	@Autowired
+	private EmailService emailService;
 	
 	//회원 가입 페이지
 	@GetMapping("/join")
@@ -105,4 +119,51 @@ public class TbEmpController {
 		model.addAttribute("tbEmpDto",tbEmpDto);
 		return "/WEB-INF/views/tb/detail.jsp";
 	}
+	@GetMapping("/findPw")
+	public String findPw2() {
+		return "/WEB-INF/views/tb/findPw.jsp";
+	}
+	@PostMapping("/findPw")
+	public String findPw(@RequestParam String loginId,@RequestParam String EmpEmail) throws MessagingException, IOException {
+		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
+	    if(tbEmpDto ==null) {
+	    	return "redirect:findPw2?error";
+	    }
+	    if(!EmpEmail.equals(tbEmpDto.getEmpEmail())) {
+	    	return "redirect:findPw2?error";
+	    }
+	    emailService.sendResetPw(loginId,EmpEmail);
+		return "redirect:login";
+	}
+	
+	
+	
+	
+	
+	//비밀번호 재설정 페이지
+		@GetMapping("/resetPw")
+		public String resetPw(@ModelAttribute CertDto certDto, @RequestParam String loginId,Model model) {
+			boolean isValid = certDao.check(certDto,customCertProperties.getExpire());
+			if(isValid) {
+				model.addAttribute("certDto",certDto);
+				model.addAttribute("loginId",loginId);
+				return "/WEB-INF/views/tb/resetPw.jsp";			
+			}
+			else{
+				throw new TargetNotFoundException("올바르지 않은 접근");
+			}
+		}
+		@PostMapping("/resetPw")
+		public String resetPw(@ModelAttribute CertDto certDto,@ModelAttribute TbEmpDto tbEmpDto) {
+			boolean isValid = certDao.check(certDto, customCertProperties.getExpire());
+			if(!isValid) {
+				throw new TargetNotFoundException("올바르지 않은 접근");
+			}
+			
+			//인증 성공시 인증번호 삭제
+			certDao.delete(certDto.getCertEmail());
+			//비밀번호 변경 처리
+			tbEmpDao.updatePassword(tbEmpDto.getLoginId(), tbEmpDto.getPassword());
+			return "redirect:login";
+		}
 }

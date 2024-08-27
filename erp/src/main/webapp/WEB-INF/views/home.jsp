@@ -15,5 +15,7 @@
 <a href="/tb/edit">수정하기</a>
 <a href="/tb/mypage">마이페이지</a>
 <a href="/tb/list">검색/리스트확인</a>
-<a href="/admin/home">관리자페이지</a>
+<c:if test="${sessionScope.userType=='A'}">
+	<a href="/admin/home">관리자페이지</a>
+</c:if>
 

@@ -142,4 +142,12 @@ public class TbEmpDao {
 			return jdbcTemplate.queryForObject(sql,int.class);			
 		}
 	}
+	//비밀번호 변경(U)
+	public boolean updatePassword(String loginId,String password) {
+		String sql = "update tb_emp set password = ? where loginId=?";
+		String rawPw =password;
+		String encPw = encoder.encode(rawPw);
+		Object[] data = {encPw,loginId};
+		return jdbcTemplate.update(sql,data)>0;
+	}
 }

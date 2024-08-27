@@ -103,7 +103,9 @@ public class TbEmpController {
 	session.setAttribute("createdUser", loginId);
 	session.setAttribute("userType", tbEmpDto.getUserType());
 	//session.setAttribute("createdLevel", memberDto.getMemberLevel());
-	return "redirect:/";// 홈으로 이동
+	//2024-08-27 17:09 조재혁 수정
+//	return "redirect:/";// 홈으로 이동
+	return "/WEB-INF/views/erp/login2.jsp";
 	}
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {

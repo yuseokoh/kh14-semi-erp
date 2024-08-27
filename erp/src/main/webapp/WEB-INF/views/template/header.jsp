@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 문서 설정 - HTML 버전 지정 (HTML 5)	-->
 <!DOCTYPE html>
 <html lang="ko">
@@ -44,7 +43,9 @@
 }
 </style>
 
-
+<!-- fullcalendar cdn-->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
 <!-- lightpick cdn -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -61,6 +62,33 @@
 <script src="/js/menuToggle.js"></script>
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- 이거가 캘린더 -->
+<script type='importmap'>
+    {
+      "imports": {
+        "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.15",
+        "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.15"
+      }
+    }
+  </script>
+<script type='module'>
+    import { Calendar } from '@fullcalendar/core'
+    import dayGridPlugin from '@fullcalendar/daygrid'
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.querySelector(".calendar")
+      const calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        }
+      })
+      calendar.render()
+    })
+  </script>
 
 
 
@@ -185,4 +213,4 @@
 	<div id="content">
 
 		<main id="body">
-			<div id="content">		
+			<div id="content">

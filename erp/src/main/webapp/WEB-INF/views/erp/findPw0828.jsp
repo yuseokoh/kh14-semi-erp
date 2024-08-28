@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 비밀번호 찾기추가</title>
-    <!-- 헤더 포함 -->
+    <!-- 헤더 포함 --> 
     <iframe src="header.html" style="border: none; width: 100%; height: auto;"></iframe>
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

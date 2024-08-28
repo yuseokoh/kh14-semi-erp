@@ -16,12 +16,12 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+ /* .container { 
+     display: flex; 
+    justify-content: center; 
+     align-items: center; 
     flex: 1;
-}
+} */
 
 .form {
     width: 400px;
@@ -31,6 +31,7 @@ body {
     align-items: center;
     flex-direction: column;
     border-radius: 0.5rem;
+    margin-top: 48%;
 }
 
 .title {
@@ -82,7 +83,8 @@ body {
     transition: all 400ms;
     box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
     position: relative; 
-    top: -1.5rem; 
+    bottom: 124px;
+    left: 43px;
 }
 
 .btn:hover {
@@ -106,5 +108,19 @@ box-shadow: none;
 .span:last-of-type {
 margin-top: 0.5rem;
 position: relative; 
-    top: -1rem; 
+bottom: 110px;
 }
+
+.span3 {
+    text-decoration: none;
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    }
+    .span3 a {
+    color: antiquewhite;
+    box-shadow: none;
+    
+    }
+    

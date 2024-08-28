@@ -150,14 +150,14 @@ public class TbEmpDao {
 		return jdbcTemplate.update(sql,data)>0;
 	}//이미지 찾기
 	public Integer findImage(String loginId) {
-		String sql = "select attachment from tb_emp_image where loginId=?";
+		String sql = "select document from tb_emp_image where loginId=?";
 		Object[] data = {loginId};
 		return jdbcTemplate.queryForObject(sql, Integer.class,data);
 	}
-	public void connect(String loginId, int attachmentNo) {
-		String sql = "insert into tb_emp_image(loginId,attachment) "
+	public void connect(String loginId, int documentNo) {
+		String sql = "insert into tb_emp_image(loginId,document) "
 				+ "values(?,?)";
-		Object[] data = {loginId,attachmentNo};
+		Object[] data = {loginId,documentNo};
 		jdbcTemplate.update(sql,data);
 		
 	} 

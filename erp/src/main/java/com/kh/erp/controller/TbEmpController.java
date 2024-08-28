@@ -22,6 +22,7 @@ import com.kh.erp.dto.CertDto;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.error.TargetNotFoundException;
 import com.kh.erp.service.AttachmentService;
+import com.kh.erp.service.DocumentService;
 import com.kh.erp.service.EmailService;
 import com.kh.erp.service.NameChangeService;
 
@@ -44,7 +45,7 @@ public class TbEmpController {
 	@Autowired
 	private EmailService emailService;
 	@Autowired
-	private AttachmentService attachmentService;
+	private DocumentService documentService;
 
 	// 회원 가입 페이지
 	@GetMapping("/join")
@@ -106,9 +107,7 @@ public class TbEmpController {
 	public String login(@RequestParam String loginId, @RequestParam String password, HttpSession session) {
 		// 아이디에 해당하는 정보를 불러와서 없으면 에러
 		TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId, password);
-		if (tbEmpDto == null)
-			return "redirect:login?error";
-
+		if (tbEmpDto == null)return "redirect:login?error";
 		session.setAttribute("createdUser", loginId);
 		session.setAttribute("userType", tbEmpDto.getUserType());
 		// session.setAttribute("createdLevel", memberDto.getMemberLevel());
@@ -181,8 +180,8 @@ public class TbEmpController {
 	public String myImage(HttpSession session) {
 		try {// 이미지가 있으면
 			String loginId = (String) session.getAttribute("createdUser");
-			Integer attachmentNo = tbEmpDao.findImage(loginId);
-			return "redirect:/attach/download?attachmentNo=" + attachmentNo;
+			Integer documentNo = tbEmpDao.findImage(loginId);
+			return "redirect:/attach/download?documentNo=" + documentNo;
 		} catch (Exception e) {// 이미지가 없으면
 //				return "redirect:/images/dummy.png";
 			return "redirect:/images/user.png";
@@ -202,11 +201,11 @@ public class TbEmpController {
 		
 		try {
 			int beforeNo = tbEmpDao.findImage(loginId);
-			attachmentService.delete(beforeNo);
+			documentService.delete(beforeNo);
 		} catch (Exception e) {}
 		
-		int attachmentNo = attachmentService.save(attach);
-		tbEmpDao.connect(loginId, attachmentNo);
+		int documentNo = documentService.save(attach);
+		tbEmpDao.connect(loginId, documentNo);
 		return "redirect:mypage";
 		
 	}

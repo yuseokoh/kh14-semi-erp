@@ -23,21 +23,21 @@ public class NoticeOwnerInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		String testLevel = (String) session.getAttribute("testLevel");
-		boolean isAdmin = testLevel != null && testLevel.equals("관리자");
+		String createdLevel = (String) session.getAttribute("createdLevel");
+		boolean isAdmin = createdLevel != null && createdLevel.equals("관리자");
 		boolean isDelete = request.getRequestURI().equals("/notice/delete");
 		if(isAdmin && isDelete) {
 			return true;
 		}
-		String testUser = (String) session.getAttribute("testUser");
-		if(testUser == null) {
+		String createdUser = (String) session.getAttribute("createdUser");
+		if(createdUser == null) {
 			response.sendError(401);
 			return false;
 		}
 		int noticeNo =  Integer.parseInt(request.getParameter("noticeNo"));
 		
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
-		boolean isOwner = testUser.equals(noticeDto.getNoticeWriter());
+		boolean isOwner = createdUser.equals(noticeDto.getNoticeWriter());
 		
 		if(isOwner) {
 			return true;

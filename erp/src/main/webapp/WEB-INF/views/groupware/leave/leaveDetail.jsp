@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!-- 일반사원 or 작성자가 상세보기할떄 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>휴가리스트 상세보기(사원용)</title>
+    <title>프로젝트 최종 폼</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

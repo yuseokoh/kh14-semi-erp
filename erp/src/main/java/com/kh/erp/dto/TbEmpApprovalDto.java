@@ -17,4 +17,5 @@ public class TbEmpApprovalDto {
 	private String approNo1; // -- 결재자1 직급 or 사번(지금당장은 loginID)
 	private String approNo2; // -- 결재자1 직급 or 사번(지금당장은 loginID)
 	private String approNo3; // -- 결재자1 직급 or 사번(지금당장은 loginID)
+	private String applicantId; // 신청자 ID
 }

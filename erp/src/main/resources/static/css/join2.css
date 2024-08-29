@@ -1,0 +1,234 @@
+@charset "UTF-8";
+/*
+회원가입 스타일
+*/
+
+.form2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    background-color: #1a1a1a;
+    color: #fff;
+    background-image: linear-gradient(to bottom, #424242, #212121);
+    }
+
+.title2 {
+font-size: 28px;
+font-weight: 600;
+letter-spacing: -1px;
+position: relative;
+display: flex;
+align-items: center;
+padding-left: 30px;
+color: antiquewhite;
+}
+
+.title2::before {
+width: 18px;
+height: 18px;
+}
+
+.title2::after {
+width: 18px;
+height: 18px;
+animation: pulse 1s linear infinite;
+}
+
+.title2::before,
+.title2::after {
+position: absolute;
+content: "";
+height: 16px;
+width: 16px;
+border-radius: 50%;
+left: 0px;
+background-color: wheat;
+}
+
+.message2, 
+.signin2 {
+font-size: 14.5px;
+color: rgba(255, 255, 255, 0.7);
+}
+
+.signin2 {
+text-align: center;
+}
+
+.signin2 a:hover {
+text-decoration: underline wheat;
+}
+
+.signin2 a {
+color: wheat;
+}
+
+.flex2 {
+display: flex;
+width: 100%;
+gap: 6px;
+}
+
+.form2 label {
+position: relative;
+}
+
+.form2 label .input2 {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 100%;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+.form2 label .select2  {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 152px;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+.form2 label .join2  {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 152px;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+.form2 label .birthday2  {
+background-color: #333;
+color: rgba(255, 255, 255, 0.5);
+width: 152px;
+padding: 20px 05px 05px 10px;
+outline: 0;
+border: 1px solid rgba(105, 105, 105, 0.397);
+border-radius: 10px;
+}
+
+
+.form2 label .input2 + span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+.form2 label .select2+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+.form2 label .join2+ span {
+color: rgba(255, 255, 255, 0.5);
+position: absolute;
+left: 10px;
+top: 0px;
+font-size: 0.9em;
+cursor: text;
+transition: 0.3s ease;
+}
+
+
+.form2 label .input2:placeholder-shown + span {
+top: 12.5px;
+font-size: 0.9em;
+}
+
+.form2 label .select2:placeholder-shown + span {
+top: 12.5px;
+font-size: 0.9em;
+}
+
+.form2 label .input2:focus + span,
+.form2 label .input2:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.form2 label .select2:focus + span,
+.form2 label .input2:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.form2 label .join2:focus + span,
+.form2 label .input2:valid + span {
+color: antiquewhite;
+top: 0px;
+font-size: 0.7em;
+font-weight: 600;
+}
+
+.input2 {
+font-size: medium;
+}
+
+.select2,
+.join2
+{
+font-size: medium;
+}
+
+
+.submit2 {
+border: none;
+outline: none;
+padding: 10px;
+border-radius: 10px;
+color: black;
+font-size: 16px;
+transform: .3s ease;
+background-color: wheat;
+transition: all 400ms;
+box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
+}
+
+.submit2:hover {
+    background-color: antiquewhite;
+    box-shadow: none;
+}
+
+@keyframes pulse {
+from {
+transform: scale(0.9);
+opacity: 1;
+}
+
+to {
+transform: scale(1.8);
+opacity: 0;
+}
+}
+
+
+.success {
+    border-color: wheat !important;
+}
+
+.fail, .fail2, .fail3
+{
+    border-color: #d63031 !important;
+}

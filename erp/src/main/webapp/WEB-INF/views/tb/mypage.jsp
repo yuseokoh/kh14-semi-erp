@@ -16,7 +16,13 @@
 		<h2>이메일 [${tbEmpDto.empEmail}]</h2>
 		<h2>전화번호[${tbEmpDto.empHp}]</h2>
 	</div>
+	<div>
+		<img src="/tb/myImage" width="100">
+		<a href="addImage">사진 추가 등록하기</a>
+	</div>
 
-
+	<div>
+		<a href="edit">수정하기</a>
+	</div>
 
 </div>

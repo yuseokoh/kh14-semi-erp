@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!-- 전자결재 리스트  -->
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전자결재 리스트 (통합 보고서,휴가신청서)</title>
+    <title>공지사항 상세보기</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,25 +15,24 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
-    <!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
+    <link rel="stylesheet" type="text/css" href="./test.css">
 
      <!-- 프로젝트 스타일 --> 
      <link rel="stylesheet" type="text/css" href="./gotowork.css">
      <link rel="stylesheet" type="text/css" href="./sidebar.css">
-     <link rel="stylesheet" type="text/css" href="./notic.css">
+     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
+<style> 
+        
 
-
-    <style>
-
-    </style>
-
-
-
+</style>
+    <!-- fullcalendar cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
   <!-- lightpick cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
   <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
@@ -43,33 +41,73 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="checkbox.js"></script>
   <script src="confirm-link.js"></script>
-  <script src="multipage.js"></script>
-
+  <!-- <script src="multipage.js"></script> -->
   <!-- 프로젝트 js-->
 <script src="gotoworkbtn.js"></script>
 <script src="menuToggle.js"></script>
+<script src="delete.js"></script>
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  
-  
-  
-  <!-- 자바스크립트 코드 작성 영역 -->
-  <script type="text/javascript">
-  $(document).ready(function() {
-            // 삭제 버튼 클릭 이벤트
-            $('.delete').on('click', function() {
-                // 확인 대화상자 표시
-                var confirmDelete = confirm("삭제하시겠습니까?");
-                if (confirmDelete) {
-                    alert("삭제되었습니다.");
-                } else {
-                    alert("삭제가 취소되었습니다.");
+    <script type="text/javascript">
+
+  //메인화면 차트 
+    $(function(){
+            //차트를 그릴 대상 선택
+            var ctx = document.querySelector(".my-chart");
+            //차트 생성 코드
+            //new Chart(캔버스태그, {옵션객체});
+            new Chart(ctx, {
+                type: 'bar',//차트 유형(bar/pie/doughnut/line)
+                data: {//차트에 표시될 데이터
+
+                    //label은 차트에 표시되는 항목(x축)
+                    labels: ['재고', '관리', '그래프', '자리'],
+
+                    //실제로 차트에 표시될 값
+                    datasets: [
+                        {
+                            label: '재고 수',//범례
+                            data: [2, 2, 2, 1],//데이터
+                            borderWidth: 1//디자인 속성(테두리 두께)
+                        },
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true//차트를 0부터 표기
+                        }
+                    }
                 }
             });
         });
     </script>
 
+<script type='importmap'>
+    {
+      "imports": {
+        "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.15",
+        "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.15"
+      }
+    }
+  </script>
+  <script type='module'>
+    import { Calendar } from '@fullcalendar/core'
+    import dayGridPlugin from '@fullcalendar/daygrid'
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.querySelector(".calendar")
+      const calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        }
+      })
+      calendar.render()
+    })
+  </script>
 
 </head>
 <body>  
@@ -88,13 +126,7 @@
         <nav id="menu">
             <div class="container">
 
-   <!-- 이미지? -->
-        
-
-<!-- 여기까지 이미지?-->
-
-
-				<!--출퇴근-->
+				<!-- 출퇴근 -->
 				<div id="commute-wrap">
 					<div id="date-wrap">
 						<span id="cur-date"></span><br>
@@ -118,8 +150,6 @@
 			</div>
 		</div>
 		<!-- 출퇴근 여기까지-->
-
-
 
                 <!-- 사이드바-->
                 <div class="row">
@@ -181,89 +211,28 @@
         </nav>
     </aside>
     
-    <div id="content">
-        
+    <div id="content" style="margin-top: 200px;">
        <main id="body"> 
-           <div id="content">
+           <!-- <div id="content" style="margin-top: 200px;"> -->
+            <!-- 여기서부터 메인 화면의 콘텐츠가 시작됩니다. -->
+            <h2>xxx님 환영합니다 일하십쇼</h2>
+            <p> </p>
+         
+            <div class="row flex-box w-1200">
+                <div class="w-50 center"> 
+                    <canvas class="my-chart"></canvas> 
+                </div>
+                <div class="w-50 center">내정보</div>
+            </div>
 
 
-        <!-- 전자결재 통합 리스트 작성 -->
-        <body>
-            <div class="noticbox w-1200">
-                   <div class="row notice">
-                       <div class="row noticname">전자결재 리스트</div>
-                       <div class="actions">
-                           <select class="row actions1" style="flex-grow: 1;">
-                               <option value="">작성일</option>
-                               <option value="" class="row">제목</option>
-                               <option value="">작성자</option>
-                           </select>
-                           <div class="row search" style="flex-grow: 1;">
-                               <input class="row"/>
-                           </div>
-                           <button type="button" class="search button" style="flex-grow: 1;">검색</button>
-                       </div>
-                   </div>
-           
-           <hr class="row mt-15 mb-50">
-           
-                   <div class="tb-box">
-                       <table class="tb">
-                           <thead>
-                               <tr>
-                                   <th>선택</th>
-                                   <th>작성일</th>
-                                   <th>제목</th>
-                                   <th>작성자</th>
-                                   <th>결재자</th>
-                                   <th>진행상태</th>
-                               </tr>
-                           </thead>
-                           <tbody class="tbody">
-                            <tr class="row center">
-                                   <td><input type="checkbox" class="check-item"></td>
-                                   <td>${전자결재Dto.작성일}</td>
-                                   <td class="name">${전자결재Dto.제목}</td>
-                                   <td>${전자결재Dto.작성자}</td>
-                                   <td>${전자결재Dto.결재자}</td>
-                                   <td>${전자결재Dto.진행상태}</td>
-                               </tr>
-                           </tbody>
-                           <tbody lass="tbody">
-                            <tr class="row center">
-                                   <td><input type="checkbox" class="check-item"></td>
-                                   <td>연습용</td>
-                                   <td class="name">실제적용시</td>
-                                   <td>위에 tbody부터 </td>
-                                   <td>아래tbody까지 지워야함</td>
-                                   <td>아래tbody까지 지워야함</td>
-                               </tr>
-                           </tbody>
-                       </table>
-           
-                       <div class="flex-box ">
-                           <div class="row left">
-                               <button type="button" class="btn delete ">삭제</button>
-                           </div>
-                           <div class="row center">
-                             <span>span지우고 네비게이터 넣는곳 </span> 
-                           </div>
-                           <div class="row right">
-                               <button type="button" class="btn write">글작성</button>
-                           </div>
-                       </div>
-           
-           
-           
-           
-                   </div>
-           
-                   </div>
-               </div>
-           </body>
-    
-    <!-- 이곳에서부터 <footer>  -->
-    </div>
-</main>
+            <div class="row flex-box w-1200">
+                <div class="calendar w-80 center"></div>
+                <div class="w-70 center"> 채팅?편지함?</div>
+            </div>
+            
+
+        </div>
+    </main>
 </body>
 </html>

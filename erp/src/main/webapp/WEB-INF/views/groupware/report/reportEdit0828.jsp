@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <!-- 전자결재 리스트  -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전자결재 리스트 (통합 보고서,휴가신청서)</title>
+    <title>보고서 수정</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,8 +15,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
-    <!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
-
+ 
      <!-- 프로젝트 스타일 --> 
      <link rel="stylesheet" type="text/css" href="./gotowork.css">
      <link rel="stylesheet" type="text/css" href="./sidebar.css">
@@ -28,50 +25,116 @@
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-
-
     <style>
+        .note-editable {
+            background-color: white;
+        }
+        .note-editable b {
+            font: inherit;
+            font-weight: 700 !important;
+            font-style: inherit;
+        }
+        .note-editable i {
+            font: inherit;
+            font-weight: inherit;
+            font-style: italic !important;
+        }
 
+        .disabled, .form[disabled] {
+            background-color: #f0f0f0;
+            color: #a0a0a0;
+            cursor: not-allowed;
+            border-color: #d0d0d0;
+        }
+
+        .disabled:focus, .form[disabled]:focus {
+            outline: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-container {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .btn-container .btn {
+            position: absolute;
+            bottom: -40px;
+            right: 15px;
+        }
+
+        .btn-warning {
+            background-color: #f39c12;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .btn-positive {
+            background-color: #28a745;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .reject-reason-textarea {
+            display: none;
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+        }
+
+        .reject {
+            display: none;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 0.5em 0.75em;
+            color: #2d3436;
+            background-color: #636e72;
+            border: 1px solid #636e72;
+            border-radius: 0.2em;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.2;
+        }
     </style>
+    <!-- lightpick cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+    <!-- jquery cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="checkbox.js"></script>
+    <script src="confirm-link.js"></script>
+    <script src="multipage.js"></script>
+    <!-- 프로젝트 js-->
+    <script src="gotoworkbtn.js"></script>
+    <script src="menuToggle.js"></script>
+    <!-- <script src="delete.js"></script> -->
+    <!-- chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 자바스크립트 코드 작성 영역 -->
+    <script type="text/javascript">
+        $(function(){
+        // 초기 상태 설정
+        $('.reject-reason-textarea').hide();
 
-
-
-  <!-- lightpick cdn -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
-  <!-- jquery cdn -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="checkbox.js"></script>
-  <script src="confirm-link.js"></script>
-  <script src="multipage.js"></script>
-
-  <!-- 프로젝트 js-->
-<script src="gotoworkbtn.js"></script>
-<script src="menuToggle.js"></script>
-  <!-- chart js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  
-  
-  
-  <!-- 자바스크립트 코드 작성 영역 -->
-  <script type="text/javascript">
-  $(document).ready(function() {
-            // 삭제 버튼 클릭 이벤트
-            $('.delete').on('click', function() {
-                // 확인 대화상자 표시
-                var confirmDelete = confirm("삭제하시겠습니까?");
-                if (confirmDelete) {
-                    alert("삭제되었습니다.");
-                } else {
-                    alert("삭제가 취소되었습니다.");
-                }
-            });
+        $('.edit-btn').on('click', function() {
+            $('.reject-reason-textarea').hide(); // textarea 숨기기
+            $('.reject').show(); // 반려 버튼 보이기
+            $(this).hide(); // 수정 버튼 숨기기
+            $('.reject-reason-textarea').show(); // textarea 보이기
         });
+
+        $('.reject').on('click', function() {
+            alert('반려 됨');
+            $(this).hide(); // 반려 버튼 숨기기
+            $('.edit-btn').show(); // 수정 버튼 보이기
+            //비동기넣는곳~ 아마도
+        });
+    });
     </script>
-
-
 </head>
 <body>  
     <header id="header">
@@ -188,78 +251,52 @@
            <div id="content">
 
 
-        <!-- 전자결재 통합 리스트 작성 -->
-        <body>
-            <div class="noticbox w-1200">
-                   <div class="row notice">
-                       <div class="row noticname">전자결재 리스트</div>
-                       <div class="actions">
-                           <select class="row actions1" style="flex-grow: 1;">
-                               <option value="">작성일</option>
-                               <option value="" class="row">제목</option>
-                               <option value="">작성자</option>
-                           </select>
-                           <div class="row search" style="flex-grow: 1;">
-                               <input class="row"/>
-                           </div>
-                           <button type="button" class="search button" style="flex-grow: 1;">검색</button>
-                       </div>
-                   </div>
-           
-           <hr class="row mt-15 mb-50">
-           ${list}
-                   <div class="tb-box">
-                       <table class="tb">
-                           <thead>
-                               <tr>
-                                   <th>선택</th>
-                                   <th>작성일</th>
-                                   <th>제목</th>
-                                   <th>작성자</th>
-                                   <th>결재자</th>
-                                   <th>진행상태</th>
-                               </tr>
-                           </thead>
-                           
-                           <tbody class="tbody">
-                           <c:forEach var="TbEmpVacaReqDto" items="${list}">
-                            <tr class="row center">
-                            	
-                                   <td><input type="checkbox" class="check-item"></td>
-                                   <td>${TbEmpVacaReqDto.vacaReqDate}</td>
-                                   <td class="name">${TbEmpVacaReqDto.vacaType}</td>
-                                   <td>${TbEmpVacaReqDto.applicantId} </td>
-<!--                                    <td>TbEmpVacaReqDto의 결재자</td> -->
-<!--                                    <td>TbEmpVacaReqDto의 진행상태</td> -->
-                                
-                               </tr>
-                               </c:forEach>
-                           </tbody>
-                       </table>
-           
-                       <div class="flex-box ">
-                           <div class="row left">
-                               <button type="button" class="btn delete ">삭제</button>
-                           </div>
-                           <div class="row center">
-                             <span>span지우고 네비게이터 넣는곳 </span> 
-                           </div>
-                           <div class="row right">
-                               <button type="button" class="btn write">글작성</button>
-                           </div>
-                       </div>
-           
-           
-           
-           
-                   </div>
-           
-                   </div>
-               </div>
-           </body>
-    
-    <!-- 이곳에서부터 <footer>  -->
-    </div>
-</main>
+        <!-- 보고서 작성 작성 -->
+        <div class="noticbox w-1200">
+            <div class="row notice">
+                <table class="table table-border" id="dataTable" width="100%" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <th class="row noticname">제목</th>
+                            <td colspan="3" class="subject"></td>
+                        </tr>
+                        <tr>
+                            <th class="row noticname">작성자</th>
+                            <td>${조장.오유석}</td>
+                            <th class="row noticname">작성일</th>
+                            <td class="notice-reg-date">${2024년 03월11일}</td>
+                        </tr>
+                        <tr>
+                            <th class="row noticname">조회수</th>
+                            <td class="row">${조회수값999}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <img style="border-radius: 0;" alt="" src="./">
+                                ${내용이 여기에 들어감 블라블라블라블라}
+                                <textarea class="reject-reason-textarea" placeholder="반려 사유를 입력하세요" style="font-size: 15px;"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>   
+            </div>
+
+            <div>
+                <div class="flex-box" style="justify-content: space-between;">
+                    <div class="row left">
+                        <button type="button" class="edit-btn btn write">반려</button>
+                        <button type="button" class="reject btn write">반려</button>
+                    </div>
+                    <div class="row right">
+                        <!-- <button type="button" class="btn btn-delete" style="background-color: #d63031; border-color: brown;">삭제</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <!-- Footer content here -->
+    </footer>
 </body>
 </html>

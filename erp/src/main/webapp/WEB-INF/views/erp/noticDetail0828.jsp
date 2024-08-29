@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!-- 전자결재 리스트  -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전자결재 리스트 (통합 보고서,휴가신청서)</title>
+    <title>공지사항 상세보기</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,14 +26,9 @@
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-
-
     <style>
 
     </style>
-
-
-
   <!-- lightpick cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
   <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
@@ -48,28 +42,14 @@
   <!-- 프로젝트 js-->
 <script src="gotoworkbtn.js"></script>
 <script src="menuToggle.js"></script>
+<script src="delete.js"></script>
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  
-  
-  
   <!-- 자바스크립트 코드 작성 영역 -->
   <script type="text/javascript">
-  $(document).ready(function() {
-            // 삭제 버튼 클릭 이벤트
-            $('.delete').on('click', function() {
-                // 확인 대화상자 표시
-                var confirmDelete = confirm("삭제하시겠습니까?");
-                if (confirmDelete) {
-                    alert("삭제되었습니다.");
-                } else {
-                    alert("삭제가 취소되었습니다.");
-                }
-            });
-        });
-    </script>
 
+    </script>
 
 </head>
 <body>  
@@ -88,13 +68,7 @@
         <nav id="menu">
             <div class="container">
 
-   <!-- 이미지? -->
-        
-
-<!-- 여기까지 이미지?-->
-
-
-				<!--출퇴근-->
+				<!-- 출퇴근 -->
 				<div id="commute-wrap">
 					<div id="date-wrap">
 						<span id="cur-date"></span><br>
@@ -118,8 +92,6 @@
 			</div>
 		</div>
 		<!-- 출퇴근 여기까지-->
-
-
 
                 <!-- 사이드바-->
                 <div class="row">
@@ -182,84 +154,66 @@
     </aside>
     
     <div id="content">
-        
        <main id="body"> 
            <div id="content">
 
 
-        <!-- 전자결재 통합 리스트 작성 -->
+        <!-- 공지사항 상세보기 -->
         <body>
             <div class="noticbox w-1200">
-                   <div class="row notice">
-                       <div class="row noticname">전자결재 리스트</div>
-                       <div class="actions">
-                           <select class="row actions1" style="flex-grow: 1;">
-                               <option value="">작성일</option>
-                               <option value="" class="row">제목</option>
-                               <option value="">작성자</option>
-                           </select>
-                           <div class="row search" style="flex-grow: 1;">
-                               <input class="row"/>
-                           </div>
-                           <button type="button" class="search button" style="flex-grow: 1;">검색</button>
+                <div class="row notice">
+                  <table class="table table-border" id="dataTable" width="100%" cellspacing="0">
+                            
+                            <tbody>
+                                <tr>
+                                    <th class="row noticname">제목</th>
+                                    <td colspan="3" class="subject"></td>
+                                </tr>
+                                <tr>
+                                    <th class="row noticname">작성자</th>
+                                    <td>${조장.오유석}</td>
+                                    <th class="row noticname">작성일</th>
+                                    <td class="notice-reg-date">${2024년 03월11일}</td>
+                                </tr>
+                                <tr>
+                                    <th class="row noticname">조회수</th>
+                                    <td class="row">${조회수값999}</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td colspan="4">
+                                        <img style="border-radius: 0;" alt="" src="./">
+                                    ${내용이 여기에 들어감 블라블라블라블라
+                                        The standard Lorem Ipsum passage, used since the 1500s
+                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                        
+                                        Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+                                        
+                                        1914 translation by H. Rackham
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
+                                        
+                                        Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                                        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
+                                    }</td>
+                                </tr>
+                                
+                            </tbody>
+                            </table>   
+                        </div>
+
+                        <div >
+                            <div class="flex-box " style="justify-content: space-between;">
+                                <div class="row left">
+                                    <!-- <button type="button" class="btn write ">수정</button> -->
+                                </div>
+                                <div class="row right">
+                                    <!-- <button type="button" class="btn btn- delete " style=" background-color: #d63031; border-color: brown;">삭제</button> -->
+                                </div>
+                            </div>
                        </div>
-                   </div>
-           
-           <hr class="row mt-15 mb-50">
-           
-                   <div class="tb-box">
-                       <table class="tb">
-                           <thead>
-                               <tr>
-                                   <th>선택</th>
-                                   <th>작성일</th>
-                                   <th>제목</th>
-                                   <th>작성자</th>
-                                   <th>결재자</th>
-                                   <th>진행상태</th>
-                               </tr>
-                           </thead>
-                           <tbody class="tbody">
-                            <tr class="row center">
-                                   <td><input type="checkbox" class="check-item"></td>
-                                   <td>${전자결재Dto.작성일}</td>
-                                   <td class="name">${전자결재Dto.제목}</td>
-                                   <td>${전자결재Dto.작성자}</td>
-                                   <td>${전자결재Dto.결재자}</td>
-                                   <td>${전자결재Dto.진행상태}</td>
-                               </tr>
-                           </tbody>
-                           <tbody lass="tbody">
-                            <tr class="row center">
-                                   <td><input type="checkbox" class="check-item"></td>
-                                   <td>연습용</td>
-                                   <td class="name">실제적용시</td>
-                                   <td>위에 tbody부터 </td>
-                                   <td>아래tbody까지 지워야함</td>
-                                   <td>아래tbody까지 지워야함</td>
-                               </tr>
-                           </tbody>
-                       </table>
-           
-                       <div class="flex-box ">
-                           <div class="row left">
-                               <button type="button" class="btn delete ">삭제</button>
-                           </div>
-                           <div class="row center">
-                             <span>span지우고 네비게이터 넣는곳 </span> 
-                           </div>
-                           <div class="row right">
-                               <button type="button" class="btn write">글작성</button>
-                           </div>
-                       </div>
-           
-           
-           
-           
-                   </div>
-           
-                   </div>
-               </div>
+
+                     </div> 
            </body>
     
     <!-- 이곳에서부터 <footer>  -->

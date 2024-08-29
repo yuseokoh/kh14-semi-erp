@@ -6,6 +6,7 @@ import lombok.Data;
 public class TbEmpDto {
 		private String loginId;
 		private String userType;
+		private String empNo;
 		private String name;
 		private String password;
 		private String empLevel;

@@ -1,6 +1,6 @@
 package com.kh.erp.dao;
 
-import java.util.Date;
+import java.sql.Date; // java.sql.Date 임포트
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.erp.dto.ErdDto;
 import com.kh.erp.mapper.ErdMapper;
-
 
 @Repository
 public class ErdDao {
@@ -24,7 +23,9 @@ public class ErdDao {
     public void insert(ErdDto dto, String imageUrl) {
         String sql = "insert into stock (stock_no, stock_category, stock_name, stock_quantity, stock_date, image_url, expiration_date) " +
                      "values (stock_seq.nextval, ?, ?, ?, SYSDATE, ?, ?)";
-        Object[] data = {dto.getStockCategory(), dto.getStockName(), dto.getStockQuantity(), imageUrl, dto.getExpirationDate()};
+        // java.sql.Date 객체로 변환
+        Date expirationDate = dto.getExpirationDate() != null ? new Date(dto.getExpirationDate().getTime()) : null;
+        Object[] data = {dto.getStockCategory(), dto.getStockName(), dto.getStockQuantity(), imageUrl, expirationDate};
         jdbcTemplate.update(sql, data);
 
         // ChangeLog 기록
@@ -44,7 +45,9 @@ public class ErdDao {
         String newValues = getFieldValues(dto);
 
         String sql = "update stock set stock_category = ?, stock_name = ?, stock_quantity = ?, image_url = ?, expiration_date = ? where stock_no = ?";
-        Object[] data = {dto.getStockCategory(), dto.getStockName(), dto.getStockQuantity(), imageUrl, dto.getExpirationDate(), dto.getStockNo()};
+        // java.sql.Date 객체로 변환
+        Date expirationDate = dto.getExpirationDate() != null ? new Date(dto.getExpirationDate().getTime()) : null;
+        Object[] data = {dto.getStockCategory(), dto.getStockName(), dto.getStockQuantity(), imageUrl, expirationDate, dto.getStockNo()};
         boolean isUpdated = jdbcTemplate.update(sql, data) > 0;
 
         if (isUpdated) {
@@ -128,7 +131,7 @@ public class ErdDao {
         String oldImageUrl = oldValues != null ? oldValues : "";
 
         String sql = "INSERT INTO ChangeLog (id, stockNo, changedFields, oldValues, newValues, changedDate) VALUES (ChangeLog_seq.NEXTVAL, ?, ?, ?, ?, ?)";
-        Object[] data = {stockNo, changedFields, oldImageUrl, newValues, new Date()};
+        Object[] data = {stockNo, changedFields, oldImageUrl, newValues, new java.util.Date()};
         jdbcTemplate.update(sql, data);
     }
 }

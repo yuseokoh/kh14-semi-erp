@@ -14,6 +14,7 @@ body {
     background-color: #fce4ec; /* 부드러운 핑크색 배경 */
     margin: 0;
     padding: 0;
+    position: relative; /* 절대 위치 요소를 위한 기준 설정 */
 }
 
 h1 {
@@ -99,27 +100,28 @@ a:hover {
 
 /* 버튼 컨테이너 스타일 */
 .button-container {
-    display: flex;
-    justify-content: center; /* 버튼을 중앙에 정렬 */
-    margin: 20px 0; /* 상하 여백 추가 */
+    position: absolute; /* 버튼을 절대 위치로 설정 */
+    top: 20px; /* 상단에서 20px 떨어진 위치 */
+    right: 20px; /* 오른쪽에서 20px 떨어진 위치 */
 }
 
-/* 재고 등록 버튼 스타일 */
 .button {
-    background-color: #f8a5b0; /* 버튼 배경색 */
-    color: white; /* 버튼 텍스트 색상 */
-    border: none;
+    background-color: #ffffff; /* 버튼 배경색 흰색 */
+    color: #f8a5b0; /* 버튼 텍스트 색상 부드러운 핑크색 */
+    border: 2px solid #f8a5b0; /* 버튼 테두리 색상 부드러운 핑크색 */
     padding: 10px 20px;
     border-radius: 5px;
     font-size: 16px;
     text-decoration: none;
     text-align: center;
     display: inline-block;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: #f48fb1; /* 버튼 호버 시 배경색 */
+    background-color: #f8a5b0; /* 버튼 호버 시 배경색 부드러운 핑크색 */
+    color: white; /* 버튼 호버 시 텍스트 색상 흰색 */
+    border-color: #f8a5b0; /* 버튼 호버 시 테두리 색상 부드러운 핑크색 */
 }
 
 /* 상품 이미지와 레이블 스타일 */
@@ -171,12 +173,19 @@ a:hover {
 </head>
 <body>
     <h1>재고 목록</h1>
+    
+    <!-- Change Log List 및 상품 목록 그래프화 버튼 추가 -->
+    <div class="button-container">
+        <a href="${pageContext.request.contextPath}/stock/changeLogList" class="button">재고 변동 내역</a>
+        <a href="${pageContext.request.contextPath}/stock/categoryQuantity" class="button">상품 목록 그래프화</a>
+    </div>
+    
     <table>
         <thead>
             <tr>
                 <th>이미지</th>
                 <th>카테고리</th>
-                <th>이름</th>
+                <th>상품명</th>
                 <th>수량 변동</th>
                 <th>상세</th>
                 <th>삭제</th>
@@ -241,10 +250,5 @@ a:hover {
             </c:forEach>
         </tbody>
     </table>
-
-    <!-- 재고 등록 버튼 추가 -->
-    <div class="button-container">
-        <a href="${pageContext.request.contextPath}/stock/insert" class="button">재고 등록</a>
-    </div>
 </body>
 </html>

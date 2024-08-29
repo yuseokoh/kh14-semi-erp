@@ -105,21 +105,28 @@ public class TbEmpController {
 
 	@PostMapping("/login")
 	public String login(@RequestParam String loginId, @RequestParam String password, HttpSession session) {
-		// 아이디에 해당하는 정보를 불러와서 없으면 에러
-		TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId, password);
-		if (tbEmpDto == null)return "redirect:login?error";
-		session.setAttribute("createdUser", loginId);
-		session.setAttribute("userType", tbEmpDto.getUserType());
-		// session.setAttribute("createdLevel", memberDto.getMemberLevel());
-		return "redirect:/";// 홈으로 이동
+	//아이디에 해당하는 정보를 불러와서 없으면 에러
+	TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId,password);
+	if (tbEmpDto == null)return "redirect:login?error";
+
+	session.setAttribute("createdUser", loginId);
+	session.setAttribute("userType", tbEmpDto.getUserType());// 관리자 인지 아닌지 구분용
+	// 부서 ->> 부서코드 테이블없이 아마 a00으로 들어갈듯 // 이거만 조절하면될듯
+	session.setAttribute("userLevel", tbEmpDto.getEmpDept());
+	//2024-08-27 17:09 조재혁 수정
+//	return "redirect:/";// 홈으로 이동
+	return "/WEB-INF/views/groupware/truehome.jsp";
 	}
 
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("createdUser");
 		session.removeAttribute("userType");
+		session.removeAttribute("userLevel");
 		return "redirect:/";
 	}
+	
+	//상세 페이지
 
 	// 상세 페이지
 	@RequestMapping("/detail")
@@ -129,11 +136,13 @@ public class TbEmpController {
 		model.addAttribute("tbEmpDto", tbEmpDto);
 		return "/WEB-INF/views/tb/detail.jsp";
 	}
+	
 
 	@GetMapping("/findPw")
 	public String findPw() {
 		return "/WEB-INF/views/tb/findPw.jsp";
 	}
+	
 
 	@PostMapping("/findPw")
 	public String findPw(@RequestParam String loginId, @RequestParam String EmpEmail)

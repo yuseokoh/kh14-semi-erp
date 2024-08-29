@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 전자결재 리스트  -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>프로젝트 최종 폼</title>
+<title>전자결재 리스트 (통합 보고서,휴가신청서)</title>
 
 <!-- google font cdn -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,8 +21,8 @@
 <!-- 프로젝트 스타일 -->
 <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
 <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-<!-- <link rel="stylesheet" type="text/css" href="/css/notic.css"> -->
-<link rel="stylesheet" type="text/css" href="/css/vacation.css">
+<link rel="stylesheet" type="text/css" href="/css/notic.css">
+<!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
@@ -28,15 +30,6 @@
 
 
 <style>
-.title1 {
-	width: 70% !important;
-	height: 40px;
-	margin-right: 40%
-}
-
-input[readonly] {
-	pointer-events: none;
-}
 </style>
 
 
@@ -57,20 +50,13 @@ input[readonly] {
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-
-
 <!-- 자바스크립트 코드 작성 영역 -->
 <script type="text/javascript">
-	$(function() {
-		var picker7 = new Lightpick({
-			field : document.querySelector(".test7-1"),//설치대상1
-			secondField : document.querySelector(".test7-2"),//설치대상2
-			singleDate : false,//하루만 선택하는 모드를 해제
-			format : "YYYY-MM-DD",//날짜의 표시 형식(momentJS 형식)
-			firstDay : 7,//일요일부터 표시
-			numberOfMonths : 4,//표시할 월의 수
-			numberOfColumns : 2,//한줄에 표시할 월의 수
+	$(document).ready(function() {
+		// 삭제 버튼 클릭 이벤트
+		$('.write').on('click', function() {
+			// 확인 대화상자 표시
+			window.location.href = '/vacation/insert'; // 여기에 원하는 링크를 입력하세요
 		});
 	});
 </script>
@@ -178,94 +164,75 @@ input[readonly] {
 	</aside>
 
 	<div id="content">
+
 		<main id="body">
 			<div id="content">
 
 
-				<!-- 휴가 신청서 작성 -->
+				<!-- 전자결재 통합 리스트 작성 -->
 				<body>
-					<div class="container w-900">
-						<div class="title">휴가신청서</div>
-						<div class="table-container">
-							<table class="table">
-								<label>결재자</label>
+					<div class="noticbox w-1200">
+						<div class="row notice">
+							<div class="row noticname">휴가 리스트</div>
+							<div class="actions">
+								<select class="row actions1" style="flex-grow: 1;">
+									<option value="">작성일</option>
+									<option value="" class="row">제목</option>
+									<option value="">작성자</option>
+								</select>
+								<div class="row search" style="flex-grow: 1;">
+									<input class="row" />
+								</div>
+								<button type="button" class="search button" style="flex-grow: 1;">검색</button>
+							</div>
+						</div>
+
+						<hr class="row mt-15 mb-50">
+						${list}
+						<div class="tb-box">
+							<table class="tb">
 								<thead>
 									<tr>
-										<th>직급</th>
+										<th>휴가번호</th>
+										<th>작성일</th>
+										<th>제목</th>
+										<th>타입</th>
+										<th>결재자</th>
+										<th>진행상태</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>서명칸</td>
-									</tr>
+
+								<tbody class="tbody">
+									<c:forEach var="TbEmpVacaReqDto" items="${list}">
+										<tr class="row center">
+
+											<td>${TbEmpVacaReqDto.vacaNo}</td>
+											<td>${TbEmpVacaReqDto.vacaReqDate}</td>
+											<td><a class="name" href="/vacation/detail?vacaNo=${TbEmpVacaReqDto.vacaNo}">${TbEmpVacaReqDto.vacaTitle}</a></td>
+											<td>${TbEmpVacaReqDto.vacaType}</td>
+											<td>${TbEmpVacaReqDto.approBosName}</td>
+											<td>${TbEmpVacaReqDto.approYN}</td>
+
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
-						</div>
 
-						<div class="row">
-							<label>제목</label> <input type="text" class="form title1" name="vacaTitle">
-						</div>
-						<div class="row">
-							<div class="row">
-								<label>사원명</label> <input type="text" class="filed form disabled" name="applicantId" value="${tbEmpDto.name}" readonly>
+							<div class="flex-box">
+								<div class="row">
+									<button type="button" class="btn write">글작성</button>
+								</div>
 							</div>
-						</div>
-
-						<div class="row">
-							<div>
-								<label>사원번호</label> <input type="text" class="form" name="empNo" value="${tbEmpDto.empNo}" readonly>
-							</div>
-							<div>
-								<label>직급</label> <input type="text" class="form" name="empNo" value="${tbEmpDto.empNo}" readonly>
-							</div>
-							<div>
-								<label>부서</label> <input type="text" class="form" name="empDept" value="${tbEmpDto.empDept}" readonly>
-							</div>
-						</div>
-
-						<div class="row">
-							<div>
-								<label>EMAIL</label> <input type="text" class="form" name="empEmail" value="${tbEmpDto.empEmail}" readonly>
-							</div>
-							<div>
-								<label>비상 연락처</label> <input type="text" class="form" placeholder="00011112222" name="vacaTel">
-							</div>
-						</div>
-
-						<div class="row flex-box">
-							<div class="w-50">
-								<label>휴가 시작일</label> <input type="text" class="field w-100 test7-1 form" name="vacaSdate">
-							</div>
-							<div class="w-50">
-								<label>휴가 종료일</label> <input type="text" class="field w-100 test7-2 form" name="vacaEdate">
-							</div>
-						</div>
-
-						<div class="row">
-							<div>
-								<label>휴가 종류</label> <select class="form" name="vacaType">
-									<option value="" class="text-secondary">휴가 종류</option>
-									<option value="개인사유">개인사유</option>
-									<option value="연차">연차</option>
-									<option value="병가">병가</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="row flex-box" style="position: relative;">
-							<div>
-								<label>휴가 사유</label>
-								<textarea class="field w-100 form" rows="3" style="padding-right: 100px;" name="vacaReason"></textarea>
-								<button type="submit" class="btn btn-positive">휴가신청</button>
+							<div class="row center">
+								<span>span지우고 네비게이터 넣는곳 </span>
 							</div>
 						</div>
 					</div>
-
-				</body>
-
-				<!-- 이곳에서부터 <footer>  -->
 			</div>
+</body>
 
-		</main>
+<!-- 이곳에서부터 <footer>  -->
+</div>
+</main>
 </body>
 </html>

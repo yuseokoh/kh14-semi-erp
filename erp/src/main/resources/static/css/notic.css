@@ -6,8 +6,8 @@
 }
         .btn{
          color: white;
-         background-color: #80bdff;
-        border-color: #7f8c8d;
+         background-color: #99c2ff;
+        border-color: #cde1ff;
          border-radius: 4px;
          height: 35px; /* Ensure consistent height */
         }
@@ -84,3 +84,21 @@
           .tbody{
             border-bottom: 1px solid #7f8c8d;
           }
+
+          th {
+            background-color: #80bdff; /* 테이블 헤더 배경색을 부드러운 핑크색으로 설정 */
+            color: white; /* 헤더 텍스트 색상을 흰색으로 설정 */
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background-color:#cde1ff; /* 테이블 행 호버 시 배경색을 부드러운 핑크색으로 설정 */
+        }
+        table {
+            width: 300%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            background-color: #ffffff; /* 테이블 배경색을 흰색으로 설정 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-right: 390px;
+        }

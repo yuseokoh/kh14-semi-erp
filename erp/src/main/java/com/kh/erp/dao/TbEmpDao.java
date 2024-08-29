@@ -147,12 +147,24 @@ public class TbEmpDao {
 	//비밀번호 변경(U)
 	public boolean updatePassword(String loginId,String password) {
 		String sql = "update tb_emp set password = ? where loginId=?";
-		String rawPw =password;
-		String encPw = encoder.encode(rawPw);
+		String encPw = encoder.encode(password);
 		Object[] data = {encPw,loginId};
 		return jdbcTemplate.update(sql,data)>0;
+	}//이미지 찾기
+	public Integer findImage(String loginId) {
+		String sql = "select document from tb_emp_image where loginId=?";
+		Object[] data = {loginId};
+		return jdbcTemplate.queryForObject(sql, Integer.class,data);
 	}
 	
 	
 	//승인된 휴가신청서 중
+	
+	public void connect(String loginId, int documentNo) {
+		String sql = "insert into tb_emp_image(loginId,document) "
+				+ "values(?,?)";
+		Object[] data = {loginId,documentNo};
+		jdbcTemplate.update(sql,data);
+		
+	} 
 }

@@ -17,9 +17,8 @@
 		<label>고용 보험</label><input value="${tbEmpDto.salKo}" name="salKo" type="text">
 		<label>건강 보험</label><input value="${tbEmpDto.salKun}" name="salKun" type="text">
 		<label>국민 보험</label><input value="${tbEmpDto.salKuk}" name="salKuk" type="text">
-		<label>보험 등록일자</label><input value="${tbEmpDto.salDate}" name="salDate" type="text">
-		<label>세전 월급</label><input value="${tbEmpDto.salPre}" name="salPre" type="number">원
-		<label>세후 월급</label><input value="${tbEmpDto.salAfter}" name="salAfter" type="number">원
+		<label>기본급</label><input value="${tbEmpDto.salPre}" name="salPre" type="number">원
+		<label>등록일자</label><input value="${tbEmpDto.salDate}" name="salDate" type="text">
 		<label>은행</label><input value="${tbEmpDto.empBank}" name="empBank" type="text">
 		<label>계좌번호</label><input value="${tbEmpDto.empAccountNumber}" name="empAccountNumber" type="text" 
 		placeholder="숫자만 입력하세요">

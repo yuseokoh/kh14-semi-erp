@@ -11,11 +11,11 @@
     background-color: gainsboro;
     border-color: #fff;
     color: #495057;
-    font-weight: 700;
+    font-weight: 800;
     text-align: center !important;
     width: 100%; 
     box-sizing: border-box;
-    margin-top: 200px;
+    margin-top: 160px;
 }
 
 .form:focus {

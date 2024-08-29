@@ -14,8 +14,6 @@ public class NoticeDto {
 	private String noticeWriter;
 	private String noticeTitle;
 	private String noticeCont;
-	private int fileNo;
-	private String noticeDelYn;
 	private Date noticeWtime;
 	private Date noticeUtime;
 	private int noticeViews;
@@ -26,7 +24,7 @@ public class NoticeDto {
 	private Integer noticeTarget;
 	private int noticeDepth;
 	
-	public String getLoginIdString() {
+	public String getNoticeWriterString() {
 		if(noticeWriter == null)
 			return "탈퇴한 사용자";
 		return noticeWriter;

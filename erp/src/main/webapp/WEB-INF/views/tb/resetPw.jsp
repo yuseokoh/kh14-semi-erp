@@ -18,7 +18,7 @@
 			<label>변경할 비밀번호</label><input class="field w-100" type="password" name="password">
 		</div>
 		<div class="row mt-30">
-			<button type="submit" class="btn btn-positive w-100">
+			<button type="submit" class="w-100">
 			<i class="fa-solid fa-user-lock"></i> 변경하기</button>
 		</div>
 	</form>

@@ -1,5 +1,7 @@
 package com.kh.erp.restcontroller;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,7 @@ import com.kh.erp.dto.TbEmpDto;
 
 @RestController
 @RequestMapping("/rest/emp")
-public class EmpRestController {
+public class TbEmpRestController {
 	@Autowired
 	private TbEmpDao tbEmpDao;
 	
@@ -22,5 +24,6 @@ public class EmpRestController {
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
 		return tbEmpDto == null;
 	}
+	
 	
 }

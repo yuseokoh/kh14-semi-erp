@@ -20,7 +20,7 @@
 		<br>
 		<label>이메일</label><input class="field w-100" 
 		name="EmpEmail"type="email" placeholder="이메일로 임시 비밀번호가 발급됩니다.">
-		<button class="btn btn-positive">
+		<button type="submit" class="w-100 pd-30">
 		 <i class="fa-solid fa-paper-plane"></i>  <span class="a">발급받기</span></button>
 		 <c:if test="${param.error!=null}">
     <div class="row center">
@@ -30,4 +30,3 @@
 	</div>
 	</form>
 </div>
-

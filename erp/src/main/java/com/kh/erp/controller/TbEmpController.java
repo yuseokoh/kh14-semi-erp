@@ -100,7 +100,7 @@ public class TbEmpController {
 	// 로그인 페이지
 	@GetMapping("/login")
 	public String login() {
-		return "/WEB-INF/views/erp/login2.jsp";
+		return "/WEB-INF/views/erp/findPw0828.jsp";
 	}
 
 	@PostMapping("/login")
@@ -131,7 +131,7 @@ public class TbEmpController {
 	}
 
 	@GetMapping("/findPw")
-	public String findPw2() {
+	public String findPw() {
 		return "/WEB-INF/views/tb/findPw.jsp";
 	}
 
@@ -140,10 +140,10 @@ public class TbEmpController {
 			throws MessagingException, IOException {
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
 		if (tbEmpDto == null) {
-			return "redirect:findPw2?error";
+			return "redirect:findPw?error";
 		}
 		if (!EmpEmail.equals(tbEmpDto.getEmpEmail())) {
-			return "redirect:findPw2?error";
+			return "redirect:findPw?error";
 		}
 		emailService.sendResetPw(loginId, EmpEmail);
 		return "redirect:login";

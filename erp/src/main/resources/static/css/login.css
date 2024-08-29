@@ -75,7 +75,7 @@ body {
    .btn {
     height: 3rem;
     width: 20rem;
-    margin-top: 3rem;
+    margin-top: 7rem;
     background-color: wheat;
     border-radius: 0.5rem;
     border: none;
@@ -83,8 +83,8 @@ body {
     transition: all 400ms;
     box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
     position: relative; 
-    bottom: 124px;
-    left: 43px;
+    bottom: 106px;
+    left: 0px;
 }
 
 .btn:hover {

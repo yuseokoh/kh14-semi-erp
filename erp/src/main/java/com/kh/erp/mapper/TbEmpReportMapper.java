@@ -22,6 +22,7 @@ public class TbEmpReportMapper implements RowMapper<TbEmpReportDto> {
         tbEmpReportDto.setWriterId(rs.getString("writer_Id"));
         tbEmpReportDto.setWriterDept(rs.getString("writer_Dept"));
         tbEmpReportDto.setWriterName(rs.getString("writer_Name"));
+        tbEmpReportDto.setReportTitle(rs.getString("report_Title"));
         tbEmpReportDto.setWriteDate(rs.getDate("write_Date"));
 
         // CLOB 데이터 처리

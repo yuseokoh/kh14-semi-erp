@@ -79,14 +79,17 @@ public class TbEmpReportController {
 		return "redirect:mylist?loginId=" + loginId;
 	}
 
-	@RequestMapping("/detail")
+	// 보고서 상세(근데 이 보고서는 나만 볼 수 있음)
+	@GetMapping("/detail")
 	public String requestMethodName(@RequestParam int reportNo, Model model) {
 		TbEmpReportDto tbEmpReportDto = tbEmpReportDao.selectOne(reportNo);
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpReportDto.getWriterId());
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+		TbEmpApprovalDto tbEmpApprovalDto = tbApprovalDao.selectOneByApproNo(tbEmpReportDto.getApproNo());
 
-		System.out.println("tbEmpReportDto = " + tbEmpReportDto);
-
+		// 승인 정보
+		model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
+		
 		// 사원 정보
 		model.addAttribute("tbEmpDto", tbEmpDto);
 
@@ -96,5 +99,7 @@ public class TbEmpReportController {
 		/// 아마 대충 음..
 		return "/WEB-INF/views/groupware/report/reportDetail.jsp";
 	}
+
+	//
 
 }

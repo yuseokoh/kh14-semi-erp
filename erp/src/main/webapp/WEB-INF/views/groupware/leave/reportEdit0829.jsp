@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>보고서 수정</title>
+    <title>보고서 반려</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,28 +19,15 @@
      <!-- 프로젝트 스타일 --> 
      <link rel="stylesheet" type="text/css" href="./gotowork.css">
      <link rel="stylesheet" type="text/css" href="./sidebar.css">
-     <link rel="stylesheet" type="text/css" href="./notic.css">
-     <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
+     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
+     <link rel="stylesheet" type="text/css" href="./vacation.css">
      <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
     <style>
-        .note-editable {
-            background-color: white;
-        }
-        .note-editable b {
-            font: inherit;
-            font-weight: 700 !important;
-            font-style: inherit;
-        }
-        .note-editable i {
-            font: inherit;
-            font-weight: inherit;
-            font-style: italic !important;
-        }
-
-        .disabled, .form[disabled] {
+            /* 비활성화된 스타일 */
+            .disabled, .form[disabled] {
             background-color: #f0f0f0;
             color: #a0a0a0;
             cursor: not-allowed;
@@ -67,36 +54,54 @@
         }
 
         .btn-warning {
-            background-color: #f39c12;
+            background-color: #f39c12; 
             color: white;
             margin-bottom: 40px;
+            border: 1px solid #ff9d00 !important;
+            border-radius: 0.2em;
         }
 
         .btn-positive {
-            background-color: #28a745;
+            background-color: #99c2ff !important;
             color: white;
             margin-bottom: 40px;
+            border-radius: 0.2em;
+            border: 1px solid #cde1ff !important;
         }
 
-        .reject-reason-textarea {
-            display: none;
-            width: 100%;
-            height: 100px;
-            margin-top: 10px;
-        }
+        .btn-positive:hover {
+    background-color: #dde6f3 !important;
+    color: #66a2fc; 
+}
+
+
+.btn-warning:hover {
+    background-color: #fae7ca; 
+    color: #f39c12; 
+}
+
 
         .reject {
-            display: none;
-            text-decoration: none;
-            font-size: 16px;
-            padding: 0.5em 0.75em;
-            color: #2d3436;
-            background-color: #636e72;
-            border: 1px solid #636e72;
-            border-radius: 0.2em;
-            cursor: pointer;
-            text-align: center;
-            line-height: 1.2;
+            text-decoration: none; 
+    display: inline-block;
+    font-size: 16px; 
+    padding: 0.5em 0.75em; 
+    color: #2d3436;
+    background-color: #dfe6e9;
+    border: 1px solid #2d3436;
+    border-radius: 0.2em;
+    cursor: pointer; 
+    text-align: center;
+    line-height: 1.2;
+    border-color: #636e72;
+    background-color: #636e72;
+    color: white;
+        }
+
+        .title1{
+           width: 70% !important;
+           height: 40px;
+           margin-right: 40%
         }
     </style>
     <!-- lightpick cdn -->
@@ -117,23 +122,19 @@
     <!-- 자바스크립트 코드 작성 영역 -->
     <script type="text/javascript">
         $(function(){
-        // 초기 상태 설정
-        $('.reject-reason-textarea').hide();
+            // 반려 버튼 클릭 시 동작
+            $('.reject').on('click', function() {
+                // 휴가 사유 라벨을 반려 사유 라벨로 변경
+                $('.reason-label').text('반려 사유');
+                
+                // 휴가 사유 textarea 숨기고 반려 사유 textarea 보이기
+                $('.reason-textarea').addClass('hidden').prop('disabled', true);
+                $('.reject-reason-textarea').removeClass('hidden').prop('disabled', false);
 
-        $('.edit-btn').on('click', function() {
-            $('.reject-reason-textarea').hide(); // textarea 숨기기
-            $('.reject').show(); // 반려 버튼 보이기
-            $(this).hide(); // 수정 버튼 숨기기
-            $('.reject-reason-textarea').show(); // textarea 보이기
+                // 휴가신청 버튼을 수정완료 버튼으로 변경
+                $('.btn.submit').text('반려완료').removeClass('btn-positive').addClass('btn-warning');
+            });
         });
-
-        $('.reject').on('click', function() {
-            alert('반려 됨');
-            $(this).hide(); // 반려 버튼 숨기기
-            $('.edit-btn').show(); // 수정 버튼 보이기
-            //비동기넣는곳~ 아마도
-        });
-    });
     </script>
 </head>
 <body>  
@@ -251,49 +252,82 @@
            <div id="content">
 
 
-        <!-- 보고서 작성 작성 -->
-        <div class="noticbox w-1200">
-            <div class="row notice">
-                <table class="table table-border" id="dataTable" width="100%" cellspacing="0">
-                    <tbody>
-                        <tr>
-                            <th class="row noticname">제목</th>
-                            <td colspan="3" class="subject"></td>
-                        </tr>
-                        <tr>
-                            <th class="row noticname">작성자</th>
-                            <td>${조장.오유석}</td>
-                            <th class="row noticname">작성일</th>
-                            <td class="notice-reg-date">${2024년 03월11일}</td>
-                        </tr>
-                        <tr>
-                            <th class="row noticname">조회수</th>
-                            <td class="row">${조회수값999}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <img style="border-radius: 0;" alt="" src="./">
-                                ${내용이 여기에 들어감 블라블라블라블라}
-                                <textarea class="reject-reason-textarea" placeholder="반려 사유를 입력하세요" style="font-size: 15px;"></textarea>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>   
-            </div>
-
-            <div>
-                <div class="flex-box" style="justify-content: space-between;">
-                    <div class="row left">
-                        <button type="button" class="edit-btn btn write">반려</button>
-                        <button type="button" class="reject btn write">반려</button>
+        
+        <!-- 보고서 수정 -->
+            <div class="container w-900">
+                <div class="title">일일 업무 보고서 수정</div>
+        
+                <div class="table-container">
+                    <table class="table form">
+                        <label>결재자</label>
+                        <thead>
+                            <tr>
+                                <th>직급</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>서명칸</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <label>제목</label>
+                    <input type="text" class="form title1" >
+                </div>
+    
+                        <div class="row">
+                            <label>사원명</label>
+                            <input type="text" class="filed form " >
+                        </div>
+        
+                <div class="row">
+                    <div>
+                        <label>사원번호</label>
+                        <input type="number" class="form "  placeholder="ex: 3892" maxlength="4">
                     </div>
-                    <div class="row right">
-                        <!-- <button type="button" class="btn btn-delete" style="background-color: #d63031; border-color: brown;">삭제</button> -->
+                    <div>
+                        <label>직급</label>
+                        <select class="form" >
+                            <option value="" class="text-secondary" >직급</option>
+                            <option value="">어쩌고</option>
+                            <option value="">저쩌고</option>
+                            <option value="">직급</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>부서</label>
+                        <select class="form" >
+                            <option value="" class="text-secondary" >부서</option>
+                            <option value="">어쩌고</option>
+                            <option value="">저쩌고</option>
+                            <option value="">부서</option>
+                        </select>
+                    </div>
+                </div>
+       
+
+
+
+             <div class="row flex-box btn-container" style="justify-content: space-between;">
+                    <div >
+                        <label class="reason-label">금일 목표</label>
+                        <textarea class="field w-100 form reason-textarea" rows="3" style="padding-right: 100px;" 
+                        placeholder="1. 코딩하기  
+2. 또 코딩하기
+3. 또 코딩하기"
+                        ></textarea>
+                        <textarea class="field w-100 form hidden reject-reason-textarea" disabled rows="3" style="padding-right: 100px;" placeholder="반려 사유를 입력하세요."></textarea>
+                        <button type="button" class="reject flex-core" >반려</button>
+                        <button type="button" class="btn btn-positive submit flex-core">기안</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+
+
+
+
 
     <footer id="footer">
         <!-- Footer content here -->

@@ -21,7 +21,6 @@ import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.CertDto;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.error.TargetNotFoundException;
-import com.kh.erp.service.AttachmentService;
 import com.kh.erp.service.DocumentService;
 import com.kh.erp.service.EmailService;
 import com.kh.erp.service.NameChangeService;
@@ -105,17 +104,19 @@ public class TbEmpController {
 
 	@PostMapping("/login")
 	public String login(@RequestParam String loginId, @RequestParam String password, HttpSession session) {
-	//아이디에 해당하는 정보를 불러와서 없으면 에러
-	TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId,password);
-	if (tbEmpDto == null)return "redirect:login?error";
+		// 아이디에 해당하는 정보를 불러와서 없으면 에러
+		TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId, password);
+		System.out.println("tbEmpDto = " + tbEmpDto);
+		if (tbEmpDto == null)
+			return "redirect:login?error";
 
-	session.setAttribute("createdUser", loginId);
-	session.setAttribute("userType", tbEmpDto.getUserType());// 관리자 인지 아닌지 구분용
-	// 부서 ->> 부서코드 테이블없이 아마 a00으로 들어갈듯 // 이거만 조절하면될듯
-	session.setAttribute("userLevel", tbEmpDto.getEmpDept());
-	//2024-08-27 17:09 조재혁 수정
+		session.setAttribute("createdUser", loginId);
+		session.setAttribute("userType", tbEmpDto.getUserType());// 관리자 인지 아닌지 구분용
+		// 부서 ->> 부서코드 테이블없이 아마 a00으로 들어갈듯 // 이거만 조절하면될듯
+		session.setAttribute("userLevel", tbEmpDto.getEmpDept());
+		// 2024-08-27 17:09 조재혁 수정
 //	return "redirect:/";// 홈으로 이동
-	return "/WEB-INF/views/groupware/truehome.jsp";
+		return "/WEB-INF/views/groupware/truehome.jsp";
 	}
 
 	@RequestMapping("/logout")
@@ -125,8 +126,8 @@ public class TbEmpController {
 		session.removeAttribute("userLevel");
 		return "redirect:/";
 	}
-	
-	//상세 페이지
+
+	// 상세 페이지
 
 	// 상세 페이지
 	@RequestMapping("/detail")
@@ -136,13 +137,11 @@ public class TbEmpController {
 		model.addAttribute("tbEmpDto", tbEmpDto);
 		return "/WEB-INF/views/tb/detail.jsp";
 	}
-	
 
 	@GetMapping("/findPw")
 	public String findPw() {
 		return "/WEB-INF/views/tb/findPw.jsp";
 	}
-	
 
 	@PostMapping("/findPw")
 	public String findPw(@RequestParam String loginId, @RequestParam String EmpEmail)
@@ -206,16 +205,18 @@ public class TbEmpController {
 	@Transactional
 	public String addImage(@RequestParam MultipartFile attach, @RequestParam String loginId)
 			throws IllegalStateException, IOException {
-		if(attach.isEmpty())return "";
-		
+		if (attach.isEmpty())
+			return "";
+
 		try {
 			int beforeNo = tbEmpDao.findImage(loginId);
 			documentService.delete(beforeNo);
-		} catch (Exception e) {}
-		
+		} catch (Exception e) {
+		}
+
 		int documentNo = documentService.save(attach);
 		tbEmpDao.connect(loginId, documentNo);
 		return "redirect:mypage";
-		
+
 	}
 }

@@ -13,6 +13,8 @@ import com.kh.erp.dao.TbEmpAttendanceDao;
 import com.kh.erp.dto.TbEmpAttendanceDto;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/rest/attendance")
@@ -35,7 +37,6 @@ public class TbEmpAttendanceRestController {
 		// 포맷된 문자열로 변환
 		String formattedCheckOutTime = checkOutTime.format(formatter);
 		return formattedCheckOutTime;
-
 	}
 
 	@PostMapping("/end")
@@ -56,4 +57,13 @@ public class TbEmpAttendanceRestController {
 		return formattedCheckOutTime;
 	}
 
+	
+//	//상태조회
+//	@PostMapping("/check")
+//	public String check() {
+//		//TODO: process POST request
+//		
+//		return entity;
+//	}
+	
 }

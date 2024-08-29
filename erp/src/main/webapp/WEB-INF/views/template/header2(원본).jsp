@@ -19,7 +19,7 @@
 
 <!-- my css -->
 <link rel="stylesheet" type="text/css" href="/css/commons.css">
-<link rel="stylesheet" type="text/css" href="/css/test.css">
+<!-- <link rel="stylesheet" type="text/css" href="/css/test.css"> -->
 
 <!-- 프로젝트 스타일 -->
 <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
@@ -46,9 +46,6 @@
 <script src="/js/gotoworkbtn.js"></script>
 <script src="/js/menuToggle.js"></script>
 <!-- <script src="/js/delete.js"></script>  받아와야할 것-->
-
-<!-- 뭔지 모르는거 물어봐야할듯 -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -113,21 +110,6 @@
   </script>
 
 
-<!-- 자바스크립트 코드 작성 영역 -->
-<script type="text/javascript">
-	$(function() {
-		var picker7 = new Lightpick({
-			field : document.querySelector(".test7-1"),//설치대상1
-			secondField : document.querySelector(".test7-2"),//설치대상2
-			singleDate : false,//하루만 선택하는 모드를 해제
-			format : "YYYY-MM-DD",//날짜의 표시 형식(momentJS 형식)
-			firstDay : 7,//일요일부터 표시
-			numberOfMonths : 4,//표시할 월의 수
-			numberOfColumns : 2,//한줄에 표시할 월의 수
-		});
-	});
-</script>
-
 <style>
 /* 비활성화된 스타일 */
 .disabled, .form[disabled] {
@@ -140,10 +122,6 @@
 .disabled:focus, .form[disabled]:focus {
 	outline: none;
 }
-
-input[readonly] {
-	pointer-events: none;
-}
 </style>
 </head>
 <body>
@@ -152,7 +130,8 @@ input[readonly] {
 			<i class="fa fa-bars"></i>
 		</div>
 		<div id="logo">
-			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i> <span class="notif-count content">0</span>
+			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i>
+			<span class="notif-count content">0</span>
 			</a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
 		</div>
 	</header>
@@ -177,7 +156,7 @@ input[readonly] {
 					</div>
 					<div id="attendance-btns">
 						<button id="start-btn" class="on">출근</button>
-						<button id="end-btn" class="off" disabled>퇴근</button>
+						<button id="end-btn" class="on">퇴근</button>
 					</div>
 				</div>
 				<!-- 출퇴근 여기까지-->
@@ -190,8 +169,8 @@ input[readonly] {
 						<li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
 						</a>
 							<ul>
-								<li><a href="#">휴가</a></li>
-								<li><a href="#">보고서</a></li>
+								<li><a href="#">휴가신청서</a></li>
+								<li><a href="#">보고서(수인씨작성중)</a></li>
 							</ul></li>
 
 						<li><a href="/emp/list" data-text=""> <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
@@ -234,3 +213,5 @@ input[readonly] {
 			</div>
 		</nav>
 	</aside>
+<body>
+	<div id="content" style="margin-top: 200px;">

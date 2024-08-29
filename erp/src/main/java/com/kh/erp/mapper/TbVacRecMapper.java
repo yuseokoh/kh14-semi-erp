@@ -17,14 +17,12 @@ public class TbVacRecMapper implements RowMapper<TbVacRecVO>{
 		tbVacRecVO.setVacaReqDate(rs.getDate("vaca_ReqDate"));
 		tbVacRecVO.setVacaTitle(rs.getString("vaca_Title"));
 		tbVacRecVO.setApplicantId(rs.getString("applicantId"));
-		tbVacRecVO.setApproBos1(rs.getString("appro_Bos1"));
-		tbVacRecVO.setApproBos2(rs.getString("appro_Bos2"));
-		tbVacRecVO.setApproBos3(rs.getString("appro_Bos3"));
-		tbVacRecVO.setApproNo1(rs.getString("appro_No1"));
-		tbVacRecVO.setApproNo2(rs.getString("appro_No2"));
-		tbVacRecVO.setApproNo3(rs.getString("appro_No3"));
+		tbVacRecVO.setApproBosId(rs.getString("appro_BosId"));
+		tbVacRecVO.setApproBosName(rs.getString("appro_BosName"));
 		tbVacRecVO.setApproYN(rs.getString("appro_YN"));
-		
+		tbVacRecVO.setVacaType(rs.getString("vaca_Type"));
+		tbVacRecVO.setApproNo(rs.getInt("appro_No"));
+		tbVacRecVO.setVacaNo(rs.getInt("vaca_No"));
 		return tbVacRecVO;
 	}
 

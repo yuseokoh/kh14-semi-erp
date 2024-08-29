@@ -98,6 +98,7 @@ public class TbEmpDao {
 		String sql = "select * from tb_emp order by emp_dept asc, emp_level asc, name asc";
 		return jdbcTemplate.query(sql, tbEmpMapper);
 	}
+	
 	//사원 검색(R) 검색어>부서>직급>이름 순
 	public List<TbEmpDto> EmpList(String column,String keyword){
 		String sql = "select * from tb_emp where "
@@ -106,6 +107,7 @@ public class TbEmpDao {
 		Object[] data = {keyword};
 		return jdbcTemplate.query(sql, tbEmpMapper,data);
 	}
+	
 	public List<TbEmpDto> empListbyPaging(PageVO pageVO) {
 		if(pageVO.isSearch()) {//검색
 		String sql = "select * from ("
@@ -150,4 +152,7 @@ public class TbEmpDao {
 		Object[] data = {encPw,loginId};
 		return jdbcTemplate.update(sql,data)>0;
 	}
+	
+	
+	//승인된 휴가신청서 중
 }

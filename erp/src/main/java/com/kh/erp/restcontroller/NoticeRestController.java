@@ -35,7 +35,7 @@ public class NoticeRestController {
 	@RequestMapping("/check")
 	public NoticeLikeVO check(HttpSession session, @RequestParam int noticeNo) {
 		//사원 아이디 추출
-		String loginId = (String)session.getAttribute("testUser");
+		String loginId = (String)session.getAttribute("createdUser");
 		
 		NoticeLikeVO noticeLikeVO = new NoticeLikeVO();
 		noticeLikeVO.setChecked(noticeLikeDao.check(loginId, noticeNo));
@@ -47,7 +47,7 @@ public class NoticeRestController {
 	@RequestMapping("/action")
 	public NoticeLikeVO action(
 			HttpSession session, @RequestParam int noticeNo) {
-		String loginId = (String) session.getAttribute("testUser");
+		String loginId = (String) session.getAttribute("createdUser");
 		boolean isChecked = noticeLikeDao.check(loginId, noticeNo);
 		if(isChecked) {//좋아요 이력 있으면 삭제
 			noticeLikeDao.delete(loginId, noticeNo);

@@ -14,12 +14,12 @@
     <!-- font awesome icon cdn -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <!-- my css -->
-    <link rel="stylesheet" type="text/css" href="./commons.css">
-    <link rel="stylesheet" type="text/css" href="./test.css">
+    <link rel="stylesheet" type="text/css" href="/css/commons.css">
+    <link rel="stylesheet" type="text/css" href="/css/test.css">
 
      <!-- 프로젝트 스타일 --> 
-     <link rel="stylesheet" type="text/css" href="./gotowork.css">
-     <link rel="stylesheet" type="text/css" href="./sidebar.css">
+     <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
+     <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
      <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
@@ -43,9 +43,9 @@
   <script src="confirm-link.js"></script>
   <!-- <script src="multipage.js"></script> -->
   <!-- 프로젝트 js-->
-<script src="gotoworkbtn.js"></script>
-<script src="menuToggle.js"></script>
-<script src="delete.js"></script>
+<script src="/js/gotoworkbtn.js"></script>
+<script src="/js/menuToggle.js"></script>
+<script src="/js/delete.js"></script>
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
@@ -215,14 +215,19 @@
        <main id="body"> 
            <!-- <div id="content" style="margin-top: 200px;"> -->
             <!-- 여기서부터 메인 화면의 콘텐츠가 시작됩니다. -->
-            <h2>xxx님 환영합니다 일하십쇼</h2>
+            <h2>${tbEmpDto.name}님 환영합니다 일하십쇼</h2>
             <p> </p>
          
             <div class="row flex-box w-1200">
                 <div class="w-50 center"> 
                     <canvas class="my-chart"></canvas> 
                 </div>
-                <div class="w-50 center">내정보</div>
+                <div class="w-50 center">내정보
+                	<div class="right">${tbEmpDto.name}</div>
+                	<div class="right">${tbEmpDto.empLevel}</div>
+                	<div class="right">${tbEmpDto.empDept}</div>
+                	<div class="left" ><img src="/tb/myImage"></div>
+                </div>
             </div>
 
 

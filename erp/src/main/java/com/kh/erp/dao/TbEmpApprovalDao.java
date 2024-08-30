@@ -87,6 +87,13 @@ public class TbEmpApprovalDao {
 			return jdbcTemplate.queryForObject(sql, int.class);
 		}
 	}
+	public void connect(int approNo, int documentNo) {
+		String sql = "insert into tb_approval_image(appro_no,document) "
+				+ "values(?,?)";
+		Object[] data = {approNo,documentNo};
+		jdbcTemplate.update(sql,data);
+		
+	} 
 
 	public int sequence() {
 		String sql = "select tb_Approval_seq.nextval from dual";

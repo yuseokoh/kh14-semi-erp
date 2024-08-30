@@ -25,13 +25,13 @@ public class NoticeViewsInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		String testUser = (String) session.getAttribute("testUser");
-		if(testUser == null) {//비회원이 글을 읽으면 조회수 증가X
+		String createdUser = (String) session.getAttribute("createdUser");
+		if(createdUser == null) {//비회원이 글을 읽으면 조회수 증가X
 			return true;
 		}
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
-		if(testUser.equals(noticeDto.getNoticeWriter())) {//본인 글을 읽을때는 조회수 증가X
+		if(createdUser.equals(noticeDto.getNoticeWriter())) {//본인 글을 읽을때는 조회수 증가X
 			return true;
 		}
 		

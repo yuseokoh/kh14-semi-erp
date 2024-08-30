@@ -17,8 +17,6 @@ public class NoticeListMapper implements RowMapper<NoticeDto>{
 		noticeDto.setNoticeWriter(rs.getString("notice_writer"));
 		noticeDto.setNoticeTitle(rs.getString("notice_title"));
 		noticeDto.setNoticeCont(rs.getString("notice_cont"));
-		noticeDto.setFileNo(rs.getInt("file_no"));
-		noticeDto.setNoticeDelYn(rs.getString("notice_del_yn"));
 		noticeDto.setNoticeWtime(rs.getDate("notice_wtime"));
 		noticeDto.setNoticeUtime(rs.getDate("notice_utime"));
 		noticeDto.setNoticeViews(rs.getInt("notice_views"));

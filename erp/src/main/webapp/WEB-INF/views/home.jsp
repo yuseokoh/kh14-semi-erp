@@ -2,40 +2,68 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+
 <script type="text/javascript">
-    $(document).ready(function() {
-        // id="c"인 캔버스를 찾아서 Fabric Canvas로 변환하는 코드
-        var canvas = new fabric.Canvas('c', {
-            isDrawingMode: true
-        });
-        fabric.Object.prototype.transparentCorners = false;
+    	 $(function () {
+             var canvas = document.getElementById("canvas");
+             var context = canvas.getContext("2d");
+             var clearButton = document.getElementById("clearButton");
+             var saveButton = document.getElementById("saveButton");
+             var signatureImage = document.getElementById("signatureImage");
 
-        // id="clear-canvas" 버튼을 누르면 캔버스의 내용이 사라지도록 처리
-        $('#clear-canvas').on('click', function () {
-            canvas.clear();
-        });
+             var drawing = false;
 
-        // id="save-canvas" 버튼을 누르면 캔버스의 내용이 JSON으로 export 되도록 처리
-        $('#save-canvas').on('click', function() {
-            var canvasJSON = JSON.stringify(canvas.toJSON()); // 캔버스 상태를 JSON으로 변환
+             canvas.addEventListener("mousedown", () => {
+             drawing = true;
+             context.beginPath();
+             });
+
+             canvas.addEventListener("mousemove", (event) => {
+             if (!drawing) return;
+
+   var x = event.clientX - canvas.getBoundingClientRect().left;
+   var y = event.clientY - canvas.getBoundingClientRect().top;
+   context.lineTo(x, y);
+   context.stroke();
+ });
+
+ canvas.addEventListener("mouseup", () => {
+   drawing = false;
+   context.closePath();
+ });
+
+ clearButton.addEventListener("click", () => {
+   context.clearRect(0, 0, canvas.width, canvas.height);
+ });
+
+         });
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		$("#saveButton").on("click",function(){
+            var signatureDataURL = canvas.toDataURL("image/png");
+            signatureImage.src = signatureDataURL;
+            console.log(signatureDataURL);
             $.ajax({
-                url: "/rest/approval/sign",
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json", // 데이터를 JSON 형식으로 서버에 전달
-                data: JSON.stringify({ result: canvasJSON }), // JSON 형식으로 문자열화
-                success: function(response) {
-                    console.log("통신성공");
-                    console.log(response);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("통신 실패", textStatus, errorThrown);
-                }
+                url : "/rest/document/sign",
+                method : "post",
+                data:{ 
+                       signatureDataURL : signatureDataURL
+                    },
+                success : function(response){
+                            alert("저장했습니다")
+                        }
             });
+
         });
-    });
-</script>    
+		
+		
+	});
+
+</script>
+
+    
 <h1>${sessionScope.createdUser}</h1>
 <h1>홈</h1>
 
@@ -55,8 +83,8 @@
 </c:if>
 
 
- <canvas id="c" width="500" height="500"></canvas>
-    <button id="clear-canvas">clear</button>
-    <button id="save-canvas">save</button>
-
-    <div id="result"></div>
+ <canvas id="canvas" width="200" height="200" style="border:1px solid black"></canvas>
+<br />
+<button id="clearButton">초기화</button>
+<button id="saveButton">서명 저장</button>
+<img id="signatureImage" style="display: none;">

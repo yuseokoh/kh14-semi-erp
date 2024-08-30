@@ -32,7 +32,7 @@ public class ReplyRestController {
 		//시퀀스 번호 생성
 		int seq = replyDao.sequence();
 		//작성자 정보 불러오기
-		String loginId = (String)session.getAttribute("testUser");
+		String loginId = (String)session.getAttribute("createdUser");
 		//정보 설정
 		replyDto.setReplyNo(seq);
 		replyDto.setReplyWriter(loginId);
@@ -62,7 +62,7 @@ public class ReplyRestController {
 		//본인 글만 삭제 가능
 		@PostMapping("/delete")
 		public void delete(HttpSession session, @RequestParam int replyNo) {
-			String loginId = (String)session.getAttribute("testUser");
+			String loginId = (String)session.getAttribute("createdUser");
 			ReplyDto replyDto = replyDao.selectOne(replyNo);
 			if(replyDto == null) {
 				throw new TargetNotFoundException();
@@ -76,7 +76,7 @@ public class ReplyRestController {
 		
 		@PostMapping("/edit")
 		public void edit(HttpSession session, @ModelAttribute ReplyDto replyDto) {
-			String loginId = (String) session.getAttribute("testUser");
+			String loginId = (String) session.getAttribute("createdUser");
 			ReplyDto originDto = replyDao.selectOne(replyDto.getReplyNo());
 			if(originDto == null) {
 				throw new TargetNotFoundException();

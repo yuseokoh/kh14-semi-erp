@@ -33,8 +33,7 @@ public class FileDownloadController {
 	
 	@Autowired
 	private DocumentService documentService;
-	@Autowired
-	private AttachmentService attachmentService;
+	
 	
 	@RequestMapping("/download")
 	public ResponseEntity<ByteArrayResource> download(

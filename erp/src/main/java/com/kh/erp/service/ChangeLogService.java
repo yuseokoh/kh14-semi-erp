@@ -21,4 +21,11 @@ public class ChangeLogService {
     public void addChangeLog(int stockNo, String changedFields, String oldValues, String newValues) {
         changeLogDao.insertChangeLog(stockNo, changedFields, oldValues, newValues);
     }
+    
+    // 모든 변경 로그를 조회
+    public List<ChangeLogDto> getAllChangeLogs() {
+        return changeLogDao.selectAllChangeLogs();
+    }
+    
+   
 }

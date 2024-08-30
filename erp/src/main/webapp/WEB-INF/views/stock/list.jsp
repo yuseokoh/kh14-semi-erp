@@ -9,174 +9,224 @@
 <meta charset="UTF-8">
 <title>재고 목록</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #fce4ec; /* 부드러운 핑크색 배경 */
-    margin: 0;
-    padding: 0;
-}
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fce4ec;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
 
-h1 {
-    text-align: center;
-    color: #ffffff; /* 헤더 텍스트 색상을 흰색으로 설정 */
-    background-color: #f8a5b0; /* 부드러운 핑크색 배경 */
-    padding: 20px;
-    margin: 0;
-}
+    h1 {
+        text-align: center;
+        color: #ffffff;
+        background-color: #f8a5b0;
+        padding: 20px;
+        margin: 0;
+    }
 
-form {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-    background-color: #ffffff; /* 폼 배경색을 흰색으로 설정 */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    form {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-label {
-    font-weight: bold;
-    color: #f8a5b0; /* 레이블 색상을 부드러운 핑크색으로 설정 */
-    margin-right: 10px;
-    white-space: nowrap; /* 레이블과 입력 필드의 줄바꿈을 방지하여 정렬을 유지 */
-    margin-top: 8px;
-}
+    label {
+        font-weight: bold;
+        color: #f8a5b0;
+        margin-right: 10px;
+        white-space: nowrap;
+        margin-top: 8px;
+    }
 
-select, input[type="text"], button {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    margin-right: 10px;
-    font-size: 16px;
-}
+    select, input[type="text"], button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-right: 10px;
+        font-size: 16px;
+    }
 
-button {
-    background-color: #f8a5b0; /* 버튼의 배경색을 부드러운 핑크색으로 설정 */
-    color: white; /* 버튼의 텍스트 색상을 흰색으로 설정 */
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    button {
+        background-color: #f8a5b0;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-button:hover {
-    background-color: #f48fb1; /* 버튼 호버 시 배경색을 약간 어두운 핑크색으로 설정 */
-}
+    button:hover {
+        background-color: #f48fb1;
+    }
 
-table {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background-color: #ffffff; /* 테이블 배경색을 흰색으로 설정 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    table {
+        width: 90%;
+        max-width: 1200px;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-th, td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
 
-th {
-    background-color: #f8a5b0; /* 테이블 헤더 배경색을 부드러운 핑크색으로 설정 */
-    color: white; /* 헤더 텍스트 색상을 흰색으로 설정 */
-    font-weight: bold;
-}
+    th {
+        background-color: #f8a5b0;
+        color: white;
+        font-weight: bold;
+    }
 
-tr:hover {
-    background-color: #fce4ec; /* 테이블 행 호버 시 배경색을 부드러운 핑크색으로 설정 */
-}
+    tr:hover {
+        background-color: #fce4ec;
+    }
 
-a {
-    color: #f8a5b0; /* 링크 색상을 부드러운 핑크색으로 설정 */
-    text-decoration: none;
-    font-weight: bold;
-}
+    a {
+        color: #f8a5b0;
+        text-decoration: none;
+        font-weight: bold;
+    }
 
-a:hover {
-    text-decoration: underline;
-}
+    a:hover {
+        text-decoration: underline;
+    }
 
-/* 버튼 컨테이너 스타일 */
-.button-container {
-    display: flex;
-    justify-content: center; /* 버튼을 중앙에 정렬 */
-    margin: 20px 0; /* 상하 여백 추가 */
-}
+    .button-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
 
-/* 재고 등록 버튼 스타일 */
-.button {
-    background-color: #f8a5b0; /* 버튼 배경색 */
-    color: white; /* 버튼 텍스트 색상 */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    text-decoration: none;
-    text-align: center;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-}
+    .button {
+        background-color: #ffffff;
+        color: #f8a5b0;
+        border: 2px solid #f8a5b0;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-decoration: none;
+        text-align: center;
+        display: inline-block;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
 
-.button:hover {
-    background-color: #f48fb1; /* 버튼 호버 시 배경색 */
-}
+    .button:hover {
+        background-color: #f8a5b0;
+        color: white;
+        border-color: #f8a5b0;
+    }
 
-/* 상품 이미지와 레이블 스타일 */
-.product-container {
-    position: relative; /* 이미지와 텍스트를 겹치게 배치할 수 있게 함 */
-    display: inline-block; /* 이미지와 텍스트를 수평으로 정렬 */
-}
+    .product-container {
+        position: relative;
+        display: inline-block;
+    }
 
-.product-image {
-    max-width: 100px; /* 이미지 최대 너비 설정 */
-    max-height: 120px; /* 이미지 최대 높이 설정 */
-    height: auto; /* 이미지의 비율을 유지하며 높이 자동 조정 */
-    border-radius: 5px; /* 이미지의 모서리를 둥글게 */
-}
+    .product-image {
+        max-width: 100px;
+        max-height: 120px;
+        height: auto;
+        border-radius: 5px;
+    }
 
-/* 재고 부족 텍스트 스타일 */
-.low-stock {
-    position: absolute; /* 텍스트를 이미지 위에 겹치게 배치 */
-    top: 5px; /* 이미지의 상단에서 5px 떨어진 위치에 텍스트 배치 */
-    left: 5px; /* 이미지의 좌측에서 5px 떨어진 위치에 텍스트 배치 */
-    background-color: rgba(255, 0, 0, 0.7); /* 빨간색 배경과 투명도 */
-    color: #ffffff; /* 텍스트 색상을 흰색으로 설정 */
-    padding: 5px 10px; /* 텍스트 주위에 패딩 추가 */
-    border-radius: 5px; /* 텍스트 배경의 모서리를 둥글게 */
-    font-weight: bold; /* 텍스트를 두껍게 설정 */
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-}
+    .low-stock {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background-color: rgba(255, 0, 0, 0.7);
+        color: #ffffff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
 
-/* 화살표 스타일 */
-.arrow {
-    display: inline-block;
-    font-size: 16px; /* 화살표 크기 설정 */
-    margin: 0 9px; /* 화살표 간격 조정 */
-    color: #f48fb1; /* 화살표 색상 */
-}
+    .arrow {
+        display: inline-block;
+        font-size: 16px;
+        margin: 0 9px;
+        color: #f48fb1;
+    }
 
-/* 변경 정보 스타일 */
-.change-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333; /* 텍스트 색상 */
-}
+    .change-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* 검색 폼 스타일 */
+    .search-form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .search-form input[type="text"] {
+        width: 300px;
+        margin-right: 10px;
+    }
+
+    /* 등록 버튼 스타일 */
+    .register-button {
+        display: block;
+        width: 120px; /* 버튼의 고정 너비 */
+        higth:90px;
+        margin: 20px auto;
+        padding: 7px 12px; /* 버튼 크기 조정 */
+        border: none;
+        border-radius: 5px;
+        background-color: #f8a5b0;
+        color: white;
+        font-size: 16px; /* 작은 폰트 사이즈 */
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    }
+
+    .register-button:hover {
+        background-color: #f48fb1;
+    }
 </style>
 <!-- Font Awesome CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <h1>재고 목록</h1>
+    
+    <!-- 검색 폼 추가 -->
+    <form class="search-form" action="${pageContext.request.contextPath}/stock/list" method="get">
+        <select name="column">
+             <option value="stock_name" <c:if test="${column eq 'stock_name'}">selected</c:if>>상품명</option>
+        <option value="stock_category" <c:if test="${column eq 'stock_category'}">selected</c:if>>카테고리</option>
+        <!-- 추가적인 검색 열을 여기에 추가할 수 있습니다 -->
+        </select>
+        <input type="text" name="keyword" value="${keyword}" placeholder="검색어 입력">
+        <button type="submit">검색</button>
+    </form>
+    
+    <!-- Change Log List 및 상품 목록 그래프화 버튼 추가 -->
+    <div class="button-container">
+        <a href="${pageContext.request.contextPath}/stock/changeLogList" class="button">재고 변동 내역</a>
+        <a href="${pageContext.request.contextPath}/stock/categoryQuantity" class="button">상품 목록 그래프화</a>
+    </div>
+    
     <table>
         <thead>
             <tr>
                 <th>이미지</th>
                 <th>카테고리</th>
-                <th>이름</th>
+                <th>상품명</th>
                 <th>수량 변동</th>
                 <th>상세</th>
                 <th>삭제</th>
@@ -200,32 +250,32 @@ a:hover {
                             <c:when test="${latestChangeLogsMap[item.stockNo] != null}">
                                 <c:set var="log" value="${latestChangeLogsMap[item.stockNo]}" />
                                 
-                                <!-- Extract old and new quantities -->
+                                <!-- 이전 및 새 수량 추출 -->
                                 <c:set var="oldQuantity" value="${fn:substringAfter(log.oldValues, 'Quantity: ')}" />
                                 <c:set var="newQuantity" value="${fn:substringAfter(log.newValues, 'Quantity: ')}" />
                                 
-                                <!-- Check if the quantity contains additional information -->
+                                <!-- 수량에 추가 정보가 있는지 확인 -->
                                 <c:set var="isComplexFormat" value="${fn:indexOf(oldQuantity, ',') != -1}" />
                                 
                                 <c:choose>
                                     <c:when test="${isComplexFormat}">
-                                        <!-- Case for full data with additional text -->
+                                        <!-- 추가 텍스트가 포함된 복합 데이터 형식 -->
                                         <c:set var="oldQuantityNumber" value="${fn:substringBefore(oldQuantity, ',')}" />
                                         <c:set var="newQuantityNumber" value="${fn:substringBefore(newQuantity, ',')}" />
                                         <c:if test="${fn:length(oldQuantityNumber) > 0 && fn:length(newQuantityNumber) > 0}">
                                             <div class="change-info">
                                                 <c:out value="${oldQuantityNumber}" />
-                                                <span class="arrow"><i class="fas fa-arrow-right"></i></span> <!-- Font Awesome 화살표 아이콘 -->
+                                                <span class="arrow"><i class="fas fa-arrow-right"></i></span>
                                                 <c:out value="${newQuantityNumber}" />
                                             </div>
                                         </c:if>
                                     </c:when>
                                     <c:otherwise>
-                                        <!-- Case for simple Quantity data -->
+                                        <!-- 단순 수량 데이터 형식 -->
                                         <c:if test="${fn:length(oldQuantity) > 0 && fn:length(newQuantity) > 0}">
                                             <div class="change-info">
                                                 <c:out value="${oldQuantity}" />
-                                                <span class="arrow"><i class="fas fa-arrow-right"></i></span> <!-- Font Awesome 화살표 아이콘 -->
+                                                <span class="arrow"><i class="fas fa-arrow-right"></i></span>
                                                 <c:out value="${newQuantity}" />
                                             </div>
                                         </c:if>
@@ -242,9 +292,7 @@ a:hover {
         </tbody>
     </table>
 
-    <!-- 재고 등록 버튼 추가 -->
-    <div class="button-container">
-        <a href="${pageContext.request.contextPath}/stock/insert" class="button">재고 등록</a>
-    </div>
+    <!-- 등록 버튼 추가 -->
+    <a href="${pageContext.request.contextPath}/stock/insert" class="register-button">재고등록</a>
 </body>
 </html>

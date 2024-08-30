@@ -1,0 +1,48 @@
+  /* SweetAlert2 팝업 배경색 및 텍스트 색상 */
+  .swal2-popup {
+    background-color: #424242 !important; /* 팝업 배경색 */
+    color: wheat !important; /* 텍스트 색상 */
+}
+
+/* SweetAlert2 제목 스타일 */
+.swal2-title {
+    font-size: 30px !important; /* 제목 폰트 크기 */
+}
+
+/* SweetAlert2 버튼 스타일 */
+.swal2-confirm, .swal2-cancel {
+    border-radius: 5px !important; /* 버튼 테두리 둥글게 */
+    font-size: 16px !important; /* 버튼 폰트 크기 */
+}
+.swal2-confirm {
+    background-color: #3085d6 !important; /* "확인" 버튼 배경색 */
+    color: white !important; /* "확인" 버튼 텍스트 색상 */
+    border: none !important; /* "확인" 버튼 테두리 제거 */
+}
+.swal2-cancel {
+    background-color: #d33 !important; /* "취소" 버튼 배경색 */
+    color: white !important; /* "취소" 버튼 텍스트 색상 */
+    border: none !important; /* "취소" 버튼 테두리 제거 */
+}
+
+/* 성공 아이콘 스타일 */
+.swal2-success {
+    color: #3085d6 !important; /* 성공 아이콘 색상 */
+}
+.swal2-success .swal2-success-ring {
+    border-color: #3085d6 !important; /* 성공 아이콘 링 색상 */
+}
+.swal2-success [class^=swal2-success-line] {
+    background-color: #3085d6 !important; /* 성공 아이콘 체크 마크 색상 */
+}
+
+/* 에러 아이콘 스타일 */
+.swal2-error {
+    color: #dc3545 !important; /* 에러 아이콘 색상 */
+}
+.swal2-error .swal2-error-ring {
+    border-color: #dc3545 !important; /* 에러 아이콘 링 색상 */
+}
+.swal2-error [class^=swal2-error-line] {
+    background-color: #dc3545 !important; /* 에러 아이콘 체크 마크 색상 */
+}

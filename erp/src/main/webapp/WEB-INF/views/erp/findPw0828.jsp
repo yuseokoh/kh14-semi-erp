@@ -7,8 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 비밀번호 찾기추가</title>
-    <!-- 헤더 포함 --> 
-    <iframe src="header.html" style="border: none; width: 100%; height: auto;"></iframe>
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -469,6 +467,12 @@
                     <select class="select1" name="empLevel">
                         <option value="">직급선택</option>
                         <option value="인턴">인턴</option>
+                        <option value="사원">사원</option>
+                        <option value="주임">주임</option>
+                        <option value="대리">대리</option>
+                        <option value="과장">과장</option>
+                        <option value="차장">차장</option>
+                        <option value="부장">부장</option>
                     </select>
                     <span class="span1">직급</span>
                 </label>

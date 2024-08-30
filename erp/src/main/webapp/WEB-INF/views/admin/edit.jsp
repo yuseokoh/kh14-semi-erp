@@ -26,3 +26,4 @@
 </div>
 <button type="submit">수정하기</button>
 </form>
+<a href="/admin/home">홈으로</a>

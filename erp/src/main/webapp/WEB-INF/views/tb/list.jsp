@@ -20,8 +20,8 @@
     </div>
 </form>
 <!-- 결과 화면 -->
-    <div class="row">
-        <table class="table table-border table-hover">
+    <div class="tb-box">
+        <table class="tb">
             <thead>
                 <tr>
                 	<th>사진</th>
@@ -32,7 +32,7 @@
                     <th>입사일</th>
                 </tr>
             </thead>
-            <tbody align="center">
+            <tbody class="tbody">
                 <c:choose>
                     <c:when test="${list.isEmpty()}">
                         <%-- 결과가 없을 때 --%>
@@ -44,7 +44,7 @@
                         <%-- 결과가 있을 때 --%>
                         <c:forEach var="tbEmpDto" items="${list}">
                         <tr>
-                        	<td><img src="/tb/myImage" width="25"></td>
+                        	<td><img src="/tb/myImage?loginId=${tbEmpDto.loginId}" width="25"></td>
                             <td>
                                 <a href="detail?loginId=${tbEmpDto.loginId}">
                                     ${tbEmpDto.name}
@@ -66,9 +66,9 @@
 
     </div>
 
-    </div>
-    
     <!-- 네비게이터 추가 -->
 <jsp:include page="/WEB-INF/views/template/navigator.jsp"></jsp:include>
+    </div>
+    
 
 

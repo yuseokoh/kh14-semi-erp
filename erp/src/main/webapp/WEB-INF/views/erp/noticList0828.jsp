@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!-- font awesome icon cdn -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+       <!-- SweetAlert2 CDN -->
+       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
     <!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
@@ -26,10 +28,36 @@
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-
+     <link rel="stylesheet" type="text/css" href="./alertBtn.css">
+     <link rel="stylesheet" type="text/css" href="./alertA.css">
 
     <style>
-        
+          .btn-write {
+            background-color: wheat !important;
+            color: white;
+            border-radius: 0.2em;
+            border: 1px solid antiquewhite !important;
+        }
+
+ .btn-write:hover {
+    background-color: rgb(252, 241, 228) !important;
+    color: rgb(252, 197, 94);
+}
+
+.btn-delete {
+            background-color: #d63031 !important;
+            color: white;
+            border-radius: 0.2em;
+            border: 1px solid #cde1ff !important;
+        }
+
+        .btn-delete:hover {
+    background-color: #ff7675 !important;
+    color: black; 
+}
+
+
+
     </style>
 
 
@@ -47,12 +75,29 @@
   <!-- 프로젝트 js-->
   <script src="gotoworkbtn.js"></script>
   <script src="menuToggle.js"></script>
-  <script src="delete.js"></script>
+  <!-- <script src="delete.js"></script> -->
+  <script src="alertDeleteBtn.js"></script>
+  <script src="alertInsert.js"></script>
+  <!-- <script src="alertEdit.js"></script> -->
+  <!-- <script src="alert.js"></script> -->
+
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <!-- 자바스크립트 코드 작성 영역 -->
   <script type="text/javascript">
+      $(document).ready(function() {
+            // 삭제 버튼 클릭 이벤트
+            $('.delete').on('click', function() {
+                // 확인 대화상자 표시
+                var confirmDelete = confirm("삭제하시겠습니까?");
+                if (confirmDelete) {
+                    alert("삭제되었습니다.");
+                } else {
+                    alert("삭제가 취소되었습니다.");
+                }
+            });
+        });
     </script>
 
 
@@ -191,10 +236,9 @@
                                    </div>
                                </div>
                        
-                       <hr class="row mt-15 mb-50">
                        
                                <div class="tb-box">
-                                   <table class="tb">
+                                   <table class="">
                                        <thead>
                                            <tr>
                                                <th>선택</th>
@@ -225,16 +269,16 @@
                                    </table>
                        
                                    <div class="flex-box ">
-                                       <div class="row left">
-                                           <button type="button" class="btn delete ">삭제</button>
-                                       </div>
-                                       <div class="row center">
-                                         <span>span지우고 네비게이터 넣는곳 </span> 
-                                       </div>
-                                       <div class="row right">
-                                           <button type="button" class="btn write">글작성</button>
-                                       </div>
-                                   </div>
+                                    <div class="row left">
+                                        <button type="button" class="btn btn-delete " onclick="showDeleteConfirmation()" >삭제</button>
+                                    </div>
+                                    <div class="row center">
+                                      <span>span지우고 네비게이터 넣는곳 </span> 
+                                    </div>
+                                    <div class="row right">
+                                        <button type="button" class="btn btn-write" onclick="showAlert()">글작성</button>
+                                    </div>
+                                </div>
                        
                        
                        

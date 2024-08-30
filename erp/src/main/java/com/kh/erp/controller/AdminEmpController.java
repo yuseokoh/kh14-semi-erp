@@ -68,6 +68,7 @@ public class AdminEmpController {
 		return "redirect:/admin/emp/list";
 	}
 
+	//퇴사에 대한 구현(삭제 아님)
 	@GetMapping("/delete")
 	public String delete(@RequestParam String loginId, Model model) {
 		model.addAttribute("loginId", loginId);
@@ -76,7 +77,7 @@ public class AdminEmpController {
 
 	@PostMapping("/delete")
 	public String delete(@RequestParam String loginId) {
-		tbEmpDao.deleteEmp(loginId);
+		tbEmpDao.updateEdate(loginId);
 		return "redirect:/admin/emp/list";
 	}
 
@@ -125,5 +126,14 @@ public class AdminEmpController {
 		model.addAttribute("list", list);
 		pageVO.setCount(tbEmpApprovalDao.countPage(pageVO));
 		return "/WEB-INF/views/groupware/totalList2.jsp";
+	}
+		@RequestMapping("/status")
+	public String status(Model model) {
+		model.addAttribute("empLevelStatusList",tbEmpDao.statusByEmpLevel());
+		model.addAttribute("empLevelStatusByeList",tbEmpDao.statusByEmpLevelBye());
+		model.addAttribute("empSdateList",tbEmpDao.statusByEmpSdate());
+		model.addAttribute("empEdateList",tbEmpDao.statusByEmpEdate());
+		model.addAttribute("workingDayList",tbEmpDao.workingDay());
+		return "/WEB-INF/views/admin/status2.jsp";
 	}
 }

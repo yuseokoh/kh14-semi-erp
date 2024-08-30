@@ -1,10 +1,12 @@
 package com.kh.erp.controller;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +33,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.erp.dao.ChangeLogDao;
 import com.kh.erp.dao.ErdDao;
 import com.kh.erp.dto.ChangeLogDto;
 import com.kh.erp.dto.ErdDto;
+import com.kh.erp.service.ChangeLogService;
 
 import jakarta.annotation.PostConstruct;
 
@@ -45,6 +49,9 @@ public class ErdController {
     @Autowired
     private ErdDao erdDao;
     
+    @Autowired
+    private ChangeLogService changeLogService;
+
     
     @Autowired
     private ChangeLogDao changeLogDao; // ChangeLogDao 추가
@@ -56,7 +63,12 @@ public class ErdController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // 날짜 포맷을 설정합니다.
-        binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+        
+        // 여기에 다른 타입의 CustomEditor를 추가 설정할 수 있습니다.
+        // 예를 들어, 다른 데이터 타입을 추가로 설정하려면 다음과 같이 작성합니다.
+        // binder.registerCustomEditor(AnotherType.class, new AnotherCustomEditor());
     }
 
     @PostConstruct
@@ -253,6 +265,12 @@ public class ErdController {
                 imageUrl = existingDto.getImageUrl();
             }
 
+            // 기존의 유통기한 값을 유지
+            ErdDto existingDto = erdDao.selectOne(dto.getStockNo());
+            if (dto.getExpirationDate() == null) {
+                dto.setExpirationDate(existingDto.getExpirationDate());
+            }
+
             // 재고 정보를 업데이트합니다.
             boolean result = erdDao.update(dto, imageUrl);
             if (!result) {
@@ -281,7 +299,7 @@ public class ErdController {
             erdDao.updateQuantity(existingDto); // 수량 업데이트
 
             // 변경된 필드 정보 및 Old/ New Values 생성
-            String changedFields = String.format("Increased quantity by %d", amount);
+            String changedFields = String.format("입고", amount);
             String oldValues = String.format("Quantity: %d", oldQuantity);
             String newValues = String.format("Quantity: %d", newQuantity);
             
@@ -315,7 +333,7 @@ public class ErdController {
             erdDao.updateQuantity(existingDto); // 수량 업데이트
 
             // 변경된 필드 정보 및 Old/ New Values 생성
-            String changedFields = String.format("Decreased quantity by %d", amount);
+            String changedFields = String.format("출고", amount);
             String oldValues = String.format("Quantity: %d", oldQuantity);
             String newValues = String.format("Quantity: %d", newQuantity);
             
@@ -328,4 +346,45 @@ public class ErdController {
         }
         return "redirect:/stock/detail?stockNo=" + stockNo;
     }
+    
+    
+ // 전체 변경 로그를 조회하는 메서드 추가
+    @RequestMapping("/changeLogList")
+    public String changeLogList(Model model) {
+        try {
+            // 전체 변경 로그를 조회
+            List<ChangeLogDto> changeLogList = changeLogService.getAllChangeLogs();
+            model.addAttribute("changeLogList", changeLogList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/stock/list?error=true";
+        }
+        return "/WEB-INF/views/stock/changeLogList.jsp";
+    }
+    
+    
+    @RequestMapping("/categoryQuantity")
+    public String categoryQuantity(Model model) {
+        try {
+            // 모든 상품 조회
+            List<ErdDto> allProducts = erdDao.selectList(); // 기존 메서드 사용
+
+            // 카테고리별 수량 집계
+            Map<String, Integer> categoryMap = new HashMap<>();
+            for (ErdDto product : allProducts) {
+                String category = product.getStockCategory(); // 카테고리
+                int quantity = product.getStockQuantity(); // 수량
+                categoryMap.put(category, categoryMap.getOrDefault(category, 0) + quantity);
+            }
+
+            // Map을 JSON 문자열로 변환
+            String categoryMapJson = new ObjectMapper().writeValueAsString(categoryMap);
+            model.addAttribute("categoryMapJson", categoryMapJson);
+        } catch (Exception e) {
+            e.printStackTrace(); // 로그에 에러 기록
+            return "redirect:/stock/list?error=true";
+        }
+        return "/WEB-INF/views/stock/categoryQuantity.jsp";
+    }
+    
 }

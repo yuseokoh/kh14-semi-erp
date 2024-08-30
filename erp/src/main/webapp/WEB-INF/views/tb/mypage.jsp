@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    ${ tbEmpDto }
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
+
 <div>
 	<div>
 		<h1>${tbEmpDto.name}님의 정보</h1>
@@ -17,7 +17,7 @@
 		<h2>전화번호[${tbEmpDto.empHp}]</h2>
 	</div>
 	<div>
-		<img src="/tb/myImage" width="100">
+		<img src="/tb/myImage?loginId=${tbEmpDto.loginId}" width="100">
 		<a href="addImage">사진 추가 등록하기</a>
 	</div>
 

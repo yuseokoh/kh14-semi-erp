@@ -174,6 +174,29 @@
         width: 300px;
         margin-right: 10px;
     }
+
+    /* 등록 버튼 스타일 */
+    .register-button {
+        display: block;
+        width: 120px; /* 버튼의 고정 너비 */
+        higth:90px;
+        margin: 20px auto;
+        padding: 7px 12px; /* 버튼 크기 조정 */
+        border: none;
+        border-radius: 5px;
+        background-color: #f8a5b0;
+        color: white;
+        font-size: 16px; /* 작은 폰트 사이즈 */
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    }
+
+    .register-button:hover {
+        background-color: #f48fb1;
+    }
 </style>
 <!-- Font Awesome CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -181,12 +204,12 @@
 <body>
     <h1>재고 목록</h1>
     
-    <!-- 검색 폼 추가 왜안대노 -->
+    <!-- 검색 폼 추가 -->
     <form class="search-form" action="${pageContext.request.contextPath}/stock/list" method="get">
         <select name="column">
-            <option value="name" <c:if test="${column eq 'name'}">selected</c:if>>상품명</option>
-            <option value="category" <c:if test="${column eq 'category'}">selected</c:if>>카테고리</option>
-            <!-- 추가적인 검색 열을 여기에 추가할 수 있습니다 -->
+             <option value="stock_name" <c:if test="${column eq 'stock_name'}">selected</c:if>>상품명</option>
+        <option value="stock_category" <c:if test="${column eq 'stock_category'}">selected</c:if>>카테고리</option>
+        <!-- 추가적인 검색 열을 여기에 추가할 수 있습니다 -->
         </select>
         <input type="text" name="keyword" value="${keyword}" placeholder="검색어 입력">
         <button type="submit">검색</button>
@@ -268,5 +291,8 @@
             </c:forEach>
         </tbody>
     </table>
+
+    <!-- 등록 버튼 추가 -->
+    <a href="${pageContext.request.contextPath}/stock/insert" class="register-button">재고등록</a>
 </body>
 </html>

@@ -78,7 +78,16 @@
             margin-bottom: 10px; /* 이미지와 다른 요소 간의 여백 */
         }
     </style>
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>재고 등록</title>
+    <style>
+        /* ...기존 CSS... */
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             // 사용자가 이미지를 업로드하면 즉시 미리보기 표시
@@ -91,10 +100,38 @@
                 reader.readAsDataURL(this.files[0]); // 파일 읽기
             });
 
-            // 폼 제출 시 확인 대화상자
+            // 폼 제출 시 비동기적으로 데이터 전송
             $('form').submit(function(event) {
-                if (!confirm('정말 등록하시겠습니까?')) {
-                    event.preventDefault(); // 사용자가 취소를 클릭하면 폼 제출을 막음
+                event.preventDefault(); // 기본 폼 제출 막기
+
+                if (confirm('정말 등록하시겠습니까?')) {
+                    let formData = new FormData(this);
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            // 성공적인 응답 처리
+                            Swal.fire({
+                                icon: 'success',
+                                title: '등록 성공',
+                                text: '재고가 성공적으로 등록되었습니다.',
+                                confirmButtonText: '확인'
+                            });
+                        },
+                        error: function() {
+                            // 오류 처리
+                            Swal.fire({
+                                icon: 'error',
+                                title: '등록 실패',
+                                text: '재고 등록에 실패했습니다. 다시 시도해 주세요.',
+                                confirmButtonText: '확인'
+                            });
+                        }
+                    });
                 }
             });
         });
@@ -103,7 +140,6 @@
 <body>
     <div class="container">
         <h1>재고 등록</h1>
-        <!-- enctype="multipart/form-data" 추가 -->
         <form action="insert" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="stockCategory">카테고리:</label>
@@ -120,13 +156,11 @@
                 <input type="number" id="stockQuantity" name="stockQuantity" required>
             </div>
 
-            <!-- 유통기한 입력 필드 추가 -->
             <div class="form-group">
                 <label for="expirationDate">유통기한:</label>
                 <input type="date" id="expirationDate" name="expirationDate">
             </div>
 
-            <!-- 이미지 업로드 필드 추가 -->
             <div class="form-group">
                 <label for="image">이미지(업로드 사진을 미리 확인하세요)</label>
                 <input type="file" id="image" name="image" accept="image/*">

@@ -75,11 +75,12 @@ public class DocumentService {
 		File target = new File(dir, String.valueOf(documentNo));
 		byte[] data = FileUtils.readFileToByteArray(target);
 		ByteArrayResource resource = new ByteArrayResource(data);
-		
 		//[3] 불러온 정보를 사용자에게 전송
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.contentLength(documentDto.getDocumentSize())
+				//이부분 바꾸면 결재 서명의 파일크기가 안찍혀서 이미지가 안나옴
+				//이걸로 수정 2024-08-30 조재혁 -> documentDto.getSize -> target.length로
+				.contentLength(target.length())
 				.header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
 				.header(HttpHeaders.CONTENT_DISPOSITION,
 					ContentDisposition.attachment()

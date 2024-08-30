@@ -28,7 +28,8 @@ public class TbEmpReportDao {
 	public void insert(TbEmpReportDto tbEmpReportDto) {
 		String sql = "insert into tb_Report(report_no, writer_Id, writer_Dept, writer_Name, report_Title, report_Content, appro_No) "
 				+ "values(tb_Report_seq.nextval, ?, ?, ?, ?, ?, ?)";
-		Object[] data = { tbEmpReportDto.getWriterId(), tbEmpReportDto.getWriterDept(), tbEmpReportDto.getWriterName(), tbEmpReportDto.getReportTitle(), tbEmpReportDto.getReportContent(), tbEmpReportDto.getApproNo()};
+		Object[] data = { tbEmpReportDto.getWriterId(), tbEmpReportDto.getWriterDept(), tbEmpReportDto.getWriterName(),
+				tbEmpReportDto.getReportTitle(), tbEmpReportDto.getReportContent(), tbEmpReportDto.getApproNo() };
 		jdbcTemplate.update(sql, data);
 	}
 
@@ -37,6 +38,27 @@ public class TbEmpReportDao {
 		Object[] data = { reportNo };
 		List<TbEmpReportDto> list = jdbcTemplate.query(sql, tbEmpReportMapper, data);
 		return list.isEmpty() ? null : list.get(0);
+	}
+
+	public boolean updateContent(TbEmpReportDto tbEmpReportDto) {
+		String sql = "update tb_Report set report_Content = ?, report_title=? where report_no = ?";
+		Object[] data = { tbEmpReportDto.getReportContent(), tbEmpReportDto.getReportTitle(),
+				tbEmpReportDto.getReportNo() };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	public TbEmpReportDto selectOneWithApproNoAndId(int approNo, String writerId) {
+		String sql = "select * from tb_Report where appro_No = ? and writer_Id = ?";
+		Object[] data = { approNo, writerId };
+		List<TbEmpReportDto> list = jdbcTemplate.query(sql, tbEmpReportMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+
+	public int findImage(int approNo) {
+
+		String sql = "select document from tb_approval_image where approNo=?";
+		Object[] data = {approNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
 	}
 
 }

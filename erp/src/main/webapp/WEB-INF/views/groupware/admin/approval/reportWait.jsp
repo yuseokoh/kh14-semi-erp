@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>보고서 수정</title>
+<title>보고서 반려</title>
 
 <!-- google font cdn -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <!-- my css -->
 <link rel="stylesheet" type="text/css" href="/css/commons.css">
-<!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
 
 <!-- 프로젝트 스타일 -->
 <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
@@ -26,17 +25,46 @@
 <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-
-
 <style>
+/* 비활성화된 스타일 */
+.disabled, .form[disabled] {
+	background-color: #f0f0f0;
+	color: #a0a0a0;
+	cursor: not-allowed;
+	border-color: #d0d0d0;
+}
+
+.disabled:focus, .form[disabled]:focus {
+	outline: none;
+}
+
+.hidden {
+	display: none;
+}
+
 .btn-container {
 	position: relative;
 	margin-top: 10px;
 }
 
+.btn-container .btn {
+	position: absolute;
+	bottom: -40px;
+	right: 15px;
+}
+
+.btn-warning {
+	background-color: #f39c12;
+	color: white;
+	margin-bottom: 40px;
+	border: 1px solid #ff9d00 !important;
+	border-radius: 0.2em;
+}
+
 .btn-positive {
 	background-color: #99c2ff !important;
 	color: white;
+	margin-bottom: 40px;
 	border-radius: 0.2em;
 	border: 1px solid #cde1ff !important;
 }
@@ -44,6 +72,28 @@
 .btn-positive:hover {
 	background-color: #dde6f3 !important;
 	color: #66a2fc;
+}
+
+.btn-warning:hover {
+	background-color: #fae7ca;
+	color: #f39c12;
+}
+
+.reject {
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	padding: 0.5em 0.75em;
+	color: #2d3436;
+	background-color: #dfe6e9;
+	border: 1px solid #2d3436;
+	border-radius: 0.2em;
+	cursor: pointer;
+	text-align: center;
+	line-height: 1.2;
+	border-color: #636e72;
+	background-color: #636e72;
+	color: white;
 }
 
 .title1 {
@@ -57,10 +107,6 @@
 	padding: 10px;
 	font-size: 10px;
 }
-/* 숨김 클래스 추가 */
-.hidden {
-	display: none;
-}
 </style>
 <!-- lightpick cdn -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -72,70 +118,127 @@
 <script src="/js/checkbox.js"></script>
 <script src="/js/confirm-link.js"></script>
 <script src="/js/multipage.js"></script>
-
 <!-- 프로젝트 js-->
 <script src="/js/gotoworkbtn.js"></script>
 <script src="/js/menuToggle.js"></script>
+<!-- <script src="delete.js"></script> -->
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- 전자 서명 -->
+<script type="text/javascript">
+    	 $(function () {
+             var canvas = document.getElementById("canvas");
+             var context = canvas.getContext("2d");
+             var clearButton = document.getElementById("clearButton");
+             var signatureImage = document.getElementById("signatureImage");
+
+             var drawing = false;
+
+             canvas.addEventListener("mousedown", () => {
+             drawing = true;
+             context.beginPath();
+             });
+
+             canvas.addEventListener("mousemove", (event) => {
+             if (!drawing) return;
+
+   var x = event.clientX - canvas.getBoundingClientRect().left;
+   var y = event.clientY - canvas.getBoundingClientRect().top;
+   context.lineTo(x, y);
+   context.stroke();
+ });
+
+ canvas.addEventListener("mouseup", () => {
+   drawing = false;
+   context.closePath();
+ });
+
+ clearButton.addEventListener("click", () => {
+   context.clearRect(0, 0, canvas.width, canvas.height);
+ });
+
+         });
+</script>
+
+
+
+
+
+<!-- 자바스크립트 코드 작성 영역 -->
 <script type="text/javascript">
 	$(function() {
+
+		
+		const approNo = $('[name=approNo]').val();
 		// 초기에 textarea 숨기기
 		$('#preview').addClass('show').prop('disabled', true);
 		$('.reason-textarea').addClass('hidden').prop('disabled', true);
-		// 수정 버튼 클릭 시 동작
-		$('.btn-positive').on(
-				'click',
-				function() {
-					// textarea를 보이게 하고 수정할 수 있도록 설정
-					$('#preview').removeClass('show').addClass('hidden');
-					$('.reason-textarea').removeClass('hidden').prop(
+
+		// 반려 버튼 클릭 시 동작
+		$('.reject').on('click', function() {
+			
+			// 휴가 사유 라벨을 반려 사유 라벨로 변경
+			$('.reason-label').text('반려 사유');
+					// id=preview 숨기고 반려 사유 textarea 보이기
+					$('#preview').addClass('hidden').prop('disabled', true);
+					
+					
+					// --
+					$('.reject-reason-textarea').removeClass('hidden').prop(
 							'disabled', false);
-					// 버튼 텍스트와 스타일 변경
-					$(this).text('수정완료').removeClass('btn-positive').addClass(
-							'btn-warning');
-					$('.btn-warning').on(
-							'click',
-							function() {
 
-								var reportContent = $('.reason-textarea').val();
-// 								console.log(reportContent);
-// 								$('.reason-textarea').addClass('hidden').prop(
-// 										'disabled', true);
-// 								$('#preview').removeClass('hidden').addClass(
-// 										'show').prop('disabled', true);
-// 								$(this).text('수정완료').addClass('hidden');
-
-								//비동기통신해서 내용만 바꾸기
-								$.ajax({
-									url : '/rest/report/update', // 요청할 URL
-									type : 'POST', // 요청 방법 (GET, POST, PUT, DELETE 등)
-									data : { // 서버에 보낼 데이터 (필요에 따라 JSON, 폼 데이터 등)
-										reportContent : reportContent,
-										approNo : $('[name=approNo]').val(),
-										approYN : $('[name=approYN]').val(),
-										reportNo : $('[name=reportNo]').val(),
-										reportTitle : $('[name=reportTitle]').val(),
-									},
-									success : function(response) { // 요청이 성공했을 때 호출되는 함수
-									console.log(response);
-									if(response){
-										alert("수정완료");
-										location.reload(); // 페이지 새로고침
-									}else{
-										alert("이미 승인된 페이지입니다");
-										location.href = '/login'; // 실패 시 페이지 리다이렉션
-									}
-										
-									},
-									error : function(xhr, status, error) { // 요청이 실패했을 때 호출되는 함수
-										console.error('Error:', error);
-									}
-								});
-							});
-
+					// 휴가신청 버튼을 반려완료 버튼으로 변경
+					$('.btn.submit').text('반려완료').removeClass('btn-positive submit')
+							.addClass('btn-warning').attr('id', 'reject');;
 				});
+		
+		//반려 완료 버튼 클릭시 뒤로가기전에 경고창 띄울까?
+		$('#reject').on('click', function(){
+			var signatureDataURL = canvas.toDataURL("image/png");
+            signatureImage.src = signatureDataURL;
+            console.log(signatureDataURL);
+			const isConfirmed = window.confirm('정말로 반려하시겠습니까?');
+			const rejectReason = $('.reject-reason-textarea').val();
+		    // 사용자가 '확인'을 클릭했을 때만 다음 작업을 수행
+		    if (isConfirmed) {
+		    	
+		    	console.log(true);
+			 $.ajax({
+	                url : "/rest/document/sign",
+	                method : "post",
+	                data:{ 
+	                       signatureDataURL : signatureDataURL,
+	                       rejectReason : rejectReason,
+	                       approNo : approNo
+	                    },
+	                success : function(response){
+	                            alert("저장했습니다");
+	                        }
+	            });
+		    }
+		});
+		
+		
+		
+		//기안 버튼 클릭시 동작
+		$(".submit").on("click",function(){
+            var signatureDataURL = canvas.toDataURL("image/png");
+            signatureImage.src = signatureDataURL;
+            console.log(signatureDataURL);
+            $.ajax({
+                url : "/rest/document/sign",
+                method : "post",
+                data:{ 
+                       signatureDataURL : signatureDataURL,
+                       approNo : approNo
+                    },
+                success : function(response){
+                            alert("저장했습니다");
+                        }
+            });
+
+        });
 	});
 </script>
 </head>
@@ -145,7 +248,8 @@
 			<i class="fa fa-bars"></i>
 		</div>
 		<div id="logo">
-			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i> <span class="notif-count content">0</span>
+			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i>
+			<span class="notif-count content">0</span>
 			</a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
 		</div>
 	</header>
@@ -240,6 +344,7 @@
 	</aside>
 
 	<div id="content">
+
 		<main id="body">
 			<div id="content">
 
@@ -259,13 +364,15 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td><img src="/report/signImage?approNo=${tbEmpReportDto.approNo}&writerId=${tbEmpReportDto.writerId}"></td>
+									<td><canvas id="canvas" width="200" height="200" style="border: 1px solid black"></canvas></td>
 								</tr>
+								
 							</tbody>
 						</table>
+						<button id="clearButton">초기화</button>
 					</div>
 					<div class="row">
-						<label>제목</label> <input type="text" name="reportTitle" class="form title1" value="${tbEmpReportDto.reportTitle}">
+						<label>제목</label> <input type="text" name="reportTitle" class="form title1" value="${tbEmpReportDto.reportTitle}" readonly>
 					</div>
 
 					<div class="row">
@@ -285,39 +392,41 @@
 						</div>
 					</div>
 
-					<!-- 이거도 전송해야댐 why? 수정위해서 -->
-					<input type="hidden" name="approNo" value="${tbEmpApprovalDto.approNo}"> <input type="hidden" name="approYN" value="${tbEmpApprovalDto.approYN}"> <input type="hidden" name="reportNo" value="${tbEmpReportDto.reportNo}">
+
 
 
 					<div class="row flex-box btn-container" style="justify-content: space-between;">
-						<textarea id="markdown" class="field w-100 form reason-textarea hidden" rows="3" style="padding-right: 100px;">${tbEmpReportDto.reportContent}</textarea>
-						<div id="preview"></div>
-						<button type="button" class="btn btn-positive submit flex-core">수정</button>
+						<div>
+							<label class="reason-label">금일 목표</label>
+
+							<textarea id="markdown" class="field w-100 form reason-textarea hidden" rows="3" style="padding-right: 100px;">${tbEmpReportDto.reportContent}</textarea>
+							<div id="preview"></div>
+							<textarea class="field w-100 form hidden reject-reason-textarea" disabled rows="3" style="padding-right: 100px;" placeholder="반려 사유를 입력하세요."></textarea>
+							<button type="button" class="reject flex-core">반려</button>
+							<button type="button" class="btn btn-positive submit flex-core">기안</button>
+						</div>
 					</div>
 				</div>
-			</div>
+				
+				<input type="hidden" name="approNo" value="${tbEmpApprovalDto.approNo}">
+				<img id="signatureImage" style="display: none;">
 
+				<footer id="footer">
+					<!-- Footer content here -->
+				</footer>
+				<script type="text/javascript">
+					document.addEventListener('DOMContentLoaded', function() {
+						const textarea = document.getElementById('markdown');
+						const preview = document.getElementById('preview');
 
+						function updatePreview() {
+							const markdownText = textarea.value;
+							preview.innerHTML = marked.parse(markdownText);
+						}
 
-
-
-			<footer id="footer">
-				<!-- Footer content here -->
-			</footer>
-			<script type="text/javascript">
-				document.addEventListener('DOMContentLoaded', function() {
-					const textarea = document.getElementById('markdown');
-					const preview = document.getElementById('preview');
-
-					function updatePreview() {
-						const markdownText = textarea.value;
-						preview.innerHTML = marked.parse(markdownText);
-					}
-
-					textarea.addEventListener('input', updatePreview);
-					updatePreview(); // 초기 렌더링
-				});
-			</script>
+						textarea.addEventListener('input', updatePreview);
+						updatePreview(); // 초기 렌더링
+					});
+				</script>
 </body>
 </html>
-

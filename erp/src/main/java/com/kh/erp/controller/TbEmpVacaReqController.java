@@ -47,7 +47,7 @@ public class TbEmpVacaReqController {
 		List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging();
 		model.addAttribute("list", list);
 		pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
-		return "/WEB-INF/views/groupware/totalVacaList.jsp";
+		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
 	}
 
 	// 각 세션에 있는 회원처리용

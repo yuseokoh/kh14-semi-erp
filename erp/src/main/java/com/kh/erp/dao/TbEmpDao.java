@@ -8,8 +8,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.erp.VO.PageVO;
+import com.kh.erp.VO.StatusDateVO;
+import com.kh.erp.VO.StatusVO;
+import com.kh.erp.VO.WorkingDayVO;
 import com.kh.erp.dto.TbEmpDto;
+import com.kh.erp.mapper.StatusDateMapper;
+import com.kh.erp.mapper.StatusMapper;
 import com.kh.erp.mapper.TbEmpMapper;
+import com.kh.erp.mapper.WorkingDayMapper;
 
 
 @Repository
@@ -20,6 +26,12 @@ public class TbEmpDao {
 	private TbEmpMapper tbEmpMapper;
 	@Autowired
 	private PasswordEncoder encoder;
+	@Autowired
+	private StatusMapper statusMapper;
+	@Autowired
+	private StatusDateMapper statusDateMapper;
+	@Autowired
+	private WorkingDayMapper workingDayMapper;
 
 	//사원 등록 기능(insert)(C)
 	//아이디,이름,비밀번호,직급,부서,전화번호,이메일,생일,입사일,주소
@@ -112,7 +124,7 @@ public class TbEmpDao {
 		if(pageVO.isSearch()) {//검색
 		String sql = "select * from ("
 				+ "select rownum rn, TMP.* from ("
-					+ "select * from tb_emp where instr(#1, ?) > 0 "
+					+ "select * from tb_emp where emp_edate is null and instr(#1, ?) > 0 "
 					+ "order by #1 asc, emp_dept asc, emp_level asc, name asc"
 				+ ")TMP"
 			+ ") where rn between ? and ?";
@@ -126,7 +138,9 @@ public class TbEmpDao {
 		else {//목록
 			String sql = "select * from ("
 								+ "select rownum rn, TMP.* from ("
-									+ "select * from tb_emp order by emp_dept asc, emp_level asc, name asc"
+							+ "select * from tb_emp  "
+							+ "where emp_edate is null "
+							+ "order by emp_dept asc, emp_level asc, name asc"
 								+ ")TMP"
 							+ ") where rn between ? and ?";
 			Object[] data = {pageVO.getBeginRow(), pageVO.getEndRow()};
@@ -167,4 +181,55 @@ public class TbEmpDao {
 		jdbcTemplate.update(sql,data);
 		
 	} 
+	//입사자 조회
+	public List<StatusVO> statusByEmpLevel(){
+		String sql = "SELECT emp_level AS title, COUNT(*) AS "
+				+ "cnt FROM tb_emp WHERE TO_CHAR(emp_sdate, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') "
+				+ "GROUP BY emp_level  ORDER BY cnt DESC, title ASC ";
+		return jdbcTemplate.query(sql, statusMapper);
+	}
+	//퇴사자 조회
+	public List<StatusVO> statusByEmpLevelBye(){
+		String sql = "SELECT emp_level AS title, COUNT(*) AS "
+				+ "cnt FROM tb_emp WHERE TO_CHAR(emp_edate, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') "
+				+ "GROUP BY emp_level  ORDER BY cnt DESC, title ASC ";
+		return jdbcTemplate.query(sql, statusMapper);
+	}
+	//퇴사일 조정
+	public boolean updateEdate(String loginId) {
+		String sql ="update tb_emp set "
+				+ "emp_edate=sysdate where loginId=?";
+		Object[] data = {loginId};
+		return jdbcTemplate.update(sql,data)>0;
+	}
+	//입사일 조회
+	public List<StatusDateVO> statusByEmpSdate(){
+		String sql = "SELECT "
+				+ "TO_CHAR(emp_sdate, 'YYYY-MM-DD') AS entry_date,"
+				+ "COUNT(*) AS cnt FROM tb_emp WHERE TO_CHAR(emp_sdate, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') "
+				+ "GROUP BY TO_CHAR(emp_sdate, 'YYYY-MM-DD') "
+				+ "ORDER BY TO_CHAR(emp_sdate, 'YYYY-MM-DD')";
+		return jdbcTemplate.query(sql, statusDateMapper);
+	}
+	//퇴사일 조회
+		public List<StatusDateVO> statusByEmpEdate(){
+			String sql = "SELECT "
+					+ "TO_CHAR(emp_edate, 'YYYY-MM-DD') AS entry_date,"
+					+ "COUNT(*) AS cnt FROM tb_emp WHERE TO_CHAR(emp_edate, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') "
+					+ "GROUP BY TO_CHAR(emp_edate, 'YYYY-MM-DD') "
+					+ "ORDER BY TO_CHAR(emp_edate, 'YYYY-MM-DD')";
+			return jdbcTemplate.query(sql, statusDateMapper);
+		}
+	//퇴사자 정보 조회
+		public List<WorkingDayVO> workingDay(){
+			  String sql = "SELECT "
+		                + "emp_no AS empNo, "
+		                + "name, "
+		                + "emp_sdate AS startDate, "
+		                + "emp_edate AS endDate, "
+		                + "TRUNC(emp_edate) - TRUNC(emp_sdate) AS workingDays "
+		                + "FROM tb_emp "
+		                + "WHERE emp_edate IS NOT NULL";
+			  return jdbcTemplate.query(sql,workingDayMapper);
+		}
 }

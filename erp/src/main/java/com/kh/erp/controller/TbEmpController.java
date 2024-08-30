@@ -21,7 +21,6 @@ import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.CertDto;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.error.TargetNotFoundException;
-import com.kh.erp.service.AttachmentService;
 import com.kh.erp.service.DocumentService;
 import com.kh.erp.service.EmailService;
 import com.kh.erp.service.NameChangeService;
@@ -186,9 +185,8 @@ public class TbEmpController {
 	}
 
 	@RequestMapping("/myImage")
-	public String myImage(HttpSession session) {
+	public String myImage(@RequestParam String loginId) {
 		try {// 이미지가 있으면
-			String loginId = (String) session.getAttribute("createdUser");
 			Integer documentNo = tbEmpDao.findImage(loginId);
 			return "redirect:/attach/download?documentNo=" + documentNo;
 		} catch (Exception e) {// 이미지가 없으면

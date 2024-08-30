@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+     <link rel="stylesheet" type="text/css" href="/css/vacation.css">
 <div class="container w-800 my-50">
         <div class="row center">
             <h1>사원 조회</h1>
         </div>
+            <h2><a href="/admin/home">홈으로</a></h2> 
 
 <!-- 검색창 -->
 <form action="list" method="get" autocomplete="off">
@@ -20,8 +22,8 @@
     </div>
 </form>
 <!-- 결과 화면 -->
-    <div class="row">
-        <table class="table table-border table-hover">
+    <div class="tb-box">
+        <table class="tb">
             <thead>
                 <tr>
                 	<th>사진</th>
@@ -46,7 +48,7 @@
                         <%-- 결과가 있을 때 --%>
                         <c:forEach var="tbEmpDto" items="${list}">
                         <tr>
-                        	<td>사진</td>
+                        	<td><img src="/tb/myImage?loginId=${tbEmpDto.loginId}" width="25"></td>
                             <td>
                                 <a href="detail?loginId=${tbEmpDto.loginId}">
                                     ${tbEmpDto.name}
@@ -70,9 +72,9 @@
 
     </div>
 
-    </div>
-    
     <!-- 네비게이터 추가 -->
 <jsp:include page="/WEB-INF/views/template/navigator.jsp"></jsp:include>
+    </div>
+    
 
 

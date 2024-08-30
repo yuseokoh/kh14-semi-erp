@@ -467,6 +467,12 @@
                     <select class="select1" name="empLevel">
                         <option value="">직급선택</option>
                         <option value="인턴">인턴</option>
+                        <option value="사원">사원</option>
+                        <option value="주임">주임</option>
+                        <option value="대리">대리</option>
+                        <option value="과장">과장</option>
+                        <option value="차장">차장</option>
+                        <option value="부장">부장</option>
                     </select>
                     <span class="span1">직급</span>
                 </label>

@@ -27,7 +27,31 @@
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
     <style>
-
+		.reply-wrapper {
+		display:flex;
+	}
+	.reply-wrapper > .image-wrapper {
+		width:100px;
+		min-width: 100px;
+		padding:10px;
+	}
+	.reply-wrapper > .image-wrapper > img {
+		width:100%;
+	}
+	.reply-wrapper > .content-wrapper {
+		flex-grow: 1;
+		font-size: 16px;
+	}
+	.reply-wrapper > .content-wrapper > .reply-title {
+		font-size: 1.25em;
+	}
+	.reply-wrapper > .content-wrapper > .reply-content {
+		font-size: 0.95em;
+		min-height: 50px;
+	}
+	.reply-wrapper > .content-wrapper > .reply-info {
+		
+	}
     </style>
   <!-- lightpick cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -48,7 +72,7 @@
   
   <!-- 자바스크립트 코드 작성 영역 -->
   <script type="text/javascript">
-
+		
     </script>
 
 </head>

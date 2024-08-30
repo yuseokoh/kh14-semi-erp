@@ -13,16 +13,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!-- font awesome icon cdn -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <!-- SweetAlert2 CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
-    <!-- 프로젝트 스타일 --> 
-    <link rel="stylesheet" type="text/css" href="./gotowork.css">
-    <link rel="stylesheet" type="text/css" href="./sidebar.css">
-    <link rel="stylesheet" type="text/css" href="./notic.css">
+     <!-- 프로젝트 스타일 --> 
+     <link rel="stylesheet" type="text/css" href="./gotowork.css">
+     <link rel="stylesheet" type="text/css" href="./sidebar.css">
+     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
+     <link rel="stylesheet" type="text/css" href="./vacation.css">
+     <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
+     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
+     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
+     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
+     <link rel="stylesheet" type="text/css" href="./alertBtn.css">
+
     <style>
-        .note-editable {
+          .note-editable {
             background-color: white;
         }
+        /* bold와 italic이 적용되지 않는 문제를 수정하도록 코드 추가 */
         .note-editable b {
             font: inherit;
             font-weight: 700 !important;
@@ -34,64 +44,36 @@
             font-style: italic !important;
         }
 
-        .disabled, .form[disabled] {
-            background-color: #f0f0f0;
-            color: #a0a0a0;
-            cursor: not-allowed;
-            border-color: #d0d0d0;
+        .title1{
+           width: 60% !important;
+           height: 40px;
+           margin-right: 40%
         }
-
-        .disabled:focus, .form[disabled]:focus {
-            outline: none;
+        .title2{
+            border: 1px solid;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    padding: .60rem 1.25rem;
+    background-color: gainsboro;
+    border-color: #fff;
+    color: #495057;
+    font-weight: 800;
+    text-align: center !important;
+    width: 98%; 
+    box-sizing: border-box;
         }
-
-        .hidden {
-            display: none;
-        }
-
-        .btn-container {
-            position: relative;
-            margin-top: 10px;
-        }
-
-        .btn-container .btn {
-            position: absolute;
-            bottom: -40px;
-            right: 15px;
-        }
-
-        .btn-warning {
-            background-color: #f39c12;
+                .btn-positive {
+                    background-color: wheat !important;
             color: white;
-            margin-bottom: 40px;
-        }
-
-        .btn-positive {
-            background-color: #28a745;
-            color: white;
-            margin-bottom: 40px;
-        }
-
-        .reject-reason-textarea {
-            display: none;
-            width: 100%;
-            height: 100px;
-            margin-top: 10px;
-        }
-
-        .reject {
-            display: none;
-            text-decoration: none;
-            font-size: 16px;
-            padding: 0.5em 0.75em;
-            color: #2d3436;
-            background-color: #636e72;
-            border: 1px solid #636e72;
             border-radius: 0.2em;
-            cursor: pointer;
-            text-align: center;
-            line-height: 1.2;
+            border: 1px solid antiquewhite !important;
         }
+        .btn-positive:hover {
+            background-color: rgb(252, 241, 228) !important;
+            color: rgb(252, 197, 94);
+}
+        
+    
     </style>
     <!-- lightpick cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -108,7 +90,12 @@
     <!-- 프로젝트 js-->
     <script src="gotoworkbtn.js"></script>
     <script src="menuToggle.js"></script>
-    <script src="delete.js"></script>
+    <!-- <script src="delete.js"></script> -->
+    <!-- <script src="alertDeleteBtn.js"></script> -->
+    <!-- <script src="alertInsert.js"></script> -->
+    <script src="alertEdit.js"></script>
+    <!-- <script src="alert.js"></script> -->
+  
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 자바스크립트 코드 작성 영역 -->
@@ -144,24 +131,6 @@
                 }
             },
         });
-
-        // 초기 상태 설정
-        $('.reject-reason-textarea').hide();
-
-        $('.edit-btn').on('click', function() {
-            $('.reject-reason-textarea').hide(); // textarea 숨기기
-            $('.reject').show(); // 반려 버튼 보이기
-            $(this).hide(); // 수정 버튼 숨기기
-            $('.reject-reason-textarea').show(); // textarea 보이기
-        });
-
-        $('.reject').on('click', function() {
-            alert('반려 됨');
-            $(this).hide(); // 반려 버튼 숨기기
-            $('.edit-btn').show(); // 수정 버튼 보이기
-            //비동기넣는곳~ 아마도 몰라 알아서해
-        });
-
     });
     </script>
 </head>
@@ -254,49 +223,65 @@
         </nav>
     </aside>
 
-    <main id="content">
-        <div class="noticbox w-1200">
-            <div class="row notice">
-                <table class="table table-border" id="dataTable" width="100%" cellspacing="0">
-                    <tbody>
-                        <tr>
-                            <th class="row noticname">제목</th>
-                            <td colspan="3" class="subject"></td>
-                        </tr>
-                        <tr>
-                            <th class="row noticname">작성자</th>
-                            <td>${조장.오유석}</td>
-                            <th class="row noticname">작성일</th>
-                            <td class="notice-reg-date">${2024년 03월11일}</td>
-                        </tr>
-                        <tr>
-                            <th class="row noticname">조회수</th>
-                            <td class="row">${조회수값999}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <img style="border-radius: 0;" alt="" src="./">
-                                ${내용이 여기에 들어감 블라블라블라블라}
-                                <textarea class="reject-reason-textarea" placeholder="반려 사유를 입력하세요" style="font-size: 15px;"></textarea>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>   
-            </div>
-
-            <div>
-                <div class="flex-box" style="justify-content: space-between;">
-                    <div class="row left">
-                        <button type="button" class="edit-btn btn write">반려</button>
-                        <button type="button" class="reject btn write">반려</button>
+    <div id="content">
+        <main id="body"> 
+            <div id="content">
+               
+                 <!-- 공지사항 수정 -->
+                 <body>
+                    <div class="container w-900">
+                        <div class="title2">공지사항 수정</div>
+                
+                        <div class="table-container">
+                            <table class="table form">
+                            </table>
+                        </div>
+                
+                        <div class="row flex-box" style="margin-top: 20px;">
+                                <div>
+                                    <label>제목</label>
+                                    <input type="text" class="form title1" >
+                                </div>
+                        </div>
+                        <div class="row flex-box" style="margin-top: 20px;">
+                            <div>
+                                <label>작성자</label>
+                                <input type="text" class="form w-20">
+                            </div>
                     </div>
-                    <div class="row right">
-                        <!-- <button type="button" class="btn btn-delete" style="background-color: #d63031; border-color: brown;">삭제</button> -->
+                       
+                        <div class="row" style="margin-top: 20px;">
+                            <div>
+                                <label>직급</label>
+                                <select class="form w-60" >
+                                    <option value="" class="text-secondary" >직급</option>
+                                    <option value="">어쩌고</option>
+                                    <option value="">저쩌고</option>
+                                    <option value="">직급</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>부서</label>
+                                <select class="form w-60" >
+                                    <option value="" class="text-secondary" >부서</option>
+                                    <option value="">어쩌고</option>
+                                    <option value="">저쩌고</option>
+                                    <option value="">부서</option>
+                                </select>
+                            </div>
+                        </div>
+               
+                        <form action="" method="post"></form>
+                        <div class="row flex-box"  style="position: relative; margin-top: 50px;">
+                            <div>
+                                <label></label>
+                                <textarea name="boardContent" class="field w-100 form "  rows="3" style="padding-right: 100px;"></textarea>
+                            </div>
+                        </form>
+                            <button type="button" class="btn btn-positive" onclick="showAlert()" >수정</button>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </main>
+                </body>
 
     <footer id="footer">
         <!-- Footer content here -->

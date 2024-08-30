@@ -13,6 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!-- font awesome icon cdn -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="./commons.css">
     <!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
@@ -26,6 +29,7 @@
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
+     <link rel="stylesheet" type="text/css" href="./alertBtn.css">
 
 
     <style>
@@ -43,6 +47,37 @@
             font-weight: inherit;
             font-style: italic !important;
         }
+
+        .title1{
+           width: 60% !important;
+           height: 40px;
+           margin-right: 40%
+        }
+
+        .title2{
+            border: 1px solid;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    padding: .60rem 1.25rem;
+    background-color: gainsboro;
+    border-color: #fff;
+    color: #495057;
+    font-weight: 800;
+    text-align: center !important;
+    width: 98%; 
+    box-sizing: border-box;
+        }
+                .btn-positive {
+            background-color: wheat !important;
+            color: white;
+            border-radius: 0.2em;
+            border: 1px solid antiquewhite !important;
+        }
+
+        .btn-positive:hover {
+    background-color: rgb(252, 241, 228) !important;
+    color: rgb(252, 197, 94);
+}
         
     </style>
 
@@ -62,6 +97,10 @@
   <script src="gotoworkbtn.js"></script>
   <script src="menuToggle.js"></script>
   <script src="delete.js"></script>
+  <!-- <script src="alertDeleteBtn.js"></script> -->
+  <script src="alertInsert.js"></script>
+  <!-- <script src="alertEdit.js"></script> -->
+  <!-- <script src="alert.js"></script> -->
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
@@ -104,6 +143,10 @@
         });
 
     </script>
+
+<script type="text/javascript">
+
+</script>
 
 
 </head>
@@ -225,28 +268,30 @@
         <!-- 공지사항 작성 -->
                 <body>
                     <div class="container w-900">
-                        <div class="title">공지사항 등록</div>
+                        <div class="title2">공지사항 등록</div>
                 
                         <div class="table-container">
                             <table class="table form">
                             </table>
                         </div>
                 
-                        <div class="row flex-box" style="margin-top: 30px;">
+                        <div class="row flex-box" style="margin-top: 20px;">
                                 <div>
                                     <label>제목</label>
-                                    <input type="text" class="form w-100" >
+                                    <input type="text" class="form title1" >
                                 </div>
                         </div>
-                
-                        <div class="row" style="margin-top: 30px;">
+                        <div class="row flex-box" style="margin-top: 20px;">
                             <div>
                                 <label>작성자</label>
-                                <input type="text" class="form w-80">
+                                <input type="text" class="form w-20">
                             </div>
+                    </div>
+                       
+                        <div class="row" style="margin-top: 20px;">
                             <div>
                                 <label>직급</label>
-                                <select class="form w-80" >
+                                <select class="form w-60" >
                                     <option value="" class="text-secondary" >직급</option>
                                     <option value="">어쩌고</option>
                                     <option value="">저쩌고</option>
@@ -255,7 +300,7 @@
                             </div>
                             <div>
                                 <label>부서</label>
-                                <select class="form w-80" >
+                                <select class="form w-60" >
                                     <option value="" class="text-secondary" >부서</option>
                                     <option value="">어쩌고</option>
                                     <option value="">저쩌고</option>
@@ -271,7 +316,7 @@
                                 <textarea name="boardContent" class="field w-100 form "  rows="3" style="padding-right: 100px;"></textarea>
                             </div>
                         </form>
-                            <button type="button" class="btn btn-positive">결재</button>
+                            <button type="button" class="btn btn-positive" onclick="showAlert()">결재</button>
                         </div>
                     </div>
                 </body>

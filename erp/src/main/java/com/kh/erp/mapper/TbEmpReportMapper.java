@@ -43,6 +43,7 @@ public class TbEmpReportMapper implements RowMapper<TbEmpReportDto> {
         } else {
             tbEmpReportDto.setReportContent(""); // CLOB이 null인 경우 빈 문자열로 설정
         }
+        tbEmpReportDto.setReportReject(rs.getString("report_Reject"));
 
         tbEmpReportDto.setApproNo(rs.getInt("appro_No"));
         return tbEmpReportDto;

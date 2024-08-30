@@ -1,17 +1,20 @@
 package com.kh.erp.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.erp.dao.TbEmpApprovalDao;
 import com.kh.erp.dao.TbEmpReportDao;
 import com.kh.erp.dto.TbEmpApprovalDto;
 import com.kh.erp.dto.TbEmpReportDto;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -25,18 +28,25 @@ public class TbEmpReportRestController {
 	private TbEmpReportDao tbEmpReportDao;
 
 	@PostMapping("/update")
-	public void update(@ModelAttribute TbEmpReportDto tbEmpReportDto , //dto로 받은거
+	public boolean update(@ModelAttribute TbEmpReportDto tbEmpReportDto, // dto로 받은거
 			@RequestParam String approYN, // 이거받은거
-			HttpSession session) {
+			HttpSession session//검증할때 세션쓸거
+			) {
 		String loginId = (String) session.getAttribute("createdUser");
 		tbEmpReportDto.setWriterId(loginId);
-		System.out.println(tbEmpReportDto);
-
+		System.out.println("approYN in rest/report/update = " + approYN);
 		// 선검증
 		TbEmpApprovalDto tbEmpApprovalDto = tbEmpApprovalDao.selectOneByApproNo(tbEmpReportDto.getApproNo());
-		if (tbEmpApprovalDto.getApplicantId().equals(loginId) && tbEmpApprovalDto.getApproYN().equals(approYN)) {
+		if (tbEmpApprovalDto.getApplicantId().equals(loginId) && tbEmpApprovalDto.getApproYN().equals(approYN)
+				&& approYN.equals("N")) {
 			// 검증 완료되면 업데이트
 			tbEmpReportDao.updateContent(tbEmpReportDto);
-		}
+			return true;
+		} else
+			return false;
+		
+		
+		
 	}
+
 }

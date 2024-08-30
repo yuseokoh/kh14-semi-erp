@@ -82,7 +82,8 @@ public class TbEmpApprovalDao {
 
 	// 전자결재 이미지 커넥팅
 	public void connect(int approNo, int documentNo) {
-		String sql = "insert into tb_approval_image(appro_no,document) " + "values(?,?)";
+		String sql = "insert into tb_approval_image(approno,document) " +
+					"values(?,?)";
 		Object[] data = { approNo, documentNo };
 		jdbcTemplate.update(sql, data);
 
@@ -115,5 +116,12 @@ public class TbEmpApprovalDao {
 		List<TbEmpApprovalDto> list = jdbcTemplate.query(sql, tbEmpApprovalMapper, data);
 		
 		return list.isEmpty() ? null : list.get(0);
+	}
+
+	public boolean updateSign(int approNo, String approBosId, String approBosName) {
+		String sql = "UPDATE tb_Approval SET appro_yn = 'Y', appro_BosName = ?, appro_BosId = ? WHERE appro_no = ?";
+		Object[] data = {approBosName, approBosId, approNo};
+		return jdbcTemplate.update(sql, data) > 0;
+		
 	}
 }

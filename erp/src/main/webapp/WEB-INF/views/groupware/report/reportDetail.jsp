@@ -79,11 +79,6 @@
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- 자바스크립트 코드 작성 영역 -->
-<script type="text/javascript">
-	
-</script>
-
 <script type="text/javascript">
 	$(function() {
 		// 초기에 textarea 숨기기
@@ -105,12 +100,12 @@
 							function() {
 
 								var reportContent = $('.reason-textarea').val();
-								console.log(reportContent);
-								$('.reason-textarea').addClass('hidden').prop(
-										'disabled', true);
-								$('#preview').removeClass('hidden').addClass(
-										'show').prop('disabled', true);
-								$(this).text('수정완료').addClass('hidden');
+// 								console.log(reportContent);
+// 								$('.reason-textarea').addClass('hidden').prop(
+// 										'disabled', true);
+// 								$('#preview').removeClass('hidden').addClass(
+// 										'show').prop('disabled', true);
+// 								$(this).text('수정완료').addClass('hidden');
 
 								//비동기통신해서 내용만 바꾸기
 								$.ajax({
@@ -124,7 +119,15 @@
 										reportTitle : $('[name=reportTitle]').val(),
 									},
 									success : function(response) { // 요청이 성공했을 때 호출되는 함수
-										console.log('Success:', response);
+									console.log(response);
+									if(response){
+										alert("수정완료");
+										location.reload(); // 페이지 새로고침
+									}else{
+										alert("이미 승인된 페이지입니다");
+										location.href = '/login'; // 실패 시 페이지 리다이렉션
+									}
+										
 									},
 									error : function(xhr, status, error) { // 요청이 실패했을 때 호출되는 함수
 										console.error('Error:', error);
@@ -256,7 +259,7 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>여기에style="width: 50px; height: 50px;"짜리 서명만들고싶음</td>
+									<td><img src="/report/signImage?approNo=${tbEmpReportDto.approNo}&writerId=${tbEmpReportDto.writerId}"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -281,11 +284,9 @@
 
 						</div>
 					</div>
-					
+
 					<!-- 이거도 전송해야댐 why? 수정위해서 -->
-					<input type="hidden" name="approNo" value="${tbEmpApprovalDto.approNo}">
-					<input type="hidden" name="approYN" value="${tbEmpApprovalDto.approYN}">
-					<input type="hidden" name="reportNo" value="${tbEmpReportDto.reportNo}">
+					<input type="hidden" name="approNo" value="${tbEmpApprovalDto.approNo}"> <input type="hidden" name="approYN" value="${tbEmpApprovalDto.approYN}"> <input type="hidden" name="reportNo" value="${tbEmpReportDto.reportNo}">
 
 
 					<div class="row flex-box btn-container" style="justify-content: space-between;">

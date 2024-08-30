@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@Transactional
 @RequestMapping("/report")
 public class TbEmpReportController {
 
@@ -47,7 +48,7 @@ public class TbEmpReportController {
 		return "/WEB-INF/views/groupware/report/reportInsert.jsp";
 	}
 
-	@Transactional
+	
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute TbEmpReportDto tbEmpReportDto, HttpSession session) {
 		// 이름이 들어가기때문에 그 이름 받는 부분을 id로 받고(이전까진 내용물은 이름)
@@ -79,7 +80,7 @@ public class TbEmpReportController {
 		return "redirect:mylist?loginId=" + loginId;
 	}
 
-	// 보고서 상세(근데 이 보고서는 나만 볼 수 있음)
+	// 보고서 상세(근데 이 보고서는 나(세션아이디와 동일한 사람)만 볼 수 있음)
 	@GetMapping("/detail")
 	public String requestMethodName(@RequestParam int reportNo, Model model) {
 		TbEmpReportDto tbEmpReportDto = tbEmpReportDao.selectOne(reportNo);
@@ -89,17 +90,30 @@ public class TbEmpReportController {
 
 		// 승인 정보
 		model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
-		
+
 		// 사원 정보
 		model.addAttribute("tbEmpDto", tbEmpDto);
 
 		// 보고서 정보
 		model.addAttribute("tbEmpReportDto", tbEmpReportDto);
 
-		/// 아마 대충 음..
+		/// 아마 대충 음.. -> 해결완
 		return "/WEB-INF/views/groupware/report/reportDetail.jsp";
 	}
 
-	//
+	// 사인 있으면 넣기
+	@RequestMapping("/signImage")
+	public String signImage(int approNo, String writerId) {
+		if (tbEmpDao.selectOne(writerId) != null) {
+			try {
+				int documentNo = tbEmpReportDao.findImage(approNo);
+				return "redirect:/attach/download?documentNo=" + documentNo;
+			} catch (Exception e) {
+				return "redirect:/images/user.jpg";
+			}
+		}
+		return "redirect:/images/user.jpg";
+
+	}
 
 }

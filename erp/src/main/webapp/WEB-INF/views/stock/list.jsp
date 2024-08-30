@@ -207,9 +207,9 @@
     <!-- 검색 폼 추가 -->
     <form class="search-form" action="${pageContext.request.contextPath}/stock/list" method="get">
         <select name="column">
-            <option value="name" <c:if test="${column eq 'name'}">selected</c:if>>상품명</option>
-            <option value="category" <c:if test="${column eq 'category'}">selected</c:if>>카테고리</option>
-            <!-- 추가적인 검색 열을 여기에 추가할 수 있습니다 -->
+             <option value="stock_name" <c:if test="${column eq 'stock_name'}">selected</c:if>>상품명</option>
+        <option value="stock_category" <c:if test="${column eq 'stock_category'}">selected</c:if>>카테고리</option>
+        <!-- 추가적인 검색 열을 여기에 추가할 수 있습니다 -->
         </select>
         <input type="text" name="keyword" value="${keyword}" placeholder="검색어 입력">
         <button type="submit">검색</button>

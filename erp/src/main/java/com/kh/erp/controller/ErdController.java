@@ -265,6 +265,12 @@ public class ErdController {
                 imageUrl = existingDto.getImageUrl();
             }
 
+            // 기존의 유통기한 값을 유지
+            ErdDto existingDto = erdDao.selectOne(dto.getStockNo());
+            if (dto.getExpirationDate() == null) {
+                dto.setExpirationDate(existingDto.getExpirationDate());
+            }
+
             // 재고 정보를 업데이트합니다.
             boolean result = erdDao.update(dto, imageUrl);
             if (!result) {
@@ -293,7 +299,7 @@ public class ErdController {
             erdDao.updateQuantity(existingDto); // 수량 업데이트
 
             // 변경된 필드 정보 및 Old/ New Values 생성
-            String changedFields = String.format("입고 %d", amount);
+            String changedFields = String.format("입고", amount);
             String oldValues = String.format("Quantity: %d", oldQuantity);
             String newValues = String.format("Quantity: %d", newQuantity);
             

@@ -184,83 +184,84 @@ input[readonly] {
 
 				<!-- 휴가 신청서 작성 -->
 				<body>
-					<div class="container w-900">
-						<div class="title">휴가신청서</div>
-						<div class="table-container">
-							<table class="table">
-								<label>결재자</label>
-								<thead>
-									<tr>
-										<th>직급</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>서명칸</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+					<form action="insert" method="post" autocomplete="off">
+						<div class="container w-900">
+							<div class="title">휴가신청서</div>
+							<div class="table-container">
+								<table class="table">
+									<label>결재자</label>
+									<thead>
+										<tr>
+											<th>직급</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>서명칸</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 
-						<div class="row">
-							<label>제목</label> <input type="text" class="form title1" name="vacaTitle">
-						</div>
-						<div class="row">
 							<div class="row">
-								<label>사원명</label> <input type="text" class="filed form disabled" name="applicantId" value="${tbEmpDto.name}" readonly>
+								<label>제목</label> <input type="text" class="form title1" name="vacaTitle">
+							</div>
+							<div class="row">
+								<div class="row">
+									<label>사원명</label> <input type="text" class="filed form disabled" name="applicantId" value="${tbEmpDto.name}" readonly>
+								</div>
+							</div>
+
+							<div class="row">
+								<div>
+									<label>사원번호</label> <input type="text" class="form" name="empNo" value="${tbEmpDto.empNo}" readonly>
+								</div>
+								<div>
+									<label>직급</label> <input type="text" class="form" name="empNo" value="${tbEmpDto.empNo}" readonly>
+								</div>
+								<div>
+									<label>부서</label> <input type="text" class="form" name="empDept" value="${tbEmpDto.empDept}" readonly>
+								</div>
+							</div>
+
+							<div class="row">
+								<div>
+									<label>EMAIL</label> <input type="text" class="form" name="empEmail" value="${tbEmpDto.empEmail}" readonly>
+								</div>
+								<div>
+									<label>비상 연락처</label> <input type="text" class="form" placeholder="00011112222" name="vacaTel">
+								</div>
+							</div>
+
+							<div class="row flex-box">
+								<div class="w-50">
+									<label>휴가 시작일</label> <input type="text" class="field w-100 test7-1 form" name="vacaSdate">
+								</div>
+								<div class="w-50">
+									<label>휴가 종료일</label> <input type="text" class="field w-100 test7-2 form" name="vacaEdate">
+								</div>
+							</div>
+
+							<div class="row">
+								<div>
+									<label>휴가 종류</label> <select class="form" name="vacaType">
+										<option value="" class="text-secondary">휴가 종류</option>
+										<option value="개인사유">개인사유</option>
+										<option value="연차">연차</option>
+										<option value="병가">병가</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row flex-box" style="position: relative;">
+								<div>
+									<label>휴가 사유</label>
+									<textarea class="field w-100 form" rows="3" style="padding-right: 100px;" name="vacaReason"></textarea>
+									<button type="submit" class="btn btn-positive">휴가신청</button>
+								</div>
 							</div>
 						</div>
-
-						<div class="row">
-							<div>
-								<label>사원번호</label> <input type="text" class="form" name="empNo" value="${tbEmpDto.empNo}" readonly>
-							</div>
-							<div>
-								<label>직급</label> <input type="text" class="form" name="empNo" value="${tbEmpDto.empNo}" readonly>
-							</div>
-							<div>
-								<label>부서</label> <input type="text" class="form" name="empDept" value="${tbEmpDto.empDept}" readonly>
-							</div>
-						</div>
-
-						<div class="row">
-							<div>
-								<label>EMAIL</label> <input type="text" class="form" name="empEmail" value="${tbEmpDto.empEmail}" readonly>
-							</div>
-							<div>
-								<label>비상 연락처</label> <input type="text" class="form" placeholder="00011112222" name="vacaTel">
-							</div>
-						</div>
-
-						<div class="row flex-box">
-							<div class="w-50">
-								<label>휴가 시작일</label> <input type="text" class="field w-100 test7-1 form" name="vacaSdate">
-							</div>
-							<div class="w-50">
-								<label>휴가 종료일</label> <input type="text" class="field w-100 test7-2 form" name="vacaEdate">
-							</div>
-						</div>
-
-						<div class="row">
-							<div>
-								<label>휴가 종류</label> <select class="form" name="vacaType">
-									<option value="" class="text-secondary">휴가 종류</option>
-									<option value="개인사유">개인사유</option>
-									<option value="연차">연차</option>
-									<option value="병가">병가</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="row flex-box" style="position: relative;">
-							<div>
-								<label>휴가 사유</label>
-								<textarea class="field w-100 form" rows="3" style="padding-right: 100px;" name="vacaReason"></textarea>
-								<button type="submit" class="btn btn-positive">휴가신청</button>
-							</div>
-						</div>
-					</div>
-
+					</form>
 				</body>
 
 				<!-- 이곳에서부터 <footer>  -->

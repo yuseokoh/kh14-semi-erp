@@ -164,7 +164,8 @@ input[readonly] {
 			<i class="fa fa-bars"></i>
 		</div>
 		<div id="logo">
-			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i></i> <span class="notif-count content">0</span>
+			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i>
+			<span class="notif-count content">0</span>
 			</a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
 		</div>
 	</header>
@@ -210,7 +211,8 @@ input[readonly] {
 				<ul class="menu-hover-fill">
 					<li><a href="/" data-text="home">HOME</a></li>
 
-					<li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
+					<li><a href="/poketmon/list" data-text="">
+					<i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
 					</a>
 						<ul>
 							<li><a href="#">휴가신청서</a></li>

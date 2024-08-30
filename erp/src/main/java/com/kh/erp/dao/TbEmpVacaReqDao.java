@@ -41,7 +41,6 @@ public class TbEmpVacaReqDao {
 	}
 
 	// 휴가 신청서 검색(R) - 페이징 적용 // 정렬순서 pageVO 컬럼, vaca_No, vaca_Sdate(휴가 시작일) 기준
-
 	public List<TbEmpVacaReqDto> vacaReqListByPaging(PageVO pageVO) {
 		if (pageVO.isSearch()) {// 검색
 			String sql = "select * from (" + "select rownum rn, TMP.* from ("

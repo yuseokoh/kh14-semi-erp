@@ -109,10 +109,12 @@ public class TbEmpReportController {
 				int documentNo = tbEmpReportDao.findImage(approNo);
 				return "redirect:/attach/download?documentNo=" + documentNo;
 			} catch (Exception e) {
-				return "redirect:/images/user.jpg";
+				//대체이미지 링크 전송
+				return "redirect:https://via.placeholder.com/200";
 			}
 		}
-		return "redirect:/images/user.jpg";
+		//대체이미지 링크 전송
+		return "redirect:https://via.placeholder.com/200";
 
 	}
 

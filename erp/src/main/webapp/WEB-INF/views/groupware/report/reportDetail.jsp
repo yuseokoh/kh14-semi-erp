@@ -127,7 +127,7 @@
 										alert("이미 승인된 페이지입니다");
 										location.href = '/login'; // 실패 시 페이지 리다이렉션
 									}
-										
+									////////////////////////////이거 장현씨랑 토의해야됨///////////////////어디로보낼지	
 									},
 									error : function(xhr, status, error) { // 요청이 실패했을 때 호출되는 함수
 										console.error('Error:', error);
@@ -286,7 +286,9 @@
 					</div>
 
 					<!-- 이거도 전송해야댐 why? 수정위해서 -->
-					<input type="hidden" name="approNo" value="${tbEmpApprovalDto.approNo}"> <input type="hidden" name="approYN" value="${tbEmpApprovalDto.approYN}"> <input type="hidden" name="reportNo" value="${tbEmpReportDto.reportNo}">
+					<input type="hidden" name="approNo" value="${tbEmpApprovalDto.approNo}">
+					<input type="hidden" name="approYN" value="${tbEmpApprovalDto.approYN}">
+					<input type="hidden" name="reportNo" value="${tbEmpReportDto.reportNo}">
 
 
 					<div class="row flex-box btn-container" style="justify-content: space-between;">

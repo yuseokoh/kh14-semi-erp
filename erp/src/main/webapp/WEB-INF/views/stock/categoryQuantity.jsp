@@ -24,8 +24,8 @@
             margin: 0;
         }
         .button-container {
-        	margin-top:17px;
-        	margin-right:18px;
+            margin-top: 20px;
+            margin-right: 20px;
             position: absolute; /* 버튼을 절대 위치로 설정 */
             top: 20px; /* 상단에서 20px 떨어진 위치 */
             right: 20px; /* 오른쪽에서 20px 떨어진 위치 */
@@ -47,14 +47,41 @@
             color: white; /* 버튼 호버 시 텍스트 색상 흰색 */
             border-color: #f8a5b0; /* 버튼 호버 시 테두리 색상 부드러운 핑크색 */
         }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 두 개의 열 생성 */
+            grid-template-rows: repeat(2, 1fr); /* 두 개의 행 생성 */
+            gap: 10px; /* 차트들 사이의 간격 줄임 */
+            margin-top: 30px;
+        }
         .chart-container {
-            width: 80%;
-            margin-top:90px;
-            margin-left:100px;
             background-color: #ffffff; /* 차트 배경색을 흰색으로 설정 */
-            padding: 20px;
+            padding: 10px; /* 패딩 줄임 */
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #barChart {
+            grid-column: 1 / 2; /* 첫 번째 열 */
+            grid-row: 1 / 2; /* 첫 번째 행 */
+            height: 200px; /* 차트 높이 설정 */
+        }
+        #pieChart {
+            grid-column: 2 / 3; /* 두 번째 열 */
+            grid-row: 1 / 2; /* 첫 번째 행 */
+            height: 200px; /* 차트 높이 설정 */
+        }
+        #lineChart {
+            grid-column: 1 / 2; /* 첫 번째 열 */
+            grid-row: 2 / 3; /* 두 번째 행 */
+            height: 400px; /* 차트 높이 설정 */
+        }
+        #radarChart {
+            grid-column: 2 / 3; /* 두 번째 열 */
+            grid-row: 2 / 3; /* 두 번째 행 */
+            height: 400px; /* 차트 높이 설정 */
         }
         canvas {
             max-width: 100%;
@@ -70,9 +97,27 @@
         <a href="list" class="button">목록으로</a>
     </div>
     
-    <!-- 차트 컨테이너 -->
-    <div class="chart-container">
-        <canvas id="categoryChart"></canvas>
+    <!-- 차트 그리드 컨테이너 -->
+    <div class="charts-grid">
+        <!-- 바 차트 컨테이너 -->
+        <div class="chart-container">
+            <canvas id="barChart"></canvas>
+        </div>
+        
+        <!-- 파이 차트 컨테이너 -->
+        <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+        </div>
+        
+        <!-- 라인 차트 컨테이너 -->
+        <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+        </div>
+        
+        <!-- 레이더 차트 컨테이너 -->
+        <div class="chart-container">
+            <canvas id="radarChart"></canvas>
+        </div>
     </div>
 
     <script>
@@ -83,9 +128,9 @@
         var labels = Object.keys(categoryMap);
         var data = Object.values(categoryMap);
 
-        // 차트 생성
-        var ctx = document.getElementById('categoryChart').getContext('2d');
-        var myChart = new Chart(ctx, {
+        // 바 차트 생성
+        var ctxBar = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctxBar, {
             type: 'bar', // 'line', 'pie', 등 다른 유형을 사용할 수 있습니다.
             data: {
                 labels: labels,
@@ -101,6 +146,102 @@
                 responsive: true,
                 scales: {
                     x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 파이 차트 생성
+        var ctxPie = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctxPie, {
+            type: 'pie', // 파이 차트 유형
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '재고 수량',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 라인 차트 생성
+        var ctxLine = document.getElementById('lineChart').getContext('2d');
+        var lineChart = new Chart(ctxLine, {
+            type: 'line', // 라인 차트 유형
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '재고 수량',
+                    data: data,
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 레이더 차트 생성
+        var ctxRadar = document.getElementById('radarChart').getContext('2d');
+        var radarChart = new Chart(ctxRadar, {
+            type: 'radar', // 레이더 차트 유형
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '재고 수량',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
                         beginAtZero: true
                     }
                 }

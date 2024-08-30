@@ -146,7 +146,7 @@
                         var formattedOldValue = formatDate(oldValue);
                         var formattedNewValue = formatDate(newValue);
                         if (formattedOldValue !== formattedNewValue) {
-                            diff += formattedOldValue + ' => ' + formattedNewValue + '<br>';
+                            diff += formattedOldValue + ' -> ' + formattedNewValue + '<br>';
                         }
                     } else {
                         // 날짜가 아닌 경우
@@ -161,7 +161,7 @@
                             } else if (newValue === 'Decreased quantity by') {
                                 newValue = '출고';
                             }
-                            diff += oldValue + ' => ' + newValue + '<br>';
+                            diff += oldValue + ' -> ' + newValue + '<br>';
                         }
                     }
                 }

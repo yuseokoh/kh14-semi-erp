@@ -1,10 +1,15 @@
 package com.kh.erp.dao;
 
-import java.sql.Date; // java.sql.Date 임포트
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.erp.dto.ErdDto;
@@ -17,41 +22,38 @@ public class ErdDao {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
     private ErdMapper erdMapper;
 
     // 등록 (유통기한 포함)
     public void insert(ErdDto dto, String imageUrl) {
         String sql = "insert into stock (stock_no, stock_category, stock_name, stock_quantity, stock_date, image_url, expiration_date) " +
                      "values (stock_seq.nextval, ?, ?, ?, SYSDATE, ?, ?)";
-        // java.sql.Date 객체로 변환
         Date expirationDate = dto.getExpirationDate() != null ? new Date(dto.getExpirationDate().getTime()) : null;
         Object[] data = {dto.getStockCategory(), dto.getStockName(), dto.getStockQuantity(), imageUrl, expirationDate};
         jdbcTemplate.update(sql, data);
 
-        // ChangeLog 기록
         logChange(dto.getStockNo(), "등록", null, dto, imageUrl);
     }
 
     // 수정 (유통기한 포함)
     public boolean update(ErdDto dto, String imageUrl) {
-        // 현재 값 가져오기
         ErdDto existingDto = selectOne(dto.getStockNo());
         if (existingDto == null) {
             return false;
         }
 
-        // 변경된 필드와 값을 추적
         String oldValues = getFieldValues(existingDto);
         String newValues = getFieldValues(dto);
 
         String sql = "update stock set stock_category = ?, stock_name = ?, stock_quantity = ?, image_url = ?, expiration_date = ? where stock_no = ?";
-        // java.sql.Date 객체로 변환
         Date expirationDate = dto.getExpirationDate() != null ? new Date(dto.getExpirationDate().getTime()) : null;
         Object[] data = {dto.getStockCategory(), dto.getStockName(), dto.getStockQuantity(), imageUrl, expirationDate, dto.getStockNo()};
         boolean isUpdated = jdbcTemplate.update(sql, data) > 0;
 
         if (isUpdated) {
-            // ChangeLog 기록
             logChange(dto.getStockNo(), "수정", oldValues, dto, imageUrl);
         }
         
@@ -60,7 +62,6 @@ public class ErdDao {
 
     // 삭제
     public boolean delete(int stockNo) {
-        // 현재 값 가져오기
         ErdDto existingDto = selectOne(stockNo);
         if (existingDto == null) {
             return false;
@@ -73,7 +74,6 @@ public class ErdDao {
         boolean isDeleted = jdbcTemplate.update(sql, data) > 0;
 
         if (isDeleted) {
-            // ChangeLog 기록
             logChange(stockNo, "삭제", oldValues, null, null);
         }
         
@@ -86,8 +86,13 @@ public class ErdDao {
         return jdbcTemplate.query(sql, erdMapper);
     }
 
-    // 조회 - 조건 검색
     public List<ErdDto> selectList(String column, String keyword) {
+        if ("category".equalsIgnoreCase(column)) {
+            column = "STOCK_CATEGORY";
+        } else if ("name".equalsIgnoreCase(column)) {
+            column = "STOCK_NAME";
+        }
+
         String sql = "select * from stock where instr(" + column + ", ?) > 0 order by stock_no asc";
         Object[] data = {keyword};
         return jdbcTemplate.query(sql, erdMapper, data);
@@ -133,5 +138,37 @@ public class ErdDao {
         String sql = "INSERT INTO ChangeLog (id, stockNo, changedFields, oldValues, newValues, changedDate) VALUES (ChangeLog_seq.NEXTVAL, ?, ?, ?, ?, ?)";
         Object[] data = {stockNo, changedFields, oldImageUrl, newValues, new java.util.Date()};
         jdbcTemplate.update(sql, data);
+    }
+    
+    // 페이징을 지원하는 조회 메소드
+    public Page<ErdDto> selectList(String column, String keyword, Pageable pageable) {
+        if ("category".equalsIgnoreCase(column)) {
+            column = "STOCK_CATEGORY";
+        } else if ("name".equalsIgnoreCase(column)) {
+            column = "STOCK_NAME";
+        }
+
+        String sql = "SELECT * FROM ( " +
+                     "    SELECT stock.*, ROW_NUMBER() OVER (ORDER BY stock_no ASC) AS row_num " +
+                     "    FROM stock " +
+                     "    WHERE instr(" + column + ", :keyword) > 0 " +
+                     ") WHERE row_num BETWEEN :startRow AND :endRow";
+
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+        int startRow = pageNumber * pageSize + 1;
+        int endRow = startRow + pageSize - 1;
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("keyword", keyword);
+        parameters.addValue("startRow", startRow);
+        parameters.addValue("endRow", endRow);
+
+        List<ErdDto> content = namedParameterJdbcTemplate.query(sql, parameters, erdMapper);
+
+        String countSql = "SELECT COUNT(*) FROM stock WHERE instr(" + column + ", :keyword) > 0";
+        int total = namedParameterJdbcTemplate.queryForObject(countSql, parameters, Integer.class);
+
+        return new PageImpl<>(content, pageable, total);
     }
 }

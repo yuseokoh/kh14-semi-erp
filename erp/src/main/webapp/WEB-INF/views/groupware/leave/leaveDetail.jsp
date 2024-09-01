@@ -135,9 +135,8 @@
 								location.reload(); // 페이지 새로고침
 							}else{
 								alert("이미 승인된 페이지입니다");
-								location.href = '/login'; // 실패 시 페이지 리다이렉션
+								location.href = '/vacation/list'; // 실패 시 페이지 리다이렉션
 							}
-							////////////////////////////이거 장현씨랑 토의해야됨///////////////////어디로보낼지	
 							},
 							error : function(xhr, status, error) { // 요청이 실패했을 때 호출되는 함수
 								console.error('Error:', error);

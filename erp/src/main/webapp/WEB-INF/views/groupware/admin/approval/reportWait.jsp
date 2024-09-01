@@ -229,7 +229,6 @@
 	                            },
 	                            success: function() {
 									location.reload(); // 페이지 새로고침
-	                                // 반려 완료 후 추가 동작 (예: 페이지 리로드)
 	                            }
 	                        });
 	                    }

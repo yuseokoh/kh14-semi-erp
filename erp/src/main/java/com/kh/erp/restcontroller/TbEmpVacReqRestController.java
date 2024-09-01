@@ -1,6 +1,10 @@
 package com.kh.erp.restcontroller;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,5 +79,35 @@ public class TbEmpVacReqRestController {
 		}
 
 	}
+	
+	@PostMapping("/reject")
+	public void reject(@RequestParam String rejectReason
+			, @RequestParam int approNo) {
+		tbEmpVacaReqDao.updateReject(approNo, rejectReason);
+	}
+	
+	//날짜 검증
+	@PostMapping("/checkDate")
+	public boolean checkDate(@RequestParam String loginId,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date vacaSdate,
+	        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date vacaEdate) {
+		
+		//리스트 찾기
+		List<TbEmpVacaReqDto> list =  tbEmpVacaReqDao.selectListByvacaTypeAndapplicantId("Y",loginId);
+		//검증
+		for (TbEmpVacaReqDto tbEmpVacaReqDto : list) {
+		    // 각 dto 객체에 대한 작업 수행
+			Date dtoSdate = tbEmpVacaReqDto.getVacaSdate();
+	        Date dtoEdate = tbEmpVacaReqDto.getVacaEdate();
+	        
+	     // 날짜가 겹치는지 확인
+	        if (vacaSdate.before(dtoEdate) && vacaEdate.after(dtoSdate)) {
+	            return false; // 겹치면 false 반환
+	        }
+		}
+		//겹치는게 하나도없으면 반환
+		return true;
+	}
+	
 
 }

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <!-- í¤ë í¬í¨ -->
+    <!-- 헤더 삽입 -->
     <iframe src="header.html" style="border: none; width: 100%; height: auto;"></iframe>
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,7 +89,7 @@
             border-radius: 0.5rem;
         }
 
-           .btn {
+        .btn {
             height: 3rem;
             width: 20rem;
             margin-top: 3rem;
@@ -99,8 +99,8 @@
             font-size: 1.2rem;
             transition: all 400ms;
             box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
-            position: relative; /* positionì relativeë¡ ì¤ì  */
-            top: -1.5rem; /* ë²í¼ì ìë¡ ì´ëìí¤ë ê° */
+            position: relative; /* position을 relative로 설정 */
+            top: -1.5rem; /* 버튼을 위로 이동 */
         }
 
         .btn:hover {
@@ -108,235 +108,232 @@
             box-shadow: none;
         }
         
-                .span {
-  text-decoration: none;
-  color: white;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-.span a {
-  color: antiquewhite;
-  box-shadow: none;
-  
-}
+        .span {
+            text-decoration: none;
+            color: white;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
 
-.span:last-of-type {
-    margin-top: 0.5rem;
-    position: relative; /* positionì relativeë¡ ì¤ì  */
-            top: -1rem; /* ë²í¼ì ìë¡ ì´ëìí¤ë ê° */
-}
+        .span a {
+            color: antiquewhite;
+            box-shadow: none;
+        }
 
-
-
+        .span:last-of-type {
+            margin-top: 0.5rem;
+            position: relative; /* position을 relative로 설정 */
+            top: -1rem; /* 버튼을 위로 이동 */
+        }
     </style>
 
-<style>
-    /* ëª¨ë¬ ê¸°ë³¸ ì¤íì¼ */
-    .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 8px;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
+    <style>
+        /* 모달 창 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 8px;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
-.modal-content {
-    background-color: #1a1a1a;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 400px;
-    border-radius: 20px;
-    background-image: linear-gradient(to bottom, #424242, #212121);
-    position: relative;
-}
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 400px;
+            border-radius: 20px;
+            background-image: linear-gradient(to bottom, #424242, #212121);
+            position: relative;
+        }
 
-.close {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute; /* Position absolutely within the modal-content */
-    top: 10px; /* Distance from the top of modal-content */
-    right: 25px; /* Distance from the right edge of modal-content */
-    z-index: 99998;
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute; /* Position absolutely within the modal-content */
+            top: 10px; /* Distance from the top of modal-content */
+            right: 25px; /* Distance from the right edge of modal-content */
+            z-index: 99998;
+        }
 
-}
+        .close:hover,
+        .close:focus {
+            color: wheat;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-.close:hover,
-.close:focus {
-    color: wheat;
-    text-decoration: none;
-    cursor: pointer;
-}
-#openModal{
-    height: 1rem;
-    width: 3rem;
-    margin-top: 3rem;
-    border-radius: 0.5rem;
-    border: none;
-    font-size: 0.6rem;
-    position: relative; /* positionì relativeë¡ ì¤ì  */
-    top: -2.7rem; /* ë²í¼ì ìë¡ ì´ëìí¤ë ê° */
-    left: 0.5rem;
-    transform: .3s ease;
-    background-color: wheat;
-    transition: all 400ms;
-    box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
-}
+        #openModal {
+            height: 1rem;
+            width: 3rem;
+            margin-top: 3rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-size: 0.6rem;
+            position: relative; /* position을 relative로 설정 */
+            top: -2.7rem; /* 버튼을 위로 이동 */
+            left: 0.5rem;
+            transform: .3s ease;
+            background-color: wheat;
+            transition: all 400ms;
+            box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
+        }
 
-#openModal:hover {
-    background-color: antiquewhite;
-    box-shadow: none;
-}
-</style>
+        #openModal:hover {
+            background-color: antiquewhite;
+            box-shadow: none;
+        }
+    </style>
 
-<style>
-    .form1 {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 350px;
-    padding: 20px;
-    border-radius: 20px;
-    position: relative;
-    background-color: #1a1a1a;
-    color: #fff;
-    background-image: linear-gradient(to bottom, #424242, #212121);
-    }
+    <style>
+        .form1 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+            background-color: #1a1a1a;
+            color: #fff;
+            background-image: linear-gradient(to bottom, #424242, #212121);
+        }
 
-.title1 {
-font-size: 28px;
-font-weight: 600;
-letter-spacing: -1px;
-position: relative;
-display: flex;
-align-items: center;
-padding-left: 30px;
-color: antiquewhite;
-}
+        .title1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            color: antiquewhite;
+        }
 
-.title1::before {
-width: 18px;
-height: 18px;
-}
+        .title1::before {
+            width: 18px;
+            height: 18px;
+        }
 
-.title1::after {
-width: 18px;
-height: 18px;
-animation: pulse 1s linear infinite;
-}
+        .title1::after {
+            width: 18px;
+            height: 18px;
+            animation: pulse 1s linear infinite;
+        }
 
-.title1::before,
-.title1::after {
-position: absolute;
-content: "";
-height: 16px;
-width: 16px;
-border-radius: 50%;
-left: 0px;
-background-color: wheat;
-}
+        .title1::before,
+        .title1::after {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 0px;
+            background-color: wheat;
+        }
 
-.message1, 
-.signin1 {
-font-size: 14.5px;
-color: rgba(255, 255, 255, 0.7);
-}
+        .message1, 
+        .signin1 {
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
 
-.signin1 {
-text-align: center;
-}
+        .signin1 {
+            text-align: center;
+        }
 
-.signin1 a:hover {
-text-decoration: underline wheat;
-}
+        .signin1 a:hover {
+            text-decoration: underline wheat;
+        }
 
-.signin1 a {
-color: wheat;
-}
+        .signin1 a {
+            color: wheat;
+        }
 
-.flex1 {
-display: flex;
-width: 100%;
-gap: 6px;
-}
+        .flex1 {
+            display: flex;
+            width: 100%;
+            gap: 6px;
+        }
 
-.form1 label {
-position: relative;
-}
+        .form1 label {
+            position: relative;
+        }
 
-.form1 label .input1 {
-background-color: #333;
-color: #fff;
-width: 100%;
-padding: 20px 05px 05px 10px;
-outline: 0;
-border: 1px solid rgba(105, 105, 105, 0.397);
-border-radius: 10px;
-}
+        .form1 label .input1 {
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+            padding: 20px 05px 05px 10px;
+            outline: 0;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: 10px;
+        }
 
-.form1 label .input1 + span {
-color: rgba(255, 255, 255, 0.5);
-position: absolute;
-left: 10px;
-top: 0px;
-font-size: 0.9em;
-cursor: text;
-transition: 0.3s ease;
-}
+        .form1 label .input1 + span {
+            color: rgba(255, 255, 255, 0.5);
+            position: absolute;
+            left: 10px;
+            top: 0px;
+            font-size: 0.9em;
+            cursor: text;
+            transition: 0.3s ease;
+        }
 
-.form1 label .input1:placeholder-shown + span {
-top: 12.5px;
-font-size: 0.9em;
-}
+        .form1 label .input1:placeholder-shown + span {
+            top: 12.5px;
+            font-size: 0.9em;
+        }
 
-.form1 label .input1:focus + span,
-.form1 label .input1:valid + span {
-color: antiquewhite;
-top: 0px;
-font-size: 0.7em;
-font-weight: 600;
-}
+        .form1 label .input1:focus + span,
+        .form1 label .input1:valid + span {
+            color: antiquewhite;
+            top: 0px;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
 
-.input1 {
-font-size: medium;
-}
+        .input1 {
+            font-size: medium;
+        }
 
-.submit1 {
-border: none;
-outline: none;
-padding: 10px;
-border-radius: 10px;
-color: black;
-font-size: 16px;
-transform: .3s ease;
-background-color: wheat;
-transition: all 400ms;
-box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
-}
+        .submit1 {
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: black;
+            font-size: 16px;
+            transform: .3s ease;
+            background-color: wheat;
+            transition: all 400ms;
+            box-shadow: 0 0 10px antiquewhite, 0 0 10px antiquewhite;
+        }
 
-.submit1:hover {
-    background-color: antiquewhite;
-    box-shadow: none;
-}
+        .submit1:hover {
+            background-color: antiquewhite;
+            box-shadow: none;
+        }
 
-@keyframes pulse {
-from {
-transform: scale(0.9);
-opacity: 1;
-}
+        @keyframes pulse {
+            from {
+                transform: scale(0.9);
+                opacity: 1;
+            }
 
-to {
-transform: scale(1.8);
-opacity: 0;
-}
-}
-</style>
+            to {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+    </style>
 
     <!-- lightpick cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -351,37 +348,33 @@ opacity: 0;
 
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- ìë°ì¤í¬ë¦½í¸ ì½ë ìì± ìì­ -->
+    <!-- 푸터 스크립트 추가 -->
     <script type="text/javascript">
     $(document).ready(function() {
-            // ëª¨ë¬ ì´ê¸°
+            // 모달 창 열기
             $('#openModal').click(function() {
                 $('#myModal').show();
             });
 
-            // ëª¨ë¬ ë«ê¸°
+            // 모달 창 닫기
             $('.close').click(function() {
                 $('#myModal').hide();
             });
 
-            // ëª¨ë¬ ì¸ë¶ í´ë¦­ ì ë«ê¸°
+            // 모달 외부 클릭 시 닫기
             $(window).click(function(event) {
                 if ($(event.target).is('#myModal')) {
                     $('#myModal').hide();
                 }
             });
 
-            // í¼ ì ì¶ ì ëª¨ë¬ ë«íì§ ìëë¡ ë°©ì§
+            // 모달 내용 클릭 시 전파 방지
             $('.modal-content').click(function(event) {
                 event.stopPropagation();
             });
         });
 
     </script>
-
-
-
-
 
 </head>
 <body>
@@ -393,50 +386,48 @@ opacity: 0;
             <span class="span"><a href="#">Forgot password?</a></span>
             <button class="btn" type="submit">Login</button>
             <span class="span">Don't have an account?
-                <button id="openModal">  Sign up</button></span>
+                <button id="openModal">Sign up</button></span>
             <div id="myModal" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
-                </form>
-                
-      
-<form class="form1">
-    <p class="title1">ERP </p>
-    <p class="message1">ERP ê°ìì ìí´ ì ë³´ë¥¼ ì ì¼ì¸ì</p>
-        <div class="flex1">
-        <label>
-            <input class="input1" type="text" placeholder="" required="">
-            <span class="span1">Company name</span>
-        </label>
+                    <form class="form1">
+                        <p class="title1">ERP </p>
+                        <p class="message1">ERP를 통해 간편하게 가입하세요</p>
+                        <div class="flex1">
+                            <label>
+                                <input class="input1" type="text" placeholder="" required="">
+                                <span class="span1">Company name</span>
+                            </label>
 
-        <label>
-            <input class="input1" type="text" placeholder="" required="">
-            <span class="span1">Name</span>
-        </label>
-    </div>  
-            
-    <label>
-        <input class="input1" type="email" placeholder="" required="">
-        <span class="span1">Phon number</span>
-    </label> 
-    <label>
-        <input class="input1" type="email" placeholder="" required="">
-        <span class="span1">Email</span>
-    </label> 
-        
-    <label>
-        <input class="input1" type="password" placeholder="" required="">
-        <span class="span1">Password</span>
-    </label>
-    <label>
-        <input class="input1" type="password" placeholder="" required="">
-        <span class="span1">Confirm password</span>
-    </label>
-    <button class="submit1">Submit</button>
-    <p class="signin1">Already have an acount ? <a href="#">Sign in</a> </p>
-</form>
+                            <label>
+                                <input class="input1" type="text" placeholder="" required="">
+                                <span class="span1">Name</span>
+                            </label>
+                        </div>  
 
+                        <label>
+                            <input class="input1" type="email" placeholder="" required="">
+                            <span class="span1">Phone number</span>
+                        </label> 
+                        <label>
+                            <input class="input1" type="email" placeholder="" required="">
+                            <span class="span1">Email</span>
+                        </label> 
+
+                        <label>
+                            <input class="input1" type="password" placeholder="" required="">
+                            <span class="span1">Password</span>
+                        </label>
+                        <label>
+                            <input class="input1" type="password" placeholder="" required="">
+                            <span class="span1">Confirm password</span>
+                        </label>
+                        <button class="submit1">Submit</button>
+                        <p class="signin1">Already have an account? <a href="#">Sign in</a></p>
+                    </form>
                 </div>
+            </div>
+        </form>
     </div>
 </body>
 </html>

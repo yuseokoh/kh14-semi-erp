@@ -205,8 +205,61 @@
                 $('.reject-reason-textarea').removeClass('hidden').prop('disabled', false);
 
                 // 휴가신청 버튼을 수정완료 버튼으로 변경
-                $('.btn.submit').text('반려완료').removeClass('btn-positive').addClass('btn-warning');
+				$(this).hide();
+				$('#rejectComplete').removeClass('hidden');
+				$('.submit').addClass('hidden'); // 기안 버튼 숨기기
             });
+			
+			
+			
+			
+			
+			// 반려완료 버튼 클릭 시 동작
+				    $('#rejectComplete').on('click', function() {
+				        var signatureDataURL = canvas.toDataURL("image/png");
+				        signatureImage.src = signatureDataURL;
+				        const isConfirmed = window.confirm('정말로 반려하시겠습니까?');
+
+				        // textarea가 제대로 표시되고 있는지 확인
+				        if (!$('.reject-reason-textarea').hasClass('hidden')) {
+				            const rejectReason = $('.reject-reason-textarea').val();
+				            console.log(rejectReason);
+
+				            if (isConfirmed) {
+				                $.ajax({
+				                    url: "/rest/document/sign",
+				                    method: "POST",
+				                    data: {
+				                        signatureDataURL: signatureDataURL,
+				                        rejectReason: rejectReason,
+				                        approNo: approNo
+				                    },
+				                    success: function(response) {
+				                        alert("저장했습니다");
+				                        $.ajax({
+											//아마여기수정하면될듯?
+				                            url: "/rest/vacation/reject",
+				                            method: "POST",
+				                            data: {
+				                                rejectReason: rejectReason,
+				                                approNo: approNo
+				                            },
+				                            success: function() {
+												location.reload(); // 페이지 새로고침
+				                            }
+				                        });
+				                    }
+				                });
+				            }
+				        }
+				    });
+			
+			
+			
+			
+			
+			
+			
 			
 			// 기안 버튼 클릭 시 동작
 				    $(".submit").on("click", function() {
@@ -232,9 +285,9 @@
 									data: {
 											approNo: approNo
 									},
-									success: function(response){
-										console.log(response);
-										alert("저장했습니다");
+									success: function(){
+										location.reload(); // 페이지 새로고침
+										// 반려 완료 후 추가 동작 (예: 페이지 리로드)
 									}
 									
 								});
@@ -465,6 +518,7 @@
                         <textarea class="field w-100 form reason-textarea" disabled rows="3" style="padding-right: 100px;">${tbEmpVacaReqDto.vacaReason}</textarea>
                         <textarea class="field w-100 form hidden reject-reason-textarea" name="rejectReason" disabled rows="3" style="padding-right: 100px;" placeholder="반려 사유를 입력하세요."></textarea>
                         <button type="button" class="reject flex-core" >반려</button>
+						<button type="button" class="flex-core btn-warning hidden " id="rejectComplete">반려완료</button>
                         <button type="button" class="btn btn-positive submit flex-core">휴가승인</button>
                     </div>
                 </div>

@@ -126,7 +126,19 @@ public class TbEmpVacaReqDao {
 		return list.isEmpty() ? null : list.get(0);
 	}
 
-	
+	public boolean updateReject(int approNo, String rejectReason) {
+		String sql = "update tb_VacaReq set vaca_Reject = ? where appro_no = ?";
+		Object[] data = {rejectReason, approNo};
+		return jdbcTemplate.update(sql, data) > 0;
+		
+	}
+
+	public List<TbEmpVacaReqDto> selectListByvacaTypeAndapplicantId(String approYN, String loginId) {
+		String sql = "SELECT v.* FROM tb_VacaReq v JOIN tb_Approval a ON v.appro_No = a.appro_No WHERE a.appro_YN = ? AND v.applicantId = ? ORDER BY v.vaca_No ASC, v.vaca_Sdate ASC";
+		Object[] data = { approYN, loginId };
+		return jdbcTemplate.query(sql, tbEmpVacaReqMapper, data);
+	}
+
 	
 	
 

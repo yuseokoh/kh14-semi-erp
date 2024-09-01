@@ -40,7 +40,6 @@ public class TbEmpReportRestController {
 			return true;
 		} else
 			return false;
-
 	}
 	
 	@PostMapping("/reject")

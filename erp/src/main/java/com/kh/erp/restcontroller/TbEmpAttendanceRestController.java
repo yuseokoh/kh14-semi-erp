@@ -63,7 +63,6 @@ public class TbEmpAttendanceRestController {
 	public TbEmpAttendanceDto check(HttpSession session) {
 		String loginId = (String) session.getAttribute("createdUser");
 		TbEmpAttendanceDto tbEmpAttendanceDto =  tbEmpAttendanceDao.selectTodayRecordById(loginId);
-		System.out.println(tbEmpAttendanceDto);
 		return tbEmpAttendanceDto;
 	}
 	

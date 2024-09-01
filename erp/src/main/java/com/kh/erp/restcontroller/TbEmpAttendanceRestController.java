@@ -58,12 +58,12 @@ public class TbEmpAttendanceRestController {
 	}
 
 	
-//	//상태조회
-//	@PostMapping("/check")
-//	public String check() {
-//		//TODO: process POST request
-//		
-//		return entity;
-//	}
+	//상태조회
+	@PostMapping("/check")
+	public TbEmpAttendanceDto check(HttpSession session) {
+		String loginId = (String) session.getAttribute("createdUser");
+		TbEmpAttendanceDto tbEmpAttendanceDto =  tbEmpAttendanceDao.selectTodayRecordById(loginId);
+		return tbEmpAttendanceDto;
+	}
 	
 }

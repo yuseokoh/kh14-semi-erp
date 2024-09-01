@@ -98,14 +98,22 @@ public class TbEmpApprovalDao {
 	// 이를 통해 int 값을 반환 하여 TbEmpDao와 연계하여 잔여 연차를 차감 및 사용 연차 업데이트 할 예정
 	// -- > 아직 승인 절차 a.appro_yn 가 'Y'가 되게 만드는 작업 없음(2024-08-28)
 	public Integer getVacationApproCount(String applicantId, int vacaNo) {
-		String sql = "SELECT COALESCE(SUM(v.date_diff), 0) " + "FROM (" + "    SELECT DISTINCT v.vaca_No, "
-				+ "           v.vaca_Sdate, " + "           v.vaca_Edate, " + "           v.vaca_Edate - v.vaca_Sdate "
-				+ // 날짜 차이 계산 (+1일 포함)
-				"    FROM tb_VacaReq v " + "    INNER JOIN tb_Approval a ON v.applicantId = a.applicantId "
-				+ "    AND a.appro_yn = 'N' " + "    WHERE v.applicantId = ? " + // 신청자 ID
-				"    AND v.vaca_No = ? " + // 특정 휴가 번호
-				"    AND v.vaca_type = '연차' " + // 휴가 유형
-				") v";
+		String sql = 
+			    "SELECT COALESCE(SUM(v.date_diff), 0) " +
+			    "FROM (" +
+			    "    SELECT DISTINCT " +
+			    "        v.vaca_No, " +
+			    "        v.vaca_Sdate, " +
+			    "        v.vaca_Edate, " +
+			    "        (v.vaca_Edate - v.vaca_Sdate) AS date_diff " + // 날짜 차이 계산 (+1일 포함) 
+			    "    FROM tb_VacaReq v " +
+			    "    INNER JOIN tb_Approval a " +
+			    "        ON v.applicantId = a.applicantId " +
+			    "        AND a.appro_yn = 'Y' " +
+			    "    WHERE v.applicantId = ? " + // 신청자 ID
+			    "      AND v.vaca_No = ? " + // 특정 휴가 번호
+			    "      AND v.vaca_type = '연차' " + // 휴가 유형
+			    ") v";
 		Object[] data = { applicantId, vacaNo };
 		return jdbcTemplate.queryForObject(sql, Integer.class, data); // Integer로 결과 반환
 	}
@@ -118,10 +126,22 @@ public class TbEmpApprovalDao {
 		return list.isEmpty() ? null : list.get(0);
 	}
 
-	public boolean updateSign(int approNo, String approBosId, String approBosName) {
-		String sql = "UPDATE tb_Approval SET appro_yn = 'Y', appro_BosName = ?, appro_BosId = ? WHERE appro_no = ?";
-		Object[] data = {approBosName, approBosId, approNo};
+	// 수정해야할것 -->  이젠 지쳐서 그냥 이렇게 할래...
+	public boolean updateSign(int approNo, String approBosId, String approBosName, String rejectReason) {
+		String sql = "UPDATE tb_Approval SET appro_yn = ?, appro_BosName = ?, appro_BosId = ? WHERE appro_no = ?";
+		// 조건에 따라 appro_yn 값을 결정합니다.
+	    String approYn = (rejectReason != null) ? "N" : "Y";
+	    Object[] data = {approYn, approBosName, approBosId, approNo};
 		return jdbcTemplate.update(sql, data) > 0;
 		
+		
+		
+		
+	}
+
+	public boolean updateType(String vacaType, int approNo) {
+		String sql = "UPDATE tb_Approval set appro_type = ? where appro_no = ? and appro_YN = 'N'";
+		Object[] data = {vacaType, approNo};
+		return jdbcTemplate.update(sql, data) > 0;
 	}
 }

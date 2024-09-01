@@ -2,6 +2,7 @@ package com.kh.erp.dto;
 import java.util.Date;
 import lombok.Data;
 
+// 추가시 얘기한번만 해주세요
 @Data
 public class TbEmpDto {
 		private String loginId;
@@ -33,4 +34,6 @@ public class TbEmpDto {
     	private String salDate;
     	private int salPre;
     	private int salAfter;
+    	private int annualLeaveQuota;
+    	private int annualLeaveUsed;
 }

@@ -31,7 +31,6 @@ public class TbEmpReportRestController {
 	) {
 		String loginId = (String) session.getAttribute("createdUser");
 		tbEmpReportDto.setWriterId(loginId);
-		System.out.println("approYN in rest/report/update = " + approYN);
 		// 선검증
 		TbEmpApprovalDto tbEmpApprovalDto = tbEmpApprovalDao.selectOneByApproNo(tbEmpReportDto.getApproNo());
 		if (tbEmpApprovalDto.getApplicantId().equals(loginId) && tbEmpApprovalDto.getApproYN().equals(approYN)
@@ -41,7 +40,13 @@ public class TbEmpReportRestController {
 			return true;
 		} else
 			return false;
-
 	}
+	
+	@PostMapping("/reject")
+	public void reject(@RequestParam String rejectReason
+			, @RequestParam int approNo) {
+		tbEmpReportDao.updateReject(approNo, rejectReason);
+	}
+	
 
 }

@@ -1,11 +1,12 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>프로젝트 최종 폼</title>
+<title>휴가 수정</title>
 
 <!-- google font cdn -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,7 +120,7 @@
 							data : { // 서버에 보낼 데이터 (필요에 따라 JSON, 폼 데이터 등)
 								approNo : $('[name=approNo]').val(),
 								approYN : $('[name=approYN]').val(),
-								vacaNo : $('[name=reportNo]').val(),
+								vacaNo : $('[name=vacaNo]').val(),
 								vacaTitle : $('[name=vacaTitle]').val(),
 								vacaSdate : $('[name=vacaSdate]').val(),
 								vacaEdate : $('[name=vacaEdate]').val(),
@@ -282,12 +283,21 @@
 								<label>결재자</label>
 								<thead>
 									<tr>
-										<th>직급</th>
+										<th>
+											<c:choose>
+																					    <c:when test="${tbEmpApprovalDto.approBosName == null}">
+																					        직급
+																					    </c:when>
+																					    <c:otherwise>
+																					        ${tbEmpApprovalDto.approBosName}
+																					    </c:otherwise>
+																					</c:choose>
+										</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td>서명칸</td>
+										<td><img src="/vacation/signImage?approNo=${tbEmpVacaReqDto.approNo}&applicantId=${tbEmpVacaReqDto.applicantId}"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -332,14 +342,13 @@
 								<label>휴가 종료일</label> <input type="text" name="vacaEdate" class="field w-100 test7-2 form disabled" value="${tbEmpVacaReqDto.vacaEdate}" disabled>
 							</div>
 						</div>
-						${tbEmpApprovalDto}<br> ${tbEmpDto}<br> ${tbEmpVacaReqDto}
 						<div class="row">
 							<div>
 								<label>휴가 종류</label> <select class="form disabled hidden" disabled name="vacaType">
-									<option value="" class="text-secondary">휴가 종류</option>
-									<option value="개인사유">개인사유</option>
-									<option value="연차">연차</option>
-									<option value="병가">병가</option>
+								    <option value="" class="text-secondary">휴가 종류</option>
+								    <option value="개인사유" ${tbEmpVacaReqDto.vacaType == '개인사유' ? 'selected' : ''}>개인사유</option>
+								    <option value="연차" ${tbEmpVacaReqDto.vacaType == '연차' ? 'selected' : ''}>연차</option>
+								    <option value="병가" ${tbEmpVacaReqDto.vacaType == '병가' ? 'selected' : ''}>병가</option>
 								</select> <input class="form disabled" id="beforVacaType" value="${tbEmpVacaReqDto.vacaType}" disabled>
 							</div>
 						</div>

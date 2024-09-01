@@ -19,7 +19,7 @@
 <!-- 프로젝트 스타일 -->
 <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
 <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-<link rel="stylesheet" type="text/css" href="/css/notic.css">
+<!--<link rel="stylesheet" type="text/css" href="/css/notic.css">-->
 <link rel="stylesheet" type="text/css" href="/css/vacation.css">
 <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
@@ -273,7 +273,7 @@ input[readonly] {
 							<div class="title">일일 업무 보고서</div>
 
 							<div class="table-container">
-								<table class="table form">
+								<table class="table">
 									<label>결재자</label>
 									<thead>
 										<tr>
@@ -282,7 +282,7 @@ input[readonly] {
 									</thead>
 									<tbody>
 										<tr>
-											<td>서명칸</td>
+											<td><img src="https://via.placeholder.com/200"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -303,10 +303,10 @@ input[readonly] {
 									<label>사원번호</label> <input type="text" class="filed form" value="${tbEmpDto.empNo}" readonly>
 								</div>
 								<div>
-									<label>직급</label> <input type="text" class="filed form" value="${tbEmpDto.empLevel}" name="writerDept" readonly>
+									<label>직급</label> <input type="text" class="filed form" value="${tbEmpDto.empLevel}" readonly>
 								</div>
 								<div>
-									<label>부서</label> <input type="text" class="filed form" value="${tbEmpDto.empDept}" readonly>
+									<label>부서</label> <input type="text" class="filed form" value="${tbEmpDto.empDept}"  name="writerDept" readonly>
 								</div>
 							</div>
 

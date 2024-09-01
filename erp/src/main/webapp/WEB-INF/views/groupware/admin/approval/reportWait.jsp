@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>보고서 반려</title>
+<title>보고서 반려 / 기안</title>
 
 <!-- google font cdn -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,9 +128,12 @@
 <!-- 전자 서명 -->
 <script type="text/javascript">
     	 $(function () {
+			
+			//여기서 정리를 해야할거 같은데 어떻게할지.. 아마 이걸로 정리해야할 듯
+			if(document.getElementById("canvas")){
              var canvas = document.getElementById("canvas");
              var context = canvas.getContext("2d");
-             var clearButton = document.getElementById("clearButton");
+			 var clearButton = document.getElementById("clearButton");
              var signatureImage = document.getElementById("signatureImage");
 
              var drawing = false;
@@ -158,6 +161,11 @@
    context.clearRect(0, 0, canvas.width, canvas.height);
  });
 
+ 
+ 
+ }else{
+	$('#clearButton').hide();
+ }
          });
 </script>
 
@@ -169,77 +177,87 @@
 <script type="text/javascript">
 	$(function() {
 
-		
-		const approNo = $('[name=approNo]').val();
-		// 초기에 textarea 숨기기
-		$('#preview').addClass('show').prop('disabled', true);
-		$('.reason-textarea').addClass('hidden').prop('disabled', true);
+	    const approNo = $('[name=approNo]').val();
+	    
+	    // 초기에 textarea 숨기기
+	    $('#preview').addClass('show').prop('disabled', true);
+	    $('.reason-textarea').addClass('hidden').prop('disabled', true);
 
-		// 반려 버튼 클릭 시 동작
-		$('.reject').on('click', function() {
-			
-			// 휴가 사유 라벨을 반려 사유 라벨로 변경
-			$('.reason-label').text('반려 사유');
-					// id=preview 숨기고 반려 사유 textarea 보이기
-					$('#preview').addClass('hidden').prop('disabled', true);
-					
-					
-					// --
-					$('.reject-reason-textarea').removeClass('hidden').prop(
-							'disabled', false);
+	    // 반려 버튼 클릭 시 동작
+	    $('.reject').on('click', function() {
+	        // 휴가 사유 라벨을 반려 사유 라벨로 변경
+	        $('.reason-label').text('반려 사유');
 
-					// 휴가신청 버튼을 반려완료 버튼으로 변경
-					$('.btn.submit').text('반려완료').removeClass('btn-positive submit')
-							.addClass('btn-warning').attr('id', 'reject');;
-				});
-		
-		//반려 완료 버튼 클릭시 뒤로가기전에 경고창 띄울까?
-		$('#reject').on('click', function(){
-			var signatureDataURL = canvas.toDataURL("image/png");
-            signatureImage.src = signatureDataURL;
-            console.log(signatureDataURL);
-			const isConfirmed = window.confirm('정말로 반려하시겠습니까?');
-			const rejectReason = $('.reject-reason-textarea').val();
-		    // 사용자가 '확인'을 클릭했을 때만 다음 작업을 수행
-		    if (isConfirmed) {
-		    	
-		    	console.log(true);
-			 $.ajax({
-	                url : "/rest/document/sign",
-	                method : "post",
-	                data:{ 
-	                       signatureDataURL : signatureDataURL,
-	                       rejectReason : rejectReason,
-	                       approNo : approNo
+	        // id=preview 숨기고 반려 사유 textarea 보이기
+	        $('#preview').addClass('hidden').prop('disabled', true);
+	        $('.reject-reason-textarea').removeClass('hidden').prop('disabled', false);
+
+	        // 반려 버튼을 숨기고 반려완료 버튼만 보이도록 설정
+	        $(this).hide();
+	        $('#rejectComplete').removeClass('hidden');
+	        $('.submit').addClass('hidden'); // 기안 버튼 숨기기
+	    });
+
+	    // 반려완료 버튼 클릭 시 동작
+	    $('#rejectComplete').on('click', function() {
+	        var signatureDataURL = canvas.toDataURL("image/png");
+	        signatureImage.src = signatureDataURL;
+	        const isConfirmed = window.confirm('정말로 반려하시겠습니까?');
+
+	        // textarea가 제대로 표시되고 있는지 확인
+	        if (!$('.reject-reason-textarea').hasClass('hidden')) {
+	            const rejectReason = $('.reject-reason-textarea').val();
+	            console.log(rejectReason);
+
+	            if (isConfirmed) {
+	                $.ajax({
+	                    url: "/rest/document/sign",
+	                    method: "POST",
+	                    data: {
+	                        signatureDataURL: signatureDataURL,
+	                        rejectReason: rejectReason,
+	                        approNo: approNo
 	                    },
-	                success : function(response){
-	                            alert("저장했습니다");
-	                        }
-	            });
-		    }
-		});
-		
-		
-		
-		//기안 버튼 클릭시 동작
-		$(".submit").on("click",function(){
-            var signatureDataURL = canvas.toDataURL("image/png");
-            signatureImage.src = signatureDataURL;
-            console.log(signatureDataURL);
-            $.ajax({
-                url : "/rest/document/sign",
-                method : "post",
-                data:{ 
-                       signatureDataURL : signatureDataURL,
-                       approNo : approNo
-                    },
-                success : function(response){
-                            alert("저장했습니다");
-                        }
-            });
+	                    success: function(response) {
+	                        alert("저장했습니다");
+	                        $.ajax({
+	                            url: "/rest/report/reject",
+	                            method: "POST",
+	                            data: {
+	                                rejectReason: rejectReason,
+	                                approNo: approNo
+	                            },
+	                            success: function() {
+									location.reload(); // 페이지 새로고침
+	                            }
+	                        });
+	                    }
+	                });
+	            }
+	        }
+	    });
 
-        });
+	    // 기안 버튼 클릭 시 동작
+	    $(".submit").on("click", function() {
+	        var signatureDataURL = canvas.toDataURL("image/png");
+	        signatureImage.src = signatureDataURL;
+	        console.log(signatureDataURL);
+	        $.ajax({
+	            url: "/rest/document/sign",
+	            method: "POST",
+	            data: {
+	                signatureDataURL: signatureDataURL,
+	                approNo: approNo
+	            },
+	            success: function(response) {
+	                alert("저장했습니다");
+	            }
+	        });
+	    });
+
 	});
+
+
 </script>
 </head>
 <body>
@@ -359,17 +377,38 @@
 							<label>결재자</label>
 							<thead>
 								<tr>
-									<th>직급</th>
+									<th>
+										<c:choose>
+										    <c:when test="${tbEmpApprovalDto.approBosName == null}">
+										        직급
+										    </c:when>
+										    <c:otherwise>
+										        ${tbEmpApprovalDto.approBosName}
+										    </c:otherwise>
+										</c:choose>
+										
+									</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td><canvas id="canvas" width="200" height="200" style="border: 1px solid black"></canvas></td>
+									<td>
+										<c:choose>
+											<c:when test="${tbEmpApprovalDto.approBosName != null && tbEmpApprovalDto.approBosId != null}">
+																			        <!-- 서명 이미지가 있는 경우 -->
+																			        <img src="/report/signImage?approNo=${tbEmpReportDto.approNo}&writerId=${tbEmpReportDto.writerId}">
+																			    </c:when>
+																			    <c:otherwise>
+																			        <!-- 서명 할 공간 보여주기 -->
+																			        <canvas id="canvas" width="200" height="200" style="border: 1px solid black"></canvas>
+																			    </c:otherwise>
+																			</c:choose>
+										</td>
 								</tr>
 								
 							</tbody>
 						</table>
-						<button id="clearButton">초기화</button>
+						<button id="clearButton" >초기화</button>
 					</div>
 					<div class="row">
 						<label>제목</label> <input type="text" name="reportTitle" class="form title1" value="${tbEmpReportDto.reportTitle}" readonly>
@@ -384,10 +423,10 @@
 							<label>사원번호</label> <input type="text" class="form " value="${tbEmpDto.empNo}" readonly>
 						</div>
 						<div>
-							<label>직급</label> <input type="text" class="form " value="${tbEmpReportDto.writerDept}" readonly>
+							<label>직급</label> <input type="text" class="form " value="${tbEmpDto.empLevel}" readonly>
 						</div>
 						<div>
-							<label>부서</label> <input type="text" class="form " value="${tbEmpDto.empDept}" readonly>
+							<label>부서</label> <input type="text" class="form " value="${tbEmpReportDto.writerDept}" readonly>
 
 						</div>
 					</div>
@@ -403,6 +442,7 @@
 							<div id="preview"></div>
 							<textarea class="field w-100 form hidden reject-reason-textarea" disabled rows="3" style="padding-right: 100px;" placeholder="반려 사유를 입력하세요."></textarea>
 							<button type="button" class="reject flex-core">반려</button>
+							<button type="button" class="flex-core btn-warning hidden " id="rejectComplete">반려완료</button>
 							<button type="button" class="btn btn-positive submit flex-core">기안</button>
 						</div>
 					</div>

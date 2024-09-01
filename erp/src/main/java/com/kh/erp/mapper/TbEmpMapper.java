@@ -44,6 +44,8 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setSalDate(rs.getString("sal_date"));
 		tbEmpDto.setSalPre(rs.getInt("sal_pre"));
 		tbEmpDto.setSalAfter(rs.getInt("sal_after"));
+		tbEmpDto.setAnnualLeaveQuota(rs.getInt("annualLeaveQuota")); // 연차 일 수 15일
+		tbEmpDto.setAnnualLeaveUsed(rs.getInt("annualLeaveUsed")); // 연차 사용일수
 		return tbEmpDto;
 	}
 

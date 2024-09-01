@@ -41,12 +41,13 @@ public class TbEmpReportDao {
 	}
 
 	public boolean updateContent(TbEmpReportDto tbEmpReportDto) {
-		String sql = "update tb_Report set report_Content = ?, report_title=? where report_no = ?";
+		String sql = "update tb_Report set report_Content = ?, report_title=?, write_Date = sysdate where report_no = ?";
 		Object[] data = { tbEmpReportDto.getReportContent(), tbEmpReportDto.getReportTitle(),
 				tbEmpReportDto.getReportNo() };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 
+	//admin용 검색할때 쓰는 거였던가?
 	public TbEmpReportDto selectOneWithApproNoAndId(int approNo, String writerId) {
 		String sql = "select * from tb_Report where appro_No = ? and writer_Id = ?";
 		Object[] data = { approNo, writerId };
@@ -59,6 +60,12 @@ public class TbEmpReportDao {
 		String sql = "select document from tb_approval_image where approNo=?";
 		Object[] data = {approNo};
 		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
+
+	public boolean updateReject(int approNo, String rejectReason) {
+		String sql = "update tb_Report set report_reject = ? where appro_no = ?";
+		Object[] data = {rejectReason, approNo};
+		return jdbcTemplate.update(sql, data) > 0;
 	}
 
 }

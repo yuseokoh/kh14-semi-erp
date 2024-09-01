@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -254,7 +254,16 @@
 							<label>결재자</label>
 							<thead>
 								<tr>
-									<th>직급</th>
+									<th>
+										<c:choose>
+										    <c:when test="${tbEmpApprovalDto.approBosName == null}">
+										        직급
+										    </c:when>
+										    <c:otherwise>
+										        ${tbEmpApprovalDto.approBosName}
+										    </c:otherwise>
+										</c:choose>
+									</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -277,10 +286,10 @@
 							<label>사원번호</label> <input type="text" class="form " value="${tbEmpDto.empNo}" readonly>
 						</div>
 						<div>
-							<label>직급</label> <input type="text" class="form " value="${tbEmpReportDto.writerDept}" readonly>
+							<label>직급</label> <input type="text" class="form " value="${tbEmpDto.empLevel}" readonly>
 						</div>
 						<div>
-							<label>부서</label> <input type="text" class="form " value="${tbEmpDto.empDept}" readonly>
+							<label>부서</label> <input type="text" class="form " value="${tbEmpReportDto.writerDept}" readonly>
 
 						</div>
 					</div>

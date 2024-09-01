@@ -48,7 +48,6 @@ public class TbEmpReportController {
 		return "/WEB-INF/views/groupware/report/reportInsert.jsp";
 	}
 
-	
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute TbEmpReportDto tbEmpReportDto, HttpSession session) {
 		// 이름이 들어가기때문에 그 이름 받는 부분을 id로 받고(이전까진 내용물은 이름)
@@ -109,11 +108,11 @@ public class TbEmpReportController {
 				int documentNo = tbEmpReportDao.findImage(approNo);
 				return "redirect:/attach/download?documentNo=" + documentNo;
 			} catch (Exception e) {
-				//대체이미지 링크 전송
+				// 대체이미지 링크 전송
 				return "redirect:https://via.placeholder.com/200";
 			}
 		}
-		//대체이미지 링크 전송
+		// 대체이미지 링크 전송
 		return "redirect:https://via.placeholder.com/200";
 
 	}

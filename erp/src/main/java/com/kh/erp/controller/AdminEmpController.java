@@ -68,7 +68,7 @@ public class AdminEmpController {
 		return "redirect:/admin/emp/list";
 	}
 
-	//퇴사에 대한 구현(삭제 아님)
+	// 퇴사에 대한 구현(삭제 아님)
 	@GetMapping("/delete")
 	public String delete(@RequestParam String loginId, Model model) {
 		model.addAttribute("loginId", loginId);
@@ -97,23 +97,23 @@ public class AdminEmpController {
 			TbEmpReportDto tbEmpReportDto = tbEmpReportDao.selectOneWithApproNoAndId(approNo, writerId);
 
 			// 작성자 Id로 사원정보 접근 + document(결재 사인)이 있는 경우 그거도 보냄
-			System.out.println("test in approval " + tbEmpReportDao.findImage(approNo));
-			if (tbEmpReportDao.findImage(approNo) == -1)
-			{
-				System.out.println("에러요 이씨빌아");
-			}
+			// 보내는 게아니라 받는다면? 받아서 보여주면된다면?
+
 			TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpReportDto.getWriterId());
 			model.addAttribute("tbEmpReportDto", tbEmpReportDto);
+			// 중간에 부서코드 -> 이름으로 바꿔서 보여주기
+			tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
 			model.addAttribute("tbEmpDto", tbEmpDto);
 			model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
 			return "/WEB-INF/views/groupware/admin/approval/reportWait.jsp";
 		} else {// 보고서 제외 전부 지금은 휴가 관련된 것만 나오게
-//				TbEmpVacaReqDto tbEmpVacaReqDto = tbEmpVacaReqDao.selectOneWithApproNoAndId();
-//				TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpReportDto.getWriterId());
-//				model.addAttribute("tbEmpVacaReqDto", tbEmpVacaReqDto);
-//				model.addAttribute("tbEmpDto", tbEmpDto);
-//				model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
-			return "/WEB-INF/views/groupware/admin/approval/vacaWait.jsp";
+				TbEmpVacaReqDto tbEmpVacaReqDto = tbEmpVacaReqDao.selectOneWithApproNoAndId(approNo, writerId);
+				TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpVacaReqDto.getApplicantId());
+				tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+				model.addAttribute("tbEmpVacaReqDto", tbEmpVacaReqDto);
+				model.addAttribute("tbEmpDto", tbEmpDto);
+				model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
+			return "/WEB-INF/views/groupware/admin/approval/leaveWait.jsp";
 		}
 
 	}
@@ -127,13 +127,14 @@ public class AdminEmpController {
 		pageVO.setCount(tbEmpApprovalDao.countPage(pageVO));
 		return "/WEB-INF/views/groupware/totalList2.jsp";
 	}
-		@RequestMapping("/status")
+
+	@RequestMapping("/status")
 	public String status(Model model) {
-		model.addAttribute("empLevelStatusList",tbEmpDao.statusByEmpLevel());
-		model.addAttribute("empLevelStatusByeList",tbEmpDao.statusByEmpLevelBye());
-		model.addAttribute("empSdateList",tbEmpDao.statusByEmpSdate());
-		model.addAttribute("empEdateList",tbEmpDao.statusByEmpEdate());
-		model.addAttribute("workingDayList",tbEmpDao.workingDay());
+		model.addAttribute("empLevelStatusList", tbEmpDao.statusByEmpLevel());
+		model.addAttribute("empLevelStatusByeList", tbEmpDao.statusByEmpLevelBye());
+		model.addAttribute("empSdateList", tbEmpDao.statusByEmpSdate());
+		model.addAttribute("empEdateList", tbEmpDao.statusByEmpEdate());
+		model.addAttribute("workingDayList", tbEmpDao.workingDay());
 		return "/WEB-INF/views/admin/status2.jsp";
 	}
 }

@@ -207,7 +207,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>서명칸 이미지 넣기</td>
+											<td><img src="https://via.placeholder.com/200"></td>
 										</tr>
 									</tbody>
 								</table>

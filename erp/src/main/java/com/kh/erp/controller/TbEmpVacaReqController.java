@@ -135,11 +135,11 @@ public class TbEmpVacaReqController {
 	// 수정 중
 	// 사인 있으면 넣기
 	@RequestMapping("/signImage")
-	public String signImage(int approNo, String writerId) {
-		if (tbEmpDao.selectOne(writerId) != null) {
+	public String signImage(int approNo, String applicantId) {
+		if (tbEmpDao.selectOne(applicantId) != null) {
 			try {
-//				int documentNo = tbEmpVacaReqDao.findImage(approNo);
-//				return "redirect:/attach/download?documentNo=" + documentNo; // 메소드 구현해야함
+				int documentNo = tbEmpVacaReqDao.findImage(approNo);
+				return "redirect:/attach/download?documentNo=" + documentNo; // 메소드 구현해야함
 			} catch (Exception e) {
 				// 대체이미지 링크 전송
 				return "redirect:https://via.placeholder.com/200";

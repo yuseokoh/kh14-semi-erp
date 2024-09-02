@@ -89,51 +89,41 @@ public class TbEmpReportDao {
 	// 작성중
 	public List<TbReportRecVO> selectReportLogListByPaging(PageVO pageVO) {
 		if (pageVO.isSearch()) { // 검색
-			String sql = "SELECT * FROM ( " +
-		             "    SELECT rownum rn, TMP.* FROM ( " +
-		             "        SELECT " +
-		             "            r.write_Date, " +
-		             "            r.report_Title, " +
-		             "            r.writer_Id, " +
-		             "            a.appro_BosName, " +
-		             "            a.appro_BosId, " +
-		             "            a.appro_YN, " +
-		             "            a.appro_No, " +
-		             "            r.report_No, " +
-		             "            r.writer_Dept, " +
-		             "            r.writer_Name " +
-		             "        FROM tb_Report r " +
-		             "        JOIN tb_Approval a ON r.appro_No = a.appro_No " +
-		             "        WHERE instr(#1, ?) > 0 " + // 문자열 검색
-		             "        ORDER BY r.write_Date DESC, #1 ASC " +
-		             "    ) TMP " +
-		             ") WHERE rn BETWEEN ? AND ?";
+			String sql = "SELECT * FROM ( " + "    SELECT rownum rn, TMP.* FROM ( " + "        SELECT "
+					+ "            r.write_Date, " + "            r.report_Title, " + "            r.writer_Id, "
+					+ "            a.appro_BosName, " + "            a.appro_BosId, " + "            a.appro_YN, "
+					+ "            a.appro_No, " + "            r.report_No, " + "            r.writer_Dept, "
+					+ "            r.writer_Name " + "        FROM tb_Report r "
+					+ "        JOIN tb_Approval a ON r.appro_No = a.appro_No " + "        WHERE instr(#1, ?) > 0 " + // 문자열
+																														// 검색
+					"        ORDER BY r.write_Date DESC, #1 ASC " + "    ) TMP " + ") WHERE rn BETWEEN ? AND ?";
 			sql = sql.replace("#1", pageVO.getColumn());
 			Object[] data = { pageVO.getKeyword(), pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbReportRecMapper, data);
 		} else { // 목록
-			String sql = "SELECT * FROM ( " +
-		             "    SELECT rownum rn, TMP.* FROM ( " +
-		             "        SELECT " +
-		             "            r.write_Date, " +
-		             "            r.report_Title, " +
-		             "            r.writer_Id, " +
-		             "            a.appro_BosName, " +
-		             "            a.appro_BosId, " +
-		             "            a.appro_YN, " +
-		             "            a.appro_No, " +
-		             "            r.report_No, " +
-		             "            r.writer_Dept, " +
-		             "            r.writer_Name " +
-		             "        FROM tb_Report r " +
-		             "        JOIN tb_Approval a ON r.appro_No = a.appro_No " +
-		             "        ORDER BY r.write_Date DESC " +
-		             "    ) TMP " +
-		             ") WHERE rn BETWEEN ? AND ?";
+			String sql = "SELECT * FROM ( " + "    SELECT rownum rn, TMP.* FROM ( " + "        SELECT "
+					+ "            r.write_Date, " + "            r.report_Title, " + "            r.writer_Id, "
+					+ "            a.appro_BosName, " + "            a.appro_BosId, " + "            a.appro_YN, "
+					+ "            a.appro_No, " + "            r.report_No, " + "            r.writer_Dept, "
+					+ "            r.writer_Name " + "        FROM tb_Report r "
+					+ "        JOIN tb_Approval a ON r.appro_No = a.appro_No " + "        ORDER BY r.write_Date DESC "
+					+ "    ) TMP " + ") WHERE rn BETWEEN ? AND ?";
 			Object[] data = { pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbReportRecMapper, data);
 		}
 
+	}
+
+	public int countPageWithVO(PageVO pageVO) {
+		if (pageVO.isSearch()) {
+			String sql = "select count(*) from tb_Report r JOIN tb_Approval a ON r.appro_No = a.appro_No WHERE instr("
+					+ pageVO.getColumn() + ",?) > 0";
+			Object[] data = { pageVO.getKeyword() };
+			return jdbcTemplate.queryForObject(sql, int.class, data);
+		} else {
+			String sql = "select count(*) from tb_Report r JOIN tb_Approval a ON r.appro_No = a.appro_No";
+			return jdbcTemplate.queryForObject(sql, int.class);
+		}
 	}
 
 }

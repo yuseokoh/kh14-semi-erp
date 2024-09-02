@@ -186,8 +186,8 @@
                                 <input type="hidden" name="loginId" value="${sessionScope.createdUser}" />
                                 <div class="actions">
                                     <select name="column" class="row actions1" style="flex-grow: 1;">
-                                        <option value="vaca_title" class="row" <c:if test="${param.column == 'vaca_title'}">selected</c:if>>제목</option>
-                                        <option value="vaca_Type" class="row" <c:if test="${param.column == 'vaca_Type'}">selected</c:if>>유형</option>
+                                        <option value="report_Title" class="row" <c:if test="${param.column == 'report_Title'}">selected</c:if>>제목</option>
+                                        <option value="appro_BosName" class="row" <c:if test="${param.column == 'appro_BosName'}">selected</c:if>>결재자</option>
                                     </select>
 
                                     <div class="row search" style="flex-grow: 1;">

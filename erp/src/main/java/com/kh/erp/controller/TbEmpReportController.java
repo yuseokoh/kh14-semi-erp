@@ -131,7 +131,7 @@ public class TbEmpReportController {
 		if (sessionloginId.equals(loginId)) {
 			List<TbReportRecVO> list = tbEmpReportDao.selectReportLogListByPaging(pageVO);
 			model.addAttribute("list", list);
-			pageVO.setCount(tbEmpReportDao.countPage(pageVO));
+			pageVO.setCount(tbEmpReportDao.countPageWithVO(pageVO));
 			return "/WEB-INF/views/groupware/report/reportList.jsp";
 		} else {
 			return "redirect:/home";

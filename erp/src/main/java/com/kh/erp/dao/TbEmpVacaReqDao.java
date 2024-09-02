@@ -58,11 +58,6 @@ public class TbEmpVacaReqDao {
 		}
 	}
 
-	// R
-	public void selectOneByColumn() {
-
-	}
-
 	// 수정(완)
 	public List<TbVacRecVO> selectVacaLogListByPaging(PageVO pageVO) {
 		if (pageVO.isSearch()) {// 검색
@@ -85,7 +80,6 @@ public class TbEmpVacaReqDao {
 			Object[] data = { pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbVacRecMapper, data);
 		}
-
 	}
 
 	// U

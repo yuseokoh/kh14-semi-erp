@@ -41,13 +41,15 @@ public class TbEmpVacaReqController {
 	@Autowired
 	private NameChangeService nameChangeService;
 
-	// Dao에서 에러남 -> 에러 해결
-	@RequestMapping("/list")
-	public String list(@ModelAttribute PageVO pageVO, Model model) {
-		model.addAttribute("list", tbEmpVacaReqDao.selectVacaLogListByPaging(pageVO));
-		pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
-		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
-	}
+	// 처음 의도 관리자가 전체 휴가 리스트 / 보고서 리스트 / 결재 리스트 봐야 한다고생각
+	// 구현상 결재 리스트만 만들면 될거같아서 굳이 ..? 라생각해서 
+	// 아마 안쓸듯.
+//	@RequestMapping("/list")
+//	public String list(@ModelAttribute PageVO pageVO, Model model) {
+//		model.addAttribute("list", tbEmpVacaReqDao.selectVacaLogListByPaging(pageVO));
+//		pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
+//		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
+//	}
 
 	// 각 세션에 있는 회원처리용
 	@RequestMapping("/mylist")

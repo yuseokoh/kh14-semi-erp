@@ -339,7 +339,7 @@ p{
                             <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
                             <ul>
                                 <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-                                <li><a href="#">보고서(수인씨작성중)</a></li>
+                                <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
                             </ul>
                         </li>
 

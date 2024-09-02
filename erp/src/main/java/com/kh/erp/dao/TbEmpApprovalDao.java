@@ -55,13 +55,13 @@ public class TbEmpApprovalDao {
 		if (pageVO.isSearch()) {// 검색
 			String sql = "select * from (" + "select rownum rn, TMP.* from ("
 					+ "select * from tb_Approval where instr(#1, ?) > 0 "
-					+ "order by #1 asc, appro_No asc, appro_Date asc" + ")TMP" + ") where rn between ? and ?";
+					+ "order by appro_Date desc, #1 asc, appro_No asc" + ")TMP" + ") where rn between ? and ?";
 			sql = sql.replace("#1", pageVO.getColumn());
 			Object[] data = { pageVO.getKeyword(), pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbEmpApprovalMapper, data);
 		} else {// 목록
 			String sql = "select * from (" + "select rownum rn, TMP.* from ("
-					+ "select * from tb_Approval order by appro_No asc, appro_Date asc" + ")TMP"
+					+ "select * from tb_Approval order by appro_Date desc, appro_No asc" + ")TMP"
 					+ ") where rn between ? and ?";
 			Object[] data = { pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbEmpApprovalMapper, data);

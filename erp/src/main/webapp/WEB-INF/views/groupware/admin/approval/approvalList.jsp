@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- 전자결재 리스트  -->
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전자결재 리스트 (통합 보고서,휴가신청서)</title>
+    <title>프로젝트 최종 폼</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,6 +31,29 @@
 
 
     <style>
+        .btn-write {
+            background-color: #99c2ff !important;
+            color: white;
+            border-radius: 0.2em;
+            border: 1px solid #cde1ff !important;
+        }
+
+        .btn-write:hover {
+            background-color: #dde6f3 !important;
+            color: #66a2fc;
+        }
+
+        .btn-delete {
+            background-color: #d63031 !important;
+            color: white;
+            border-radius: 0.2em;
+            border: 1px solid #cde1ff !important;
+        }
+
+        .btn-delete:hover {
+            background-color: #ff7675 !important;
+            color: black;
+        }
     </style>
 
 
@@ -51,28 +74,17 @@
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- 자바스크립트 코드 작성 영역 -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            // 삭제 버튼 클릭 이벤트
-            $('.write').on('click', function() {
-                // 확인 대화상자 표시
-                window.location.href = '/vacation/insert'; // 여기에 원하는 링크를 입력하세요
-            });
-        });
-    </script>
-
-
 </head>
 
 <body>
     <header id="header">
-        <div id="menuToggle">
-            <i class="fa fa-bars"></i>
-        </div>
+        <div id="menuToggle"><i class="fa fa-bars"></i></div>
         <div id="logo">
-            <a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i></i> <span class="notif-count content">0</span>
-            </a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
+            <a href="#" class="notif-alert">
+                <i class="fa-solid fa-envelope email"></i></i>
+                <span class="notif-count content">0</span>
+            </a>
+            <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
         </div>
     </header>
 
@@ -89,7 +101,8 @@
                 <!--출퇴근-->
                 <div id="commute-wrap">
                     <div id="date-wrap">
-                        <span id="cur-date"></span><br> <span id="cur-time"></span>
+                        <span id="cur-date"></span><br>
+                        <span id="cur-time"></span>
                     </div>
                     <div id="start-time">
                         <i>출근 시간</i>
@@ -115,42 +128,42 @@
             <!-- 사이드바-->
             <div class="row">
                 <ul class="menu-hover-fill">
-                    <li><a href="/home" data-text="home">HOME</a></li>
+                    <li><a href="/" data-text="home">HOME</a></li>
 
-                    <li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
-                        </a>
+                    <li><a href="/poketmon/list" data-text="">
+                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
                         <ul>
-                            <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-                            <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+                            <li><a href="#">휴가신청서</a></li>
+                            <li><a href="#">보고서(수인씨작성중)</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="/emp/list" data-text=""> <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
-                        </a>
-                        <ul>
-                            <li><a href="#">서브메뉴1</a></li>
-                            <li><a href="#">서브메뉴2</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="/book/list" data-text=""> <i class="fa-solid fa-people-group"></i> 인사관리(book)
-                        </a>
+                    <li><a href="/emp/list" data-text="">
+                            <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
                         <ul>
                             <li><a href="#">서브메뉴1</a></li>
                             <li><a href="#">서브메뉴2</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="/member/mypage" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
-                        </a>
+                    <li><a href="/book/list" data-text="">
+                            <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
                         <ul>
                             <li><a href="#">서브메뉴1</a></li>
                             <li><a href="#">서브메뉴2</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="/board/list" data-text=""> <i class="fa-solid fa-comment"></i> 예비용
-                        </a>
+                    <li><a href="/member/mypage" data-text="">
+                            <i class="fa-solid fa-id-card"></i> mypage</a>
+                        <ul>
+                            <li><a href="#">서브메뉴1</a></li>
+                            <li><a href="#">서브메뉴2</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="/board/list" data-text="">
+                            <i class="fa-solid fa-comment"></i> 예비용</a>
                         <ul>
                             <li><a href="#">서브메뉴1</a></li>
                             <li><a href="#">서브메뉴2</a></li>
@@ -158,12 +171,14 @@
                     </li>
 
                     <c:if test="${sessionScope.createdLevel == '관리자'}">
-                        <li><a href="/admin" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
-                            </a></li>
+                        <li><a href="/admin" data-text="">
+                                <i class="fa-solid fa-gears"></i> 관리자</a>
+                        </li>
                     </c:if>
 
-                    <li><a href="/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
-                        </a></li>
+                    <li><a href="/logout" data-text="">
+                            <i class="fa-solid fa-power-off"></i> 로그아웃</a>
+                    </li>
                 </ul>
             </div>
             </div>
@@ -181,15 +196,14 @@
                 <body>
                     <div class="noticbox w-1200">
                         <div class="row notice">
-                            <div class="row noticname">휴가 리스트</div>
-                           	<form action="mylist" method="get" autocomplete="off">
-								<input type="hidden" name="loginId" value="${sessionScope.createdUser}" />
+                            <div class="row noticname">전자결재 리스트</div>
+                            <form action="approvalList" method="get" autocomplete="off">
                                 <div class="actions">
                                     <select name="column" class="row actions1" style="flex-grow: 1;">
-										<option value="vaca_title" class="row" <c:if test="${param.column == 'vaca_title'}" >selected</c:if>>제목</option>
-										<option value="vaca_Type" class="row" <c:if test="${param.column == 'vaca_Type'}" >selected</c:if>>유형</option>
+                                        <option value="applicantId" class="row" <c:if test="${param.column == 'applicantId'}">selected</c:if>>작성자</option>
+										<option value="appro_BosName" class="row" <c:if test="${param.column == 'appro_BosName'}">selected</c:if>>결재자</option>
+										<option value="appro_Type" class="row" <c:if test="${param.column == 'appro_Type'}">selected</c:if>>유형</option>
                                     </select>
-
                                     <div class="row search" style="flex-grow: 1;">
                                         <input type="text" name="keyword" value="${param.keyword}" class="row">
                                     </div>
@@ -198,51 +212,43 @@
                             </form>
                         </div>
 
-                        <hr class="row mt-15 mb-50">
                         <div class="tb-box">
-                            <table class="tb">
+                            <table class="">
                                 <thead>
                                     <tr>
-                                        <th>작성일</th>
-                                        <th>제목</th>
+                                        <th style="width: 200px;">작성일</th>
                                         <th>유형</th>
+                                        <th>작성자</th>
                                         <th>결재자</th>
                                         <th>진행상태</th>
                                     </tr>
                                 </thead>
-
                                 <tbody class="tbody">
                                     <c:choose>
                                         <c:when test="${list.isEmpty()}">
-
                                             <tr class="row center">
                                                 <td colspan="5">결과가 존재하지 않습니다</td>
                                             </tr>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:forEach var="TbEmpVacaReqDto" items="${list}">
-												<tr class="row center">
-                                                <td>${TbEmpVacaReqDto.vacaReqDate}</td>
-                                                <td><a class="name" href="/vacation/detail?vacaNo=${TbEmpVacaReqDto.vacaNo}">${TbEmpVacaReqDto.vacaTitle}</a></td>
-                                                <td>${TbEmpVacaReqDto.vacaType}</td>
-                                                <td>${TbEmpVacaReqDto.approBosName}</td>
-                                                <td>${TbEmpVacaReqDto.approYN}</td>
+                                            <c:forEach var="tbEmpApprovalDto" items="${list}">
+                                                <tr class="row center">
+                                                    <td>${tbEmpApprovalDto.approDate}</td>
+                                                    <td><a class="name" href="/admin/emp/approval?applicantId=${tbEmpApprovalDto.applicantId}&approNo=${tbEmpApprovalDto.approNo}">${tbEmpApprovalDto.approType}</a></td>
+                                                    <td>${tbEmpApprovalDto.applicantId}</td>
+                                                    <td>${tbEmpApprovalDto.approBosName}</td>
+                                                    <td>${tbEmpApprovalDto.approYN}</td>
                                                 </tr>
                                             </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
                                 </tbody>
                             </table>
-
-                            <div class="flex-box">
-                                <div class="row">
-                                    <button type="button" class="btn write">글작성</button>
-                                </div>
-                            </div>
                             <div class="row center">
-                                <jsp:include page="/WEB-INF/views/template/navigator2.jsp"></jsp:include>
+                                <jsp:include page="/WEB-INF/views/template/navigator3.jsp"></jsp:include>
                             </div>
                         </div>
+
                     </div>
             </div>
 </body>

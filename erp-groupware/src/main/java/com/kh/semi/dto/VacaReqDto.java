@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import lombok.Data;
 
-@Data
+@Data 
 public class VacaReqDto { //휴가신청
 	private int vacaNo; //휴가번호
 	private String vacaTel; //비상연락처

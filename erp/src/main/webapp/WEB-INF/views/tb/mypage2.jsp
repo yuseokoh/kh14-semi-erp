@@ -349,7 +349,7 @@
 </script>
 <script type="text/javascript">
 $(function(){
-	$(#saveChanges).click(function(){
+	$("#saveChanges").click(function(){
 		$.ajax({
 			url:"/rest/emp/edit",
 			method:"post",
@@ -358,8 +358,7 @@ $(function(){
 				empSdate:empSdate,
 				empBirth:empBirth,
 				empHp:empHp,
-				empPost:empPost,
-				attach:attach
+				empPost:empPost
 			},
 			success:function(response){
 				console.log("성공");
@@ -417,10 +416,6 @@ $(function(){
 
 
 </script>
-
-
-
-
 
 </head>
 <body>  
@@ -541,7 +536,7 @@ $(function(){
           <hr style="width: 133%; border: 1px solid #858e8f;">
           <div class="row flex-box w-1200">
               <div class="w-50 center"> 
-                  <img class="target" src="/tb/myImage?loginId=${tbEmpDto.loginId}" alt="Profile Image" style="width: 370px; height: 300px;" >
+                  <img class="target" src="https://picsum.photos/500/300" alt="Profile Image" style="width: 370px; height: 300px;" >
               </div>
               <div class="w-50 center">
                   <div class="info1-container">
@@ -590,9 +585,7 @@ $(function(){
                           <span class="span2">전화번호: </span>
                           <span id="phoneDisplay">${tbEmpDto.empHp}</span>
                       </div> 
-                      
-                      
-                                    <!--주소-->
+                      <!--주소-->
         <div class="info1-item"> 
             <i class="fa-solid fa-map-location-dot"></i> 
             <span class="span2">우편번호: </span>
@@ -613,13 +606,12 @@ $(function(){
            
            
            <!-- 주소-->
-                      
-                  </div>
+
                   <!-- 수정 버튼 추가 -->
                 
                 
                   <div class="row flex-box w-1200">
-					<form action="/tb/edit" method="post" autocomplete="off">
+					<form action="edit" method="post" autocomplete="off">
                   <div id="editForm" class="edit-form">
                  	<input type="hidden" value="${tbEmpDto.loginId}" name="loginId">
                       <h3>정보 수정</h3>
@@ -660,7 +652,7 @@ $(function(){
                           <label for="editPhone">전화번호:</label>
                           <input type="text" id="editPhone" value="${tbEmpDto.empHp}" name="empHp">
                       </div>
-                         <!--주소-->
+                        <!--주소-->
                       <div>
                      <label for="editAddress1">우편번호:</label>
                               <input class="address1" id="editAddress1" name="empPost" type="text" placeholder="" required="" style="width: 30%;">
@@ -682,12 +674,10 @@ $(function(){
                     
                     
                     <!-- 주소-->
-
                       <div>
                         <label for="editImage">이미지</label>
-                        <input type="file" id="editImage" name="attach" accept="image/*">
+                        <input type="file" id="editImage" name="image" accept="image/*">
                     </div>
-                      <button id="saveChanges" type="submit">저장</button>
                   </div>
               </form>
               </div>
@@ -697,13 +687,13 @@ $(function(){
         
 
                     </div>
-          <hr style="width: 133%; border: 1px solid #858e8f;">
-          <div class="edit">
-            <button id="editButton" class="edit-btn" style="margin-right: 300px;">수정</button>
-            <button id="saveChanges" class="edit-btn hidden">저장</button> 
-        </div>
                     
                 </div>
+          <hr style="width: 133%; border: 1px solid #858e8f;">
+          <div class="edit">
+            <button id="editButton" class="edit-btn">수정</button>
+            <button id="saveChanges" class="edit-btn hidden">저장</button> 
+        </div>
             </main>
 </body>
 </html>

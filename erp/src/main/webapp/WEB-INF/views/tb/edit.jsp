@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 <form method="post" action="edit" autocomplete="off">
-   
+  <input type="hidden" value ="${sessionScope.createdUser}" name="loginId" > 
 <div>
 	<div>
 		<h1>정보 수정하기</h1>

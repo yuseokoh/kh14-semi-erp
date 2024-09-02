@@ -6,8 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.kh.erp.dao.TbEmpAttendanceDao;
 import com.kh.erp.dao.TbEmpDao;
+import com.kh.erp.dto.TbEmpAttendanceDto;
 import com.kh.erp.dto.TbEmpDto;
+import com.kh.erp.service.DateService;
+import com.kh.erp.service.NameChangeService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +23,13 @@ public class HomeController {
 	@Autowired
 	private TbEmpDao tbEmpDao;
 	
+	@Autowired
+	private TbEmpAttendanceDao tbEmpAttendanceDao;
+	
+	@Autowired
+	private NameChangeService nameChangeService;
+	@Autowired
+	private DateService dateService;
     // 로그인 페이지로 리디렉션
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String redirectToLogin() {
@@ -30,8 +41,12 @@ public class HomeController {
     public String home(HttpSession session,Model model) {
     	String loginId = (String) session.getAttribute("createdUser");
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
+		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+		String inTime = dateService.TimeChangeIn(loginId);
+		String outTime = dateService.TimeChangeOut(loginId);
+		model.addAttribute("inTime",inTime);
+		model.addAttribute("outTime",outTime);
 		model.addAttribute("tbEmpDto",tbEmpDto);
-		System.out.println(tbEmpDto);
         return "/WEB-INF/views/erp/mian0828.jsp";
     }
 }

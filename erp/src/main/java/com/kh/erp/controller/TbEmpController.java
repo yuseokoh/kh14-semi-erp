@@ -72,18 +72,21 @@ public class TbEmpController {
 	}
 
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute TbEmpDto tbempDto) {
-		tbEmpDao.updateEmp(tbempDto);
-		return "redirect:/";
+	public String edit(@ModelAttribute TbEmpDto tbEmpDto) {
+		tbEmpDao.updateEmp(tbEmpDto);
+		return "redirect:/tb/mypage?loginId="+tbEmpDto.getLoginId();
 	}
 
 	// 마이페이지
 	@RequestMapping("/mypage")
-	public String mypage(HttpSession session, Model model) {
-		String loginId = (String) session.getAttribute("createdUser");
+	public String mypage(@RequestParam String loginId, Model model) {
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
 		long workingDays = dateService.dateChange(loginId);
+		String inTime = dateService.TimeChangeIn(loginId);
+		String outTime = dateService.TimeChangeOut(loginId);
+		model.addAttribute("inTime",inTime);
+		model.addAttribute("outTime",outTime);
 		model.addAttribute("workingDays",workingDays);
 		model.addAttribute("tbEmpDto", tbEmpDto);
 		return "/WEB-INF/views/tb/mypage.jsp";

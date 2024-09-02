@@ -70,8 +70,8 @@ public class TbEmpDao {
 	// 회원 개인의 정보 변경(update)(U)
 	// 이름,비밀번호,전화번호,이메일,생일,최종학력,비고,계좌번호,은행,주소,세전급여
 	public boolean updateEmp(TbEmpDto tbEmpDto) {
-		String sql = "update tb_emp set " + "name=?," + "emp_hp=?,emp_email=?,emp_birth=?,emp_edu=?,"
-				+ "emp_memo=?,emp_post=?,emp_address1=?,emp_address2=? " + "where loginId=?";
+		String sql = "update tb_emp set name=?, emp_hp=?,emp_email=?,emp_birth=?,emp_edu=?,"
+				+ "emp_memo=?,emp_post=?,emp_address1=?,emp_address2=? where loginId=?";
 		Object[] data = { tbEmpDto.getName(), tbEmpDto.getEmpHp(), tbEmpDto.getEmpEmail(), tbEmpDto.getEmpBirth(),
 				tbEmpDto.getEmpBirth(), tbEmpDto.getEmpMemo(), tbEmpDto.getEmpPost(), tbEmpDto.getEmpAddress1(),
 				tbEmpDto.getEmpAddress2(), tbEmpDto.getLoginId() };

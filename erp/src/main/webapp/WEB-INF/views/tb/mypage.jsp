@@ -20,7 +20,10 @@
 		<img src="/tb/myImage?loginId=${tbEmpDto.loginId}" width="100">
 		<a href="addImage">사진 추가 등록하기</a>
 	</div>
-
+	<div>
+		<h2>오늘까지의 근무일수는 ${workingDays}일 입니다.</h2>
+	
+	</div>
 	<div>
 		<a href="edit">수정하기</a>
 	</div>

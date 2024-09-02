@@ -22,6 +22,8 @@ import com.kh.erp.dto.TbEmpReportDto;
 import com.kh.erp.dto.TbEmpVacaReqDto;
 import com.kh.erp.service.NameChangeService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/admin/emp")
 public class AdminEmpController {
@@ -83,7 +85,7 @@ public class AdminEmpController {
 
 	// 문서결재 하는 란 admin으로 넘겨질수도
 	@GetMapping("/approval")
-	public String detail(@RequestParam String writerId, @RequestParam int approNo, Model model) {
+	public String detail(@RequestParam String applicantId, @RequestParam int approNo, Model model) {
 		// 결재해야할 문서 정보 접근
 		TbEmpApprovalDto tbEmpApprovalDto = tbEmpApprovalDao.selectOneByApproNo(approNo);
 
@@ -94,7 +96,7 @@ public class AdminEmpController {
 		// 이거한번만 적용되면 휴가도 적용하고~ 다하면 된다 이마리야~
 		if (tbEmpApprovalDto.getApproType().equals("보고서")) {
 			// 보고서면 작성자 Id와 결재번호로 보고서 접근
-			TbEmpReportDto tbEmpReportDto = tbEmpReportDao.selectOneWithApproNoAndId(approNo, writerId);
+			TbEmpReportDto tbEmpReportDto = tbEmpReportDao.selectOneWithApproNoAndId(approNo, applicantId);
 
 			// 작성자 Id로 사원정보 접근 + document(결재 사인)이 있는 경우 그거도 보냄
 			// 보내는 게아니라 받는다면? 받아서 보여주면된다면?
@@ -107,25 +109,28 @@ public class AdminEmpController {
 			model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
 			return "/WEB-INF/views/groupware/admin/approval/reportWait.jsp";
 		} else {// 보고서 제외 전부 지금은 휴가 관련된 것만 나오게
-				TbEmpVacaReqDto tbEmpVacaReqDto = tbEmpVacaReqDao.selectOneWithApproNoAndId(approNo, writerId);
-				TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpVacaReqDto.getApplicantId());
-				tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
-				model.addAttribute("tbEmpVacaReqDto", tbEmpVacaReqDto);
-				model.addAttribute("tbEmpDto", tbEmpDto);
-				model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
+			TbEmpVacaReqDto tbEmpVacaReqDto = tbEmpVacaReqDao.selectOneWithApproNoAndId(approNo, applicantId);
+			TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpVacaReqDto.getApplicantId());
+			tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+			model.addAttribute("tbEmpVacaReqDto", tbEmpVacaReqDto);
+			model.addAttribute("tbEmpDto", tbEmpDto);
+			model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
 			return "/WEB-INF/views/groupware/admin/approval/leaveWait.jsp";
 		}
 
 	}
 
-	// dao에서 sql 수정
-	@RequestMapping("/approlist")
-	public String approlist(@ModelAttribute PageVO pageVO, Model model) {
-		List<TbEmpApprovalDto> list = tbEmpApprovalDao.approListByPaging(pageVO);
-		System.out.println(list);
-		model.addAttribute("list", list);
-		pageVO.setCount(tbEmpApprovalDao.countPage(pageVO));
-		return "/WEB-INF/views/groupware/totalList2.jsp";
+	// dao에서 sql 수정 -- > 이거 수정하고 페이지 만들기
+	@RequestMapping("/approvalList")
+	public String approlist(@ModelAttribute PageVO pageVO, Model model, HttpSession session) {
+		if (session.getAttribute("userType").equals("A")) {
+			List<TbEmpApprovalDto> list = tbEmpApprovalDao.approListByPaging(pageVO);
+			model.addAttribute("list", list);
+			pageVO.setCount(tbEmpApprovalDao.countPage(pageVO));
+			return "/WEB-INF/views/groupware/admin/approval/approvalList.jsp";
+		} else {
+			return "redirect:/home";
+		}
 	}
 
 	@RequestMapping("/status")

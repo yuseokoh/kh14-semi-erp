@@ -58,18 +58,28 @@ public class TbEmpVacaReqDao {
 		}
 	}
 
-	// R
-	public void selectOneByColumn() {
-
-	}
-
-	// 수정해야 할 것
-	// 여기서 에러남
-	public List<TbVacRecVO> selectVacaLogListByPaging() {
-		String sql = "select v.vaca_ReqDate, v.vaca_Title, v.vaca_Type,v.vaca_No, a.appro_no, v.applicantId, a.appro_BosId, a.appro_BosName, a.appro_YN "
-				+ "from tb_VacaReq v "
-				+ "join tb_Approval a on v.appro_No = a.appro_No order by v.vaca_No ASC, v.vaca_Sdate ASC";
-		return jdbcTemplate.query(sql, tbVacRecMapper);
+	// 수정(완)
+	public List<TbVacRecVO> selectVacaLogListByPaging(PageVO pageVO) {
+		if (pageVO.isSearch()) {// 검색
+			String sql = "SELECT * FROM ( " + "    SELECT rownum rn, TMP.* FROM ( "
+					+ "        SELECT v.vaca_ReqDate, v.vaca_Title, v.vaca_Type, v.vaca_No, "
+					+ "               a.appro_no, v.applicantId, a.appro_BosId, a.appro_BosName, a.appro_YN "
+					+ "        FROM tb_VacaReq v " + "        JOIN tb_Approval a ON v.appro_No = a.appro_No "
+					+ "        WHERE instr(#1, ?) > 0 " + " ORDER BY v.vaca_ReqDate desc, #1 ASC "
+					+ "    ) TMP " + ") WHERE rn BETWEEN ? AND ?";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] data = { pageVO.getKeyword(), pageVO.getBeginRow(), pageVO.getEndRow() };
+			return jdbcTemplate.query(sql, tbVacRecMapper, data);
+		} else {// 목록
+			String sql = "SELECT * FROM ( " + "    SELECT rownum rn, TMP.* FROM ( "
+					+ "        SELECT v.vaca_ReqDate, v.vaca_Title, v.vaca_Type, v.vaca_No, "
+					+ "               a.appro_no, v.applicantId, a.appro_BosId, a.appro_BosName, a.appro_YN "
+					+ "        FROM tb_VacaReq v " + "        JOIN tb_Approval a ON v.appro_No = a.appro_No "
+					+ "        ORDER BY v.vaca_ReqDate desc " + "   ) TMP "
+					+ ") WHERE rn BETWEEN ? AND ?";
+			Object[] data = { pageVO.getBeginRow(), pageVO.getEndRow() };
+			return jdbcTemplate.query(sql, tbVacRecMapper, data);
+		}
 	}
 
 	// U
@@ -105,16 +115,18 @@ public class TbEmpVacaReqDao {
 	}
 
 	public boolean updateContent(TbEmpVacaReqDto tbEmpVacaReqDto) {
-		
+
 		String sql = "update tb_VacaReq set vaca_Reason = ?, vaca_Title = ?, vaca_type = ?, vaca_tel = ?, vaca_sdate = ?, vaca_edate = ?, vaca_ReqDate = sysdate where vaca_no = ? ";
-		Object[] data = {tbEmpVacaReqDto.getVacaReason(), tbEmpVacaReqDto.getVacaTitle(), tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaTel(), tbEmpVacaReqDto.getVacaSdate(), tbEmpVacaReqDto.getVacaEdate(),   tbEmpVacaReqDto.getVacaNo()};
+		Object[] data = { tbEmpVacaReqDto.getVacaReason(), tbEmpVacaReqDto.getVacaTitle(),
+				tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaTel(), tbEmpVacaReqDto.getVacaSdate(),
+				tbEmpVacaReqDto.getVacaEdate(), tbEmpVacaReqDto.getVacaNo() };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 
 	public int findImage(int approNo) {
 
 		String sql = "select document from tb_approval_image where approNo=?";
-		Object[] data = {approNo};
+		Object[] data = { approNo };
 		return jdbcTemplate.queryForObject(sql, int.class, data);
 	}
 
@@ -128,9 +140,9 @@ public class TbEmpVacaReqDao {
 
 	public boolean updateReject(int approNo, String rejectReason) {
 		String sql = "update tb_VacaReq set vaca_Reject = ? where appro_no = ?";
-		Object[] data = {rejectReason, approNo};
+		Object[] data = { rejectReason, approNo };
 		return jdbcTemplate.update(sql, data) > 0;
-		
+
 	}
 
 	public List<TbEmpVacaReqDto> selectListByvacaTypeAndapplicantId(String approYN, String loginId) {
@@ -138,8 +150,5 @@ public class TbEmpVacaReqDao {
 		Object[] data = { approYN, loginId };
 		return jdbcTemplate.query(sql, tbEmpVacaReqMapper, data);
 	}
-
-	
-	
 
 }

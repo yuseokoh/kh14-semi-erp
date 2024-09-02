@@ -130,7 +130,8 @@ public class TbEmpController {
 		session.removeAttribute("createdUser");
 		session.removeAttribute("userType");
 		session.removeAttribute("userLevel");
-		return "redirect:/";
+		// 2024-09-02 22:36 로그아웃 시 /tb/login getmapping쪽으로 보내기(성공)
+		return "redirect:/tb/login";
 	}
 	
 	//상세 페이지

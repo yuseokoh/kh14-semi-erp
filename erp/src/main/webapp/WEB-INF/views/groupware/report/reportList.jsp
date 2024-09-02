@@ -57,7 +57,7 @@
             // 삭제 버튼 클릭 이벤트
             $('.write').on('click', function() {
                 // 확인 대화상자 표시
-                window.location.href = '/vacation/insert'; // 여기에 원하는 링크를 입력하세요
+                window.location.href = '/report/insert'; // 여기에 원하는 링크를 입력하세요
             });
         });
     </script>
@@ -120,8 +120,8 @@
                     <li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
                         </a>
                         <ul>
-                            <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-                            <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+                            <li><a href="#">휴가신청서</a></li>
+                            <li><a href="#">보고서(수인씨작성중)</a></li>
                         </ul>
                     </li>
 
@@ -179,15 +179,15 @@
                 <!-- 전자결재 통합 리스트 작성 -->
 
                 <body>
-                    <div class="noticbox w-1200">
+                    <div class="noticbox w-900">
                         <div class="row notice">
-                            <div class="row noticname">휴가 리스트</div>
-                           	<form action="mylist" method="get" autocomplete="off">
-								<input type="hidden" name="loginId" value="${sessionScope.createdUser}" />
+                            <div class="row noticname">보고서 리스트</div>
+                            <form action="mylist" method="get" autocomplete="off">
+                                <input type="hidden" name="loginId" value="${sessionScope.createdUser}" />
                                 <div class="actions">
                                     <select name="column" class="row actions1" style="flex-grow: 1;">
-										<option value="vaca_title" class="row" <c:if test="${param.column == 'vaca_title'}" >selected</c:if>>제목</option>
-										<option value="vaca_Type" class="row" <c:if test="${param.column == 'vaca_Type'}" >selected</c:if>>유형</option>
+                                        <option value="report_Title" class="row" <c:if test="${param.column == 'report_Title'}">selected</c:if>>제목</option>
+                                        <option value="appro_BosName" class="row" <c:if test="${param.column == 'appro_BosName'}">selected</c:if>>결재자</option>
                                     </select>
 
                                     <div class="row search" style="flex-grow: 1;">
@@ -197,36 +197,31 @@
                                 </div>
                             </form>
                         </div>
-
                         <hr class="row mt-15 mb-50">
                         <div class="tb-box">
                             <table class="tb">
                                 <thead>
                                     <tr>
-                                        <th>작성일</th>
-                                        <th>제목</th>
-                                        <th>유형</th>
+                                        <th style="width: 150px;">작성일</th>
+                                        <th style="width: 300px;">제목</th>
                                         <th>결재자</th>
-                                        <th>진행상태</th>
+                                        <th style="width: 80px;">진행상태</th>
                                     </tr>
                                 </thead>
-
                                 <tbody class="tbody">
                                     <c:choose>
                                         <c:when test="${list.isEmpty()}">
-
                                             <tr class="row center">
                                                 <td colspan="5">결과가 존재하지 않습니다</td>
                                             </tr>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:forEach var="TbEmpVacaReqDto" items="${list}">
-												<tr class="row center">
-                                                <td>${TbEmpVacaReqDto.vacaReqDate}</td>
-                                                <td><a class="name" href="/vacation/detail?vacaNo=${TbEmpVacaReqDto.vacaNo}">${TbEmpVacaReqDto.vacaTitle}</a></td>
-                                                <td>${TbEmpVacaReqDto.vacaType}</td>
-                                                <td>${TbEmpVacaReqDto.approBosName}</td>
-                                                <td>${TbEmpVacaReqDto.approYN}</td>
+                                            <c:forEach var="TbReportRecVO" items="${list}">
+                                                <tr class="row center">
+                                                    <td>${TbReportRecVO.writeDate}</td>
+                                                    <td><a class="name" href="/report/detail?reportNo=${TbReportRecVO.reportNo}">${TbReportRecVO.reportTitle}</a></td>
+                                                    <td>${TbReportRecVO.approBosName}</td>
+                                                    <td>${TbReportRecVO.approYN}</td>
                                                 </tr>
                                             </c:forEach>
                                         </c:otherwise>

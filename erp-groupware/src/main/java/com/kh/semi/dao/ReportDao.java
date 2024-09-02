@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.ReportDto;
 import com.kh.semi.mapper.ReportMapper;
-import com.kh.semi.vo.PageVO;
+import com.kh.semi.vo.ResPageVO;
 
 @Repository
 public class ReportDao {
@@ -61,7 +61,7 @@ public class ReportDao {
 		return jdbcTemplate.query(sql, reportMapper ,data);
 	}
 	
-	public int countByPaging(PageVO pageVO) {
+	public int countByPaging(ResPageVO pageVO) {
 		if(pageVO.isSearch()) {//검색
 			String sql = "select count(*) from report where instr(#1, ?) > 0";
 			sql = sql.replace("#1", pageVO.getColumn());

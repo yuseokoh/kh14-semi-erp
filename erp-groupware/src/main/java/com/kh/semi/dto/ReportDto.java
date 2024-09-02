@@ -20,5 +20,5 @@ public class ReportDto {
 	private Date wdate;			//작성일자
 	private String wname;		//작성자이름
 	private String dept;		//부서이름
-	private String approYN;     //결재여부
+	private String approYN;     //결재여부(결재대기,결재중,결재완료)
 }

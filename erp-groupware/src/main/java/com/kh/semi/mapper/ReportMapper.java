@@ -28,6 +28,7 @@ public class ReportMapper implements RowMapper<ReportDto>{
 		reportDto.setWdate(rs.getDate("wdate")); //작성일자
 		reportDto.setWname(rs.getString("wname")); //작성자이름
 		reportDto.setDept(rs.getString("dept")); //부서이름
+		reportDto.setApproYN(rs.getString("approYN")); //결재여부
 		return reportDto;
 	}
 

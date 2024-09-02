@@ -4,19 +4,21 @@ import lombok.Data;
 
 //페이징 작업을 모듈화 하기 위한 클래스
 @Data
-public class PageVO {
+public class ResPageVO {
 	//페이징 작업에 필요한 정보들을 필드로 선언
 	private String column;//검색 항목
 	private String keyword;//검색 키워드
 	private int page=1;//페이지 번호
-	private int size=10;//1페이지의 크기
+	private int size=5;//1페이지의 크기
 	private int count;//총 데이터 개수
 	private int blockSize = 10;//블럭구역의 크기
 	
-	//계산 메소드(가상의 Getter 메소드) 추가
+	//계산 메소드(가상의 Getter 메소드) 추가 //수인 수정
 	public boolean isSearch() {
-		return this.column != null && this.keyword != null;
+	    return this.column != null && !this.column.trim().isEmpty() &&
+	           this.keyword != null && !this.keyword.trim().isEmpty();
 	}
+
 	
 	//시작행, 종료행 계산 메소드
 	public int getBeginRow() {

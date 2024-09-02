@@ -9,7 +9,7 @@
   <div class="container">
         <h1>보고서 목록</h1>
         <div class="row">
-        
+        <input type="text"><button type="button">검색하기</button>
         <table border="1" width="800">
             <thead>
                 <tr>

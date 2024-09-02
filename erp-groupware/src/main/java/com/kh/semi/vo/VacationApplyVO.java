@@ -1,11 +1,11 @@
-package com.kh.semi.dto;
+package com.kh.semi.vo;
 
 import java.sql.Date;
 
 import lombok.Data;
 
-@Data 
-public class VacaReqDto { //휴가신청
+@Data
+public class VacationApplyVO {
 	private int vacaNo; //휴가번호
 	private String vacaTel; //비상연락처
 	private Date vacaSdate; //휴가시작일
@@ -17,8 +17,19 @@ public class VacaReqDto { //휴가신청
 	private Date approDate; //결재일자
 	private String approYN; //결재여부
 	private int approNo; //결재번호
+	private String approBos; //(통합) 결재자 의견
 	private String approBos1; //결재자1
 	private String approBos2; //결재자2
-	private String approBos3; //결재자3
+	private String approBos3; //결재자3	
 	private int approNo2; //사번
+	
+	//--------------------------
+
+	private int loginId; //사번
+	private String name; //이름
+	private String empLevel; // 직급
+	private String empDept; //부서
+    private String empEmail; //이메일
+    private String deptCd;
+    private String levelCd;
 }

@@ -48,6 +48,14 @@ public class TbEmpAttendanceDao {
 		List<TbEmpAttendanceDto> list = jdbcTemplate.query(sql, tbEmpAttendanceMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
+	
+	//이거는 js용 추가 하나 일단 만들어둠(쓰는거임!!)
+	public TbEmpAttendanceDto selectTodayRecordById(String loginId) {
+	    String sql = "SELECT * FROM tb_attendance WHERE loginId = ? AND TRUNC(check_in_time) = TRUNC(SYSDATE) ORDER BY ta_attendance_no DESC";
+	    Object[] data = { loginId };
+	    List<TbEmpAttendanceDto> list = jdbcTemplate.query(sql, tbEmpAttendanceMapper, data);
+	    return list.isEmpty() ? null : list.get(0);
+	}
 
 	// U
 	public void updateCheckOutTime(int taAttendanceNo) {

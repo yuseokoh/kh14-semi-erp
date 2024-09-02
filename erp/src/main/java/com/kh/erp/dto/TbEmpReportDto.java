@@ -14,5 +14,6 @@ public class TbEmpReportDto {
 	private Date writeDate ; // 작성일자
 	private String reportTitle; // 보고서 제목
 	private String reportContent; // 보고서 내용
+	private String reportReject; // 보고서 반려내용
 	private int approNo; // 승인 번호 
 }

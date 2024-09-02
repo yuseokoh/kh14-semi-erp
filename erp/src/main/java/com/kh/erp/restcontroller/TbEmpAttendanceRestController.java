@@ -15,7 +15,6 @@ import com.kh.erp.dto.TbEmpAttendanceDto;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/rest/attendance")
 public class TbEmpAttendanceRestController {
@@ -27,16 +26,21 @@ public class TbEmpAttendanceRestController {
 	public String startCommuting(HttpSession session) {
 		// 출근 시간 처리 로직
 		String loginId = (String) session.getAttribute("createdUser");
-		int seq = tbEmpAttendanceDao.sequence();
+		if (tbEmpAttendanceDao.selectTodayRecordById(loginId) == null) {
 
-		tbEmpAttendanceDao.insert(loginId, seq);
-		// 시간 받기
-		LocalDateTime checkOutTime = tbEmpAttendanceDao.selectOneById(loginId).getCheckInTime();
-		// 포맷 정의
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a h:mm:ss", Locale.KOREAN);
-		// 포맷된 문자열로 변환
-		String formattedCheckOutTime = checkOutTime.format(formatter);
-		return formattedCheckOutTime;
+			int seq = tbEmpAttendanceDao.sequence();
+
+			tbEmpAttendanceDao.insert(loginId, seq);
+			// 시간 받기
+			LocalDateTime checkOutTime = tbEmpAttendanceDao.selectOneById(loginId).getCheckInTime();
+			// 포맷 정의
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a h:mm:ss", Locale.KOREAN);
+			// 포맷된 문자열로 변환
+			String formattedCheckOutTime = checkOutTime.format(formatter);
+			return formattedCheckOutTime;
+		} else {
+			return null;
+		}
 	}
 
 	@PostMapping("/end")
@@ -44,26 +48,29 @@ public class TbEmpAttendanceRestController {
 		// 퇴근 시간 처리 로직
 		String loginId = (String) session.getAttribute("createdUser");
 
-		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectOneById(loginId);
-		tbEmpAttendanceDao.updateCheckOutTime(tbEmpAttendanceDto.getTaAttendanceNo());
+		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectTodayRecordById(loginId);
+		if (tbEmpAttendanceDto != null) {
+			tbEmpAttendanceDao.updateCheckOutTime(tbEmpAttendanceDto.getTaAttendanceNo());
 
-		// 시간 받기
-		LocalDateTime checkOutTime = tbEmpAttendanceDao.selectOneById(loginId).getCheckOutTime();
-		// 포맷 정의
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a h:mm:ss", Locale.KOREAN);
-		// 포맷된 문자열로 변환
-		String formattedCheckOutTime = checkOutTime.format(formatter);
+			// 시간 받기
+			LocalDateTime checkOutTime = tbEmpAttendanceDao.selectOneById(loginId).getCheckOutTime();
+			// 포맷 정의
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a h:mm:ss", Locale.KOREAN);
+			// 포맷된 문자열로 변환
+			String formattedCheckOutTime = checkOutTime.format(formatter);
 
-		return formattedCheckOutTime;
+			return formattedCheckOutTime;
+		} else {
+			return null;
+		}
 	}
 
-	
-//	//상태조회
-//	@PostMapping("/check")
-//	public String check() {
-//		//TODO: process POST request
-//		
-//		return entity;
-//	}
-	
+	// 상태조회
+	@PostMapping("/check")
+	public TbEmpAttendanceDto check(HttpSession session) {
+		String loginId = (String) session.getAttribute("createdUser");
+		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectTodayRecordById(loginId);
+		return tbEmpAttendanceDto;
+	}
+
 }

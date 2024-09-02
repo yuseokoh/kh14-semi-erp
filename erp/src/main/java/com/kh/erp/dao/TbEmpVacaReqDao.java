@@ -41,7 +41,6 @@ public class TbEmpVacaReqDao {
 	}
 
 	// 휴가 신청서 검색(R) - 페이징 적용 // 정렬순서 pageVO 컬럼, vaca_No, vaca_Sdate(휴가 시작일) 기준
-
 	public List<TbEmpVacaReqDto> vacaReqListByPaging(PageVO pageVO) {
 		if (pageVO.isSearch()) {// 검색
 			String sql = "select * from (" + "select rownum rn, TMP.* from ("
@@ -104,5 +103,43 @@ public class TbEmpVacaReqDao {
 		List<TbEmpVacaReqDto> list = jdbcTemplate.query(sql, tbEmpVacaReqMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
+
+	public boolean updateContent(TbEmpVacaReqDto tbEmpVacaReqDto) {
+		
+		String sql = "update tb_VacaReq set vaca_Reason = ?, vaca_Title = ?, vaca_type = ?, vaca_tel = ?, vaca_sdate = ?, vaca_edate = ?, vaca_ReqDate = sysdate where vaca_no = ? ";
+		Object[] data = {tbEmpVacaReqDto.getVacaReason(), tbEmpVacaReqDto.getVacaTitle(), tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaTel(), tbEmpVacaReqDto.getVacaSdate(), tbEmpVacaReqDto.getVacaEdate(),   tbEmpVacaReqDto.getVacaNo()};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	public int findImage(int approNo) {
+
+		String sql = "select document from tb_approval_image where approNo=?";
+		Object[] data = {approNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
+
+	public TbEmpVacaReqDto selectOneWithApproNoAndId(int approNo, String writerId) {
+
+		String sql = "select * from tb_VacaReq where appro_No = ? and applicantId = ?";
+		Object[] data = { approNo, writerId };
+		List<TbEmpVacaReqDto> list = jdbcTemplate.query(sql, tbEmpVacaReqMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+
+	public boolean updateReject(int approNo, String rejectReason) {
+		String sql = "update tb_VacaReq set vaca_Reject = ? where appro_no = ?";
+		Object[] data = {rejectReason, approNo};
+		return jdbcTemplate.update(sql, data) > 0;
+		
+	}
+
+	public List<TbEmpVacaReqDto> selectListByvacaTypeAndapplicantId(String approYN, String loginId) {
+		String sql = "SELECT v.* FROM tb_VacaReq v JOIN tb_Approval a ON v.appro_No = a.appro_No WHERE a.appro_YN = ? AND v.applicantId = ? ORDER BY v.vaca_No ASC, v.vaca_Sdate ASC";
+		Object[] data = { approYN, loginId };
+		return jdbcTemplate.query(sql, tbEmpVacaReqMapper, data);
+	}
+
+	
+	
 
 }

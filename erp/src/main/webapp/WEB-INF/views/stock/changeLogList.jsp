@@ -100,7 +100,7 @@
                 <th class="stock-no-column">재고 번호</th>
                 <th>변경된 필드</th>
                 <th class="long-column">수정된 사항</th>
-                <th class="date-column">날짜</th>
+                <th class="date-column">변경 날짜</th>
             </tr>
         </thead>
         <tbody>

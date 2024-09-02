@@ -180,7 +180,7 @@
                             </ul>
                         </li>
 
-                        <li><a href="/member/mypage" data-text="">
+                        <li><a href="/tb/mypage" data-text="">
                             <i class="fa-solid fa-id-card"></i> mypage</a>
                             <ul>
                                 <li><a href="#">서브메뉴1</a></li>

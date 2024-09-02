@@ -118,7 +118,7 @@ public class TbEmpController {
 	// 부서 ->> 부서코드 테이블없이 아마 a00으로 들어갈듯 // 이거만 조절하면될듯
 	session.setAttribute("userLevel", tbEmpDto.getEmpDept());
 	//2024-08-27 17:09 조재혁 수정
-	return "redirect:/";// 홈으로 이동
+	return "redirect:/home";// 홈으로 이동
 //	return "/WEB-INF/views/groupware/truehome.jsp";
 	}
 

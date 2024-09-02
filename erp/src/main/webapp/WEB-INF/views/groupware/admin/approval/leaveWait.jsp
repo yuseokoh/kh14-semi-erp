@@ -263,37 +263,34 @@
 			
 			// 기안 버튼 클릭 시 동작
 				    $(".submit").on("click", function() {
-				        var signatureDataURL = canvas.toDataURL("image/png");
-				        signatureImage.src = signatureDataURL;
-				        console.log(signatureDataURL);
-				        $.ajax({
-				            url: "/rest/document/sign",
-				            method: "POST",
-				            data: {
-				                signatureDataURL: signatureDataURL,
-				                approNo: approNo
-				            },
-				            success: function(response) {
-				                
-								// 사인 저장해버리고
-								// 여기서 추가적으로 더보내버릴까? 싶음
-								// 결재번호보내서! 승인상태 확인해서! Y면! ajax해서 값을 넘겨! 그리고 받아! 그리고 계산해! 그리고 갱신해!!
-								
-								$.ajax({
-									url: "/rest/vacation/deducted",
-									method: "POST",
-									data: {
-											approNo: approNo
-									},
-									success: function(){
-										location.reload(); // 페이지 새로고침
-										// 반려 완료 후 추가 동작 (예: 페이지 리로드)
-									}
-									
-								});
-																
-				            }
-				        });
+							var signatureDataURL = canvas.toDataURL("image/png");
+							signatureImage.src = signatureDataURL;
+							console.log(signatureDataURL);
+				        
+						$.ajax({
+						    url: "/rest/document/sign",
+						    method: "POST",
+						    data: {
+						        signatureDataURL: signatureDataURL,
+						        rejectReason: rejectReason,
+						        approNo: approNo
+						    },
+						    success: function(response) {
+						        alert("저장했습니다");
+						        $.ajax({
+						            url: "/rest/vacation/reject",
+						            method: "POST",
+						            data: {
+						                rejectReason: rejectReason,
+						                approNo: approNo
+						            },
+						            success: function() {
+										alert("승인 완료!");
+						                location.reload(); // 페이지 새로고침
+						            },
+						        });
+						    },
+						});
 				    });
 			
 			

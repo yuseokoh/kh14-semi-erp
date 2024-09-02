@@ -44,26 +44,25 @@ public class TbEmpVacaReqController {
 	// Dao에서 에러남 -> 에러 해결
 	@RequestMapping("/list")
 	public String list(@ModelAttribute PageVO pageVO, Model model) {
-		List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging();
-		model.addAttribute("list", list);
+		model.addAttribute("list", tbEmpVacaReqDao.selectVacaLogListByPaging(pageVO));
 		pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
 		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
 	}
 
 	// 각 세션에 있는 회원처리용
 	@RequestMapping("/mylist")
-	public String list(HttpSession session, @RequestParam String loginId, Model model) {
+	public String list(HttpSession session, @RequestParam String loginId, Model model, @ModelAttribute PageVO pageVO) {
 		String sessionloginId = (String) session.getAttribute("createdUser");
+		System.out.println(pageVO);
 		// 세션Id와 접근하려는 Id가 동일한 경우
 		if (sessionloginId.equals(loginId)) {
-			List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging();
-
+			List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging(pageVO);
 			model.addAttribute("list", list);
+			pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
+			return "/WEB-INF/views/groupware/leave/leaveList.jsp";
 		} else {
-			return "/WEB-INF/views/groupware/truehome.jsp";
+			return "redirect:/home";
 		}
-
-		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
 	}
 
 	// 휴가 신청서 작성 근데 사용자의 관련 정보를 미리 가져와야함
@@ -119,7 +118,7 @@ public class TbEmpVacaReqController {
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpVacaReqDto.getApplicantId());
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
 		TbEmpApprovalDto tbEmpApprovalDto = tbApprovalDao.selectOneByApproNo(tbEmpVacaReqDto.getApproNo());
-		
+
 		// 승인 정보
 		model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
 

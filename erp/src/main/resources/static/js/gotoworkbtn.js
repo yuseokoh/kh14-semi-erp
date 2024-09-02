@@ -1,105 +1,105 @@
-/* 
-출퇴근 버튼 JS
-*/
-
 $(function() {
+    // 페이지 로드 시 출퇴근 상태를 서버에서 가져오기
+    $.ajax({
+        url: '/rest/attendance/check', // 서버의 엔드포인트 URL
+        type: 'POST',
+        success: function(response) {
+            
+
+            var loginId = response.loginId;
+            var checkInTime = response.checkInTime;
+            var checkOutTime = response.checkOutTime;
+
+            // 콘솔에 출력 --> 내일은 꼭 지울것!
+            console.log('Login ID:', loginId);
+            console.log('Check In Time:', checkInTime);
+            console.log('Check Out Time:', checkOutTime);
+			console.log('서버 응답:', response);
+
+            // 출근 및 퇴근 버튼 상태 업데이트
+            if (checkInTime) {
+                // 이미 출근한 경우
+                $('#start-btn').removeClass('on').addClass('off').text('출근 완료');
+                $('#end-btn').prop('disabled', false).removeClass('off').addClass('on'); // 퇴근 버튼 활성화
+                $('#start-time-display').text(new Date(checkInTime).toLocaleTimeString()); // 출근 시간 표시
+            } else {
+                // 출근하지 않은 경우
+                $('#start-btn').removeClass('off').addClass('on').text('출근');
+                $('#end-btn').prop('disabled', true).removeClass('on').addClass('off'); // 퇴근 버튼 비활성화
+            }
+
+            if (checkOutTime) {
+                // 이미 퇴근한 경우
+                $('#end-btn').removeClass('on').addClass('off').text('퇴근 완료');
+                $('#end-time-display').text(new Date(checkOutTime).toLocaleTimeString()); // 퇴근 시간 표시
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('출퇴근 상태 조회 실패:', textStatus, errorThrown);
+        }
+    });
+
     // 현재 날짜 및 시간 업데이트 함수
     function updateDateTime() {
         const now = new Date();
-        // 한국 표준시로 변환
-        const offset = 9 * 60; // 한국 표준시는 UTC+9
-        const localTime = new Date(now.getTime() + (offset * 60 * 1000));
         $('#cur-date').text(now.toLocaleDateString());
         $('#cur-time').text(now.toLocaleTimeString());
     }
 
     // 출근 버튼 클릭 핸들러
-    $('#start-btn').click(
-            function() {
-                if (confirm('출근하시겠습니까?')) {
-                    const now = new Date();
-                    const offset = 9 * 60; // 한국 표준시 UTC+9
-                    const startTime = new Date(now.getTime() + (offset * 60 * 1000)).toISOString(); // ISO 8601 형식으로 변환
-                    const $this = $(this);
-
-                    // 출근 버튼 상태에 따라 동작
-                    if ($this.hasClass('on')) {
-                        $('#start-time-display').text(new Date().toLocaleTimeString('ko-KR'));
-                        $this.removeClass('on').addClass('off').text(
-                                '출근 완료');
-                        $('#end-btn').prop('disabled', false); // 퇴근 버튼 활성화
-
-                        // 출근 시간을 서버로 전송
-                        $
-                                .ajax({
-                                    url : '/rest/home/start', // 서버의 API URL
-                                    type : 'POST',
-                                    data : {
-                                        startTime : startTime
-                                    },
-                                    success : function(response) {
-                                        console.log('출근 시간 기록 성공:',
-                                                response);
-                                    },
-                                    error : function(jqXHR, textStatus,
-                                            errorThrown) {
-                                        console.error('출근 시간 기록 실패:',
-                                                textStatus, errorThrown);
-                                    }
-                                });
-                    } else if ($this.hasClass('off')) {
-                        $this.removeClass('off').addClass('on').text('출근');
+    $('#start-btn').click(function() {
+        const $this = $(this);
+        if ($this.hasClass('on')) {
+            if (confirm('출근하시겠습니까?')) {
+                $this.removeClass('on').addClass('off').text('출근 완료');
+                $('#end-btn').prop('disabled', false).removeClass('off').addClass('on'); // 퇴근 버튼 활성화
+                // 출근 시간을 서버로 전송
+                $.ajax({
+                    url: '/rest/attendance/start', // 서버의 API URL
+                    type: 'POST',
+                    success: function(response) {
+                        console.log('출근 시간 기록 성공:', response);
+                        $('#start-time-display').text(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('출근 시간 기록 실패:', textStatus, errorThrown);
                     }
-                }
-            });
+                });
+            }
+        } else if ($this.hasClass('off')) {
+            alert('이미 출근 완료 상태입니다.');
+        }
+    });
 
     // 퇴근 버튼 클릭 핸들러
-    $('#end-btn').click(
-            function() {
-                if ($(this).hasClass('off')) {
-                    if (confirm('퇴근하시겠습니까?')) {
-                        const now = new Date();
-                        const offset = 9 * 60; // 한국 표준시 UTC+9
-                        const endTime = new Date(now.getTime() + (offset * 60 * 1000)).toISOString(); // ISO 8601 형식으로 변환
-
-                        $('#end-time-display').text(new Date().toLocaleTimeString('ko-KR'));
-
-                        // 퇴근 버튼 상태에 따라 동작
-                        $(this).removeClass('off').addClass('on').text(
-                                '퇴근 완료');
-
-                        // 퇴근 시간을 서버로 전송
-                        $
-                                .ajax({
-                                    url : '/rest/home/end', // 서버의 API URL
-                                    type : 'POST',
-                                    data : {
-                                        endTime : endTime
-                                    },
-                                    success : function(response) {
-                                        console.log('퇴근 시간 기록 성공:',
-                                                response);
-                                    },
-                                    error : function(jqXHR, textStatus,
-                                            errorThrown) {
-                                        console.error('퇴근 시간 기록 실패:',
-                                                textStatus, errorThrown);
-                                    }
-                                });
-
-                        // 출근 버튼을 다시 '출근' 상태로 리셋
-                        $('#start-btn').removeClass('off').addClass('on')
-                                .text('출근');
+    $('#end-btn').click(function() {
+        const $this = $(this);
+        if ($this.hasClass('on')) {
+            if (confirm('퇴근하시겠습니까?')) {
+                $this.removeClass('on').addClass('off').text('퇴근 완료');
+                // 퇴근 시간을 서버로 전송
+                $.ajax({
+                    url: '/rest/attendance/end', // 서버의 API URL
+                    type: 'POST',
+                    success: function(response) {
+                        console.log('퇴근 시간 기록 성공:', response);
+                        $('#end-time-display').text(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('퇴근 시간 기록 실패:', textStatus, errorThrown);
                     }
-                } else {
-                    alert('이미 퇴근 완료 상태입니다.');
-                }
-            });
+                });
+                $('#end-btn').prop('disabled', true); // 퇴근 버튼 비활성화
+            }
+        } else if ($this.hasClass('off')) {
+            alert('이미 퇴근 완료 상태입니다.');
+        }
+    });
 
     // 초기 날짜 및 시간 업데이트
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
     // 페이지 로드 시 퇴근 버튼 비활성화
-    $('#end-btn').prop('disabled', true);
+    $('#end-btn').prop('disabled', true).removeClass('on').addClass('off');
 });

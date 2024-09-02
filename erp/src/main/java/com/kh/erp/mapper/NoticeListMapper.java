@@ -16,10 +16,16 @@ public class NoticeListMapper implements RowMapper<NoticeDto>{
 		noticeDto.setNoticeNo(rs.getInt("notice_no"));
 		noticeDto.setNoticeWriter(rs.getString("notice_writer"));
 		noticeDto.setNoticeTitle(rs.getString("notice_title"));
-		noticeDto.setNoticeDate(rs.getDate("notice_date"));
 		noticeDto.setNoticeCont(rs.getString("notice_cont"));
-		noticeDto.setFileNo(rs.getInt("file_no"));
-		noticeDto.setNoticeDelYn(rs.getString("notice_del_yn"));
+		noticeDto.setNoticeWtime(rs.getDate("notice_wtime"));
+		noticeDto.setNoticeUtime(rs.getDate("notice_utime"));
+		noticeDto.setNoticeViews(rs.getInt("notice_views"));
+		noticeDto.setNoticeLikes(rs.getInt("notice_likes"));
+		noticeDto.setNoticeReplies(rs.getInt("notice_replies"));
+		//항목 3개 추가
+		noticeDto.setNoticeGroup(rs.getInt("notice_group"));
+		noticeDto.setNoticeTarget(rs.getObject("notice_target", Integer.class));
+		noticeDto.setNoticeDepth(rs.getInt("notice_depth"));
 		return noticeDto;
 	}
 }

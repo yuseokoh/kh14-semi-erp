@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.erp.VO.NoticeLikeVO;
 import com.kh.erp.dao.NoticeDao;
 import com.kh.erp.dao.NoticeLikeDao;
-import com.kh.erp.service.AttachmentService;
+import com.kh.erp.service.DocumentService;
 import com.kh.erp.error.TargetNotFoundException;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,7 +35,7 @@ public class NoticeRestController {
 	@RequestMapping("/check")
 	public NoticeLikeVO check(HttpSession session, @RequestParam int noticeNo) {
 		//사원 아이디 추출
-		String loginId = (String)session.getAttribute("testUser");
+		String loginId = (String)session.getAttribute("createdUser");
 		
 		NoticeLikeVO noticeLikeVO = new NoticeLikeVO();
 		noticeLikeVO.setChecked(noticeLikeDao.check(loginId, noticeNo));
@@ -47,7 +47,7 @@ public class NoticeRestController {
 	@RequestMapping("/action")
 	public NoticeLikeVO action(
 			HttpSession session, @RequestParam int noticeNo) {
-		String loginId = (String) session.getAttribute("testUser");
+		String loginId = (String) session.getAttribute("createdUser");
 		boolean isChecked = noticeLikeDao.check(loginId, noticeNo);
 		if(isChecked) {//좋아요 이력 있으면 삭제
 			noticeLikeDao.delete(loginId, noticeNo);
@@ -65,15 +65,15 @@ public class NoticeRestController {
 	}
 	//글 내부에 포함될 이미지를 업로드하고 번호를 반환하는 기능
 	@Autowired
-	private AttachmentService attachmentService;
+	private DocumentService documentService;
 	
 	@PostMapping("/upload")
 	public int upload(@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		if(attach.isEmpty()) {
-			throw new TargetNotFoundException("파일이 없습니다");
+			throw new TargetNotFoundException("문서가 없습니다");
 		}
-		int attachmentNo = attachmentService.save(attach);
-		return attachmentNo;
+		int documentNo = documentService.save(attach);
+		return documentNo;
 	}
 	
 	@PostMapping("/uploads")
@@ -82,8 +82,8 @@ public class NoticeRestController {
 		List<Integer> results = new ArrayList<>();//번호 담을 저장소 생성
 		for(MultipartFile attach : attachList) {//사용자가 보낸 파일 수만큼 반복
 			if(!attach.isEmpty()) {
-				int attachmentNo = attachmentService.save(attach);
-				results.add(attachmentNo);
+				int documentNo = documentService.save(attach);
+				results.add(documentNo);
 			}
 		}
 		return results;

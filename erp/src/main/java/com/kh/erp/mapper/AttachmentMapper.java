@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.kh.erp.dto.AttachmentDto;
 
+
+
 @Service
-public class AttachmentMapper implements RowMapper<AttachmentDto>{
+public class AttachmentMapper implements RowMapper<AttachmentDto> {
+
 	@Override
-	public AttachmentDto mapRow(ResultSet rs, int rowNum) throws SQLException{
+	public AttachmentDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		AttachmentDto attachmentDto = new AttachmentDto();
 		attachmentDto.setAttachmentNo(rs.getInt("attachment_no"));
 		attachmentDto.setAttachmentName(rs.getString("attachment_name"));
@@ -19,4 +22,5 @@ public class AttachmentMapper implements RowMapper<AttachmentDto>{
 		attachmentDto.setAttachmentSize(rs.getLong("attachment_size"));
 		return attachmentDto;
 	}
+
 }

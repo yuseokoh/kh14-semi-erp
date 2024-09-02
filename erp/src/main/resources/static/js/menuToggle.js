@@ -9,13 +9,21 @@ $(document).ready(function() {
         var isOpened = $sidebar.hasClass('opened');
         
         if (isOpened) {
+            // 사이드바가 열려 있는 상태에서 닫는 경우
             $sidebar.removeClass('opened');
-            $body.css('width', '100%');
-            $body.css('padding-left', 0);
+            $body.css({
+                'width': '82%', // 0823 이곳을 조정해서 사이드바 정상화완료
+                'padding-left': '0',
+                'transition': 'width 0.3s ease, padding-left 0.3s ease'
+            });
         } else {
+            // 사이드바가 닫혀 있는 상태에서 여는 경우
             $sidebar.addClass('opened');
-            $body.css('width', 'calc(100% - 300px)');
-            $body.css('padding-left', '320px');
+            $body.css({
+                'width': 'calc(100% - 300px)',
+                'padding-left': '320px',
+                'transition': 'width 0.3s ease, padding-left 0.3s ease'
+            });
         }
     });
 });

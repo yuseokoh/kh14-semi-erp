@@ -24,16 +24,18 @@ public class NoticeDao {
 	//목록
 	public List<NoticeDto> selectList(){
 		String sql = "select "
-						+ "notice_no, notice_writer, notice_title, notice_date, "
-						+ "notice_cont, file_no, notice_del_yn "
+						+ "notice_no, notice_writer, notice_title, "
+						+ "notice_wtime, notice_utime, notice_views, notice_likes, "
+						+ "notice_replies "
 					+ "from notice order by notice_no desc";
 		return jdbcTemplate.query(sql, noticeListMapper);
 	}
 	//검색
 	public List<NoticeDto> selectList(String column, String keyword) {
 		String sql = "select "
-						+ "notice_no, notice_writer, notice_title, notice_date, "
-						+ "notice_cont, file_no, notice_del_yn "
+				+ "notice_no, notice_writer, notice_title, "
+				+ "notice_wtime, notice_utime, notice_views, notice_likes, "
+				+ "notice_replies "
 					+ "from notice "
 					+ "where instr(#1, ?) > 0 "
 					+ "order by notice_no desc";
@@ -55,14 +57,16 @@ public class NoticeDao {
 	}
 	public void insert(NoticeDto noticeDto) {
 		String sql = "insert into notice("
-						+ "notice_no, notice_writer, notice_title, notice_date, "
-						+ "notice_cont, file_no, notice_del_yn "
+						+ "notice_no, notice_writer, notice_title, "
+						+ "notice_cont, "
+						+ "notice_group, notice_target, notice_depth"
 							+ ") "
 								+ "values(?, ?, ?, ?, ?, ?, ?)";
 		Object[] data = {
 				noticeDto.getNoticeNo(), noticeDto.getNoticeWriter(), noticeDto.getNoticeTitle(),
-				noticeDto.getNoticeDate(), noticeDto.getNoticeCont(), noticeDto.getFileNo(),
-				noticeDto.getNoticeDelYn()
+				noticeDto.getNoticeCont(), noticeDto.getNoticeGroup(),
+				noticeDto.getNoticeTarget(), noticeDto.getNoticeDepth()
+				
 		};
 		jdbcTemplate.update(sql, data);
 	}
@@ -76,10 +80,10 @@ public class NoticeDao {
 	//수정
 	public boolean update(NoticeDto noticeDto) {
 		String sql = "update notice set "
-						+ "notice_title=?, notice_date, notice_cont, notice_del_yn "
+						+ "notice_title=?, notice_cont=?, notice_utime=sysdate "
 						+ "where notice_no=?";
 		Object[] data = {
-				noticeDto.getNoticeTitle(), noticeDto.getNoticeDate(), noticeDto.getNoticeCont(), noticeDto.getNoticeDelYn(),
+				noticeDto.getNoticeTitle(), noticeDto.getNoticeCont(),
 				noticeDto.getNoticeNo()
 		};
 		return jdbcTemplate.update(sql, data) > 0;
@@ -99,15 +103,14 @@ public class NoticeDao {
 		int endRow = page * size;
 		int beginRow = endRow - (size-1);
 		String sql = "select * from ("
-							+ "select rownum rn, TMP.*from ("
+							+ "select rownum rn, TMP.* from ("
 								+ "select "
-								+ "notice_no, notice_writer, notice_title, notice_date, "
-								+ "notice_cont, file_no, notice_del_yn"
-								+ "from notice "
-								+ "where instr(#1. ?) > 0 "
-								+ "order by notice_no desc"
+								+ "notice_no, notice_writer, notice_title, "
+								+ "notice_wtime, "
+								+ "notice_utime, notice_views, notice_likes, notice_replies "
+								+ "from notice order by notice_no desc"
 							+ ")TMP"
-						+ ") where  rn between ? and ?";
+						+ ") where rn between ? and ?";
 		Object[] data = {beginRow, endRow};
 		return  jdbcTemplate.query(sql, noticeListMapper, data);						
 	}
@@ -117,15 +120,16 @@ public class NoticeDao {
 		int endRow = page * size;
 		int beginRow = endRow - (size-1);
 		String sql = "select * from ("
-							+ "select rownum rn, TMP.* from ( "
+							+ "select rownum rn, TMP.* from ("
 								+ "select "
-								+ "notice_no, notice_writer, notice_title, notice_date, "
-								+ "notice_cont, file_no, notice_del_yn"
+								+ "notice_no, notice_writer, notice_title, "
+								+ "notice_wtime, "
+								+ "notice_utime, notice_views, notice_likes, notice_replies "
 								+ "from notice "
-								+ "where instr(#1. ?) > 0 "
+								+ "where instr(#1, ?) > 0 "
 								+ "order by notice_no desc"
 							+ ")TMP"
-						+ ") where  rn between ? and ?";
+						+ ") where rn between ? and ?";
 		sql = sql.replace("#1", column);
 		Object[] data = {keyword, beginRow, endRow};
 		return  jdbcTemplate.query(sql, noticeListMapper, data);
@@ -149,10 +153,11 @@ public class NoticeDao {
 			String sql = "select * from ("
 								+ "select rownum rn, TMP.* from ("
 									+ "select "
-									+ "notice_no, notice_writer, notice_title, notice_date, "
-									+ "notice_cont, file_no, notice_del_yn"
+									+ "notice_no, notice_writer, notice_title, "
+									+ "notice_wtime, notice_utime, notice_views, notice_likes, notice_replies, "
+									+ "notice_group, notice_target, notice_depth "
 									+ "from notice "
-									+ "where instr(#1. ?) > 0 "
+									+ "where instr(#1, ?) > 0 "
 									//트리 정렬
 									+ "connect by prior notice_no=notice_target "
 									+ "start with notice_target is null "
@@ -171,10 +176,10 @@ public class NoticeDao {
 			String sql = "select * from ("
 							+ "select rownum rn, TMP.* from ("
 								+ "select "
-								+ "notice_no, notice_writer, notice_title, notice_date, "
-								+ "notice_cont, file_no, notice_del_yn"
+									+ "notice_no, notice_writer, notice_title, "
+									+ "notice_wtime, notice_utime, notice_views, notice_likes, notice_replies, "
+									+ "notice_group, notice_target, notice_depth "
 								+ "from notice "
-								+ "where instr(#1. ?) > 0 "
 								//트리 정렬
 								+ "connect by prior notice_no=notice_target "
 								+ "start with notice_target is null "
@@ -194,7 +199,7 @@ public class NoticeDao {
 			return jdbcTemplate.queryForObject(sql, int.class, data);
 		}
 		else {//목록카운팅
-			String sql = "select count(*) form notice";
+			String sql = "select count(*) from notice";
 			return jdbcTemplate.queryForObject(sql, int.class);
 		}
 	}

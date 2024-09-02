@@ -25,7 +25,7 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setEmpGender(rs.getString("emp_gender"));
 		tbEmpDto.setEmpHp(rs.getString("emp_hp"));
 		tbEmpDto.setEmpEmail(rs.getString("emp_email"));
-		tbEmpDto.setEmpBirth(rs.getString("emp_birth"));
+		tbEmpDto.setEmpBirth(rs.getDate("emp_birth"));
 		tbEmpDto.setEmpEdu(rs.getString("emp_edu"));
 		tbEmpDto.setEmpSdate(rs.getString("emp_sdate"));
 		tbEmpDto.setEmpEdate(rs.getDate("emp_edate"));

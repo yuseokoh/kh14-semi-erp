@@ -46,7 +46,7 @@
                         <tr>
                         	<td><img src="/tb/myImage?loginId=${tbEmpDto.loginId}" width="25"></td>
                             <td>
-                                <a href="detail?loginId=${tbEmpDto.loginId}">
+                                <a href="/tb/mypage?loginId=${tbEmpDto.loginId}">
                                     ${tbEmpDto.name}
                                 </a>
                             </td>

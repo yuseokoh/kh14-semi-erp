@@ -515,8 +515,7 @@
             <label>
                 <input class="address" name="empPost" type="text" placeholder="">
                 <span class="span1">우편번호</span>
-                <button class="btn-address">
-                </button>
+                <button class="btn-address"></button>
             </label>
 
             <label>

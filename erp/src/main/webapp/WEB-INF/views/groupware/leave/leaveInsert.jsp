@@ -201,7 +201,6 @@ input[readonly] {
 								</tbody>
 							</table>
 						</div>
-
 						<div class="row">
 							<label>제목</label> <input type="text" class="form title1" name="vacaTitle">
 						</div>
@@ -260,7 +259,6 @@ input[readonly] {
 							</div>
 						</div>
 					</div>
-
 				</body>
 
 				<!-- 이곳에서부터 <footer>  -->

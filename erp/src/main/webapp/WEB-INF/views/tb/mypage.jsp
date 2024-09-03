@@ -348,28 +348,7 @@
         }
     });
 </script>
-<script type="text/javascript">
-$(function(){
-	$(#saveChanges).click(function(){
-		$.ajax({
-			url:"/rest/emp/edit",
-			method:"post",
-			data:{
-				name: name,
-				empSdate:empSdate,
-				empBirth:empBirth,
-				empHp:empHp,
-				empPost:empPost,
-				attach:attach
-			},
-			success:function(response){
-				console.log("성공");
-			}
-		});
-	});
-	
-});
-</script>
+
 
 
 <script type="text/javascript">
@@ -709,15 +688,13 @@ $(function(){
                     </div>
           <hr style="width: 133%; border: 1px solid #858e8f;">
           <div class="edit">
-<<<<<<< HEAD
+
           	<c:if test="${tbEmpDto.loginId == sessionScope.createdUser}">
             <button id="editButton" class="edit-btn">수정</button>
             <button id="saveChanges" class="edit-btn hidden">저장</button>           	
           	</c:if>
-=======
-            <button id="editButton" class="edit-btn" >수정</button>
-            <button id="saveChanges" type="submit" class="edit-btn hidden">저장</button> 
->>>>>>> refs/remotes/origin/main
+
+           
         </div>
                     
                 </div>

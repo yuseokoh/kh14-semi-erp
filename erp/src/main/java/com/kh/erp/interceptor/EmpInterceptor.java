@@ -8,25 +8,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class AdminInterceptor implements HandlerInterceptor {
-
+public class EmpInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		//목표 : 로그인 한 사람은 통과, 아닌 사람은 차단(+로그인페이지 이동)
+		
 		HttpSession session = request.getSession();
-		String userType = (String)session.getAttribute("userType");
-//		boolean isAdmin = createdLevel !=null&&createdLevel.equals("관리자");
-		boolean isAdmin = "A".equals(userType);
-		if(isAdmin) {
-			return true;	
+		String createdUser =  (String)session.getAttribute("createdUser");
+		boolean isLogin = createdUser !=null;
+		if(isLogin) {//로그인 한 사람이라면
+			return true;//통과		
 		}
-		else {
-			response.sendError(403);//권한 없음(부족),Forbidden
-//			response.sendRedirect("/");
-			return false;
+		else {//로그인 안한 사람이라면
+			response.sendRedirect("/");//로그인페이지로 추방
+			return false;//차단
 		}
-	
 		
 	}
-
 }

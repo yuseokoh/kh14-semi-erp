@@ -36,7 +36,6 @@ public class FileDownloadController {
 	@RequestMapping("/download")
 	public ResponseEntity<ByteArrayResource> download(
 				@RequestParam int documentNo) throws IOException {
-		System.out.println(documentService.find(documentNo));
 		return documentService.find(documentNo);
 	}
 	

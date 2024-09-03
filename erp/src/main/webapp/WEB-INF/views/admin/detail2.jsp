@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <title>내정보</title>
 
     <!-- google font cdn -->
@@ -267,158 +267,22 @@
                 $('#notificationCount').toggle(count > 0); 
             }
             updateNotificationCount(10); 
+        
+        
+        
+        $('#editButton').show(); // 로그인 시 수정 버튼 표시
+        $('#editButton').on('click', function() {
+            $('#editButton').hide(); // 수정 버튼 숨기기
+            $('#saveChanges').show(); // 저장 버튼 표시
+            $('.info1-container').addClass('hidden'); // 기존 정보 숨기기
+            $('#editForm').show(); // 수정 폼 표시
+        });
         });
     </script>
 
 
   
-  <script type="text/javascript">
-    $(document).ready(function() {
-        var isLoggedIn = true; // 실제 로그인 상태 확인 로직 필요
-
-        if (isLoggedIn) {
-            $('#editButton').show(); // 로그인 시 수정 버튼 표시
-
-            // 초기 폼 값 설정
-            $('#editName').val($('#nameDisplay').text());
-            $('#editPosition').val($('#positionDisplay').text());
-            $('#editDepartment').val($('#departmentDisplay').text());
-            $('#editStartTime').val($('#startTimeDisplay').text());
-            $('#editEndTime').val($('#endTimeDisplay').text());
-            $('#editEmployeeId').val($('#employeeIdDisplay').text());
-            $('#editHireDate').val($('#hireDateDisplay').text());
-            $('#editBirthDate').val($('#birthDateDisplay').text());
-            $('#editPhone').val($('#phoneDisplay').text());
-            $('#editAddress1').val($('#addressDisplay1').text());
-            $('#editAddress2').val($('#addressDisplay2').text());
-            $('#editAddress3').val($('#addressDisplay3').text());
-
-            // 수정 버튼 클릭 시
-            $('#editButton').on('click', function() {
-                $('#editButton').hide(); // 수정 버튼 숨기기
-                $('#saveChanges').show(); // 저장 버튼 표시
-                $('.info1-container').addClass('hidden'); // 기존 정보 숨기기
-                $('#editForm').show(); // 수정 폼 표시
-            });
-
-            // 저장 버튼 클릭 시
-            $('#saveChanges').on('click', function() {
-                $('#nameDisplay').text($('#editName').val());
-                $('#positionDisplay').text($('#editPosition').val());
-                $('#departmentDisplay').text($('#editDepartment').val());
-                $('#startTimeDisplay').text($('#editStartTime').val());
-                $('#endTimeDisplay').text($('#editEndTime').val());
-                $('#employeeIdDisplay').text($('#editEmployeeId').val());
-                $('#hireDateDisplay').text($('#editHireDate').val());
-                $('#birthDateDisplay').text($('#editBirthDate').val());
-                $('#phoneDisplay').text($('#editPhone').val());
-                $('#addressDisplay1').text($('#editAddress1').val());
-                $('#addressDisplay2').text($('#editAddress2').val());
-                $('#addressDisplay3').text($('#editAddress3').val());
-
-                // 이미지 업데이트
-                var file = $('#editImage')[0].files[0];
-                if (file) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#profileImage').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                }
-
-                $('#editForm').hide(); // 폼 숨기기
-                $('.info1-container').removeClass('hidden'); // 기존 정보 다시 표시
-                $('#editButton').show(); // 수정 버튼 표시
-                $('#saveChanges').hide(); // 저장 버튼 숨기기
-            });
-
-            // 이미지 파일 선택 시 미리보기
-            $('#editImage').on('change', function() {
-                var file = this.files[0];
-                if (file) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#previewImage').attr('src', e.target.result).show();
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    $('#previewImage').hide();
-                }
-            });
-        }
-    });
-</script>
-<script type="text/javascript">
-$(function(){
-	$(#saveChanges).click(function(){
-		$.ajax({
-			url:"/rest/emp/edit",
-			method:"post",
-			data:{
-				name: name,
-				empSdate:empSdate,
-				empBirth:empBirth,
-				empHp:empHp,
-				empPost:empPost,
-				attach:attach
-			},
-			success:function(response){
-				console.log("성공");
-			}
-		});
-	});
-	
-});
-</script>
-
-
-<script type="text/javascript">
-
-    $(function () {
-        $("[name=empPost],[name=empAddress1], .btn-find-address")
-        .click(function(){
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    var addr = ''; // 주소 변수
-                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                    }
-                    document.querySelector("[name=empPost]").value = data.zonecode;
-                    document.querySelector("[name=empAddress1]").value = addr;
-                    // 커서를 상세주소 필드로 이동한다.
-                    document.querySelector("[name=empAddress2]").focus();
-                    $("[name=empPost]").trigger("input");
-                }
-            }).open();
-        });
-        $(".btn-clear-address").click(function(){
-            $("[name=empPost]").val("");
-            $("[name=empAddress1]").val("");
-            $("[name=empAddress2]").val("");
-        });
-        $(".btn-clear-address").hide();
-        $("[name=empPost],[name=empAddress1],[name=empAddress2]")
-        .on("input", function(){
-            var len1 = $("[name=empPost]").val().length;
-            var len2 = $("[name=empAddress1]").val().length;
-            var len3 = $("[name=empAddress2]").val().length;
-            if(len1 + len2 + len3 > 0) {
-                $(".btn-clear-address").fadeIn();
-            }
-            else {
-                $(".btn-clear-address").fadeOut();
-            }
-        });
-    });
-
-
-
-
-
-</script>
-
+  
 
 
 
@@ -536,14 +400,13 @@ $(function(){
     
     <div id="content" style="margin-top: 50px;">
         <main id="body"> 
-          
-          <!-- 내정보-->
-           <h2><a href="/home"><i class="fa-solid fa-left-long"></i></a></h2>
+         <h2><a href="list"><i class="fa-solid fa-left-long"></i></a></h2>
+ <!-- 내정보-->
           <h2 style="margin-left: 10px;">${tbEmpDto.name}님 정보</h2>
           <hr style="width: 133%; border: 1px solid #858e8f;">
           <div class="row flex-box w-1200">
               <div class="w-50 center"> 
-                  <img class="target" src="/tb/myImage?loginId=${tbEmpDto.loginId}" alt="Profile Image" style="width: 370px; height: 300px;" >
+                  
               </div>
               <div class="w-50 center">
                   <div class="info1-container">
@@ -564,157 +427,148 @@ $(function(){
                       </div> 
                       <div class="info1-item"> 
                           <i class="fa-regular fa-clock"></i> 
-                          <span class="span2">출근시간: </span>
-                          <span id="startTimeDisplay">${inTime}</span>
+                          <span class="span2">비고: </span>
+                          <span id="startTimeDisplay">${tbEmpDto.empMemo}</span>
                       </div> 
                       <div class="info1-item"> 
                           <i class="fa-solid fa-clock"></i> 
-                          <span class="span2">퇴근시간: </span>
-                          <span id="endTimeDisplay">${outTime}</span>
+                          <span class="span2">산재보험: </span>
+                          <span id="endTimeDisplay">${tbEmpDto.salSan}</span>
                       </div> 
                       <div class="info1-item"> 
                           <i class="fa-solid fa-address-card"></i> 
-                          <span class="span2">사번: </span>
-                          <span id="employeeIdDisplay">${tbEmpDto.empNo}</span>
+                          <span class="span2">고용보험: </span>
+                          <span id="employeeIdDisplay">${tbEmpDto.salKo}</span>
                       </div> 
                       <div class="info1-item"> 
                           <i class="fa-solid fa-calendar-days"></i> 
-                          <span class="span2">입사일: </span>
-                          <span id="hireDateDisplay">${tbEmpDto.empSdate}</span>
+                          <span class="span2">건강보험: </span>
+                          <span id="hireDateDisplay">${tbEmpDto.salKun}</span>
                       </div> 
                       <div class="info1-item"> 
                           <i class="fa-solid fa-cake-candles"></i> 
-                          <span class="span2">생년월일: </span>
-                          <span id="birthDateDisplay">${tbEmpDto.empBirth}</span>
+                          <span class="span2">국민보험: </span>
+                          <span id="birthDateDisplay">${tbEmpDto.salKuk}</span>
                       </div> 
                       <div class="info1-item"> 
                           <i class="fa-solid fa-phone-volume"></i> 
-                          <span class="span2">전화번호: </span>
-                          <span id="phoneDisplay">${tbEmpDto.empHp}</span>
+                          <span class="span2">보험등록일자: </span>
+                          <span id="phoneDisplay">${tbEmpDto.salDate}</span>
                       </div> 
                       <div class="info1-item"> 
                           <i class="fa-solid fa-envelope"></i>
-                          <span class="span2">이메일: </span>
-                          <span id="phoneDisplay">${tbEmpDto.empEmail}</span>
+                          <span class="span2">세전급여: </span>
+                          <span id="phoneDisplay">${tbEmpDto.salPre}</span>
                       </div> 
-                      
-                      
-                                    <!--주소-->
-        <div class="info1-item"> 
-            <i class="fa-solid fa-map-location-dot"></i> 
-            <span class="span2">우편번호: </span>
-            <span id="addressDisplay1">${tbEmpDto.empPost}</span>
-             </div>
-
-             <div class="info1-item"> 
-                <i class="fa-solid fa-map-location-dot"></i> 
-                <span class="span2">주소: </span>
-                <span id="addressDisplay2">${tbEmpDto.empAddress1}</span>
-            </div> 
-
-            <div class="info1-item"> 
-                <i class="fa-solid fa-map-location-dot"></i> 
-                <span class="span2">상세주소: </span>
-                <span id="addressDisplay3">${tbEmpDto.empAddress2}</span>
-            </div> 
-           
-           
-           <!-- 주소-->
+                      <div class="info1-item"> 
+                          <i class="fa-solid fa-envelope"></i>
+                          <span class="span2">세후급여: </span>
+                          <span id="phoneDisplay">${tbEmpDto.salAfter}</span>
+                      </div> 
+                       <div class="info1-item"> 
+                          <i class="fa-solid fa-envelope"></i>
+                          <span class="span2">계좌번호: </span>
+                          <span id="phoneDisplay">${tbEmpDto.empAccountNumber}</span>
+                      </div> 
+      				   <div class="info1-item"> 
+                          <i class="fa-solid fa-envelope"></i>
+                          <span class="span2">은행이름: </span>
+                          <span id="phoneDisplay">${tbEmpDto.empBank}</span>
+                      </div> 
                       
                   </div>
                   <!-- 수정 버튼 추가 -->
                 
                 
+				<form action="/admin/emp/edit" method="post" autocomplete="off">
                   <div class="row flex-box w-1200">
-					<form action="/tb/edit" method="post" autocomplete="off" enctype="multipart/form-data">
                   <div id="editForm" class="edit-form">
                  	<input type="hidden" value="${tbEmpDto.loginId}" name="loginId">
                       <h3>정보 수정</h3>
                       <div>
                           <label for="editName">이름:</label>
-                          <input type="text" id="editName" value="${tbEmpDto.name}" name="name">
+                          <input type="text" id="editName" value="${tbEmpDto.name}" name="name" readonly>
                       </div>
                       
                       <div>
                           <label for="editPosition">직급:</label>
-                          <input type="text" id="editPosition" value="${tbEmpDto.empLevel}" name="empLevel" readonly>
+                          <select name="empLevel" class="select1" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);">
+                          	<option value="인턴" <c:if test="${tbEmpDto.empLevel == '인턴'}">selected</c:if>>인턴</option>
+                          	<option value="사원" <c:if test="${tbEmpDto.empLevel == '사원'}">selected</c:if>>사원</option>
+                        	<option value="주임" <c:if test="${tbEmpDto.empLevel == '주임'}">selected</c:if>>주임</option>
+                        	<option value="대리" <c:if test="${tbEmpDto.empLevel == '대리'}">selected</c:if>>대리</option>
+                        	<option value="과장" <c:if test="${tbEmpDto.empLevel == '과장'}">selected</c:if>>과장</option>
+                        	<option value="차장" <c:if test="${tbEmpDto.empLevel == '차장'}">selected</c:if>>차장</option>
+                        	<option value="부장" <c:if test="${tbEmpDto.empLevel == '부장'}">selected</c:if>>부장</option>
+                          	
+                          </select>
+                        
                       </div>
                       <div>
                           <label for="editDepartment">부서:</label>
-                          <input type="text" id="editDepartment" value="${tbEmpDto.empDept}" name="empDept" readonly>
+                          <select name="empDept" class="select1" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);" >
+                          	<option value="a00" <c:if test="${tbEmpDto.empDept == '인사팀'}">selected</c:if>>인사팀</option>
+                          	<option value="a01" <c:if test="${tbEmpDto.empDept == '총무팀'}">selected</c:if>>총무팀</option>
+                          	<option value="a02" <c:if test="${tbEmpDto.empDept == '영업팀'}">selected</c:if>>영업팀</option>
+                          	<option value="a03" <c:if test="${tbEmpDto.empDept == '개발팀'}">selected</c:if>>개발팀</option>
+							<option value="a04" <c:if test="${tbEmpDto.empDept == '생산팀'}">selected</c:if>>생산팀</option>
+                          </select>
+                      
                       </div>
                       <div>
-                          <label for="editStartTime">출근시간:</label>
-                          <input type="text" id="editStartTime" value="${inTime}" disabled>
+                          <label for="editStartTime">비고:</label>
+                          <input type="text" id="editMemo" value="${tbEmpDto.empMemo}" name="empMemo">
                       </div>
                       <div>
-                          <label for="editEndTime">퇴근시간:</label>
-                          <input type="text" id="editEndTime" value="${outTime}" disabled>
+                          <label for="editEndTime">산재보험:</label>
+                          <input type="text" id="editSalSan" value="${tbEmpDto.salSan}" name="SalSan">
                       </div>
                       <div>
-                          <label for="editEmployeeId">사번:</label>
-                          <input type="text" id="editEmployeeId" value="${tbEmpDto.empNo}" name="empNo" readonly>
+                          <label for="editEmployeeId">고용보험:</label>
+                          <input type="text" id="editEmployeeId" value="${tbEmpDto.salKo}" name="SalKo">
                       </div>
                       <div>
-                          <label for="editHireDate">입사일:</label>
-                          <input type="date" id="editHireDate" value="${tbEmpDto.empSdate}" name="empSdate" readonly>
+                          <label for="editHireDate">건강보험:</label>
+                          <input type="text" id="editHireDate" value="${tbEmpDto.salKun}" name="SalKun">
                       </div>
                       <div>
-                          <label for="editBirthDate">생년월일:</label>
-                          <input type="date" id="editBirthDate" value="${tbEmpDto.empBirth}" name="empBirth">
+                          <label for="editBirthDate">국민보험:</label>
+                          <input type="text" id="editBirthDate" value="${tbEmpDto.salKuk}" name="SalKuk">
                       </div>
                       <div>
-                          <label for="editPhone">전화번호:</label>
-                          <input type="text" id="editPhone" value="${tbEmpDto.empHp}" name="empHp">
+                          <label for="editPhone">보험등록일자:</label>
+                          <input type="date" id="editPhone" value="${tbEmpDto.salDate}" name="SalDate">
                       </div>
                       <div>
-                          <label for="editEmail">이메일:</label>
-                          <input type="text" id="editEmail" value="${tbEmpDto.empEmail}" name="empEmail">
+                          <label for="editEmail">세전급여:</label>
+                          <input type="text" id="editEmail" value="${tbEmpDto.salPre}" name="SalPre">
                       </div>
-                         <!--주소-->
-                      <div>
-                     <label for="editAddress1">우편번호:</label>
-                              <input class="address1" id="editAddress1" name="empPost" type="text" placeholder="" required="" style="width: 30%;">
-                            </button>
-                        </label>
+                       <div>
+                          <label for="editEmail">세전급여:</label>
+                          <input type="text" id="editEmail" value="${tbEmpDto.salAfter}" name="SalAfter">
                       </div>
-
-                        <div>
-                            <label for="editAddress2">주소:</label>
-                                <input class="address2"  id="editAddress2" name="empAddress1" type="text" placeholder="" required="">
-                            </label>
-                        </div>
-
-                        <div>
-                            <label for="editAddress3">상세주소:</label>
-                                <input class="address3"   id="editAddress3" name="empAddress2" type="text" placeholder="" required="">
-                            </label>
+                       <div>
+                          <label for="editEmail">계좌번호:</label>
+                          <input type="text" id="editEmail" value="${tbEmpDto.empAccountNumber}" name="EmpAccountNumber">
                       </div>
-                    
-                    
-                    <!-- 주소-->
-
-                      <div>
-                        <label for="editImage">이미지</label>
-                        <input type="file" id="editImage" name="attach" accept="image/*">
-                    </div>
-                      <button id="saveChanges" type="submit">저장</button>
+                       <div>
+                          <label for="editEmail">은행이름:</label>
+                          <input type="text" id="editEmail" value="${tbEmpDto.empBank}" name="empBank">
+                      </div>
                   </div>
-              </form>
               </div>
+          <hr style="width: 133%; border: 1px solid #858e8f;">
+          <div class="edit">
+            <button id="editButton" class="edit-btn" type="button">수정</button>
+            <button id="saveChanges" class="edit-btn hidden" type="submit">저장</button> 
+        </div>
+              </form>
           </div>
            <!-- 내정보 -->           
                         
         
 
                     </div>
-          <hr style="width: 133%; border: 1px solid #858e8f;">
-          <div class="edit">
-          	<c:if test="${tbEmpDto.loginId == sessionScope.createdUser}">
-            <button id="editButton" class="edit-btn">수정</button>
-            <button id="saveChanges" class="edit-btn hidden">저장</button>           	
-          	</c:if>
-        </div>
                     
                 </div>
             </main>

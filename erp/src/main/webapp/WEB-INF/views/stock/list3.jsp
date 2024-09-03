@@ -38,9 +38,12 @@
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+
 <style>
     /* 통일된 색상 */
     body {
+    	margin-bottom:200px;
         color: #333333;
         background-color: #f5f5f5; /* 배경색 변경, 선택 사항 */
     }
@@ -83,7 +86,7 @@
         display: block;
         width: 80px;
         height: 40px;
-        margin: 20px auto; /* 수평 중앙 정렬 */
+        margin: 20px auto 220px auto; /* 수평 중앙 정렬 */
         padding: 10px;
         border: none;
         border-radius: 5px;
@@ -95,10 +98,8 @@
         transition: background-color 0.3s ease;
         text-decoration: none;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        position: relative;
-        bottom: 20px; /* 바닥에서 20px 위로 이동 */
-        top:10px
-    }
+        
+}    
 
     .register-button:hover {
         background-color: #555555;
@@ -108,7 +109,10 @@
         height: 70%;
         width: 80%;
         margin: 0 auto; /* 수평 중앙 정렬 */
-        padding-bottom: 180px; /* 버튼이 바닥에 붙지 않도록 여백 추가 */
+        padding-bottom: 300px; /* 버튼이 바닥에 붙지 않도록 여백 추가 */
+        position: relative; /* 'relative' 위치 속성을 추가 */
+        margin-left: 1200px; /* 사이드바가 닫힐 때의 기본 위치 */
+        transition: margin-left 0.3s ease; /* 이동 애니메이션 */
     }
 
     table {
@@ -159,6 +163,15 @@
         font-size: 12px;
         font-weight: bold;
     }
+    
+    h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #333; /* 제목 색상 */
+    font-weight: bold;
+    padding-bottom: 10px; /* 제목과 선 사이의 여백 */
+    display: inline-block; /* 선의 길이를 제목의 길이에 맞추기 위해 인라인 블록 설정 */
+}
 
     .change-info {
         display: flex;
@@ -217,6 +230,28 @@
 
     .search-form button:hover {
         background-color: #555555;
+    }
+
+    /* 사이드바 기본 상태 */
+    #sidebar {
+        width: 230px; /* 사이드바의 너비 */
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #333;
+        color: #fff;
+        transition: transform 0.3s ease; /* 이동 애니메이션 */
+        transform: translateX(-230\px); /* 사이드바가 기본적으로 왼쪽으로 숨겨져 있음 */
+    }
+    
+    #menu li {
+    margin: 15px 0; /* 메뉴 항목 사이의 간격 */
+}
+
+    /* 사이드바가 열릴 때 */
+    #sidebar.open {
+        transform: translateX(0);
     }
 </style>
 </head>
@@ -316,7 +351,7 @@
     </aside>
 
     <div class="container1">
-        <h1></h1>
+        <h1>재고 목록</h1>
         
         <!-- 검색 폼 추가 -->
         <form class="search-form" action="${pageContext.request.contextPath}/stock/list" method="get">
@@ -401,7 +436,31 @@
        
         <!-- 등록 버튼 추가 -->
         <a href="${pageContext.request.contextPath}/stock/insert" class="register-button">재고등록</a>
-          
     </div>
+     <script>
+    $(document).ready(function() {
+        const sidebar = $('#sidebar');
+        const container1 = $('.container1');
+        const menuToggle = $('#menuToggle');
+
+        // 사이드바 상태에 따른 container1 이동
+        function adjustContainer() {
+            if (sidebar.hasClass('open')) {
+                container1.css('margin-left', '400px'); // 사이드바가 열릴 때 container1의 위치
+            } else {
+                container1.css('margin-left', '100px'); // 사이드바가 닫힐 때 container1의 위치
+            }
+        }
+
+        // 사이드바 열기/닫기 토글
+        menuToggle.click(function() {
+            sidebar.toggleClass('open');
+            adjustContainer();
+        });
+
+        // 페이지 로드 시 사이드바 상태에 따른 container1 위치 조정
+        adjustContainer();
+    });
+    </script>
 </body>
 </html>

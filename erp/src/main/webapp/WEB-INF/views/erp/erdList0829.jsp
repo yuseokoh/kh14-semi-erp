@@ -180,6 +180,10 @@ a:hover {
        <main id="body"> 
            <div id="content">
                <!-- 페이지 내용이 여기에 들어갑니다. -->
+               
+               
+               
+               
            </div>
        </main>
     </div>

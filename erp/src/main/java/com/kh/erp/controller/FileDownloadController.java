@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.erp.dao.DocumentDao;
 import com.kh.erp.dto.DocumentDto;
 import com.kh.erp.error.TargetNotFoundException;
-import com.kh.erp.service.AttachmentService;
 import com.kh.erp.service.DocumentService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,7 +35,6 @@ public class FileDownloadController {
 	@RequestMapping("/download")
 	public ResponseEntity<ByteArrayResource> download(
 				@RequestParam int documentNo) throws IOException {
-		System.out.println(documentService.find(documentNo));
 		return documentService.find(documentNo);
 	}
 	

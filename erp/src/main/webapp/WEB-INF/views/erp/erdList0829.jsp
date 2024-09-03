@@ -1,56 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>재고 목록</title>
+<title>출퇴근 관리 시스템</title>
 
- <!-- google font cdn -->
+ <!-- Google Font CDN -->
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
- <!-- font awesome icon cdn -->
+ <!-- Font Awesome Icon CDN -->
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
- <!-- my css -->
- <link rel="stylesheet" type="text/css" href="./commons.css">
- <!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
-
-  <!-- 프로젝트 스타일 --> 
-  <link rel="stylesheet" type="text/css" href="./gotowork.css">
-  <link rel="stylesheet" type="text/css" href="./sidebar.css">
-  <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-
-  
-  <!-- jquery cdn -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="checkbox.js"></script>
-  <script src="confirm-link.js"></script>
-  <script src="multipage.js"></script>
-
-    <!-- summernote cdn -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
-
-  <!-- 프로젝트 js-->
-  <script src="gotoworkbtn.js"></script>
-  <script src="menuToggle.js"></script>
-  <script src="delete.js"></script>
-  <!-- chart js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <!-- My CSS -->
+ <link rel="stylesheet" type="text/css" href="/css/commons.css">
+ <!-- Additional CSS -->
+ <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
+ <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+ <!-- External Scripts -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ <script src="checkbox.js"></script>
+ <script src="confirm-link.js"></script>
+ <script src="multipage.js"></script>
+ <script src="gotoworkbtn.js"></script>
+ <script src="menuToggle.js"></script>
+ <script src="delete.js"></script>
+ <!-- Summernote CDN -->
+ <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+ <!-- Chart.js CDN -->
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
 table {
-    width: 300%;
+    width: 100%;
     max-width: 1200px;
     border-collapse: collapse;
-    background-color: #ffffff; /* 테이블 배경색을 흰색으로 설정 */
+    background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-right: 390px;
+    margin: 0 auto;
 }
 
 th, td {
@@ -60,17 +46,17 @@ th, td {
 }
 
 th {
-    background-color: #80bdff; /* 테이블 헤더 배경색을 부드러운 핑크색으로 설정 */
-    color: white; /* 헤더 텍스트 색상을 흰색으로 설정 */
+    background-color: #80bdff;
+    color: white;
     font-weight: bold;
 }
 
 tr:hover {
-    background-color:#cde1ff; /* 테이블 행 호버 시 배경색을 부드러운 핑크색으로 설정 */
+    background-color: #cde1ff;
 }
 
 a {
-    color: #2e86de; /* 링크 색상을 부드러운 핑크색으로 설정 */
+    color: #2e86de;
     text-decoration: none;
     font-weight: bold;
 }
@@ -79,39 +65,34 @@ a:hover {
     text-decoration: underline;
 }
 
-/* 상품 이미지 스타일 */
 .product-image {
-    max-width: 100px; /* 이미지 최대 너비 설정 */
-    max-height: 120px; /* 이미지 최대 높이 설정 */
-    height: auto; /* 이미지의 비율을 유지하며 높이 자동 조정 */
-    border-radius: 5px; /* 이미지의 모서리를 둥글게 */
+    max-width: 100px;
+    max-height: 120px;
+    height: auto;
+    border-radius: 5px;
 }
 
-/* 변동 정보 스타일 */
 .change-info {
     display: flex;
     align-items: center;
-    justify-content: center; /* 수평 정렬 */
+    justify-content: center;
 }
 
 .arrow {
-    color: #2e86de; /* 화살표 색상 설정 */
-    font-size: 1.2em; /* 화살표 크기 조정 */
-    margin: 0 7px; /* 화살표와 텍스트 사이의 간격 설정 */
-    margin-bottom:5px;
+    color: #2e86de;
+    font-size: 1.2em;
+    margin: 0 7px;
+    margin-bottom: 5px;
 }
 </style>
 
-  <!-- 자바스크립트 코드 작성 영역 -->
-  <script type="text/javascript">
-</script>
 </head>
-<body>  
+<body>
     <header id="header">
         <div id="menuToggle"><i class="fa fa-bars"></i></div>
         <div id="logo">
             <a href="#" class="notif-alert">
-                <i class="fa-solid fa-envelope email"></i></i>
+                <i class="fa-solid fa-envelope email"></i>
                 <span class="notif-count content">0</span>
             </a>
             <a href="#"><i class="fa-solid fa-circle-user user"></i></a> 
@@ -121,53 +102,38 @@ a:hover {
     <aside id="sidebar">
         <nav id="menu">
             <div class="container">
+                <!-- 출퇴근 관리 -->
+                <div id="commute-wrap">
+                    <div id="date-wrap">
+                        <span id="cur-date"></span><br>
+                        <span id="cur-time"></span>
+                    </div>
+                    <div id="start-time">
+                        <i>출근 시간</i>
+                        <span id="start-time-display">미등록</span>
+                    </div>
+                    <div id="end-time">
+                        <i>퇴근 시간</i>
+                        <span id="end-time-display">미등록</span>
+                    </div>
+                    <div id="attendance-btns">
+                        <button id="start-btn" class="on">출근</button>
+                        <button id="end-btn" class="on">퇴근</button>
+                    </div>
+                </div>
+                <!-- 출퇴근 관리 끝 -->
 
-   <!-- 이미지? -->
-        
-
-<!-- 여기까지 이미지?-->
-
-
-				<!--출퇴근-->
-				<div id="commute-wrap">
-					<div id="date-wrap">
-						<span id="cur-date"></span><br>
-						<span id="cur-time"></span>
-					</div>
-					<div id="start-time">
-						<i>출근 시간</i>
-						<!-- 출근 여부에 따른 표시 -->
-						<span id="start-time-display">미등록</span>
-					</div>
-					<div id="end-time">
-						<i>퇴근 시간</i>
-						<!-- 퇴근 여부에 따른 표시 -->
-						<span id="end-time-display">미등록</span>
-					</div>
-					<div id="attendance-btns">
-						<button id="start-btn" class="on">출근</button>
-						<button id="end-btn" class="on">퇴근</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 출퇴근 여기까지-->
-
-
-
-                <!-- 사이드바-->
+                <!-- 메뉴 -->
                 <div class="row">
                     <ul class="menu-hover-fill">
                         <li><a href="/" data-text="home">HOME</a></li>
-
                         <li><a href="/poketmon/list" data-text="">
-                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
+                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)</a>
                             <ul>
-                                <li><a href="#">휴가신청서</a></li>
-                                <li><a href="#">보고서(수인씨작성중)</a></li>
+                                <li><a href="#">휴가</a></li>
+                                <li><a href="#">보고서</a></li>
                             </ul>
                         </li>
-
                         <li><a href="/emp/list" data-text="">
                             <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
                             <ul>
@@ -175,7 +141,6 @@ a:hover {
                                 <li><a href="#">서브메뉴2</a></li>
                             </ul>
                         </li>
-
                         <li><a href="/book/list" data-text="">
                             <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
                             <ul>
@@ -183,7 +148,6 @@ a:hover {
                                 <li><a href="#">서브메뉴2</a></li>
                             </ul>
                         </li>
-
                         <li><a href="/member/mypage" data-text="">
                             <i class="fa-solid fa-id-card"></i> mypage</a>
                             <ul>
@@ -191,7 +155,6 @@ a:hover {
                                 <li><a href="#">서브메뉴2</a></li>
                             </ul>
                         </li>
-
                         <li><a href="/board/list" data-text="">
                             <i class="fa-solid fa-comment"></i> 예비용</a>
                             <ul>
@@ -199,13 +162,11 @@ a:hover {
                                 <li><a href="#">서브메뉴2</a></li>
                             </ul>
                         </li>
-
                         <c:if test="${sessionScope.createdLevel == '관리자'}">
                             <li><a href="/admin" data-text="">
                                 <i class="fa-solid fa-gears"></i> 관리자</a>
                             </li>
                         </c:if>
-
                         <li><a href="/logout" data-text="">
                             <i class="fa-solid fa-power-off"></i> 로그아웃</a>
                         </li>
@@ -216,13 +177,15 @@ a:hover {
     </aside>
     
     <div id="content">
-        
        <main id="body"> 
            <div id="content">
-
-
-
-</div>
-</div>
+               <!-- 페이지 내용이 여기에 들어갑니다. -->
+               
+               
+               
+               
+           </div>
+       </main>
+    </div>
 </body>
 </html>

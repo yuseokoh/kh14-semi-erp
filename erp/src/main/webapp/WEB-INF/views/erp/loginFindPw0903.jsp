@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 링크받고 넘어온 페이지</title>
     <!-- 헤더 포함 -->
-    <iframe src="header.html" style="border: none; width: 100%; height: auto;"></iframe>
+ 	<jsp:include page="/WEB-INF/views/template/header999.jsp"></jsp:include>
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,14 +23,14 @@
     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./attendancemystatus.css"> -->
-    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <link rel="stylesheet" type="text/css" href="/css/commons.css">
     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./gotowork.css"> -->
-    <link rel="stylesheet" type="text/css" href="./join.css">
-    <link rel="stylesheet" type="text/css" href="./join2.css">
-    <link rel="stylesheet" type="text/css" href="./login.css">
-    <link rel="stylesheet" type="text/css" href="./modal.css">
-    <link rel="stylesheet" type="text/css" href="./modal2.css">
+    <link rel="stylesheet" type="text/css" href="/css/join.css">
+    <link rel="stylesheet" type="text/css" href="/css/join2.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="/css/modal2.css">
     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./sidebar.css"> -->
@@ -57,7 +57,7 @@
     <!-- <script src="gotoworkbtn.js"></script> -->
     <!-- <script src="menuToggle.js"></script> -->
     <!-- <script src="delete.js"></script> -->
-    <script src="modal.js"></script>
+    <script src="/js/modal.js"></script>
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -122,10 +122,12 @@ $(document).ready(function() {
         <div class="modal2-content2">
             <span class="close">&times;</span>
             
-            <form  class="form2" action="#" method="post">
+            <form  class="form2" action="resetPw" method="post">
                 <p class="title2">새 비밀번호 입력</p>
                 <p class="message2">새로운 비밀번호를 입력하세요.</p>
-
+					<input type="hidden" name=certEmail value="${certDto.certEmail}">
+					<input type="hidden" name=certNumber value="${certDto.certNumber}">
+					<input type="hidden" name=loginId value="${loginId}">
                 <label>
                     <input class="input2" type="password" name="password" placeholder="" required="">
                     <span class="span2">비밀번호</span>
@@ -136,13 +138,13 @@ $(document).ready(function() {
                     <span class="span2">비밀번호 확인</span>
                 </label>
 
-                <button class="submit2">Submit</button>
+                <button class="submit2" type="submit">Submit</button>
                 <p class="signin2"><a href="#" onclick="showAlert()" >Resend Email</a> </p>
                 
+			    	</form>
             </div>
         </div>
         
-    </form>
 
 </body>
 

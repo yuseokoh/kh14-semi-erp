@@ -8,7 +8,7 @@
         <div class="row center">
             <h1>사원 조회</h1>
         </div>
-            <h2><a href="/admin/home">홈으로</a></h2> 
+             <h2><a href="/home"><i class="fa-solid fa-left-long"></i></a></h2>
 
 <!-- 검색창 -->
 <form action="list" method="get" autocomplete="off">
@@ -32,7 +32,7 @@
                     <th>직급</th>
                     <th>부서</th>
                     <th>입사일</th>
-                    <th>수정하기</th>
+                   
                     <th>삭제하기</th>
                 </tr>
             </thead>
@@ -60,8 +60,7 @@
                             <td>
                             ${tbEmpDto.empSdate} 				
                             </td>
-                            <td><a href="edit?loginId=${tbEmpDto.loginId}">수정</a></td>
-                            <td><a href="delete?loginId=${tbEmpDto.loginId}">삭제</a></td>
+                            <td><a href="delete?loginId=${tbEmpDto.loginId}">퇴사</a></td>
                         </tr>
                         </c:forEach>
                     </c:otherwise>

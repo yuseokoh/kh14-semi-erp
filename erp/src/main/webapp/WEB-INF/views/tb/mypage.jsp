@@ -687,7 +687,6 @@ $(function(){
                         <label for="editImage">이미지</label>
                         <input type="file" id="editImage" name="attach" accept="image/*">
                     </div>
-                      <button id="saveChanges" type="submit">저장</button>
                   </div>
               </form>
               </div>
@@ -699,8 +698,8 @@ $(function(){
                     </div>
           <hr style="width: 133%; border: 1px solid #858e8f;">
           <div class="edit">
-            <button id="editButton" class="edit-btn" style="margin-right: 300px;">수정</button>
-            <button id="saveChanges" class="edit-btn hidden">저장</button> 
+            <button id="editButton" class="edit-btn" >수정</button>
+            <button id="saveChanges" type="submit" class="edit-btn hidden">저장</button> 
         </div>
                     
                 </div>

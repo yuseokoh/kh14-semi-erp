@@ -25,7 +25,7 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setEmpGender(rs.getString("emp_gender"));
 		tbEmpDto.setEmpHp(rs.getString("emp_hp"));
 		tbEmpDto.setEmpEmail(rs.getString("emp_email"));
-		tbEmpDto.setEmpBirth(rs.getString("emp_birth"));
+		tbEmpDto.setEmpBirth(rs.getDate("emp_birth"));
 		tbEmpDto.setEmpEdu(rs.getString("emp_edu"));
 		tbEmpDto.setEmpSdate(rs.getString("emp_sdate"));
 		tbEmpDto.setEmpEdate(rs.getDate("emp_edate"));
@@ -44,6 +44,8 @@ public class TbEmpMapper implements RowMapper<TbEmpDto> {
 		tbEmpDto.setSalDate(rs.getString("sal_date"));
 		tbEmpDto.setSalPre(rs.getInt("sal_pre"));
 		tbEmpDto.setSalAfter(rs.getInt("sal_after"));
+		tbEmpDto.setAnnualLeaveQuota(rs.getInt("annualLeaveQuota")); // 연차 일 수 15일
+		tbEmpDto.setAnnualLeaveUsed(rs.getInt("annualLeaveUsed")); // 연차 사용일수
 		return tbEmpDto;
 	}
 

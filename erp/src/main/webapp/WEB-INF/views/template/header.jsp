@@ -185,7 +185,7 @@ input[readonly] {
 				<!-- 사이드바-->
 				<div class="row">
 					<ul class="menu-hover-fill">
-						<li><a href="/" data-text="home">HOME</a></li>
+						<li><a href="/home" data-text="home">HOME</a></li>
 
 						<li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
 						</a>
@@ -194,7 +194,7 @@ input[readonly] {
 								<li><a href="#">보고서</a></li>
 							</ul></li>
 
-						<li><a href="/emp/list" data-text=""> <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
+						<li><a href="/stock/list3" data-text=""> <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
 						</a>
 							<ul>
 								<li><a href="#">서브메뉴1</a></li>

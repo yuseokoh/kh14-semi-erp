@@ -103,8 +103,32 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* 알람 창 스타일 */
+        .custom-title {
+            font-size: 30px !important; 
+        }
+        .custom-background {
+            background-color: #424242 !important;
+            color: wheat !important; 
+        }
+        .custom-button {
+            background-color: antiquewhite !important; 
+            color: #000 !important; 
+            border: 1px solid #000 !important; 
+        }
+        .swal2-success {
+            color: antiquewhite !important; 
+        }
+        .swal2-success .swal2-success-ring {
+            border-color: antiquewhite !important; 
+        }
+        .swal2-success [class^=swal2-success-line] {
+            background-color: rgb(253, 211, 155) !important; 
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             // 사용자가 이미지를 업로드하면 즉시 미리보기 표시
@@ -118,29 +142,65 @@
             });
 
             $('form').submit(function(event) {
-                // 수정 확인 대화상자 표시
-                if (!confirm('정말 수정하시겠습니까? 변동 사항을 잘 확인하세요.')) {
-                    event.preventDefault(); // 사용자가 취소를 클릭하면 폼 제출을 막음
-                }
+                event.preventDefault(); // 기본 폼 제출 방지
 
-                // 각 필드가 비어 있으면 기존 값 유지
-                if ($('#stockCategory').val().trim() === '') {
-                    $('#stockCategory').val('${fn:escapeXml(dto.stockCategory)}');
-                }
-                if ($('#stockName').val().trim() === '') {
-                    $('#stockName').val('${fn:escapeXml(dto.stockName)}');
-                }
-                if ($('#stockQuantity').val().trim() === '') {
-                    $('#stockQuantity').val('${dto.stockQuantity}');
-                }
-                if ($('#expirationDate').val().trim() === '') {
-                    $('#expirationDate').val('${dto.expirationDate}');
-                }
-
-                // 새 이미지가 업로드되지 않은 경우 기존 이미지 URL 전송
-                if ($('#image').val().trim() === '') {
-                    $('#imageUrl').val('${fn:escapeXml(dto.imageUrl)}');
-                }
+                Swal.fire({
+                    title: '수정 확인',
+                    text: '변동 사항을 잘 확인하세요. 정말 수정하시겠습니까?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '수정',
+                    cancelButtonText: '취소',
+                    customClass: {
+                        title: 'custom-title',
+                        popup: 'custom-background',
+                        confirmButton: 'custom-button',
+                        cancelButton: 'custom-button'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // AJAX로 폼 데이터 제출
+                        $.ajax({
+                            url: '${pageContext.request.contextPath}/stock/edit',
+                            type: 'POST',
+                            data: new FormData(this),
+                            contentType: false,
+                            processData: false,
+                            success: function(response) {
+                                // 성공 알림 표시
+                                Swal.fire({
+                                    title: '수정 완료!',
+                                    text: '재고 정보가 성공적으로 수정되었습니다.',
+                                    icon: 'success',
+                                    confirmButtonText: '확인',
+                                    customClass: {
+                                        title: 'custom-title',
+                                        popup: 'custom-background',
+                                        confirmButton: 'custom-button'
+                                    }
+                                }).then(() => {
+                                    // 알림이 끝난 후 리다이렉트
+                                    window.location.href = '${pageContext.request.contextPath}/stock/list';
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: '오류!',
+                                    text: '수정 중 오류가 발생했습니다.',
+                                    icon: 'error',
+                                    confirmButtonText: '확인',
+                                    customClass: {
+                                        title: 'custom-title',
+                                        popup: 'custom-background',
+                                        confirmButton: 'custom-button'
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>
@@ -168,10 +228,6 @@
             </div>
 
             <div class="form-group">
-                <%-- <label class="current-expiration-date">
-                    현재 유통 기한: 
-                    <fmt:formatDate value="${dto.expirationDate}" pattern="yyyy-MM-dd" />
-                </label> --%>
                 <label for="expirationDate">수정할 유통기한을 입력하세요 (선택)</label>
                 <input type="date" id="expirationDate" name="expirationDate" value="${dto.expirationDate != null ? fn:escapeXml(dto.expirationDate) : ''}">
             </div>

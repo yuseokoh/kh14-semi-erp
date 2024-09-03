@@ -41,29 +41,30 @@ public class TbEmpVacaReqController {
 	@Autowired
 	private NameChangeService nameChangeService;
 
-	// Dao에서 에러남 -> 에러 해결
-	@RequestMapping("/list")
-	public String list(@ModelAttribute PageVO pageVO, Model model) {
-		List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging();
-		model.addAttribute("list", list);
-		pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
-		return "/WEB-INF/views/groupware/totalVacaList.jsp";
-	}
+	// 처음 의도 관리자가 전체 휴가 리스트 / 보고서 리스트 / 결재 리스트 봐야 한다고생각
+	// 구현상 결재 리스트만 만들면 될거같아서 굳이 ..? 라생각해서 
+	// 아마 안쓸듯.
+//	@RequestMapping("/list")
+//	public String list(@ModelAttribute PageVO pageVO, Model model) {
+//		model.addAttribute("list", tbEmpVacaReqDao.selectVacaLogListByPaging(pageVO));
+//		pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
+//		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
+//	}
 
 	// 각 세션에 있는 회원처리용
 	@RequestMapping("/mylist")
-	public String list(HttpSession session, @RequestParam String loginId, Model model) {
+	public String list(HttpSession session, @RequestParam String loginId, Model model, @ModelAttribute PageVO pageVO) {
 		String sessionloginId = (String) session.getAttribute("createdUser");
+		System.out.println(pageVO);
 		// 세션Id와 접근하려는 Id가 동일한 경우
 		if (sessionloginId.equals(loginId)) {
-			List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging();
-
+			List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging(pageVO);
 			model.addAttribute("list", list);
-		}else {
-			return "/WEB-INF/views/groupware/truehome.jsp";
+			pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
+			return "/WEB-INF/views/groupware/leave/leaveList.jsp";
+		} else {
+			return "redirect:/home";
 		}
-
-		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
 	}
 
 	// 휴가 신청서 작성 근데 사용자의 관련 정보를 미리 가져와야함
@@ -117,16 +118,37 @@ public class TbEmpVacaReqController {
 	public String detail(@RequestParam int vacaNo, Model model) {
 		TbEmpVacaReqDto tbEmpVacaReqDto = tbEmpVacaReqDao.selectOne(vacaNo);
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpVacaReqDto.getApplicantId());
-		
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+		TbEmpApprovalDto tbEmpApprovalDto = tbApprovalDao.selectOneByApproNo(tbEmpVacaReqDto.getApproNo());
 
-		//사원 정보
+		// 승인 정보
+		model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
+
+		// 사원 정보
 		model.addAttribute("tbEmpDto", tbEmpDto);
-		
-		//휴가 정보
+
+		// 휴가 정보
 		model.addAttribute("tbEmpVacaReqDto", tbEmpVacaReqDto);
-		
+
 		return "/WEB-INF/views/groupware/leave/leaveDetail.jsp";
+	}
+
+	// 수정 중
+	// 사인 있으면 넣기
+	@RequestMapping("/signImage")
+	public String signImage(int approNo, String applicantId) {
+		if (tbEmpDao.selectOne(applicantId) != null) {
+			try {
+				int documentNo = tbEmpVacaReqDao.findImage(approNo);
+				return "redirect:/attach/download?documentNo=" + documentNo; // 메소드 구현해야함
+			} catch (Exception e) {
+				// 대체이미지 링크 전송
+				return "redirect:https://via.placeholder.com/200";
+			}
+		}
+		// 대체이미지 링크 전송
+		return "redirect:https://via.placeholder.com/200";
+
 	}
 
 }

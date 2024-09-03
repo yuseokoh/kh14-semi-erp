@@ -94,7 +94,7 @@
     
     <!-- 버튼 컨테이너 -->
     <div class="button-container">
-        <a href="list" class="button">목록으로</a>
+        <a href="list3" class="button">목록으로</a>
     </div>
     
     <!-- 차트 그리드 컨테이너 -->

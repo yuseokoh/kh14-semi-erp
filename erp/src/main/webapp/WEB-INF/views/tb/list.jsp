@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div class="container w-800 my-50">
         <div class="row center">

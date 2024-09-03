@@ -163,7 +163,7 @@ public class ErdController {
     }
 
  // 목록(검색) 페이지
-    @RequestMapping("/list")
+    @RequestMapping("/list3")
     public String list(Model model,
                        @RequestParam(required = false) String column,
                        @RequestParam(required = false) String keyword) {
@@ -190,7 +190,7 @@ public class ErdController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("list", list);
         model.addAttribute("latestChangeLogsMap", latestChangeLogsMap); // 최신 변경 로그 맵을 모델에 추가
-        return "/WEB-INF/views/stock/list.jsp";
+        return "/WEB-INF/views/stock/list3.jsp";
     }
 
 

@@ -168,7 +168,7 @@ public class ErdController {
     }
 
  // 목록(검색) 페이지
-    @RequestMapping("/list3")
+    @RequestMapping("/list")
     public String list(Model model,
                        @RequestParam(required = false) String column,
                        @RequestParam(required = false) String keyword) {
@@ -195,7 +195,7 @@ public class ErdController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("list", list);
         model.addAttribute("latestChangeLogsMap", latestChangeLogsMap); // 최신 변경 로그 맵을 모델에 추가
-        return "/WEB-INF/views/stock/list3.jsp";
+        return "/WEB-INF/views/stock/list.jsp";
     }
 
 
@@ -396,5 +396,31 @@ public class ErdController {
         }
         return "/WEB-INF/views/stock/categoryQuantity.jsp";
     }
+    
+    @RequestMapping("/categoryQuantityData")
+    public String categoryQuantityData(Model model) {
+        try {
+            // 모든 상품 조회
+            List<ErdDto> allProducts = erdDao.selectList(); // 기존 메서드 사용
+
+            // 카테고리별 수량 집계
+            Map<String, Integer> categoryMap = new HashMap<>();
+            for (ErdDto product : allProducts) {
+                String category = product.getStockCategory(); // 카테고리
+                int quantity = product.getStockQuantity(); // 수량
+                categoryMap.put(category, categoryMap.getOrDefault(category, 0) + quantity);
+            }
+
+            // Map을 JSON 문자열로 변환
+            String categoryMapJson = new ObjectMapper().writeValueAsString(categoryMap);
+            model.addAttribute("categoryMapJson", categoryMapJson);
+        } catch (Exception e) {
+            e.printStackTrace(); // 로그에 에러 기록
+            return "redirect:/stock/list?error=true";
+        }
+        return "/WEB-INF/views/erp/mian0828.jsp";
+    }
+    
+    
     
 }

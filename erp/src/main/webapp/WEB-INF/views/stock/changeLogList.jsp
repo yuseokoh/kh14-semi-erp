@@ -90,7 +90,7 @@
     <h1>
         변경 로그 목록
         <div class="btn-container">
-            <a href="list3" class="btn">목록으로</a>
+            <a href="list" class="btn">목록으로</a>
         </div>
     </h1>
 

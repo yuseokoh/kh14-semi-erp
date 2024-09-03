@@ -164,7 +164,7 @@
 
         <div class="button-container">
             <a href="edit?stockNo=${dto.stockNo}">수정</a>
-            <a href="list3" class="back-link">목록으로</a>
+            <a href="list" class="back-link">목록으로</a>
         </div>
 
         <!-- 메시지 표시 -->

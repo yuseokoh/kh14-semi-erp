@@ -351,10 +351,10 @@ p{
                             </ul>
                         </li>
 
-                        <li><a href="/book/list" data-text="">
+                        <li><a href="#" data-text="">
                             <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
                             <ul>
-                                <li><a href="#">서브메뉴1</a></li>
+                                <li><a href="/tb/list">인원 리스트</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
                             </ul>
                         </li>
@@ -376,7 +376,7 @@ p{
                         </li>
 
                         <c:if test="${sessionScope.userType == 'A'}">
-                            <li><a href="/admin/home" data-text="">
+                            <li><a href="/admin/emp/list" data-text="">
                                 <i class="fa-solid fa-gears"></i> 관리자</a>
                             </li>
                         </c:if>

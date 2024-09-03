@@ -3,8 +3,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+<<<<<<< HEAD
+<jsp:include page="/WEB-INF/views/template/header999.jsp"></jsp:include>
+=======
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+>>>>>>> refs/remotes/origin/main
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -393,7 +397,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" style="margin-top: 100px">
         <form class="form" action="login" method="post">
             <p class="title">Login</p>
             <input placeholder="Username" class="username input" type="text" name="loginId">
@@ -436,7 +440,7 @@
             <span class="span">Don't have an account?
                 <button id="openModal" type="button"> Sign up</button></span>
             <div id="myModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content" >
                     <span class="close">&times;</span>
         </form>
 

@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

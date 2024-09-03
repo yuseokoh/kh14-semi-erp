@@ -527,15 +527,10 @@
                 <span class="span1">상세주소</span>
             </label>
 
-
-
-
-
             <button class="submit1" type="submit">Submit</button>
             <p class="signin1">Already have an account ? <a href="#">Sign in</a> </p>
         </form>
 
-    </div>
     </div>
 </body>
 

@@ -23,6 +23,8 @@ import com.kh.erp.dto.TbEmpVacaReqDto;
 import com.kh.erp.service.NameChangeService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 @RequestMapping("/admin/emp")
@@ -142,4 +144,12 @@ public class AdminEmpController {
 		model.addAttribute("workingDayList", tbEmpDao.workingDay());
 		return "/WEB-INF/views/admin/status2.jsp";
 	}
+	
+	
+	@GetMapping("/hoursMgmt")
+	public String hoursMgmt(Model model, HttpSession session) {
+		return "/WEB-INF/views/groupware/admin/workHours.jsp";
+	}
+	
+	
 }

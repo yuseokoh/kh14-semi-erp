@@ -24,7 +24,7 @@ public class NoticeListMapper implements RowMapper<NoticeDto>{
 		noticeDto.setNoticeReplies(rs.getInt("notice_replies"));
 		//항목 3개 추가
 		noticeDto.setNoticeGroup(rs.getInt("notice_group"));
-		noticeDto.setNoticeTarget(rs.getObject("notice_target", Integer.class));
+		noticeDto.setNoticeTarget(rs.getInt("notice_target"));
 		noticeDto.setNoticeDepth(rs.getInt("notice_depth"));
 		return noticeDto;
 	}

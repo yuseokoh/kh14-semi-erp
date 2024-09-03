@@ -173,19 +173,8 @@ public class NoticeDao {
 			return jdbcTemplate.query(sql, noticeListMapper, data);
 		}
 		else {//목록이라면
-			String sql = "select * from ("
-							+ "select rownum rn, TMP.* from ("
-								+ "select "
-									+ "notice_no, notice_writer, notice_title, "
-									+ "notice_wtime, notice_utime, notice_views, notice_likes, notice_replies, "
-									+ "notice_group, notice_target, notice_depth "
-								+ "from notice "
-								//트리 정렬
-								+ "connect by prior notice_no=notice_target "
-								+ "start with notice_target is null "
-								+ "order siblings by notice_group desc, notice_no asc"
-							+ ")TMP"
-						+ ") where rn between ? and ?";
+			String sql = "SELECT * FROM (SELECT rownum rn, notice_no, notice_writer, notice_title, notice_wtime, notice_utime, notice_views, notice_likes, notice_replies, notice_group, notice_target, notice_depth FROM (SELECT notice_no, notice_writer, notice_title, notice_wtime, notice_utime, notice_views, notice_likes, notice_replies, notice_group, notice_target, notice_depth FROM notice CONNECT BY PRIOR notice_no = notice_target START WITH notice_target IS NULL ORDER SIBLINGS BY notice_group DESC, notice_no ASC)) WHERE rn BETWEEN ? AND ?";
+
 			Object[] data = {pageVO.getBeginRow(), pageVO.getEndRow()};
 			return jdbcTemplate.query(sql, noticeListMapper, data);
 		}

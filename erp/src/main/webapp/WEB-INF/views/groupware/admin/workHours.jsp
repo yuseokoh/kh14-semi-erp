@@ -1,0 +1,302 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사원별 총 근무 시간</title>
+
+<!-- Google Font CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+<!-- Font Awesome Icon CDN -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<!-- My CSS -->
+<link rel="stylesheet" type="text/css" href="/css/commons.css">
+<link rel="stylesheet" type="text/css" href="/css/gotowork.css">
+<link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+<link rel="stylesheet" type="text/css" href="/css/notic.css">
+
+<style>
+.attendance {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.btn {
+	color: white;
+	background-color: #80bdff;
+	border-color: #7f8c8d;
+	border-radius: 4px;
+	height: 35px;
+}
+
+.search, .delete, .write {
+	width: 100%;
+}
+
+.search {
+	font-size: 16px;
+}
+
+.actions1 {
+	font-size: 16px;
+}
+
+.button {
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	padding: 0.5em 0.75em;
+	color: white;
+	background-color: #80bdff;
+	border: 1px solid #7f8c8d;
+	border-radius: 0.2em;
+	cursor: pointer;
+	text-align: center;
+	line-height: 1.2;
+}
+
+.attendance {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.attendance .attendancename {
+	font-weight: bold;
+}
+
+.attendance .actions {
+	display: flex;
+	align-items: center;
+}
+
+.attendance select, .attendance input, .attendance button {
+	margin-left: 0px;
+	max-width: 150px;
+	height: 35px;
+}
+
+.tb-box .flex-box {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tb {
+	border-top: 1px solid #7f8c8d;
+	border-bottom: 1px solid #7f8c8d;
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 16px;
+}
+
+.tb>thead {
+	border-bottom: 1px solid #7f8c8d;
+}
+
+.name {
+	color: #80bdff;
+	font-weight: bold;
+}
+
+.tbody {
+	border-bottom: 1px solid #7f8c8d;
+}
+
+#calendar {
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.calendar-header {
+	margin-bottom: 20px;
+}
+
+.button-group button {
+	margin: 0 5px;
+}
+</style>
+
+<!-- FullCalendar CDN -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- 프로젝트 js -->
+<script src="/js/gotoworkbtn.js"></script>
+<script src="/js/menuToggle.js"></script>
+
+</head>
+<body>
+	<header id="header">
+		<div id="menuToggle">
+			<i class="fa fa-bars"></i>
+		</div>
+		<div id="logo">
+			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i> <span class="notif-count content">0</span>
+			</a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
+		</div>
+	</header>
+
+	<aside id="sidebar">
+		<nav id="menu">
+			<div class="container">
+				<!--출퇴근-->
+				<div id="commute-wrap">
+					<div id="date-wrap">
+						<span id="cur-date"></span><br> <span id="cur-time"></span>
+					</div>
+					<div id="start-time">
+						<i>출근 시간</i> <span id="start-time-display">미등록</span>
+					</div>
+					<div id="end-time">
+						<i>퇴근 시간</i> <span id="end-time-display">미등록</span>
+					</div>
+					<div id="attendance-btns">
+						<button id="start-btn" class="on">출근</button>
+						<button id="end-btn" class="on">퇴근</button>
+					</div>
+				</div>
+				<!-- 출퇴근 여기까지-->
+
+				<!-- 사이드바-->
+				<div class="row">
+					<ul class="menu-hover-fill">
+						<li><a href="/home" data-text="home">HOME</a></li>
+						<li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
+						</a>
+							<ul>
+								<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+								<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+							</ul></li>
+						<li><a href="/emp/list" data-text=""> <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
+						</a>
+							<ul>
+								<li><a href="#">서브메뉴1</a></li>
+								<li><a href="#">서브메뉴2</a></li>
+							</ul></li>
+						<li><a href="/book/list" data-text=""> <i class="fa-solid fa-people-group"></i> 인사관리(book)
+						</a>
+							<ul>
+								<li><a href="#">서브메뉴1</a></li>
+								<li><a href="#">서브메뉴2</a></li>
+							</ul></li>
+						<li><a href="/member/mypage" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+						</a>
+							<ul>
+								<li><a href="#">서브메뉴1</a></li>
+								<li><a href="#">서브메뉴2</a></li>
+							</ul></li>
+						<li><a href="/board/list" data-text=""> <i class="fa-solid fa-comment"></i> 예비용
+						</a>
+							<ul>
+								<li><a href="#">서브메뉴1</a></li>
+								<li><a href="#">서브메뉴2</a></li>
+							</ul></li>
+						<c:if test="${sessionScope.createdLevel == '관리자'}">
+							<li><a href="/admin" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+							</a></li>
+						</c:if>
+						<li><a href="/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</aside>
+
+	<div id="content">
+		<main id="body">
+			<div id="content">
+				<div class="container w-1200">
+					<div class="row attendance">
+						<div class="actions">
+							<select class="row actions1" style="flex-grow: 1;">
+								<option value="">전체</option>
+								<option value="">무엇을</option>
+								<option value="">검색</option>
+								<option value="">해야하나</option>
+							</select>
+							<div class="row search" style="flex-grow: 1;">
+								<input class="row" />
+							</div>
+							<button type="button" class="search button" style="flex-grow: 1;">검색</button>
+						</div>
+
+						<!-- Calendar container -->
+						<div class="calendar-header" style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+							<button class="button" id="prevBtn" style="margin: 0 5px;"><i class="fa-solid fa-chevron-left"></i></button>
+							<h2 id="calendarTitle" style="margin: 0 10px; font-size: 1.5em;"></h2>
+							<button class="button" id="nextBtn" style="margin: 0 5px;"><i class="fa-solid fa-chevron-right"></i></button>
+						</div>
+					</div>
+					<hr class="row mt-15 mb-50">
+
+					<div class="tb-box">
+						<table class="tb">
+							<thead>
+								<tr>
+									<th>사원이름</th>
+									<th>이름</th>
+									<th>날짜</th>
+									<th>시간</th>
+									<th>총 근무 시간</th>
+								</tr>
+							</thead>
+							<tbody class="tbody">
+								<!-- Data will be dynamically inserted here -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</main>
+</body>
+<!-- JavaScript Code -->
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.createElement('div');
+    calendarEl.style.display = 'none'; // Hide the calendar container
+    document.body.appendChild(calendarEl);
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: false, // Disable default header
+        initialView: 'dayGridMonth',
+        datesSet: function(info) {
+            updateTitle(info.view.currentStart);
+        }
+    });
+
+    // Initial title update
+    updateTitle(calendar.view.currentStart);
+
+    // Custom button functionality
+    document.getElementById('prevBtn').addEventListener('click', function() {
+        calendar.prev();
+        updateTitle(calendar.getDate()); // Update title after navigation
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', function() {
+        calendar.next();
+        updateTitle(calendar.getDate()); // Update title after navigation
+    });
+
+    function updateTitle(date) {
+        const month = date.getMonth() + 1; // Months are zero-based, so add 1
+        const year = date.getFullYear();
+        document.getElementById('calendarTitle').innerText = year + "년 " + month + "월";
+        console.log(month);
+        console.log(year);
+    }
+});
+
+</script>
+</html>

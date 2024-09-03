@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.erp.VO.AttendanceSummaryVO;
+import com.kh.erp.VO.PageVO;
 import com.kh.erp.dto.TbEmpAttendanceDto;
+import com.kh.erp.mapper.AttendanceSummaryMapper;
 import com.kh.erp.mapper.TbEmpAttendanceMapper;
 
 @Repository
@@ -17,7 +20,10 @@ public class TbEmpAttendanceDao {
 
 	@Autowired
 	private TbEmpAttendanceMapper tbEmpAttendanceMapper;
-
+	
+	@Autowired
+	private AttendanceSummaryMapper attendanceSummaryMapper;
+	
 	public int sequence() {
 		String sql = "select tb_attendance_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
@@ -71,4 +77,25 @@ public class TbEmpAttendanceDao {
 		return jdbcTemplate.query(sql, tbEmpAttendanceMapper, data);
 	}
 
+	//총 근무시간 관련 내용
+	public List<AttendanceSummaryVO> getAttendanceSummary(PageVO pageVO) {
+		if(pageVO.isSearch()) {
+			
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] data = { pageVO.getKeyword(), pageVO.getBeginRow(), pageVO.getEndRow() };
+			return jdbcTemplate.query(sql, attendanceSummaryMapper, data);
+		}else
+		{
+			
+			Object[] data = { pageVO.getBeginRow(), pageVO.getEndRow() };
+			return jdbcTemplate.query(sql, attendanceSummaryMapper, data);
+		}
+		String sql = "SELECT loginID AS loginId, EXTRACT(YEAR FROM check_in_time) AS tb_year, EXTRACT(MONTH FROM check_in_time) AS tb_month, COUNT(DISTINCT TO_CHAR(check_in_time, 'YYYY-MM-DD')) AS days_worked, LISTAGG(TO_CHAR(check_in_time, 'YYYY-MM-DD'), ', ') WITHIN GROUP (ORDER BY check_in_time) AS check_in_dates, LPAD(TRUNC(SUM(EXTRACT(DAY FROM (check_out_time - check_in_time)) * 24 * 60 * 60 + EXTRACT(HOUR FROM (check_out_time - check_in_time)) * 60 * 60 + EXTRACT(MINUTE FROM (check_out_time - check_in_time)) * 60 + ROUND(EXTRACT(SECOND FROM (check_out_time - check_in_time))) / 3600), 2, '0') || ':' || LPAD(TRUNC(MOD(SUM(EXTRACT(DAY FROM (check_out_time - check_in_time)) * 24 * 60 * 60 + EXTRACT(HOUR FROM (check_out_time - check_in_time)) * 60 * 60 + EXTRACT(MINUTE FROM (check_out_time - check_in_time)) * 60 + ROUND(EXTRACT(SECOND FROM (check_out_time - check_in_time))) / 60, 60)), 2, '0') || ':' || LPAD(MOD(ROUND(SUM(EXTRACT(DAY FROM (check_out_time - check_in_time)) * 24 * 60 * 60 + EXTRACT(HOUR FROM (check_out_time - check_in_time)) * 60 * 60 + EXTRACT(MINUTE FROM (check_out_time - check_in_time)) * 60 + EXTRACT(SECOND FROM (check_out_time - check_in_time))), 60), 2, '0') AS total_work_time FROM tb_attendance GROUP BY loginID, EXTRACT(YEAR FROM check_in_time), EXTRACT(MONTH FROM check_in_time) ORDER BY loginId, tb_year, tb_month;";
+	}
+	
+	
+	
+	
+	
+	
 }

@@ -56,7 +56,7 @@ public class AdminEmpController {
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
 		model.addAttribute("tbEmpDto", tbEmpDto);
-		return "/WEB-INF/views/admin/detail.jsp";
+		return "/WEB-INF/views/admin/detail2.jsp";
 	}
 
 	@GetMapping("/edit")

@@ -218,8 +218,8 @@ p{
   <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
   <!-- jquery cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="checkbox.js"></script>
-  <script src="confirm-link.js"></script>
+  <script src="/js/checkbox.js"></script>
+  <script src="/js/confirm-link.js"></script>
   <!-- <script src="multipage.js"></script> -->
   <!-- 프로젝트 js-->
 <script src="/js/gotoworkbtn.js"></script>
@@ -351,10 +351,10 @@ p{
                             </ul>
                         </li>
 
-                        <li><a href="/book/list" data-text="">
+                        <li><a href="#" data-text="">
                             <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
                             <ul>
-                                <li><a href="#">서브메뉴1</a></li>
+                                <li><a href="/tb/list">인원 리스트</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
                             </ul>
                         </li>
@@ -376,7 +376,7 @@ p{
                         </li>
 
                         <c:if test="${sessionScope.userType == 'A'}">
-                            <li><a href="/admin/home" data-text="">
+                            <li><a href="/admin/emp/list" data-text="">
                                 <i class="fa-solid fa-gears"></i> 관리자</a>
                             </li>
                         </c:if>

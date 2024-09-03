@@ -3,12 +3,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<<<<<<< HEAD
-<jsp:include page="/WEB-INF/views/template/header999.jsp"></jsp:include>
-=======
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
->>>>>>> refs/remotes/origin/main
+<jsp:include page="/WEB-INF/views/template/header999.jsp"></jsp:include>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

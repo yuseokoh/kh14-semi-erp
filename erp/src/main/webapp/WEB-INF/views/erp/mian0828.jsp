@@ -218,8 +218,8 @@ p{
   <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
   <!-- jquery cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="checkbox.js"></script>
-  <script src="confirm-link.js"></script>
+  <script src="/js/checkbox.js"></script>
+  <script src="/js/confirm-link.js"></script>
   <!-- <script src="multipage.js"></script> -->
   <!-- 프로젝트 js-->
 <script src="/js/gotoworkbtn.js"></script>

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<<<<<<< HEAD
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -192,11 +192,10 @@
 
         <body>
             <div class="noticbox w-1200">
-=======
 
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
->>>>>>> refs/remotes/origin/main
+
+
 <div class="container w-800 my-50">
         <div class="row center">
             <h1>사원 조회</h1>

@@ -21,6 +21,7 @@ import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.CertDto;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.error.TargetNotFoundException;
+import com.kh.erp.service.DateService;
 import com.kh.erp.service.DocumentService;
 import com.kh.erp.service.EmailService;
 import com.kh.erp.service.NameChangeService;
@@ -45,6 +46,8 @@ public class TbEmpController {
 	private EmailService emailService;
 	@Autowired
 	private DocumentService documentService;
+	@Autowired
+	private DateService dateService;
 
 	// 회원 가입 페이지
 	@GetMapping("/join")
@@ -80,6 +83,8 @@ public class TbEmpController {
 		String loginId = (String) session.getAttribute("createdUser");
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+		long workingDays = dateService.dateChange(loginId);
+		model.addAttribute("workingDays",workingDays);
 		model.addAttribute("tbEmpDto", tbEmpDto);
 		return "/WEB-INF/views/tb/mypage.jsp";
 	}

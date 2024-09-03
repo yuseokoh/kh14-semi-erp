@@ -18,9 +18,9 @@
 		
 	</div>
 	<div>
-		<label>우편번호</label><input value="${tbEmpDto.empPost}" name="empPost" type="number">
-		<label>기본주소</label><input value="${tbEmpDto.empAddress1}" name="empAddress1" type="text">
-		<label>상세주소</label><input value="${tbEmpDto.empAddress2}" name="empAddress2" type="text">
+		<label>우편번호</label><input value="${tbEmpDto.empPost}" name="empPost" type="number" class="address">
+		<label>기본주소</label><input value="${tbEmpDto.empAddress1}" name="empAddress1" type="text" class="address1">
+		<label>상세주소</label><input value="${tbEmpDto.empAddress2}" name="empAddress2" type="text" class="daaress1">
 	</div>
 
 </div>

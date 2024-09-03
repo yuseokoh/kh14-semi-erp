@@ -47,7 +47,7 @@ public class TbEmpVacaReqController {
 		List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging();
 		model.addAttribute("list", list);
 		pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
-		return "/WEB-INF/views/groupware/totalVacaList.jsp";
+		return "/WEB-INF/views/groupware/leave/leaveList.jsp";
 	}
 
 	// 각 세션에 있는 회원처리용
@@ -59,7 +59,7 @@ public class TbEmpVacaReqController {
 			List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging();
 
 			model.addAttribute("list", list);
-		}else {
+		} else {
 			return "/WEB-INF/views/groupware/truehome.jsp";
 		}
 
@@ -117,16 +117,37 @@ public class TbEmpVacaReqController {
 	public String detail(@RequestParam int vacaNo, Model model) {
 		TbEmpVacaReqDto tbEmpVacaReqDto = tbEmpVacaReqDao.selectOne(vacaNo);
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(tbEmpVacaReqDto.getApplicantId());
-		
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+		TbEmpApprovalDto tbEmpApprovalDto = tbApprovalDao.selectOneByApproNo(tbEmpVacaReqDto.getApproNo());
+		
+		// 승인 정보
+		model.addAttribute("tbEmpApprovalDto", tbEmpApprovalDto);
 
-		//사원 정보
+		// 사원 정보
 		model.addAttribute("tbEmpDto", tbEmpDto);
-		
-		//휴가 정보
+
+		// 휴가 정보
 		model.addAttribute("tbEmpVacaReqDto", tbEmpVacaReqDto);
-		
+
 		return "/WEB-INF/views/groupware/leave/leaveDetail.jsp";
+	}
+
+	// 수정 중
+	// 사인 있으면 넣기
+	@RequestMapping("/signImage")
+	public String signImage(int approNo, String applicantId) {
+		if (tbEmpDao.selectOne(applicantId) != null) {
+			try {
+				int documentNo = tbEmpVacaReqDao.findImage(approNo);
+				return "redirect:/attach/download?documentNo=" + documentNo; // 메소드 구현해야함
+			} catch (Exception e) {
+				// 대체이미지 링크 전송
+				return "redirect:https://via.placeholder.com/200";
+			}
+		}
+		// 대체이미지 링크 전송
+		return "redirect:https://via.placeholder.com/200";
+
 	}
 
 }

@@ -26,7 +26,7 @@ import com.kh.erp.service.DocumentService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/groupware/notice")
 public class NoticeController {
 
     @Autowired
@@ -35,12 +35,12 @@ public class NoticeController {
     @Autowired
     private DocumentService documentService;
 
-    @RequestMapping("/list")
+    @RequestMapping("/noticList")
     public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model) {
         model.addAttribute("noticeList", noticeDao.selectListByPaging(pageVO));
         int count = noticeDao.countByPaging(pageVO);
         pageVO.setCount(count);
-        return "/WEB-INF/views/notice/list.jsp";
+        return "/WEB-INF/views/groupware/notice/noticList.jsp";
     }
     
     private boolean checkSearch(String column, String keyword) {
@@ -55,7 +55,7 @@ public class NoticeController {
     }
 
     // 상세 페이지
-    @RequestMapping("/detail")
+    @RequestMapping("/noticDetail")
     public String detail(@RequestParam(value = "noticeNo", required = false, defaultValue = "-1") int noticeNo, Model model) {
         if (noticeNo < 0) {
             // 예외 처리 또는 기본 처리 로직
@@ -66,20 +66,19 @@ public class NoticeController {
             throw new TargetNotFoundException("존재하지 않는 공지사항 번호");
         }
         model.addAttribute("noticeDto", noticeDto);
-        return "/WEB-INF/views/notice/detail.jsp";
+        return "/WEB-INF/views/groupware/notice/noticDetail.jsp";
     }
     
     // 등록 페이지
-    @GetMapping("/write")
-    public String write() {
-        return "/WEB-INF/views/notice/write.jsp";
+    @GetMapping("/noticInsert")
+    public String insert() {
+        return "/WEB-INF/views/groupware/notice/noticInsert.jsp";
     }
     
-    @PostMapping("/write")
-    public String write(@ModelAttribute NoticeDto noticeDto, HttpSession session) {
-        String createdUser = (String)session.getAttribute("createdUser");
+    @PostMapping("/noticInsert")
+    public String insert(@ModelAttribute NoticeDto noticeDto, HttpSession session) {
+    	String createdUser = (String)session.getAttribute("createdUser");
         noticeDto.setNoticeWriter(createdUser);
-        
         int seq = noticeDao.sequence();
         noticeDto.setNoticeNo(seq);
         
@@ -95,8 +94,9 @@ public class NoticeController {
             noticeDto.setNoticeGroup(targetDto.getNoticeGroup());
             noticeDto.setNoticeDepth(targetDto.getNoticeDepth() + 1);
         }
+        
         noticeDao.insert(noticeDto);
-        return "redirect:detail?noticeNo=" + seq;
+        return "redirect:noticDetail?noticeNo=" + seq;
     }
 
     // 삭제 페이지(글 안에 있는 이미지 파일까지 찾아서 삭제)
@@ -119,11 +119,11 @@ public class NoticeController {
             documentService.delete(documentNo);
         }
         boolean result = noticeDao.delete(noticeNo);
-        return "redirect:list";
+        return "redirect:notic";
     }
 
     // 수정 페이지
-    @GetMapping("/edit")
+    @GetMapping("/noticEdit")
     public String edit(@RequestParam(value = "noticeNo", required = false, defaultValue = "-1") int noticeNo, Model model) {
         if (noticeNo < 0) {
             throw new TargetNotFoundException("공지사항 번호가 유효하지 않습니다.");
@@ -133,10 +133,10 @@ public class NoticeController {
             throw new TargetNotFoundException("존재하지 않는 공지사항 번호");
         }
         model.addAttribute("noticeDto", noticeDto);
-        return "/WEB-INF/views/notice/edit.jsp";
+        return "/WEB-INF/views/groupware/notice/noticEdit.jsp";
     }
     
-    @PostMapping("/edit")
+    @PostMapping("/noticEdit")
     public String edit(@ModelAttribute NoticeDto noticeDto) {
         NoticeDto originDto = noticeDao.selectOne(noticeDto.getNoticeNo());//이전글 조회
         if(originDto == null) {
@@ -170,6 +170,6 @@ public class NoticeController {
         }
         //수정 처리
         noticeDao.update(noticeDto);
-        return "redirect:detail?noticeNo=" + noticeDto.getNoticeNo();
+        return "redirect:noticDetail?noticeNo=" + noticeDto.getNoticeNo();
     }
 }

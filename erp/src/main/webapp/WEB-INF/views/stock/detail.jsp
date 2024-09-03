@@ -3,14 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <!-- JSTL fmt 라이브러리 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>재고 상세 정보</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #fce4ec; /* 부드러운 핑크색 배경 */
+            background-color: #f5f5f5; /* 배경색 변경 */
             margin: 0;
             padding: 0;
             display: flex;
@@ -20,8 +20,8 @@
         }
 
         .container {
-            background-color: #ffffff; /* 컨테이너 배경색을 흰색으로 설정 */
-            border-radius: 10px;
+            background-color: #ffffff; /* 컨테이너 배경색 변경 */
+            border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px 30px;
             max-width: 600px;
@@ -30,12 +30,12 @@
         }
 
         h1 {
-            color: #f8a5b0; /* 헤더 텍스트 색상을 부드러운 핑크색으로 설정 */
+            color: #333333; /* 제목 색상 변경 */
             font-size: 24px;
             margin-bottom: 20px;
-            background-color: #ffffff; /* 헤더 배경색을 흰색으로 설정 */
+            background-color: #ffffff; /* 헤더 배경색 변경 */
             padding: 10px 0;
-            border-bottom: 2px solid #f8a5b0; /* 헤더 하단에 부드러운 핑크색 테두리 추가 */
+            border-bottom: 2px solid #333333; /* 헤더 하단 테두리 색상 변경 */
         }
 
         .info {
@@ -64,11 +64,11 @@
         }
 
         a {
-            color: #ffffff; /* 링크 텍스트 색상을 흰색으로 설정 */
+            color: #ffffff; /* 링크 텍스트 색상 변경 */
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 5px;
-            background-color: #f8a5b0; /* 버튼 배경색을 부드러운 핑크색으로 설정 */
+            background-color: #333333; /* 버튼 배경색 변경 */
             transition: background-color 0.3s ease;
             flex: 1;
             text-align: center;
@@ -76,17 +76,17 @@
         }
 
         a:hover {
-            background-color: #f48fb1; /* 버튼 호버 시 배경색을 약간 어두운 핑크색으로 설정 */
+            background-color: #555555; /* 버튼 호버 시 색상 변경 */
         }
 
         .back-link {
-            background-color: #e0e0e0; /* '목록으로' 링크 배경색을 연한 회색으로 설정 */
-            color: #333333; /* 텍스트 색상을 어두운 회색으로 설정 */
+            background-color: #e0e0e0; /* '목록으로' 링크 배경색 변경 */
+            color: #333333; /* 텍스트 색상 변경 */
         }
 
         .back-link:hover {
-            background-color: #bdbdbd; /* 버튼 호버 시 배경색을 약간 어두운 회색으로 설정 */
-            color: #000000; /* 호버 시 텍스트 색상을 검은색으로 설정 */
+            background-color: #bdbdbd; /* 버튼 호버 시 색상 변경 */
+            color: #000000; /* 호버 시 텍스트 색상 변경 */
         }
 
         .form-container {
@@ -106,7 +106,7 @@
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: #f8a5b0;
+            background-color: #333333; /* 버튼 배경색 변경 */
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -114,7 +114,7 @@
         }
 
         .form-container button:hover {
-            background-color: #f48fb1;
+            background-color: #555555; /* 버튼 호버 시 색상 변경 */
         }
 
         .error-message {
@@ -164,7 +164,7 @@
 
         <div class="button-container">
             <a href="edit?stockNo=${dto.stockNo}">수정</a>
-            <a href="list" class="back-link">목록으로</a>
+            <a href="list3" class="back-link">목록으로</a>
         </div>
 
         <!-- 메시지 표시 -->

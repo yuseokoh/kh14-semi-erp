@@ -111,7 +111,6 @@
         margin: 0 auto; /* 수평 중앙 정렬 */
         padding-bottom: 300px; /* 버튼이 바닥에 붙지 않도록 여백 추가 */
         position: relative; /* 'relative' 위치 속성을 추가 */
-        margin-left: 1200px; /* 사이드바가 닫힐 때의 기본 위치 */
         transition: margin-left 0.3s ease; /* 이동 애니메이션 */
     }
 
@@ -153,8 +152,8 @@
 
     .low-stock {
         position: absolute;
-        bottom: 45px; /* 이미지 하단에서 5px 위로 위치 */
-        left: 45%;
+        bottom: 25px; /* 이미지 하단에서 5px 위로 위치 */
+        left: 46%;
         transform: translateX(-50%);
         background-color: rgba(255, 0, 0, 0.7); /* 빨간 배경, 투명도 0.7 */
         color: white;
@@ -304,12 +303,12 @@
                                 <li><a href="#">보고서(수인씨작성중)</a></li>
                             </ul>
                         </li>
-                        <li><a href="/emp/list" data-text="">
+                        <li><a href="/stock/list3" data-text="">
                             <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
                         </a>
                             <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
+                                <li><a href="/stock/changeLogList">재고 변경 내역</a></li>
+                                <li><a href="/stock/categoryQuantity">재고 그래프</a></li>
                             </ul>
                         </li>
                         <li><a href="/book/list" data-text="">

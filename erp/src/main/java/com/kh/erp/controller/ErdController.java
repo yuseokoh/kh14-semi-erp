@@ -99,7 +99,7 @@ public class ErdController {
             redirectAttributes.addAttribute("error", true);
             return "redirect:/stock/insert";
         }
-        return "redirect:/stock/insertComplete";
+        return "redirect:/stock/list3";
     }
 
     // 이미지 파일을 서버에 저장하고 URL을 반환합니다.
@@ -228,7 +228,7 @@ public class ErdController {
             e.printStackTrace();  // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
-        return "redirect:/stock/list";
+        return "redirect:/stock/list3";
     }
 
     // 수정(입력) 페이지

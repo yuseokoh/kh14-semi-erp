@@ -568,7 +568,7 @@ calendar.render();
                             </ul>
                         </li>
 
-                        <li><a href="/emp/list" data-text="">
+                        <li><a href="/stock/list3" data-text="">
                             <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
                             <ul>
                                 <li><a href="#">서브메뉴1</a></li>

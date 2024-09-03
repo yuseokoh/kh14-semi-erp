@@ -74,7 +74,9 @@ public class TbEmpController {
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute TbEmpDto tbEmpDto,
 					@RequestParam(required = false) MultipartFile attach) throws IllegalStateException, IOException {
+
 		tbEmpDao.updateEmp(tbEmpDto);
+
 		if(!attach.isEmpty()) {
 			try {
 				int beforeNo = tbEmpDao.findImage(tbEmpDto.getLoginId());
@@ -83,6 +85,12 @@ public class TbEmpController {
 		int documentNo = documentService.save(attach);
 		tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
 		}
+
+		int beforeNo = tbEmpDao.findImage(tbEmpDto.getLoginId());
+		documentService.delete(beforeNo);
+		int documentNo = documentService.save(attach);
+		tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
+
 		return "redirect:/tb/mypage?loginId="+tbEmpDto.getLoginId();
 	}
 
@@ -94,6 +102,7 @@ public class TbEmpController {
 		long workingDays = dateService.dateChange(loginId);
 		String inTime = dateService.TimeChangeIn(loginId);
 		String outTime = dateService.TimeChangeOut(loginId);
+		
 		model.addAttribute("inTime",inTime);
 		model.addAttribute("outTime",outTime);
 		model.addAttribute("workingDays",workingDays);

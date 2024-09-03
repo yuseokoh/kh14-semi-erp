@@ -90,7 +90,7 @@
     <h1>
         변경 로그 목록
         <div class="btn-container">
-            <a href="list" class="btn">목록으로</a>
+            <a href="list3" class="btn">목록으로</a>
         </div>
     </h1>
 
@@ -100,7 +100,7 @@
                 <th class="stock-no-column">재고 번호</th>
                 <th>변경된 필드</th>
                 <th class="long-column">수정된 사항</th>
-                <th class="date-column">날짜</th>
+                <th class="date-column">변경 날짜</th>
             </tr>
         </thead>
         <tbody>

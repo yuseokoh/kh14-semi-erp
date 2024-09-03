@@ -19,7 +19,7 @@
 <!-- 프로젝트 스타일 -->
 <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
 <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-<link rel="stylesheet" type="text/css" href="/css/notic.css">
+<!--<link rel="stylesheet" type="text/css" href="/css/notic.css">-->
 <link rel="stylesheet" type="text/css" href="/css/vacation.css">
 <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
@@ -164,7 +164,8 @@ input[readonly] {
 			<i class="fa fa-bars"></i>
 		</div>
 		<div id="logo">
-			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i></i> <span class="notif-count content">0</span>
+			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i>
+			<span class="notif-count content">0</span>
 			</a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
 		</div>
 	</header>
@@ -210,7 +211,8 @@ input[readonly] {
 				<ul class="menu-hover-fill">
 					<li><a href="/" data-text="home">HOME</a></li>
 
-					<li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
+					<li><a href="/poketmon/list" data-text="">
+					<i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
 					</a>
 						<ul>
 							<li><a href="#">휴가신청서</a></li>
@@ -271,7 +273,7 @@ input[readonly] {
 							<div class="title">일일 업무 보고서</div>
 
 							<div class="table-container">
-								<table class="table form">
+								<table class="table">
 									<label>결재자</label>
 									<thead>
 										<tr>
@@ -280,7 +282,7 @@ input[readonly] {
 									</thead>
 									<tbody>
 										<tr>
-											<td>서명칸</td>
+											<td><img src="https://via.placeholder.com/200"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -301,10 +303,10 @@ input[readonly] {
 									<label>사원번호</label> <input type="text" class="filed form" value="${tbEmpDto.empNo}" readonly>
 								</div>
 								<div>
-									<label>직급</label> <input type="text" class="filed form" value="${tbEmpDto.empLevel}" name="writerDept" readonly>
+									<label>직급</label> <input type="text" class="filed form" value="${tbEmpDto.empLevel}" readonly>
 								</div>
 								<div>
-									<label>부서</label> <input type="text" class="filed form" value="${tbEmpDto.empDept}" readonly>
+									<label>부서</label> <input type="text" class="filed form" value="${tbEmpDto.empDept}"  name="writerDept" readonly>
 								</div>
 							</div>
 

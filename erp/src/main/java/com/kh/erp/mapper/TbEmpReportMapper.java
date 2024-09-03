@@ -22,6 +22,7 @@ public class TbEmpReportMapper implements RowMapper<TbEmpReportDto> {
         tbEmpReportDto.setWriterId(rs.getString("writer_Id"));
         tbEmpReportDto.setWriterDept(rs.getString("writer_Dept"));
         tbEmpReportDto.setWriterName(rs.getString("writer_Name"));
+        tbEmpReportDto.setReportTitle(rs.getString("report_Title"));
         tbEmpReportDto.setWriteDate(rs.getDate("write_Date"));
 
         // CLOB 데이터 처리
@@ -42,6 +43,7 @@ public class TbEmpReportMapper implements RowMapper<TbEmpReportDto> {
         } else {
             tbEmpReportDto.setReportContent(""); // CLOB이 null인 경우 빈 문자열로 설정
         }
+        tbEmpReportDto.setReportReject(rs.getString("report_Reject"));
 
         tbEmpReportDto.setApproNo(rs.getInt("appro_No"));
         return tbEmpReportDto;

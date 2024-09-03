@@ -5,6 +5,7 @@ package com.kh.erp.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,11 @@ public class TbEmpRestController {
 	@PostMapping("/status/bye")
 	public List<StatusVO> statusBye(){
 		return tbEmpDao.statusByEmpLevelBye();
+	}
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute TbEmpDto tbEmpDto) {
+		tbEmpDao.updateEmp(tbEmpDto);
+		return "redirect:/tb/mypage?loginId="+tbEmpDto.getLoginId();
 	}
 	
 }

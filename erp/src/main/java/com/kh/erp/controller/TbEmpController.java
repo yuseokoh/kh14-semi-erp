@@ -21,6 +21,7 @@ import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.CertDto;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.error.TargetNotFoundException;
+import com.kh.erp.service.DateService;
 import com.kh.erp.service.DocumentService;
 import com.kh.erp.service.EmailService;
 import com.kh.erp.service.NameChangeService;
@@ -45,6 +46,8 @@ public class TbEmpController {
 	private EmailService emailService;
 	@Autowired
 	private DocumentService documentService;
+	@Autowired
+	private DateService dateService;
 
 	// 회원 가입 페이지
 	@GetMapping("/join")
@@ -69,17 +72,22 @@ public class TbEmpController {
 	}
 
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute TbEmpDto tbempDto) {
-		tbEmpDao.updateEmp(tbempDto);
-		return "redirect:/";
+	public String edit(@ModelAttribute TbEmpDto tbEmpDto) {
+		tbEmpDao.updateEmp(tbEmpDto);
+		return "redirect:/tb/mypage?loginId="+tbEmpDto.getLoginId();
 	}
 
 	// 마이페이지
 	@RequestMapping("/mypage")
-	public String mypage(HttpSession session, Model model) {
-		String loginId = (String) session.getAttribute("createdUser");
+	public String mypage(@RequestParam String loginId, Model model) {
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+		long workingDays = dateService.dateChange(loginId);
+		String inTime = dateService.TimeChangeIn(loginId);
+		String outTime = dateService.TimeChangeOut(loginId);
+		model.addAttribute("inTime",inTime);
+		model.addAttribute("outTime",outTime);
+		model.addAttribute("workingDays",workingDays);
 		model.addAttribute("tbEmpDto", tbEmpDto);
 		return "/WEB-INF/views/tb/mypage.jsp";
 	}
@@ -113,7 +121,7 @@ public class TbEmpController {
 	// 부서 ->> 부서코드 테이블없이 아마 a00으로 들어갈듯 // 이거만 조절하면될듯
 	session.setAttribute("userLevel", tbEmpDto.getEmpDept());
 	//2024-08-27 17:09 조재혁 수정
-	return "redirect:/";// 홈으로 이동
+	return "redirect:/home";// 홈으로 이동
 //	return "/WEB-INF/views/groupware/truehome.jsp";
 	}
 
@@ -122,7 +130,8 @@ public class TbEmpController {
 		session.removeAttribute("createdUser");
 		session.removeAttribute("userType");
 		session.removeAttribute("userLevel");
-		return "redirect:/";
+		// 2024-09-02 22:36 로그아웃 시 /tb/login getmapping쪽으로 보내기(성공)
+		return "redirect:/tb/login";
 	}
 	
 	//상세 페이지

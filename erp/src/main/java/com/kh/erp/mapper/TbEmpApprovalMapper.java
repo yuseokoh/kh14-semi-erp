@@ -18,12 +18,8 @@ public class TbEmpApprovalMapper implements RowMapper<TbEmpApprovalDto>{
 		tbEmpApprovalDto.setApproType(rs.getString("appro_Type"));
 		tbEmpApprovalDto.setApproDate(rs.getDate("appro_Date"));
 		tbEmpApprovalDto.setApproYN(rs.getString("appro_YN"));// DB상에선 CHAR(1)
-		tbEmpApprovalDto.setApproBos1(rs.getString("appro_Bos1"));
-		tbEmpApprovalDto.setApproBos2(rs.getString("appro_Bos2"));
-		tbEmpApprovalDto.setApproBos3(rs.getString("appro_Bos3"));
-		tbEmpApprovalDto.setApproNo1(rs.getString("appro_No1"));
-		tbEmpApprovalDto.setApproNo2(rs.getString("appro_No2"));
-		tbEmpApprovalDto.setApproNo3(rs.getString("appro_No3"));
+		tbEmpApprovalDto.setApproBosId(rs.getString("appro_BosId"));
+		tbEmpApprovalDto.setApproBosName(rs.getString("appro_BosName"));
 		tbEmpApprovalDto.setApplicantId(rs.getString("applicantId"));
 		return tbEmpApprovalDto;
 	}

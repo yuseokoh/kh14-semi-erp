@@ -56,6 +56,6 @@ public class HomeController {
 		model.addAttribute("tbEmpDto",tbEmpDto);
 		List<ReservationDto> allReservations = reservationDao.selectAllReservations();
 	    model.addAttribute("allReservations", allReservations);
-        return "/WEB-INF/views/erp/suin0903main.jsp";
+        return "/WEB-INF/views/erp/main1.jsp";
     }
 }

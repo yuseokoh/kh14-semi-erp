@@ -151,9 +151,10 @@
     }
 
     .low-stock {
+    	width:60px;
         position: absolute;
-        bottom: 25px; /* 이미지 하단에서 5px 위로 위치 */
-        left: 46%;
+        top: 15px; /* 이미지 하단에서 5px 위로 위치 */
+        left: 43%;
         transform: translateX(-50%);
         background-color: rgba(255, 0, 0, 0.7); /* 빨간 배경, 투명도 0.7 */
         color: white;
@@ -214,8 +215,8 @@
     }
 
     .search-form input[type="text"] {
-        width: 560px;
-        flex: 2;
+        width: 900px;
+        flex: 4;
     }
 
     .search-form button {
@@ -461,5 +462,7 @@
         adjustContainer();
     });
     </script>
+    
+    
 </body>
 </html>

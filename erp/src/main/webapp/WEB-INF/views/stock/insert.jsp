@@ -79,55 +79,66 @@
             margin-bottom: 10px;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function() {
-            // 사용자가 이미지를 업로드하면 즉시 미리보기 표시
-            $('#image').change(function() {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#imagePreview').attr('src', e.target.result);
-                    $('#imagePreview').show();
-                }
-                reader.readAsDataURL(this.files[0]);
-            });
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        // 사용자가 이미지를 업로드하면 즉시 미리보기 표시
+        $('#image').change(function() {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').attr('src', e.target.result);
+                $('#imagePreview').show();
+            }
+            reader.readAsDataURL(this.files[0]);
+        });
 
-            // 폼 제출 시 비동기적으로 데이터 전송
-            $('form').on('submit', function(event) {
-                event.preventDefault(); // 기본 폼 제출 막기
+        // 폼 제출 시 비동기적으로 데이터 전송
+        $('form').on('submit', function(event) {
+            event.preventDefault(); // 기본 폼 제출 막기
 
-                let formData = new FormData(this);
+            let formData = new FormData(this);
 
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
                         Swal.fire({
                             icon: 'success',
                             title: '등록 성공',
-                            text: '재고가 성공적으로 등록되었습니다.',
+                            text: response.message,
                             confirmButtonText: '확인'
                         }).then(function() {
                             // 성공 후 리스트 페이지로 리다이렉트
                             window.location.href = '/stock/list3'; // 실제 리스트 페이지 URL로 변경
                         });
-                    },
-                    error: function() {
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: '등록 실패',
-                            text: '재고 등록에 실패했습니다. 다시 시도해 주세요.',
+                            text: response.message,
                             confirmButtonText: '확인'
                         });
                     }
-                });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '등록 실패',
+                        text: xhr.responseJSON?.message || '재고 등록에 실패했습니다. 다시 시도해 주세요.',
+                        confirmButtonText: '확인'
+                    });
+                }
             });
         });
-    </script>
+    });
+</script>
+
 </head>
 <body>
     <div class="container">

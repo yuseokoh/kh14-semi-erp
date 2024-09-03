@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -85,22 +86,26 @@ public class ErdController {
         return "/WEB-INF/views/stock/insert.jsp";
     }
 
-    // 등록 처리
     @PostMapping("/insert")
-    public String insert(@ModelAttribute ErdDto erdDto,
-                         @RequestParam("image") MultipartFile image,
-                         RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Map<String, Object>> insert(@ModelAttribute ErdDto erdDto,
+                                                      @RequestPart("image") MultipartFile image) {
+        Map<String, Object> response = new HashMap<>();
         try {
             // 이미지 파일 처리
             String imageUrl = saveUploadedFile(image);
             erdDao.insert(erdDto, imageUrl);
+            response.put("status", "success");
+            response.put("message", "재고가 성공적으로 등록되었습니다!");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();  // 로그에 에러 기록
-            redirectAttributes.addAttribute("error", true);
-            return "redirect:/stock/insert";
+            response.put("status", "error");
+            response.put("message", "재고 등록에 실패했습니다. 다시 시도해주세요.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-        return "redirect:/stock/list3";
     }
+
+
 
     // 이미지 파일을 서버에 저장하고 URL을 반환합니다.
     private String saveUploadedFile(MultipartFile file) throws IOException {
@@ -252,36 +257,39 @@ public class ErdController {
 
     // 수정 처리
     @PostMapping("/edit")
-    public String edit(@ModelAttribute ErdDto dto,
-                       @RequestParam(value = "image", required = false) MultipartFile image) {
+    public ResponseEntity<Map<String, Object>> edit(@ModelAttribute ErdDto dto,
+                                                     @RequestParam(value = "image", required = false) MultipartFile image) {
+        Map<String, Object> response = new HashMap<>();
         try {
-            // 새 이미지가 업로드된 경우 처리
             String imageUrl = null;
             if (image != null && !image.isEmpty()) {
                 imageUrl = saveUploadedFile(image); // 새 이미지 저장
             } else {
-                // 새 이미지가 없을 경우 기존 이미지 URL을 유지
                 ErdDto existingDto = erdDao.selectOne(dto.getStockNo());
                 imageUrl = existingDto.getImageUrl();
             }
 
-            // 기존의 유통기한 값을 유지
             ErdDto existingDto = erdDao.selectOne(dto.getStockNo());
             if (dto.getExpirationDate() == null) {
                 dto.setExpirationDate(existingDto.getExpirationDate());
             }
 
-            // 재고 정보를 업데이트합니다.
             boolean result = erdDao.update(dto, imageUrl);
             if (!result) {
-                return "redirect:/stock/edit?stockNo=" + dto.getStockNo() + "&error=true";
+                response.put("error", true);
+                response.put("message", "재고 정보 수정 중 오류가 발생했습니다.");
+            } else {
+                response.put("error", false);
+                response.put("stockNo", dto.getStockNo());
             }
         } catch (Exception e) {
             e.printStackTrace();  // 로그에 에러 기록
-            return "redirect:/stock/edit?stockNo=" + dto.getStockNo() + "&error=true";
+            response.put("error", true);
+            response.put("message", "예기치 않은 오류가 발생했습니다.");
         }
-        return "redirect:/stock/detail?stockNo=" + dto.getStockNo();
+        return ResponseEntity.ok(response);
     }
+
 
     @PostMapping("/increaseQuantity")
     public String increaseQuantity(@RequestParam int stockNo, @RequestParam int amount, RedirectAttributes redirectAttributes) {
@@ -312,6 +320,8 @@ public class ErdController {
         }
         return "redirect:/stock/detail?stockNo=" + stockNo;
     }
+    
+    
 
     @PostMapping("/decreaseQuantity")
     public String decreaseQuantity(@RequestParam int stockNo, @RequestParam int amount, RedirectAttributes redirectAttributes) {

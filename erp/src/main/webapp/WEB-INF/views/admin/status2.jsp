@@ -106,12 +106,7 @@ $(function(){
     createChart("http://localhost:8080/rest/emp/status/hi",".emp-new-chart","입사자 수", "bar");
     createChart("http://localhost:8080/rest/emp/status/bye",".emp-bye-chart","퇴사자 수", "bar");
 });
-<<<<<<< HEAD
-     </script>
-=======
-     </script> 
-
->>>>>>> refs/remotes/origin/main
+</script>
 
 </head>
 <body>
@@ -178,12 +173,10 @@ $(function(){
 					</a></li>
 
 					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
-					</a>
-						</li>
+					</a></li>
 
 					<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
-					</a>
-					</li>
+					</a></li>
 
 					<c:if test="${sessionScope.userType == 'A'}">
 						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자

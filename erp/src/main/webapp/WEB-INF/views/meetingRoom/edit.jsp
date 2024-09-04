@@ -343,88 +343,54 @@
         <nav id="menu">
             <div class="container">
 
-				<!-- 출퇴근 -->
-				<div id="commute-wrap">
-					<div id="date-wrap">
-						<span id="cur-date"></span><br>
-						<span id="cur-time"></span>
-					</div>
-					<div id="start-time">
-						<i>출근 시간</i>
-						<!-- 출근 여부에 따른 표시 -->
-						<span id="start-time-display">미등록</span>
-					</div>
-					<div id="end-time">
-						<i>퇴근 시간</i>
-						<!-- 퇴근 여부에 따른 표시 -->
-						<span id="end-time-display">미등록</span>
-					</div>
-					<div id="attendance-btns">
-						<button id="start-btn" class="on">출근</button>
-						<button id="end-btn" class="on">퇴근</button>
-					</div>
-				</div>
+				 <!-- 사이드바-->
+			<div class="row">
+				<ul class="menu-hover-fill">
+					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
+					</a></li>
+
+					<li><a href="#" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어
+					</a>
+						<ul>
+							<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+							<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+							<li><a href="/res/list">회의실 예약</a></li>
+						</ul></li>
+
+					<li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+					</a>
+						<ul>
+							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
+							<li><a href="/stock/categoryQuantity">재고 그래프</a></li>
+						</ul></li>
+
+					<li><a href="/tb/list" data-text=""> <i class="fa-solid fa-people-group"> </i> 인사관리
+					</a></li>
+
+					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+					</a></li>
+
+					<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
+					</a></li>
+
+					<c:if test="${sessionScope.userType == 'A'}">
+						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+						</a>
+							<ul>
+								<li><a href="/admin/emp/list">사원조회</a></li>
+								<li><a href="/admin/emp/status">사원현황</a></li>
+								<li><a href="/admin/emp/approvalList">결재현황</a></li>
+								<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
+							</ul></li>
+					</c:if>
+
+					<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
+					</a></li>
+				</ul>
 			</div>
-                <!-- 사이드바-->
-                <div class="row">
-                    <ul class="menu-hover-fill">
-                        <li><a href="/home" data-text="home">HOME</a></li>
-
-                        <li><a href="/poketmon/list" data-text="">
-                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
-                            <ul>
-                                <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-                                <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-                            	<li><a href="/res/list">회의실 예약</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/emp/list" data-text="">
-                            <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/book/list" data-text="">
-                            <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text="">
-                            <i class="fa-solid fa-id-card"></i> mypage</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/board/list" data-text="">
-                            <i class="fa-solid fa-comment"></i> 예비용</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <c:if test="${sessionScope.userType == 'A'}">
-                            <li><a href="/admin/home" data-text="">
-                                <i class="fa-solid fa-gears"></i> 관리자</a>
-                            </li>
-                        </c:if>
-
-                        <li><a href="/tb/logout" data-text="">
-                            <i class="fa-solid fa-power-off"></i> 로그아웃</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </aside>
+			</div>
+		</nav>
+	</aside>
 
    <main id="body">
     <!-- 회의실 예약 수정 -->

@@ -20,7 +20,7 @@
      <!-- 프로젝트 스타일 --> 
      <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
      <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
+     <link rel="stylesheet" type="text/css" href="/css/notic.css">
      <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
@@ -321,7 +321,7 @@ p{
 							<li><a href="/res/list">회의실 예약</a></li>
 						</ul></li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+					<li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
 					</a>
 						<ul>
 							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>

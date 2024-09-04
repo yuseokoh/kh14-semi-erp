@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -54,6 +53,42 @@
            border: 1px solid #ccc;
            pointer-events: none;
         }
+        .user1{
+       background-color: #f0f0f0; 
+           border: 1px solid #ccc;
+           pointer-events: none;
+            line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 0.5rem; 
+    padding: 1px; 
+    font-size: 0.9em; 
+    width: 20%;
+}
+
+
+.user1 img {
+    width: 30px; 
+    height: 30px; 
+}
+
+.creation{
+       background-color: #f0f0f0; 
+           border: 1px solid #ccc;
+           pointer-events: none;
+            line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 0.5rem; 
+    padding: 1px; 
+    font-size: 0.9em; 
+    width: 33%;
+    height: 35px;
+}
     </style>
   <!-- lightpick cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -92,9 +127,15 @@
 
     <aside id="sidebar">
         <nav id="menu">
-            <div class="container">
+            <div class="container" >
 
-				<!-- 출퇴근 -->
+   <!-- 이미지? -->
+        
+
+<!-- 여기까지 이미지?-->
+
+
+				<!--출퇴근-->
 				<div id="commute-wrap">
 					<div id="date-wrap">
 						<span id="cur-date"></span><br>
@@ -118,6 +159,8 @@
 			</div>
 		</div>
 		<!-- 출퇴근 여기까지-->
+
+
 
                 <!-- 사이드바-->
                 <div class="row">
@@ -180,47 +223,72 @@
     </aside>
     
     <div id="content">
+        
        <main id="body"> 
            <div id="content">
 
 
-        <!-- 공지사항 상세보기 -->
-        <body>
-        	<form action="noticDetail" method="post" autocomplete="off">
-            <div class="container w-900">
-                <div class="title2">공지사항 상세보기</div>
-        
-                <div class="table-container">
-                    <table class="table form">
-                    </table>
-                </div>
-        
-                <div class="row flex-box" style="margin-top: 20px;">
-                        <div>
-                            <label>제목</label>
-                            <input type="text" class="form title1 readonly" name="noticeTitle">
-                        </div>
-                </div>
-                <div class="row flex-box" style="margin-top: 20px;">
-                    <div>
-                        <label>작성자</label>
-                        <input type="text" class="form w-20 readonly" name="noticeWriter">
-                    </div>
-            </div>
-           
-                <div class="row flex-box "  style="position: relative; margin-top: 50px;">
-                    <div>
-                        <label></label>
-                        <textarea class="field w-100 form readonly"  rows="3" style="padding-right: 100px;" name="noticeCont"></textarea>
-                    </div>
-                </form>
-                </div>
-            </div>
-            </form>
-        </body>
-    
-    <!-- 이곳에서부터 <footer>  -->
+
+
+
+
+<div class="container w-900">
+    <!-- 제목 -->
+  <div class="title2">
+      ${noticeDto.noticeTitle}
+            <c:if test="${noticeDto.noticeUtime != null}">
+                (수정됨)
+            </c:if></div>
+
+
+    <!-- 작성자 -->
+    <div class="row flex-box user1 readonly" readonly style="margin-top: 20px;">
+    <div class="row">
+       
+        ${noticeDto.noticeWriterString}
     </div>
-</main>
-</body>
-</html>
+    </div>
+
+    <!-- 작성일 -->
+    <div class="row right readonly creation "  readonly>
+        <fmt:formatDate value="${noticeDto.noticeWtime}" 
+                                    pattern="y년 M월 d일 E a h시 m분 s초"/>
+    </div>
+    <!-- 내용 -->
+    <div class="row readonly"  style="min-height:200px" readonly>
+        <!-- pre 태그는 내용을 작성된 형태 그대로 출력한다
+                Rich Text Editor를 쓸 경우는 할 필요가 없다 -->
+        ${noticeDto.noticeCont}
+    </div>
+	<!-- 정보 -->
+	<div class="row">
+		조회 
+		<fmt:formatNumber value="${noticeDto.noticeViews}"
+										pattern="#,##0"/>
+		
+	</div>
+	
+
+	
+	<!-- 각종 이동버튼들 -->
+	<div class="row left">
+		<a class="btn btn-positive" href="noticInsert">글쓰기</a>
+		
+		<%-- 본인 글만 표시되도록 조건 설정 --%>
+		<c:set var="isAdmin" value="${sessionScope.createdLevel == '관리자'}"/>
+		<c:set var="isLogin" value="${sessionScope.createdUser != null}"/>
+		<c:set var="isOwner" value="${sessionScope.createdUser == noticeDto.noticeWriter}"/>
+		
+		<c:if test="${isLogin}">
+			<c:if test="${isOwner}">
+				<a class="btn btn-negative btn-edit " href="noitcEdit?noticeNo=${noticeDto.noticeNo}" >수정</a>
+			</c:if>
+			<c:if test="${isOwner || isAdmin}">
+				<a class="btn btn-negative btn-delete"  href="delete?noticeNo=${noticeDto.noticeNo}">삭제</a>
+			</c:if>
+		</c:if>
+		
+		<a class="btn btn-neutral" href="noticList">목록</a>
+
+	</div>
+</div>

@@ -1,7 +1,6 @@
 package com.kh.erp.controller;
 
 import java.util.HashSet;
-
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -42,6 +41,7 @@ public class NoticeController {
         pageVO.setCount(count);
         return "/WEB-INF/views/groupware/notice/noticList.jsp";
     }
+
     
     private boolean checkSearch(String column, String keyword) {
         if(column == null) return false;

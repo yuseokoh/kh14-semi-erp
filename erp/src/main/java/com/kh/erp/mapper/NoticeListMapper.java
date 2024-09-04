@@ -18,11 +18,14 @@ public class NoticeListMapper implements RowMapper<NoticeDto>{
         noticeDto.setNoticeTitle(rs.getString("notice_title"));
         noticeDto.setNoticeCont(rs.getString("notice_cont"));
         noticeDto.setNoticeWtime(rs.getDate("notice_wtime"));
-
-        //항목 3개 추가
+        noticeDto.setNoticeUtime(rs.getDate("notice_utime"));
+        noticeDto.setNoticeViews(rs.getInt("notice_views"));
+        noticeDto.setNoticeLikes(rs.getInt("notice_likes"));
+        noticeDto.setNoticeReplies(rs.getInt("notice_replies"));
         noticeDto.setNoticeGroup(rs.getInt("notice_group"));
         noticeDto.setNoticeTarget(rs.getObject("notice_target", Integer.class));
         noticeDto.setNoticeDepth(rs.getInt("notice_depth"));
+        
         return noticeDto;
     }
 }

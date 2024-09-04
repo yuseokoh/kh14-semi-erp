@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kh.erp.dao.ReservationDao;
-import com.kh.erp.dao.TbEmpAttendanceDao;
 import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.ReservationDto;
 import com.kh.erp.dto.TbEmpDto;
@@ -46,12 +45,11 @@ public class HomeController {
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
 		String inTime = dateService.TimeChangeIn(loginId);
 		String outTime = dateService.TimeChangeOut(loginId);
-		model.addAttribute("inTime", inTime);
-		model.addAttribute("outTime", outTime);
-		model.addAttribute("tbEmpDto", tbEmpDto);
+		model.addAttribute("inTime",inTime);
+		model.addAttribute("outTime",outTime);
+		model.addAttribute("tbEmpDto",tbEmpDto);
 		List<ReservationDto> allReservations = reservationDao.selectAllReservations();
-		model.addAttribute("allReservations", allReservations);
-		return "/WEB-INF/views/erp/main01.jsp";
-//		return "/WEB-INF/views/erp/mian0828.jsp";
-	}
+	    model.addAttribute("allReservations", allReservations);
+        return "/WEB-INF/views/erp/main1.jsp";
+    }
 }

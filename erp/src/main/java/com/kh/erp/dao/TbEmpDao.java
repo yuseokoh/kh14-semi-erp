@@ -150,6 +150,7 @@ public class TbEmpDao {
 	public Integer findImage(String loginId) {
 		String sql = "select document from tb_emp_image where loginId=?";
 		Object[] data = { loginId };
+		
 		return jdbcTemplate.queryForObject(sql, Integer.class, data);
 	}
 

@@ -9,14 +9,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #fce4ec;
+            background-color: #f0f0f0; /* 연한 회색 배경 */
             margin: 0;
             padding: 0;
         }
         h1 {
             text-align: center;
             color: #ffffff;
-            background-color: #f8a5b0;
+            background-color: #333333; /* 제목 배경색을 #333333으로 설정 */
             padding: 20px;
             margin: 0;
             position: relative;
@@ -39,12 +39,12 @@
             text-overflow: ellipsis; /* 넘치는 내용을 "..."으로 표시 */
         }
         th {
-            background-color: #f8a5b0;
+            background-color: #333333; /* 헤더 배경색을 #333333으로 설정 */
             color: white;
             font-weight: bold;
         }
         tr:hover {
-            background-color: #fce4ec;
+            background-color: #e0e0e0; /* 행 호버 시 연한 회색 */
         }
         .btn-container {
             position: absolute;
@@ -53,8 +53,8 @@
         }
         .btn {
             background-color: #ffffff; /* 버튼 배경색 흰색 */
-            color: #f8a5b0; /* 버튼 텍스트 색상 부드러운 핑크색 */
-            border: 2px solid #f8a5b0; /* 버튼 테두리 색상 부드러운 핑크색 */
+            color: #333333; /* 버튼 텍스트 색상 #333333 */
+            border: 2px solid #333333; /* 버튼 테두리 색상 #333333 */
             padding: 10px 20px;
             border-radius: 5px;
             font-size: 16px;
@@ -64,12 +64,12 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         .btn:hover {
-            background-color: #f8a5b0; /* 버튼 호버 시 배경색 부드러운 핑크색 */
+            background-color: #333333; /* 버튼 호버 시 배경색 #333333 */
             color: white; /* 버튼 호버 시 텍스트 색상 흰색 */
-            border-color: #f8a5b0; /* 버튼 호버 시 테두리 색상 부드러운 핑크색 */
+            border-color: #333333; /* 버튼 호버 시 테두리 색상 #333333 */
         }
         .updated-info {
-            color: #333;
+            color: #333333; /* 수정된 정보 텍스트 색상 #333333 */
             word-wrap: break-word;
             white-space: pre-wrap;
         }
@@ -90,7 +90,7 @@
     <h1>
         변경 로그 목록
         <div class="btn-container">
-            <a href="list3" class="btn">목록으로</a>
+            <a href="list" class="btn">목록으로</a>
         </div>
     </h1>
 
@@ -106,12 +106,21 @@
         <tbody>
             <c:forEach var="log" items="${changeLogList}">
                 <tr>
-                    <td class="stock-no-column">${log.stockNo}</td>
+                    <td class="stock-no-column">
+                        <c:choose>
+                            <c:when test="${log.stockNo == 0}">
+                                신규 등록
+                            </c:when>
+                            <c:otherwise>
+                                ${log.stockNo}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td>${log.changedFields}</td>
                     <td class="updated-info"
                         data-old-values="${log.oldValues}" 
                         data-new-values="${log.newValues}"></td>
-                    <td><fmt:formatDate value="${log.changedDate}" pattern="yyyy-MM-dd HH-mm" /></td>
+                    <td><fmt:formatDate value="${log.changedDate}" pattern="yyyy-MM-dd HH:mm" /></td>
                 </tr>
             </c:forEach>
         </tbody>

@@ -10,91 +10,91 @@
     <!-- Chart.js 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fce4ec; /* 부드러운 핑크색 배경 */
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #ffffff; /* 헤더 텍스트 색상을 흰색으로 설정 */
-            background-color: #f8a5b0; /* 부드러운 핑크색 배경 */
-            padding: 20px;
-            margin: 0;
-        }
-        .button-container {
-            margin-top: 20px;
-            margin-right: 20px;
-            position: absolute; /* 버튼을 절대 위치로 설정 */
-            top: 20px; /* 상단에서 20px 떨어진 위치 */
-            right: 20px; /* 오른쪽에서 20px 떨어진 위치 */
-        }
-        .button {
-            background-color: #ffffff; /* 버튼 배경색 흰색 */
-            color: #f8a5b0; /* 버튼 텍스트 색상 부드러운 핑크색 */
-            border: 2px solid #f8a5b0; /* 버튼 테두리 색상 부드러운 핑크색 */
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            text-decoration: none;
-            text-align: center;
-            display: inline-block;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-        .button:hover {
-            background-color: #f8a5b0; /* 버튼 호버 시 배경색 부드러운 핑크색 */
-            color: white; /* 버튼 호버 시 텍스트 색상 흰색 */
-            border-color: #f8a5b0; /* 버튼 호버 시 테두리 색상 부드러운 핑크색 */
-        }
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 두 개의 열 생성 */
-            grid-template-rows: repeat(2, 1fr); /* 두 개의 행 생성 */
-            gap: 10px; /* 차트들 사이의 간격 줄임 */
-            margin-top: 30px;
-        }
-        .chart-container {
-            background-color: #ffffff; /* 차트 배경색을 흰색으로 설정 */
-            padding: 10px; /* 패딩 줄임 */
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #barChart {
-            grid-column: 1 / 2; /* 첫 번째 열 */
-            grid-row: 1 / 2; /* 첫 번째 행 */
-            height: 200px; /* 차트 높이 설정 */
-        }
-        #pieChart {
-            grid-column: 2 / 3; /* 두 번째 열 */
-            grid-row: 1 / 2; /* 첫 번째 행 */
-            height: 200px; /* 차트 높이 설정 */
-        }
-        #lineChart {
-            grid-column: 1 / 2; /* 첫 번째 열 */
-            grid-row: 2 / 3; /* 두 번째 행 */
-            height: 400px; /* 차트 높이 설정 */
-        }
-        #radarChart {
-            grid-column: 2 / 3; /* 두 번째 열 */
-            grid-row: 2 / 3; /* 두 번째 행 */
-            height: 400px; /* 차트 높이 설정 */
-        }
-        canvas {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0; /* 연한 회색 배경 */
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #ffffff; /* 헤더 텍스트 색상을 흰색으로 설정 */
+        background-color: #333333; /* 어두운 회색 배경 */
+        padding: 20px;
+        margin: 0;
+    }
+    .button-container {
+        margin-top: 20px;
+        margin-right: 20px;
+        position: absolute; /* 버튼을 절대 위치로 설정 */
+        top: 20px; /* 상단에서 20px 떨어진 위치 */
+        right: 20px; /* 오른쪽에서 20px 떨어진 위치 */
+    }
+    .button {
+        background-color: #ffffff; /* 버튼 배경색 흰색 */
+        color: #333333; /* 버튼 텍스트 색상 어두운 회색 */
+        border: 2px solid #333333; /* 버튼 테두리 색상 어두운 회색 */
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-decoration: none;
+        text-align: center;
+        display: inline-block;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .button:hover {
+        background-color: #333333; /* 버튼 호버 시 배경색 어두운 회색 */
+        color: white; /* 버튼 호버 시 텍스트 색상 흰색 */
+        border-color: #333333; /* 버튼 호버 시 테두리 색상 어두운 회색 */
+    }
+    .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 두 개의 열 생성 */
+        grid-template-rows: repeat(2, 1fr); /* 두 개의 행 생성 */
+        gap: 10px; /* 차트들 사이의 간격 줄임 */
+        margin-top: 30px;
+    }
+    .chart-container {
+        background-color: #ffffff; /* 차트 배경색을 흰색으로 설정 */
+        padding: 10px; /* 패딩 줄임 */
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #barChart {
+        grid-column: 1 / 2; /* 첫 번째 열 */
+        grid-row: 1 / 2; /* 첫 번째 행 */
+        height: 200px; /* 차트 높이 설정 */
+    }
+    #pieChart {
+        grid-column: 2 / 3; /* 두 번째 열 */
+        grid-row: 1 / 2; /* 첫 번째 행 */
+        height: 200px; /* 차트 높이 설정 */
+    }
+    #lineChart {
+        grid-column: 1 / 2; /* 첫 번째 열 */
+        grid-row: 2 / 3; /* 두 번째 행 */
+        height: 400px; /* 차트 높이 설정 */
+    }
+    #radarChart {
+        grid-column: 2 / 3; /* 두 번째 열 */
+        grid-row: 2 / 3; /* 두 번째 행 */
+        height: 400px; /* 차트 높이 설정 */
+    }
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 </head>
 <body>
     <h1>카테고리 수량 차트</h1>
     
     <!-- 버튼 컨테이너 -->
     <div class="button-container">
-        <a href="list3" class="button">목록으로</a>
+        <a href="list" class="button">목록으로</a>
     </div>
     
     <!-- 차트 그리드 컨테이너 -->

@@ -21,7 +21,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 			return true;	
 		}
 		else {
-			response.sendError(403);//권한 없음(부족),Forbidden
+			response.sendRedirect("/home");//홈페이지로 추방
 //			response.sendRedirect("/");
 			return false;
 		}

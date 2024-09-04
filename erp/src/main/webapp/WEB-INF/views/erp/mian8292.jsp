@@ -8,19 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 상세보기</title>
 
-    <!-- google font cdn -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <!-- font awesome icon cdn -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+   
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="/css/commons.css">
     <link rel="stylesheet" type="text/css" href="/css/test.css">
 
      <!-- 프로젝트 스타일 --> 
      <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
-     <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+ 
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
@@ -209,17 +205,20 @@ p{
   border-radius: 5px; 
 }
 </style>
-    <!-- fullcalendar cdn-->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+
+<!-- FullCalendar CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css">
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
   <!-- lightpick cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
   <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
   <!-- jquery cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="/js/checkbox.js"></script>
-  <script src="/js/confirm-link.js"></script>
+  <script src="checkbox.js"></script>
+  <script src="confirm-link.js"></script>
   <!-- <script src="multipage.js"></script> -->
   <!-- 프로젝트 js-->
 <script src="/js/gotoworkbtn.js"></script>
@@ -227,6 +226,78 @@ p{
 <script src="/js/delete.js"></script>
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  	          <!-- 자바스크립트 코드 작성 영역 -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#menuToggle').on('click', function() {
+            var $sidebar = $('#sidebar');
+            var $body = $('#body');
+            var isOpened = $sidebar.hasClass('opened');
+
+            if (isOpened) {
+                $sidebar.removeClass('opened');
+                $body.css('width', '100%');
+                $body.css('padding-left', 0);
+            } else {
+                $sidebar.addClass('opened');
+                $body.css('width', 'calc(100% - 300px)');
+                $body.css('padding-left', '320px');
+            }
+        });
+
+        // 캘린더 데이터를 설정
+        var allReservations = [];
+        <c:forEach var="reservation" items="${allReservations}">
+            allReservations.push({
+                roomId: "${reservation.roomId}",
+                roomName: "${reservation.roomName}",
+                calDate: "${reservation.calDate}",
+                stime: "${reservation.stime}",
+                etime: "${reservation.etime}"
+            });
+        </c:forEach>
+
+        // FullCalendar 초기화
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'ko',
+            timeZone: 'Asia/Seoul',
+            initialView: 'dayGridMonth',
+            selectable: true,
+            validRange: {
+                start: new Date().toISOString().split("T")[0]
+            },
+            events: allReservations.map(function(reservation) {
+                return {
+                    title: reservation.roomName,
+                    start: reservation.calDate + 'T' + reservation.stime,
+                    end: reservation.calDate + 'T' + reservation.etime
+                };
+            }),
+            contentHeight: 'auto',
+            aspectRatio: 2.0,
+            eventClick: function(info) {
+                // 예약된 이벤트를 클릭하면 모달에 정보 표시
+                $('#modalRoomName').text('회의실: ' + info.event.title);
+                $('#modalStartTime').text(
+                    '시작 시간: ' + info.event.start.toISOString().slice(0, 16).replace('T', ' '));
+                $('#modalEndTime').text(
+                    '종료 시간: ' + info.event.end.toISOString().slice(0, 16).replace('T', ' '));
+
+                // 모달 표시
+                $('#reservationModal').show();
+            }
+        });
+
+        calendar.render();
+
+        // 모달 닫기 버튼
+        $('#closeModal').click(function() {
+            $('#reservationModal').hide();
+        });
+    });
+</script>
+  
     <script type="text/javascript">
 
   //메인화면 차트 
@@ -262,135 +333,11 @@ p{
         });
     </script>
 
-<script type='importmap'>
-    {
-      "imports": {
-        "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.15",
-        "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.15"
-      }
-    }
-  </script>
-  <script type='module'>
-    import { Calendar } from '@fullcalendar/core'
-    import dayGridPlugin from '@fullcalendar/daygrid'
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendarEl = document.querySelector(".calendar")
-      const calendar = new Calendar(calendarEl, {
-        plugins: [dayGridPlugin],
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        }
-      })
-      calendar.render()
-    })
-  </script>
-
 </head>
 <body>  
-    <header id="header">
-        <div id="menuToggle"><i class="fa fa-bars"></i></div>
-        <div id="logo">
-            <a href="#" class="notif-alert">
-                <i class="fa-solid fa-envelope email"></i></i>
-                <span class="notif-count content">0</span>
-            </a>
-            <a href="#"><i class="fa-solid fa-circle-user user"></i></a> 
-        </div>
-    </header>
-
-    <aside id="sidebar">
-        <nav id="menu">
-            <div class="container">
-
-				<!-- 출퇴근 -->
-				<div id="commute-wrap">
-					<div id="date-wrap">
-						<span id="cur-date"></span><br>
-						<span id="cur-time"></span>
-					</div>
-					<div id="start-time">
-						<i>출근 시간</i>
-						<!-- 출근 여부에 따른 표시 -->
-						<span id="start-time-display">미등록</span>
-					</div>
-					<div id="end-time">
-						<i>퇴근 시간</i>
-						<!-- 퇴근 여부에 따른 표시 -->
-						<span id="end-time-display">미등록</span>
-					</div>
-					<div id="attendance-btns">
-						<button id="start-btn" class="on">출근</button>
-						<button id="end-btn" class="on">퇴근</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 출퇴근 여기까지-->
-
-                <!-- 사이드바-->
-                <div class="row">
-                    <ul class="menu-hover-fill">
-                        <li><a href="/home" data-text="home">HOME</a></li>
-
-                        <li><a href="/poketmon/list" data-text="">
-                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
-                            <ul>
-                                <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-                                <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/emp/list" data-text="">
-                            <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="#" data-text="">
-                            <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
-                            <ul>
-                                <li><a href="/tb/list">인원 리스트</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text="">
-                            <i class="fa-solid fa-id-card"></i> mypage</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/board/list" data-text="">
-                            <i class="fa-solid fa-comment"></i> 예비용</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <c:if test="${sessionScope.userType == 'A'}">
-                            <li><a href="/admin/emp/list" data-text="">
-                                <i class="fa-solid fa-gears"></i> 관리자</a>
-                            </li>
-                        </c:if>
-
-                        <li><a href="/tb/logout" data-text="">
-                            <i class="fa-solid fa-power-off"></i> 로그아웃</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </aside>
+<jsp:include page="/WEB-INF/views/template/sidebar.jsp"></jsp:include>  
     
-    <div id="content" style="margin-top: 200px;">
+    <div id="content" style="margin-top: 500px;">
        <main id="body"> 
            <!-- <div id="content" style="margin-top: 200px;"> -->
             <!-- 여기서부터 메인 화면의 콘텐츠가 시작됩니다. -->
@@ -422,11 +369,24 @@ p{
 
 
             <div class="row flex-box w-1200">
-                <div class="calendar w-80 center"></div>
+          
+  <!-- 예약 정보 모달 -->
+    <div id="reservationModal"
+        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; padding: 20px; background-color: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); border-radius: 10px; z-index: 10000;">
+        <h3>예약 정보</h3>
+        <p id="modalRoomName"></p>
+        <p id="modalStartTime"></p>
+        <p id="modalEndTime"></p>
+        <button id="closeModal">닫기</button>
+    </div>
+
+    <div id="content" style="margin-top : 200px;">
+        <main id="body">
+            <div id="calendar"></div>
+				</div>
+				
                 <div class="w-70 center"> 채팅?편지함?</div>
             </div>
-            
-
         </div>
     </main>
 </body>

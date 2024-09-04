@@ -233,7 +233,7 @@ public class ErdController {
             e.printStackTrace();  // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
-        return "redirect:/stock/list3";
+        return "redirect:/stock/list";
     }
 
     // 수정(입력) 페이지

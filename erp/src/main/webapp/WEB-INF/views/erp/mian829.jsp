@@ -228,9 +228,49 @@ p{
 <script src="/js/gotoworkbtn.js"></script>
 <script src="/js/menuToggle.js"></script>
 <script src="/js/delete.js"></script>
+
+
   <!-- chart js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  	          <!-- 자바스크립트 코드 작성 영역 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/categoryQuantityData') // JSON 데이터를 제공하는 API 엔드포인트
+            .then(response => response.json())
+            .then(categoryMap => {
+                var labels = Object.keys(categoryMap);
+                var data = Object.values(categoryMap);
+
+                // 바 차트 생성
+                var ctxBar = document.getElementById('barChart').getContext('2d');
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '재고 수량',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading the JSON data:', error));
+    });
+</script>
+
+
+
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#menuToggle').on('click', function() {
@@ -302,40 +342,7 @@ p{
     });
 </script>
   
-    <script type="text/javascript">
-
-  //메인화면 차트 
-    $(function(){
-            //차트를 그릴 대상 선택
-            var ctx = document.querySelector(".my-chart");
-            //차트 생성 코드
-            //new Chart(캔버스태그, {옵션객체});
-            new Chart(ctx, {
-                type: 'bar',//차트 유형(bar/pie/doughnut/line)
-                data: {//차트에 표시될 데이터
-
-                    //label은 차트에 표시되는 항목(x축)
-                    labels: ['재고', '관리', '그래프', '자리'],
-
-                    //실제로 차트에 표시될 값
-                    datasets: [
-                        {
-                            label: '재고 수',//범례
-                            data: [2, 2, 2, 1],//데이터
-                            borderWidth: 1//디자인 속성(테두리 두께)
-                        },
-                    ]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true//차트를 0부터 표기
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+   
 
 </head>
 <body>  
@@ -349,8 +356,8 @@ p{
             <p> </p>
          
             <div class="row flex-box w-1200">
-                <div class="w-50 center"> 
-                    <canvas class="my-chart"></canvas> 
+                <div class="w-50 center">
+                    <canvas id="barChart"></canvas>
                 </div>
                 <div class="w-50 center" >
     <div class="card">

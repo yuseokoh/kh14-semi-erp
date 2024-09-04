@@ -428,7 +428,7 @@
                             </c:choose>
                         </td>
                         <td><a href="${pageContext.request.contextPath}/stock/detail?stockNo=${item.stockNo}">상세보기</a></td>
-                        <td><a href="${pageContext.request.contextPath}/stock/delete?stockNo=${item.stockNo}" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a></td>
+                        <td><a href="#" class="delete-link" data-url="${pageContext.request.contextPath}/stock/delete?stockNo=${item.stockNo}">삭제</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -437,7 +437,7 @@
         <!-- 등록 버튼 추가 -->
         <a href="${pageContext.request.contextPath}/stock/insert" class="register-button">재고등록</a>
     </div>
-     <script>
+    <script>
     $(document).ready(function() {
         const sidebar = $('#sidebar');
         const container1 = $('.container1');
@@ -460,6 +460,28 @@
 
         // 페이지 로드 시 사이드바 상태에 따른 container1 위치 조정
         adjustContainer();
+
+        // 삭제 알림 처리
+        $('.delete-link').click(function(event) {
+            event.preventDefault(); // 링크 기본 동작 방지
+
+            const deleteUrl = $(this).data('url');
+
+            Swal.fire({
+                title: '정말 삭제하시겠습니까?',
+                text: '이 작업은 되돌릴 수 없습니다.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#333333',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // 사용자가 확인을 클릭하면 삭제 URL로 이동
+                }
+            });
+        });
     });
     </script>
     

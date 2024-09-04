@@ -115,7 +115,7 @@
                             confirmButtonText: '확인'
                         }).then(function() {
                             // 성공 후 리스트 페이지로 리다이렉트
-                            window.location.href = '/stock/list3'; // 실제 리스트 페이지 URL로 변경
+                            window.location.href = '/stock/list'; // 실제 리스트 페이지 URL로 변경
                         });
                     } else {
                         Swal.fire({

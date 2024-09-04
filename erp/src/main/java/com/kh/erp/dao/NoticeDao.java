@@ -24,7 +24,7 @@ public class NoticeDao {
 	//목록
 	public List<NoticeDto> selectList(){
 		String sql = "select "
-						+ "notice_no, notice_writer, notice_title, "
+						+ "notice_no, notice_writer, notice_title,notice_cont, "
 						+ "notice_wtime, notice_utime, notice_views, notice_likes, "
 						+ "notice_replies "
 					+ "from notice order by notice_no desc";
@@ -33,7 +33,7 @@ public class NoticeDao {
 	//검색
 	public List<NoticeDto> selectList(String column, String keyword) {
 		String sql = "select "
-				+ "notice_no, notice_writer, notice_title, "
+				+ "notice_no, notice_writer, notice_title, notice_cont, "
 				+ "notice_wtime, notice_utime, notice_views, notice_likes, "
 				+ "notice_replies "
 					+ "from notice "
@@ -61,7 +61,7 @@ public class NoticeDao {
 						+ "notice_cont, "
 						+ "notice_group, notice_target, notice_depth"
 							+ ") "
-								+ "values(?, ?, ?, ?, ?, ?, ?)";
+								+"values(?, ?, ?, ?, ?, ?, ?)";
 		Object[] data = {
 				noticeDto.getNoticeNo(), noticeDto.getNoticeWriter(), noticeDto.getNoticeTitle(),
 				noticeDto.getNoticeCont(), noticeDto.getNoticeGroup(),
@@ -105,9 +105,8 @@ public class NoticeDao {
 		String sql = "select * from ("
 							+ "select rownum rn, TMP.* from ("
 								+ "select "
-								+ "notice_no, notice_writer, notice_title, "
-								+ "notice_wtime, "
-								+ "notice_utime, notice_views, notice_likes, notice_replies "
+								+ "notice_no, notice_writer, notice_title, notice_cont, "
+								+"notice_group, notice_target, notice_depth "
 								+ "from notice order by notice_no desc"
 							+ ")TMP"
 						+ ") where rn between ? and ?";
@@ -122,9 +121,8 @@ public class NoticeDao {
 		String sql = "select * from ("
 							+ "select rownum rn, TMP.* from ("
 								+ "select "
-								+ "notice_no, notice_writer, notice_title, "
-								+ "notice_wtime, "
-								+ "notice_utime, notice_views, notice_likes, notice_replies "
+								+ "notice_no, notice_writer, notice_title, notice_cont,  "
+								+ "notice_group, notice_target, notice_depth "
 								+ "from notice "
 								+ "where instr(#1, ?) > 0 "
 								+ "order by notice_no desc"
@@ -147,49 +145,40 @@ public class NoticeDao {
 		return jdbcTemplate.queryForObject(sql, int.class, data);
 	}
 	
-	//페이징 객체를 이용한 목록 및 검색 메소드
-	public List<NoticeDto> selectListByPaging(PageVO pageVO){
-		if(pageVO.isSearch()) {//검색이라면
-			String sql = "select * from ("
-								+ "select rownum rn, TMP.* from ("
-									+ "select "
-									+ "notice_no, notice_writer, notice_title, "
-									+ "notice_wtime, notice_utime, notice_views, notice_likes, notice_replies, "
-									+ "notice_group, notice_target, notice_depth "
-									+ "from notice "
-									+ "where instr(#1, ?) > 0 "
-									//트리 정렬
-									+ "connect by prior notice_no=notice_target "
-									+ "start with notice_target is null "
-									+ "order siblings by notice_group desc, notice_no asc"
-								+ ")TMP"
-							+ ") where rn between ? and ?";
-			sql = sql.replace("#1", pageVO.getColumn());
-			Object[] data = {
-					pageVO.getKeyword(),
-					pageVO.getBeginRow(),
-					pageVO.getEndRow()	
-			};
-			return jdbcTemplate.query(sql, noticeListMapper, data);
-		}
-		else {//목록이라면
-			String sql = "select * from ("
-							+ "select rownum rn, TMP.* from ("
-								+ "select "
-									+ "notice_no, notice_writer, notice_title, "
-									+ "notice_wtime, notice_utime, notice_views, notice_likes, notice_replies, "
-									+ "notice_group, notice_target, notice_depth "
-								+ "from notice "
-								//트리 정렬
-								+ "connect by prior notice_no=notice_target "
-								+ "start with notice_target is null "
-								+ "order siblings by notice_group desc, notice_no asc"
-							+ ")TMP"
-						+ ") where rn between ? and ?";
-			Object[] data = {pageVO.getBeginRow(), pageVO.getEndRow()};
-			return jdbcTemplate.query(sql, noticeListMapper, data);
-		}
+	public List<NoticeDto> selectListByPaging(PageVO pageVO) {
+	    if(pageVO.isSearch()) {
+	        String sql = "select * from ("
+	                            + "select rownum rn, TMP.* from ("
+	                                + "select "
+	                                + "notice_no, notice_writer, notice_title, notice_cont, "
+	                                + "notice_group, notice_target, notice_depth "
+	                                + "from notice "
+	                                + "where instr(#1, ?) > 0 "
+	                                + "connect by prior notice_no=notice_target "
+	                                + "start with notice_target is null "
+	                                + "order siblings by notice_group desc, notice_no asc"
+	                            + ")TMP"
+	                        + ") where rn between ? and ?";
+	        sql = sql.replace("#1", pageVO.getColumn());
+	        Object[] data = {pageVO.getKeyword(), pageVO.getBeginRow(), pageVO.getEndRow()};
+	        return jdbcTemplate.query(sql, noticeListMapper, data);
+	    } else {
+	        String sql = "select * from ("
+	                        + "select rownum rn, TMP.* from ("
+	                            + "select "
+	                                + "notice_no, notice_writer, notice_title, notice_cont, "
+	                                + "notice_group, notice_target, notice_depth "
+	                            + "from notice "
+	                            + "connect by prior notice_no=notice_target "
+	                            + "start with notice_target is null "
+	                            + "order siblings by notice_group desc, notice_no asc"
+	                        + ")TMP"
+	                    + ") where rn between ? and ?";
+	        Object[] data = {pageVO.getBeginRow(), pageVO.getEndRow()};
+	        return jdbcTemplate.query(sql, noticeListMapper, data);
+	    }
 	}
+
 	
 	public int countByPaging(PageVO pageVO) {
 		if(pageVO.isSearch()) {//검색카운팅

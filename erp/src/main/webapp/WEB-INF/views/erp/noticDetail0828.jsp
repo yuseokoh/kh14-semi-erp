@@ -164,7 +164,6 @@
                                 <i class="fa-solid fa-gears"></i> 관리자</a>
                             </li>
                         </c:if>
-
                         <li><a href="/logout" data-text="">
                             <i class="fa-solid fa-power-off"></i> 로그아웃</a>
                         </li>

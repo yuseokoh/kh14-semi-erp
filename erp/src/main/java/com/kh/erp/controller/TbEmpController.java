@@ -17,8 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.erp.VO.PageVO;
 import com.kh.erp.configuration.CustomCertProperties;
 import com.kh.erp.dao.CertDao;
+import com.kh.erp.dao.ReservationDao;
 import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.CertDto;
+import com.kh.erp.dto.ReservationDto;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.error.TargetNotFoundException;
 import com.kh.erp.service.DateService;
@@ -48,6 +50,8 @@ public class TbEmpController {
 	private DocumentService documentService;
 	@Autowired
 	private DateService dateService;
+	@Autowired
+	private ReservationDao reservationDao;
 
 	// 회원 가입 페이지
 	@GetMapping("/join")
@@ -73,26 +77,24 @@ public class TbEmpController {
 
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute TbEmpDto tbEmpDto,
-					@RequestParam(required = false) MultipartFile attach) throws IllegalStateException, IOException {
+	                   @RequestParam(required = false) MultipartFile attach) throws IllegalStateException, IOException {
+	    tbEmpDao.updateEmp(tbEmpDto);
 
-		tbEmpDao.updateEmp(tbEmpDto);
-
-		if(!attach.isEmpty()) {
-			try {
-				int beforeNo = tbEmpDao.findImage(tbEmpDto.getLoginId());
-				documentService.delete(beforeNo);
-			} catch (Exception e) {}
-		int documentNo = documentService.save(attach);
-		tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
-		}
-
-		int beforeNo = tbEmpDao.findImage(tbEmpDto.getLoginId());
-		documentService.delete(beforeNo);
-		int documentNo = documentService.save(attach);
-		tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
-
-		return "redirect:/tb/mypage?loginId="+tbEmpDto.getLoginId();
-	}
+	    if (attach != null && !attach.isEmpty()) 
+	        try {
+	            int beforeNo = tbEmpDao.findImage(tbEmpDto.getLoginId());
+	            if (beforeNo > 0) {
+	                documentService.delete(beforeNo);
+	            }
+	            int documentNo = documentService.save(attach);
+	            tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
+	        } catch (Exception e) {
+	        	int documentNo = documentService.save(attach);
+	            tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
+	        }
+	    return "redirect:/tb/mypage?loginId=" + tbEmpDto.getLoginId();
+	
+}
 
 	// 마이페이지
 	@RequestMapping("/mypage")
@@ -244,13 +246,19 @@ public class TbEmpController {
 		
 	}
 	//직급,이미지,이름
-	@RequestMapping("/home")
-	public String home(Model model, HttpSession session) {
-		String loginId = (String) session.getAttribute("createdUser");
-		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
-		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
-		model.addAttribute("tbEmpDto",tbEmpDto);
-		return "/WEB-INF/views/erp/mian0828.jsp";
-	}
+	  @RequestMapping("/home")
+	    public String home(HttpSession session,Model model) {
+	        String loginId = (String) session.getAttribute("createdUser");
+	        TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
+	        tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+	        String inTime = dateService.TimeChangeIn(loginId);
+	        String outTime = dateService.TimeChangeOut(loginId);
+	        model.addAttribute("inTime",inTime);
+	        model.addAttribute("outTime",outTime);
+	        model.addAttribute("tbEmpDto",tbEmpDto);
+	        List<ReservationDto> allReservations = reservationDao.selectAllReservations();
+	        model.addAttribute("allReservations", allReservations);
+	        return "/WEB-INF/views/erp/mian8292.jsp";
+	    }
 	
 }

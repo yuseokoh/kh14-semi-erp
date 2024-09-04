@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -64,9 +65,9 @@
 
   <!-- jquery cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="checkbox.js"></script>
-  <script src="confirm-link.js"></script>
-  <script src="multipage.js"></script>
+  <script src="/js/checkbox.js"></script>
+  <script src="/js/confirm-link.js"></script>
+  <script src="/js/multipage.js"></script>
 
     <!-- summernote cdn -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
@@ -223,6 +224,7 @@
                         <div class="noticbox w-1200">
                                <div class="row notice">
                                    <div class="row noticname">공지사항</div>
+                                   
                                    <div class="actions">
                                        <select class="row actions1" style="flex-grow: 1;">
                                            <option value="">작성일</option>
@@ -238,42 +240,36 @@
                        
                        
                                <div class="tb-box">
-                                   <table class="">
-                                       <thead>
-                                           <tr>
-                                               <th>선택</th>
-                                               <th>작성일</th>
-                                               <th>제목</th>
-                                               <th>작성자</th>
-                                               <th>조회수</th>
-                                           </tr>
-                                       </thead>
-                                       <tbody class="tbody">
-                                        <tr class="row center">
-                                               <td><input type="checkbox" class="check-item"></td>
-                                               <td>${게시판Dto.게시판작성자}</td>
-                                               <td class="name">${게시판Dtto.게시판제목}</td>
-                                               <td>${게시판Dto.게시판작성자}</td>
-                                               <td>${게시판Dto.게시판조회수}</td>
-                                           </tr>
-                                       </tbody>
-                                       <tbody lass="tbody">
-                                        <tr class="row center">
-                                               <td><input type="checkbox" class="check-item"></td>
-                                               <td>연습용</td>
-                                               <td class="name">실제적용시</td>
-                                               <td>위에 tbody부터 </td>
-                                               <td>아래tbody까지 지워야함</td>
-                                           </tr>
-                                       </tbody>
-                                   </table>
+                                   <table>
+    <thead>
+        <tr>
+            <th>선택</th>
+            <th>작성일</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+        </tr>
+    </thead>
+    <tbody class="tbody">
+        <c:forEach var="notice" items="${noticeList}">
+            <tr class="row center">
+                <td><input type="checkbox" class="check-item"></td>
+                <td>${notice.noticeWtime}</td>
+                <td class="name">${notice.noticeTitle}</td>
+                <td>${notice.noticeWriter}</td>
+                <td>${notice.noticeViews}</td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+                                   
                        
                                    <div class="flex-box ">
                                     <div class="row left">
                                         <button type="button" class="btn btn-delete " onclick="showDeleteConfirmation()" >삭제</button>
                                     </div>
                                     <div class="row center">
-                                      <span>span지우고 네비게이터 넣는곳 </span> 
+                                                                 <jsp:include page="/WEB-INF/views/template/navigator2.jsp"></jsp:include> 
                                     </div>
                                     <div class="row right">
                                         <button type="button" class="btn btn-write" onclick="showAlert()">글작성</button>

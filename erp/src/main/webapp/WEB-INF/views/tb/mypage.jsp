@@ -536,42 +536,35 @@
 								<!--주소-->
 								<div>
 									<label for="editAddress1">우편번호:</label> <input class="address1" id="editAddress1" name="empPost" type="text" placeholder="" required="" style="width: 30%;" value="${tbEmpDto.empPost }">
-									</button>
-									</label>
 								</div>
-
 								<div>
 									<label for="editAddress2">주소:</label> <input class="address2" id="editAddress2" name="empAddress1" type="text" placeholder="" required="" value="${tbEmpDto.empAddress1 }"> </label>
 								</div>
 
-								<div>
-									<label for="editAddress3">상세주소:</label> <input class="address3" id="editAddress3" name="empAddress2" type="text" placeholder="" required="" value="${tbEmpDto.empAddress2}"> </label>
-								</div>
+                        <div>
+                            <label for="editAddress3">상세주소:</label>
+                                <input class="address3"   id="editAddress3" name="empAddress2" type="text" placeholder="" required=""
+                                value="${tbEmpDto.empAddress2}">
+                      </div>
+                      <div>
+                        <label for="editImage">이미지</label>
+                        <input type="file" id="editImage" name="attach" accept="image/*">
+                    </div>
+                  </div>
+          </div>
+              </div>
+        	</div>
+           <!-- 내정보 -->           
+        	<hr style="width: 133%; border: 1px solid #858e8f;">
+         			 <div class="edit">
+          			<c:if test="${tbEmpDto.loginId == sessionScope.createdUser}">
+            		<button id="editButton" class="edit-btn" type="button">수정</button>
+            		<button id="saveChanges" class="edit-btn hidden" type="submit">저장</button>           	
+          			</c:if>
+                    </div>
+          </form>
+      </div>
+   </main>
 
-
-								<div>
-									<label for="editImage">이미지</label> <input type="file" id="editImage" name="attach" accept="image/*">
-								</div>
-							</div>
-
-							<div class="edit">
-
-								<c:if test="${tbEmpDto.loginId == sessionScope.createdUser}">
-									<button id="editButton" class="edit-btn" type="button">수정</button>
-									<button id="saveChanges" class="edit-btn hidden" type="submit">저장</button>
-								</c:if>
-							</div>
-						</div>
-					</form>
-				</div>
-				<!-- 내정보 -->
-
-
-
-
-
-			</div>
-	</div>
-	</main>
 </body>
 </html>

@@ -56,6 +56,15 @@
 }
 
 
+.tb th, .tb td {
+    padding: 10px; 
+}
+.tb tr {
+    border-bottom: 1px solid #ddd; 
+}
+
+.tb tbody tr {
+    height: 40px;
     </style>
 
 
@@ -196,7 +205,7 @@
 
 
 
-<div class="container w-800 my-50">
+<div class="container my-50">
         <div class="row center">
             <h1>사원 조회</h1>
         </div>

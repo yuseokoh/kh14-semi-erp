@@ -6,8 +6,8 @@
 }
         .btn{
          color: white;
-         background-color: #99c2ff;
-        border-color: #cde1ff;
+         background-color: wheat;
+        border-color: antiquewhite;
          border-radius: 4px;
          height: 35px; /* Ensure consistent height */
         }
@@ -28,7 +28,7 @@
          font-size: 16px; /* 입력창과 동일하게 */
         padding: 0.5em 0.75em; /*입력창과 동일하게*/
         color: white;
-        background-color: #80bdff;
+        background-color: wheat;
         border: 1px solid #7f8c8d;
         border-radius: 0.2em;
         cursor: pointer; /* 커서모양 변경 */
@@ -71,13 +71,13 @@
                  border-bottom: 1px solid #7f8c8d;  
                  width: 100%;
                  border-collapse: collapse;
-                 font-size: 16px;
+                 font-size: 20px;
              }
              .tb > thead {
          border-bottom: 1px solid #7f8c8d;
          }
          .name{
-              color: #80bdff;
+              color: wheat;
               font-weight: bold;
           }
              
@@ -86,13 +86,13 @@
           }
 
           th {
-            background-color: #80bdff; /* 테이블 헤더 배경색을 부드러운 핑크색으로 설정 */
+            background-color: wheat; /* 테이블 헤더 배경색을 부드러운 핑크색으로 설정 */
             color: white; /* 헤더 텍스트 색상을 흰색으로 설정 */
             font-weight: bold;
         }
         
         tr:hover {
-            background-color:#cde1ff; /* 테이블 행 호버 시 배경색을 부드러운 핑크색으로 설정 */
+            background-color:antiquewhite; /* 테이블 행 호버 시 배경색을 부드러운 핑크색으로 설정 */
         }
         table {
             width: 300%;

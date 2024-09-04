@@ -605,26 +605,25 @@
                         <input type="file" id="editImage" name="attach" accept="image/*">
                     </div>
                   </div>
+                  
           			
-         			 <div class="edit">
-
-          			<c:if test="${tbEmpDto.loginId == sessionScope.createdUser}">
-            		<button id="editButton" class="edit-btn" type="button">수정</button>
-            		<button id="saveChanges" class="edit-btn hidden" type="submit">저장</button>           	
-          			</c:if>
-                    </div>
           </div>
-              		</form>
               </div>
            <!-- 내정보 -->           
                         
         
 
-
            
-        </div>
-                    
-                </div>
-            </main>
+        	</div>
+        	<hr style="width: 133%; border: 1px solid #858e8f;">
+         			 <div class="edit">
+          			<c:if test="${tbEmpDto.loginId == sessionScope.createdUser}">
+            		<button id="editButton" class="edit-btn" type="button">수정</button>
+            		<button id="saveChanges" class="edit-btn hidden" type="submit">저장</button>           	
+          			</c:if>
+                    </div>
+          </form>
+      </div>
+   </main>
 </body>
 </html>

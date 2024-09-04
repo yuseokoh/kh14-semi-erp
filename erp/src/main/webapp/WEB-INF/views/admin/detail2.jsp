@@ -225,6 +225,10 @@
     width: calc(100% - 160px); 
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 100%;
+}
+.select0{
+width: 100% !important;
 }
 
 </style>
@@ -398,7 +402,7 @@
         </nav>
     </aside>
     
-    <div id="content" style="margin-top: 50px;">
+    <div id="content" style="margin-top: 80px;">
         <main id="body"> 
          <h2><a href="list"><i class="fa-solid fa-left-long"></i></a></h2>
  <!-- 내정보-->
@@ -479,7 +483,7 @@
                   </div>
                   <!-- 수정 버튼 추가 -->
                 
-                
+               
 				<form action="/admin/emp/edit" method="post" autocomplete="off">
                   <div class="row flex-box w-1200">
                   <div id="editForm" class="edit-form">
@@ -491,8 +495,8 @@
                       </div>
                       
                       <div>
-                          <label for="editPosition">직급:</label>
-                          <select name="empLevel" class="select1" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);">
+                          <label for="editPosition" >직급:</label>
+                          <select name="empLevel" class="select0" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);">
                           	<option value="인턴" <c:if test="${tbEmpDto.empLevel == '인턴'}">selected</c:if>>인턴</option>
                           	<option value="사원" <c:if test="${tbEmpDto.empLevel == '사원'}">selected</c:if>>사원</option>
                         	<option value="주임" <c:if test="${tbEmpDto.empLevel == '주임'}">selected</c:if>>주임</option>
@@ -506,7 +510,7 @@
                       </div>
                       <div>
                           <label for="editDepartment">부서:</label>
-                          <select name="empDept" class="select1" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);" >
+                          <select name="empDept" class="select0" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);" >
                           	<option value="a00" <c:if test="${tbEmpDto.empDept == '인사팀'}">selected</c:if>>인사팀</option>
                           	<option value="a01" <c:if test="${tbEmpDto.empDept == '총무팀'}">selected</c:if>>총무팀</option>
                           	<option value="a02" <c:if test="${tbEmpDto.empDept == '영업팀'}">selected</c:if>>영업팀</option>
@@ -557,12 +561,6 @@
                       </div>
                   </div>
               </div>
-          <hr style="width: 133%; border: 1px solid #858e8f;">
-          <div class="edit">
-            <button id="editButton" class="edit-btn" type="button">수정</button>
-            <button id="saveChanges" class="edit-btn hidden" type="submit">저장</button> 
-        </div>
-              </form>
           </div>
            <!-- 내정보 -->           
                         
@@ -570,6 +568,12 @@
 
                     </div>
                     
+          <hr style="width: 133%; border: 1px solid #858e8f;">
+          <div class="edit">
+            <button id="editButton" class="edit-btn" type="button">수정</button>
+            <button id="saveChanges" class="edit-btn hidden" type="submit">저장</button> 
+        </div>
+              </form>
                 </div>
             </main>
 </body>

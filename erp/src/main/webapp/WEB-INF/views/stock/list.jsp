@@ -34,22 +34,21 @@
 <!-- 프로젝트 js-->
 <script src="/js/gotoworkbtn.js"></script>
 <script src="/js/menuToggle.js"></script>
-<script src="/js/alertDeleteA.js"></script>
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
 <style>
-    /* 통일된 색상 */
     body {
-    	margin-bottom:200px;
-        color: #333333;
-        background-color: #f5f5f5; /* 배경색 변경, 선택 사항 */
+        margin-bottom: 200px;
+        font-family: 'Noto Sans KR', sans-serif;
+        color: #333;
+        background-color: #f5f5f5;
     }
 
     a {
-        color: #333333; /* 링크 색상 */
+        color: #333;
         text-decoration: none;
         font-weight: bold;
     }
@@ -66,9 +65,9 @@
     }
 
     .button {
-        background-color: #ffffff;
-        color: #333333;
-        border: 2px solid #333333;
+        background-color: #fff;
+        color: #333;
+        border: 2px solid #333;
         padding: 8px 15px;
         border-radius: 5px;
         font-size: 12px;
@@ -78,48 +77,46 @@
     }
 
     .button:hover {
-        background-color: #333333;
-        color: white;
+        background-color: #333;
+        color: #fff;
     }
 
     .register-button {
         display: block;
         width: 80px;
         height: 40px;
-        margin: 20px auto 220px auto; /* 수평 중앙 정렬 */
+        margin: 20px auto 220px auto;
         padding: 10px;
         border: none;
         border-radius: 5px;
-        background-color: #333333;
-        color: white;
+        background-color: #333;
+        color: #fff;
         font-size: 16px;
         cursor: pointer;
         text-align: center;
         transition: background-color 0.3s ease;
         text-decoration: none;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        
-}    
+    }    
 
     .register-button:hover {
-        background-color: #555555;
+        background-color: #555;
     }
 
     .container1 {
         height: 70%;
         width: 80%;
-        margin: 0 auto; /* 수평 중앙 정렬 */
-        padding-bottom: 300px; /* 버튼이 바닥에 붙지 않도록 여백 추가 */
-        position: relative; /* 'relative' 위치 속성을 추가 */
-        transition: margin-left 0.3s ease; /* 이동 애니메이션 */
+        margin: 0 auto;
+        padding-bottom: 300px;
+        position: relative;
+        transition: margin-left 0.3s ease;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        background-color: #ffffff;
+        background-color: #fff;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding-bottom: 180px; /* 버튼이 바닥에 붙지 않도록 여백 추가 */
     }
 
     th, td {
@@ -129,13 +126,26 @@
     }
 
     th {
-        background-color: #333333; /* 헤더 배경색 */
-        color: white; /* 헤더 텍스트 색상 */
+        background-color: #333;
+        color: #fff;
         font-weight: bold;
     }
 
     tr:hover {
-        background-color: rgb(220, 220, 220); /* 행 호버 시 배경색 */
+        background-color: rgb(220, 220, 220);
+    }
+
+    .change-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .arrow {
+        color: #333;
+        font-size: 0.8em;
+        margin: 0 5px;
+        margin-bottom: 0;
     }
 
     .product-container {
@@ -151,52 +161,21 @@
     }
 
     .low-stock {
-    	width:60px;
+        width: 60px;
         position: absolute;
-        top: 15px; /* 이미지 하단에서 5px 위로 위치 */
+        top: 15px;
         left: 43%;
         transform: translateX(-50%);
-        background-color: rgba(255, 0, 0, 0.7); /* 빨간 배경, 투명도 0.7 */
+        background-color: rgba(255, 0, 0, 0.7);
         color: white;
         padding: 1px 3px;
         border-radius: 3px;
         font-size: 12px;
         font-weight: bold;
     }
-    
-    h1 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    color: #333; /* 제목 색상 */
-    font-weight: bold;
-    padding-bottom: 10px; /* 제목과 선 사이의 여백 */
-    display: inline-block; /* 선의 길이를 제목의 길이에 맞추기 위해 인라인 블록 설정 */
-}
-
-    .change-info {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .arrow {
-        color: #333333; /* 화살표 색상 */
-        font-size: 0.8em;
-        margin: 0 5px;
-        margin-bottom: 0px;
-    }
-
-    #content {
-        max-height: 1000px;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto; /* Center the content */
-        padding: 0 15px;
-        padding-bottom: 180px; /* 버튼이 바닥에 붙지 않도록 여백 추가 */
-    }
 
     .search-form {
-        display: flex; /* 플렉스 컨테이너로 설정 */
+        display: flex;
         justify-content: center;
         gap: 10px;
         margin-bottom: 20px;
@@ -221,7 +200,7 @@
 
     .search-form button {
         width: 70px;
-        background-color: #333333;
+        background-color: #333;
         color: white;
         border: none;
         cursor: pointer;
@@ -229,30 +208,51 @@
     }
 
     .search-form button:hover {
-        background-color: #555555;
+        background-color: #555;
     }
 
-    /* 사이드바 기본 상태 */
-    #sidebar {
-        width: 230px; /* 사이드바의 너비 */
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        background-color: #333;
-        color: #fff;
-        transition: transform 0.3s ease; /* 이동 애니메이션 */
-        transform: translateX(-230\px); /* 사이드바가 기본적으로 왼쪽으로 숨겨져 있음 */
+    /* SweetAlert2 custom styles */
+    .swal2-popup {
+        font-family: 'Noto Sans KR', sans-serif;
+        background-color: #ffffff !important;
+        color: #333333 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     }
-    
-    #menu li {
-    margin: 15px 0; /* 메뉴 항목 사이의 간격 */
-}
 
-    /* 사이드바가 열릴 때 */
-    #sidebar.open {
-        transform: translateX(0);
+    .swal2-title {
+        font-size: 26px !important;
+        font-weight: bold !important;
     }
+
+    .swal2-confirm, .swal2-cancel {
+        font-size: 16px !important;
+        padding: 10px 20px !important;
+        border-radius: 5px !important;
+    }
+
+    .swal2-confirm {
+        background-color: #333333 !important;
+        color: white !important;
+        border: none !important;
+    }
+
+    .swal2-cancel {
+        background-color: #ffffff !important;
+        color: #333333 !important;
+        border: 2px solid #ddd !important;
+    }
+
+    .swal2-confirm:hover, .swal2-cancel:hover {
+        background-color: #555555 !important;
+        color: white !important;
+        border: 2px solid #555555 !important;
+    }
+
+    .swal2-cancel:hover {
+        color: #ffffff !important;
+    }
+
 </style>
 </head>
 <body>

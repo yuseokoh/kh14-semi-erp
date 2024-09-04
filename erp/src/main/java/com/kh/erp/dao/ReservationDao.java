@@ -110,10 +110,11 @@ public class ReservationDao {
 	        String column = pageVO.getColumn();
 
 	        String sql = "select * from (select rownum rn, TMP.* "
-	                    + " from (select * from reservation "
-	                    + " where instr(" + column + ", ?) > 0 "
-	                    + " order by calDate asc, stime asc, " + column + " asc, res_id asc) TMP) "
-	                    + " where rn between ? and ?";
+	                + " from (select * from reservation "
+	                + " where instr(" + column + ", ?) > 0 " 
+	                + " order by calDate asc, stime asc, " + column + " asc, res_id asc) TMP) "  // 정렬 기준에 컬럼을 직접 삽입
+	                + " where rn between ? and ?";
+
 
 	        Object[] data = {
 	            pageVO.getKeyword(), 

@@ -35,9 +35,9 @@
 
   <!-- jquery cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="checkbox.js"></script>
-  <script src="confirm-link.js"></script>
-  <script src="multipage.js"></script>
+  <script src="/js/checkbox.js"></script>
+  <script src="/js/confirm-link.js"></script>
+  <script src="/js/multipage.js"></script>
 
     <!-- summernote cdn -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
@@ -111,43 +111,6 @@ $(function(){
 });
      </script> 
 
-<script type="text/javascript">
-  //vs용 차트 
-  $(function(){
-            //차트를 그릴 대상 선택
-            var ctx = document.querySelector(".my-chart");
-            //차트 생성 코드
-            //new Chart(캔버스태그, {옵션객체});
-            new Chart(ctx, {
-                type: 'bar',//차트 유형(bar/pie/doughnut/line)
-                data: {//차트에 표시될 데이터
-
-                    //label은 차트에 표시되는 항목(x축)
-                    labels: ['재고', '관리', '그래프', '자리'],
-
-                    //실제로 차트에 표시될 값
-                    datasets: [
-                        {
-                            label: '재고 수',//범례
-                            data: [2, 2, 2, 1],//데이터
-                            borderWidth: 1//디자인 속성(테두리 두께)
-                        },
-                    ]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true//차트를 0부터 표기
-                        }
-                    }
-                }
-            });
-        });
- $(function(){
-     createChart("http://localhost:8080/rest/emp/status/hi",".emp-new-chart","입사자 수", "bar");
-    createChart("http://localhost:8080/rest/emp/status/bye",".emp-bye-chart","퇴사자 수", "bar");
-     });
-</script>
 
 </head>
 <body>  

@@ -122,7 +122,7 @@ $(document).ready(function() {
         <div class="modal2-content2">
             <span class="close">&times;</span>
             
-            <form  class="form2" action="resetPw" method="post">
+            <form  class="form2" action="resetPw" method="post" autocomplete="off">
                 <p class="title2">새 비밀번호 입력</p>
                 <p class="message2">새로운 비밀번호를 입력하세요.</p>
 					<input type="hidden" name=certEmail value="${certDto.certEmail}">

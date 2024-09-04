@@ -55,7 +55,7 @@
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+	<jsp:include page="/WEB-INF/views/template/header1000.jsp"></jsp:include>
     <!-- 자바스크립트 코드 작성 영역 -->
     <script type="text/javascript">
     </script>
@@ -393,7 +393,7 @@
 
 <body>
     <div class="container" style="margin-top: 100px">
-        <form class="form" action="login" method="post">
+        <form class="form" action="login" method="post" autocomplete="off">
             <p class="title">Login</p>
             <input placeholder="Username" class="username input" type="text" name="loginId">
             <input placeholder="Password" class="password input" type="password" name="password">
@@ -440,7 +440,7 @@
         </form>
 
         <!-- 회원가입-->
-        <form class="form1" action="join" method="post">
+        <form class="form1" action="join" method="post" autocomplete="off">
             <p class="title1">ERP </p>
             <p class="message1">ERP 가입을 위해 정보를 적으세요</p>
 

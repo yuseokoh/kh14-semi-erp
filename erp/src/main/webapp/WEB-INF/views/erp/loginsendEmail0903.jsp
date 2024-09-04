@@ -146,7 +146,7 @@ $(document).ready(function() {
         <div class="modal2-content2">
             <a href="/"><span class="close">&times;</span></a>
             
-            <form class="form2" action="findPw" method="post">
+            <form class="form2" action="findPw" method="post" autocomplete="off">
                 <p class="title2">비밀번호 찾기</p>
                 <p class="message2">비밀번호 찾기를 위해 정보를 입력하세요</p>
 

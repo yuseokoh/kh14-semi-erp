@@ -210,8 +210,8 @@ p{
 }
 </style>
     <!-- fullcalendar cdn-->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
   <!-- lightpick cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
   <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
@@ -422,7 +422,80 @@ p{
 
 
             <div class="row flex-box w-1200">
-                <div class="calendar w-80 center"></div>
+                 <!-- full Calendar -->
+                <div class="calendar w-80 center" id="calendar"></div>
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    // 서버에서 전달된 예약 데이터를 캘린더에 표시
+                    var allReservations = [];
+                    <c:forEach var="reservation" items="${allReservations}">
+                        allReservations.push({
+                            title: "${reservation.roomName}",
+                            start: "${reservation.calDate}T${reservation.stime}",
+                            end: "${reservation.calDate}T${reservation.etime}",
+                            extendedProps: {
+                                guestName: "${reservation.guestName}"
+                            }
+                        });
+                    </c:forEach>
+
+                    // FullCalendar 초기화
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        locale: 'ko',
+                        timeZone: 'Asia/Seoul',
+                        initialView: 'dayGridMonth',
+                        selectable: false, // 날짜 선택 비활성화
+                        validRange: {
+                            start: new Date().toISOString().split("T")[0]
+                        },
+                        events: allReservations,
+                        contentHeight: 'auto',
+                        aspectRatio: 2.0,
+                        displayEventTime: false,
+                        displayEventEnd: false,
+
+                        // Hover 이벤트 비활성화
+                        eventMouseEnter: function() {
+                            // 아무 작업도 하지 않음
+                        },
+                        eventMouseLeave: function() {
+                            // 아무 작업도 하지 않음
+                        },
+
+                        eventClick: function(info) {
+                            // 예약된 이벤트를 클릭하면 모달에 정보 표시
+                            $('#modalRoomName').text('회의실: ' + info.event.title);
+                            $('#modalGuestName').text('예약자: ' + info.event.extendedProps.guestName);
+                            $('#modalStartTime').text('시작 시간: ' + info.event.start.toISOString().slice(0, 16).replace('T', ' '));
+                            $('#modalEndTime').text('종료 시간: ' + info.event.end.toISOString().slice(0, 16).replace('T', ' '));
+
+                            // 모달 표시
+                            $('#reservationModal').show();
+                        }
+                    });
+
+                    calendar.render();
+
+                    // 모달 닫기 버튼
+                    $('#closeModal').click(function() {
+                        $('#reservationModal').hide();
+                    });
+                });
+
+
+				</script>
+				<!-- 예약 정보 모달 -->
+				<div id="reservationModal" style="display: none; position: fixed;
+				 top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; 
+				 padding: 20px; background-color: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); border-radius: 10px; z-index: 10000;">
+				    
+				    <p id="modalRoomName"></p>
+				    <p id="modalGuestName"></p>
+				    <p id="modalStartTime"></p>
+				    <p id="modalEndTime"></p>
+				    <button id="closeModal">닫기</button>
+				</div>
                 <div class="w-70 center"> 채팅?편지함?</div>
             </div>
             

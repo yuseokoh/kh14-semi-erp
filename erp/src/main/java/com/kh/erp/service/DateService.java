@@ -50,22 +50,20 @@ public class DateService {
 	}
 
 	public String TimeChangeIn(@RequestParam String loginId) {
-		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectOneById(loginId);
+		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectTodayRecordById(loginId);
 		if (tbEmpAttendanceDto != null) {
 			LocalDateTime dateTime = tbEmpAttendanceDto.getCheckInTime();
-			if (dateTime == null)
-				return "출근 필요";
 			// 원하는 형식으로 LocalDateTime을 String으로 변환
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM월dd일 HH시mm분ss초");
 			String formattedDateStr = dateTime.format(formatter);
 
 			return formattedDateStr;
 		} else
-			return null;
+			return "출근 필요";
 	}
 
 	public String TimeChangeOut(@RequestParam String loginId) {
-		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectOneById(loginId);
+		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectTodayRecordById(loginId);
 		if (tbEmpAttendanceDto != null) {
 			LocalDateTime dateTime = tbEmpAttendanceDto.getCheckOutTime();
 			if (dateTime == null)

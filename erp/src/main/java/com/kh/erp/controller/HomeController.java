@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kh.erp.dao.ReservationDao;
-import com.kh.erp.dao.TbEmpAttendanceDao;
 import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.ReservationDto;
 import com.kh.erp.dto.TbEmpDto;
@@ -18,35 +17,30 @@ import com.kh.erp.service.NameChangeService;
 
 import jakarta.servlet.http.HttpSession;
 
-
-
-
 @Controller
 public class HomeController {
 	@Autowired
 	private TbEmpDao tbEmpDao;
-	
-	@Autowired
-	private TbEmpAttendanceDao tbEmpAttendanceDao;
-	
+
 	@Autowired
 	private NameChangeService nameChangeService;
 	
 	@Autowired
-	private ReservationDao reservationDao;
+    private ReservationDao reservationDao;
 	
 	@Autowired
 	private DateService dateService;
-    // 로그인 페이지로 리디렉션
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String redirectToLogin() {
-        return "redirect:/tb/login";
-    }
 
-    // 홈 페이지로 접근할 수 있는 새 주소
-    @RequestMapping("/home")
-    public String home(HttpSession session,Model model) {
-    	String loginId = (String) session.getAttribute("createdUser");
+	// 로그인 페이지로 리디렉션
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String redirectToLogin() {
+		return "redirect:/tb/login";
+	}
+
+	// 홈 페이지로 접근할 수 있는 새 주소
+	@RequestMapping("/home")
+	public String home(HttpSession session, Model model) {
+		String loginId = (String) session.getAttribute("createdUser");
 		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
 		String inTime = dateService.TimeChangeIn(loginId);

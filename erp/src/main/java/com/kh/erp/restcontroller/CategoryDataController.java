@@ -25,7 +25,6 @@ public class CategoryDataController {
         try {
             // 모든 상품 조회
             List<ErdDto> allProducts = erdDao.selectList(); // 기존 메서드 사용
-
             // 카테고리별 수량 집계
             Map<String, Integer> categoryMap = new HashMap<>();
             for (ErdDto product : allProducts) {
@@ -33,7 +32,6 @@ public class CategoryDataController {
                 int quantity = product.getStockQuantity(); // 수량
                 categoryMap.put(category, categoryMap.getOrDefault(category, 0) + quantity);
             }
-
             // Map을 JSON으로 변환하여 반환
             return categoryMap;
         } catch (Exception e) {

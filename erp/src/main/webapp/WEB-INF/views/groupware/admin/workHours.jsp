@@ -216,26 +216,17 @@
 	<div id="content">
 		<main id="body">
 			<div id="content">
-				<div class="container w-1200">
+				<div class="container w-800">
 					<div class="row attendance">
-						<div class="actions">
-							<select class="row actions1" style="flex-grow: 1;">
-								<option value="">전체</option>
-								<option value="">무엇을</option>
-								<option value="">검색</option>
-								<option value="">해야하나</option>
-							</select>
-							<div class="row search" style="flex-grow: 1;">
-								<input class="row" />
-							</div>
-							<button type="button" class="search button" style="flex-grow: 1;">검색</button>
-						</div>
-
 						<!-- Calendar container -->
 						<div class="calendar-header" style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-							<button class="button" id="prevBtn" style="margin: 0 5px;"><i class="fa-solid fa-chevron-left"></i></button>
-							<h2 id="calendarTitle" style="margin: 0 10px; font-size: 1.5em;"></h2>
-							<button class="button" id="nextBtn" style="margin: 0 5px;"><i class="fa-solid fa-chevron-right"></i></button>
+							<button class="button" id="prevBtn" style="margin: 0 5px;">
+								<i class="fa-solid fa-chevron-left"></i>
+							</button>
+							<h2 id="calendarTitle" style="margin: 0 10px; font-size: 1.5em; display:none;"></h2>
+							<button class="button" id="nextBtn" style="margin: 0 5px;">
+								<i class="fa-solid fa-chevron-right"></i>
+							</button>
 						</div>
 					</div>
 					<hr class="row mt-15 mb-50">
@@ -244,59 +235,123 @@
 						<table class="tb">
 							<thead>
 								<tr>
-									<th>사원이름</th>
-									<th>이름</th>
-									<th>날짜</th>
-									<th>시간</th>
-									<th>총 근무 시간</th>
+									<th>사원ID</th>
+									<th>월간 근무한 일 수</th>
+									<th>월간 근무 날짜</th>
+									<th>총 근무 시간(hh:mm:ss)</th>
 								</tr>
 							</thead>
 							<tbody class="tbody">
-								<!-- Data will be dynamically inserted here -->
+								<c:choose>
+									<c:when test="${list.isEmpty()}">
+										<tr class="row center">
+											<td colspan="4">결과가 존재하지 않습니다</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="AttendanceSummaryVO" items="${list}">
+											<tr class="center">
+												<td>${AttendanceSummaryVO.loginID}</td>
+												<td>${AttendanceSummaryVO.daysWorked}</td>
+												<td>
+													<table style="all: unset; border: none;">
+														<tbody>
+															<c:forEach var="day" items="${AttendanceSummaryVO.checkInDates}">
+																<tr>
+																	<td style="padding: 4px;">${day}</td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
+												</td>
+												<td>${AttendanceSummaryVO.totalWorkTime}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 					</div>
+					<div class="row center">
+						<jsp:include page="/WEB-INF/views/template/navigator4.jsp"></jsp:include>
+					</div>
 				</div>
+
+
 			</div>
 		</main>
 </body>
 <!-- JavaScript Code -->
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.createElement('div');
-    calendarEl.style.display = 'none'; // Hide the calendar container
-    document.body.appendChild(calendarEl);
+		const calendarEl = document.createElement('div');
+		calendarEl.style.display = 'none'; // Hide the calendar container
+		document.body.appendChild(calendarEl);
 
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: false, // Disable default header
-        initialView: 'dayGridMonth',
-        datesSet: function(info) {
-            updateTitle(info.view.currentStart);
-        }
-    });
+		const calendar = new FullCalendar.Calendar(calendarEl, {
+			headerToolbar : false, // Disable default header
+			initialView : 'dayGridMonth',
+			datesSet : function(info) {
+				updateTitle(info.view.currentStart);
+			}
+		});
 
-    // Initial title update
-    updateTitle(calendar.view.currentStart);
+		// Initial title update
+		updateTitle(calendar.view.currentStart);
 
-    // Custom button functionality
-    document.getElementById('prevBtn').addEventListener('click', function() {
-        calendar.prev();
-        updateTitle(calendar.getDate()); // Update title after navigation
-    });
+		// Custom button functionality
+		document.getElementById('prevBtn').addEventListener('click',
+				function() {
+					calendar.prev();
+					const currentDate = calendar.getDate(); // 현재 날짜 객체를 얻습니다
+					const month = currentDate.getMonth()+1; // 월은 0부터 시작하므로 1을 추가합니다.
+					const year = currentDate.getFullYear();
+					console.log(month);
+					console.log(year);
+					if (month == null || year == null) {
+						const newUrl = new URL(
+								window.location.href.split('?')[0]);
+						console.log(newUrl);
+						window.location.href = newUrl.toString();
+					} else {
+						const newUrl = new URL(
+								window.location.href.split('?')[0]);
+						newUrl.searchParams.set('tbmonth', month);
+						newUrl.searchParams.set('tbyear', year);
+						// Reload the page with the new URL
+						window.location.href = newUrl.toString();
+					}
+				});
 
-    document.getElementById('nextBtn').addEventListener('click', function() {
-        calendar.next();
-        updateTitle(calendar.getDate()); // Update title after navigation
-    });
+		document.getElementById('nextBtn').addEventListener(
+				'click',
+				function() {
+					calendar.next();
+					// 현재 날짜를 가져오고 연도와 월 추출
+					const currentDate = calendar.getDate(); // 현재 날짜 객체를 얻습니다
+					const month = currentDate.getMonth(); // 월은 0부터 시작하므로 1을 추가합니다.
+					const year = currentDate.getFullYear();
+					if (month == null || year == null) {
+						const newUrl = new URL(
+								window.location.href.split('?')[0]);
+						window.location.href = newUrl.toString();
+					} else {
+						const newUrl = new URL(
+								window.location.href.split('?')[0]);
+						newUrl.searchParams.set('tbmonth', month);
+						newUrl.searchParams.set('tbyear', year);
+						// Reload the page with the new URL
+						window.location.href = newUrl.toString();
+					}
 
-    function updateTitle(date) {
-        const month = date.getMonth() + 1; // Months are zero-based, so add 1
-        const year = date.getFullYear();
-        document.getElementById('calendarTitle').innerText = year + "년 " + month + "월";
-        console.log(month);
-        console.log(year);
-    }
-});
+				});
 
+		function updateTitle(date) {
+			const month = date.getMonth() + 1; // Months are zero-based, so add 1
+			const year = date.getFullYear();
+			document.getElementById('calendarTitle').innerText = year + "년 "
+					+ month + "월";
+		}
+	});
 </script>
 </html>

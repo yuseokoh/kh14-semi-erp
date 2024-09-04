@@ -2,12 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+    
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트 최종 폼</title>
+    <title>공지사항 상세보기</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,44 +23,38 @@
      <!-- 프로젝트 스타일 --> 
      <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
      <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-     <link rel="stylesheet" type="text/css" href="/css/notic.css">
-     <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
+     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
+     <link rel="stylesheet" type="text/css" href="/css/vacation.css">
      <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-
-
     <style>
-                .btn-write {
-            background-color: #99c2ff !important;
-            color: white;
-            border-radius: 0.2em;
-            border: 1px solid #cde1ff !important;
+        .title1{
+           width: 60% !important;
+           height: 40px;
+           margin-right: 40%;
+        }
+        .title2{
+            border: 1px solid;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    padding: .60rem 1.25rem;
+    background-color: gainsboro;
+    border-color: #fff;
+    color: #495057;
+    font-weight: 800;
+    text-align: center !important;
+    width: 98%; 
+    box-sizing: border-box;
         }
 
-        .btn-write:hover {
-    background-color: #dde6f3 !important;
-    color: #66a2fc; 
-}
-
-.btn-delete {
-            background-color: #d63031 !important;
-            color: white;
-            border-radius: 0.2em;
-            border: 1px solid #cde1ff !important;
+        .readonly{
+            background-color: #f0f0f0; 
+           border: 1px solid #ccc;
+           pointer-events: none;
         }
-
-        .btn-delete:hover {
-    background-color: #ff7675 !important;
-    color: black; 
-}
-
-
     </style>
-
-
-
   <!-- lightpick cdn -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
   <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
@@ -73,7 +68,16 @@
   <!-- 프로젝트 js-->
 <script src="/js/gotoworkbtn.js"></script>
 <script src="/js/menuToggle.js"></script>
+<script src="/js/delete.js"></script>
+  <!-- chart js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- 자바스크립트 코드 작성 영역 -->
+  <script type="text/javascript">
 
+    </script>
+
+</head>
 <body>  
     <header id="header">
         <div id="menuToggle"><i class="fa fa-bars"></i></div>
@@ -90,13 +94,7 @@
         <nav id="menu">
             <div class="container">
 
-   <!-- 이미지? -->
-        
-
-<!-- 여기까지 이미지?-->
-
-
-				<!--출퇴근-->
+				<!-- 출퇴근 -->
 				<div id="commute-wrap">
 					<div id="date-wrap">
 						<span id="cur-date"></span><br>
@@ -120,8 +118,6 @@
 			</div>
 		</div>
 		<!-- 출퇴근 여기까지-->
-
-
 
                 <!-- 사이드바-->
                 <div class="row">
@@ -184,84 +180,47 @@
     </aside>
     
     <div id="content">
-        
        <main id="body"> 
            <div id="content">
 
 
-
+        <!-- 공지사항 상세보기 -->
         <body>
-            <div class="noticbox w-1200">
-
-
-
-
-<div class="container w-800 my-50">
-        <div class="row center">
-            <h1>사원 조회</h1>
-        </div>
-
-<!-- 검색창 -->
-<form action="list" method="get" autocomplete="off">
-    <div class="row">
-        <select name="column" class="field">
-            <option value="name" <c:if test="${param.column == 'name'}">selected</c:if>>사원명</option>
-            <option value="emp_dept" <c:if test="${param.column == 'emp_dept'}">selected</c:if>>부서</option>
-        </select>
-        <input type="text" name="keyword" value="${param.keyword}" class="field">
-        <button class="btn btn-neutral">검색</button>
-    </div>
-</form>
-<!-- 결과 화면 -->
-    <div class="tb-box">
-        <table class="tb">
-            <thead>
-                <tr>
-                	<th>사진</th>
-                    <th>사원명</th>
-                    <th>이메일</th>
-                    <th>직급</th>
-                    <th>부서</th>
-                    <th>입사일</th>
-                </tr>
-            </thead>
-            <tbody class="tbody">
-                <c:choose>
-                    <c:when test="${list.isEmpty()}">
-                        <%-- 결과가 없을 때 --%>
-                        <tr>
-                            <td colspan="5">결과가 존재하지 않습니다</td>
-                        </tr>
-                    </c:when>
-                    <c:otherwise>
-                        <%-- 결과가 있을 때 --%>
-                        <c:forEach var="tbEmpDto" items="${list}">
-                        <tr class="row center">
-                        	<td><img src="/tb/myImage?loginId=${tbEmpDto.loginId}" width="25"></td>
-                            <td>
-                                <a href="/tb/mypage?loginId=${tbEmpDto.loginId}">
-                                    ${tbEmpDto.name}
-                                </a>
-                            </td>
-                            <td>${tbEmpDto.empEmail}</td>
-                            <td>${tbEmpDto.empLevel}</td>
-                            <td>${tbEmpDto.empDept}</td>
-                            <td>
-                                ${tbEmpDto.empSdate}
-                            </td>
-                        </tr>
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
-                
-            </tbody>
-        </table>
-
-    </div>
-
-    <!-- 네비게이터 추가 -->
-<jsp:include page="/WEB-INF/views/template/navigator.jsp"></jsp:include>
-    </div>
+        	<form action="noticDetail" method="post" autocomplete="off">
+            <div class="container w-900">
+                <div class="title2">공지사항 상세보기</div>
+        
+                <div class="table-container">
+                    <table class="table form">
+                    </table>
+                </div>
+        
+                <div class="row flex-box" style="margin-top: 20px;">
+                        <div>
+                            <label>제목</label>
+                            <input type="text" class="form title1 readonly" name="noticeTitle">
+                        </div>
+                </div>
+                <div class="row flex-box" style="margin-top: 20px;">
+                    <div>
+                        <label>작성자</label>
+                        <input type="text" class="form w-20 readonly" name="noticeWriter">
+                    </div>
+            </div>
+           
+                <div class="row flex-box "  style="position: relative; margin-top: 50px;">
+                    <div>
+                        <label></label>
+                        <textarea class="field w-100 form readonly"  rows="3" style="padding-right: 100px;" name="noticeCont"></textarea>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </form>
+        </body>
     
-
-
+    <!-- 이곳에서부터 <footer>  -->
+    </div>
+</main>
+</body>
+</html>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 링크받고 넘어온 페이지</title>
     <!-- 헤더 포함 -->
-    <iframe src="header.html" style="border: none; width: 100%; height: auto;"></iframe>
+    <jsp:include page="/WEB-INF/views/template/header999.jsp"></jsp:include>
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,19 +23,19 @@
     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./attendancemystatus.css"> -->
-    <link rel="stylesheet" type="text/css" href="./commons.css">
+    <link rel="stylesheet" type="text/css" href="/css/commons.css">
     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./gotowork.css"> -->
-    <link rel="stylesheet" type="text/css" href="./join.css">
-    <link rel="stylesheet" type="text/css" href="./join2.css">
-    <link rel="stylesheet" type="text/css" href="./login.css">
-    <link rel="stylesheet" type="text/css" href="./modal.css">
-    <link rel="stylesheet" type="text/css" href="./modal2.css">
+    <link rel="stylesheet" type="text/css" href="/css/join.css">
+    <link rel="stylesheet" type="text/css" href="/css/join2.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="/css/modal2.css">
     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./sidebar.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
-    <link rel="stylesheet" type="text/css" href="./alertBtn.css">
+    <link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
    <style>
 .a1 {
     display: flex; 
@@ -82,7 +82,7 @@
     <!-- <script src="gotoworkbtn.js"></script> -->
     <!-- <script src="menuToggle.js"></script> -->
     <!-- <script src="delete.js"></script> -->
-    <script src="modal.js"></script>
+    <script src="/js/modal.js"></script>
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -121,7 +121,7 @@ $(document).ready(function() {
                        confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
                    }
                });
-   
+   			
                // 첫 번째 알림창의 "확인" 버튼 클릭 시 두 번째 알림창 표시
                if (result.isConfirmed) {
                    await Swal.fire({
@@ -144,9 +144,9 @@ $(document).ready(function() {
     <!-- 모달 창 구조 -->
     <div id="myModal2" class="modal2">
         <div class="modal2-content2">
-            <span class="close">&times;</span>
+            <a href="/"><span class="close">&times;</span></a>
             
-            <form  class="form2" action="#" method="post">
+            <form class="form2" action="findPw" method="post">
                 <p class="title2">비밀번호 찾기</p>
                 <p class="message2">비밀번호 찾기를 위해 정보를 입력하세요</p>
 
@@ -156,16 +156,16 @@ $(document).ready(function() {
                 </label>
 
                 <label>
-                    <input class="input2" type="email" name="empEmail" placeholder="" required="">
+                    <input class="input2" type="email" name="EmpEmail" placeholder="" required="">
                     <span class="span2">이메일</span>
                 </label>
 
-               <a href="#" class="a1" onclick="showAlert()" >Send Email</a>
+               <button class="a1" onclick="showAlert()" type="submit" >Send Email</button>
                
+			    </form>
             </div>
         </div>
         
-    </form>
 
 </body>
 

@@ -214,24 +214,7 @@ p {
 	border-radius: 5px;
 }
 </style>
-<!-- fullcalendar cdn-->
-<script
-	src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<script
-	src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
-<!-- lightpick cdn -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
-<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
-<!-- jquery cdn -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="checkbox.js"></script>
-<script src="confirm-link.js"></script>
-<!-- <script src="multipage.js"></script> -->
-<!-- 프로젝트 js-->
+
 <script src="/js/gotoworkbtn.js"></script>
 <script src="/js/menuToggle.js"></script>
 <script src="/js/delete.js"></script>
@@ -343,118 +326,6 @@ p {
 					</div>
 				</div>
 			</div>
-			</div>
-			<!-- 출퇴근 여기까지-->
 
-			<!-- 사이드바-->
-			<div class="row">
-				<ul class="menu-hover-fill">
-					<li><a href="/home" data-text="home">HOME</a></li>
-
-					<li><a href="/poketmon/list" data-text=""> <i
-							class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
-					</a>
-						<ul>
-							<li><a
-								href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-							<li><a
-								href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-						</ul></li>
-
-					<li><a href="/emp/list" data-text=""> <i
-							class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
-
-					<li><a href="/book/list" data-text=""> <i
-							class="fa-solid fa-people-group"></i> 인사관리(book)
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
-
-					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}"
-						data-text=""> <i class="fa-solid fa-id-card"></i> mypage
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
-
-					<li><a href="/board/list" data-text=""> <i
-							class="fa-solid fa-comment"></i> 예비용
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
-
-					<c:if test="${sessionScope.userType == 'A'}">
-						<li><a href="/admin/home" data-text=""> <i
-								class="fa-solid fa-gears"></i> 관리자
-						</a></li>
-					</c:if>
-
-					<li><a href="/tb/logout" data-text=""> <i
-							class="fa-solid fa-power-off"></i> 로그아웃
-					</a></li>
-				</ul>
-			</div>
-			</div>
-		</nav>
-	</aside>
-
-	<div id="content" style="margin-top: 200px;">
-		<main id="body">
-			<!-- <div id="content" style="margin-top: 200px;"> -->
-			<!-- 여기서부터 메인 화면의 콘텐츠가 시작됩니다. -->
-			<h2>${tbEmpDto.name}님환영합니다 일하십쇼</h2>
-			<p></p>
-
-			<div class="row flex-box w-1200">
-				<div class="w-50 center">
-					<canvas id="barChart"></canvas>
-				</div>
-				<div class="w-50 center">
-					<div class="card">
-						<div class="card-inner">
-							<div class="card-front">
-								<img class="target" src="https://picsum.photos/500/300"
-									alt="Front Image" style="width: 570px; height: 300px;">
-							</div>
-							<div class="card-back">
-								<div class="info-item">
-									<i class="fa-solid fa-user-pen"></i> <span>이름: </span>${tbEmpDto.name}</div>
-								<div class="info-item">
-									<i class="fa-solid fa-clipboard-user"></i> <span class="span1">직급:
-									</span>${tbEmpDto.empLevel}</div>
-								<div class="info-item">
-									<i class="fa-solid fa-people-group"></i> <span>부서: </span>${tbEmpDto.empDept}</div>
-								<div class="info-item">
-									<i class="fa-regular fa-clock"></i> <span class="span2">출근시간:
-									</span> ${inTime}
-								</div>
-								<div class="info-item">
-									<i class="fa-solid fa-clock"></i> <span class="span2">퇴근시간:
-									</span> ${outTime}
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-
-
-			<div class="row flex-box w-1200">
-				<div class="calendar w-80 center"></div>
-				<div class="w-70 center">채팅?편지함?</div>
-			</div>
-	</div>
-	</main>
 </body>
 </html>

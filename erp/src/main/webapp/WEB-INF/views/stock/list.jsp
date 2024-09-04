@@ -40,6 +40,11 @@
 
 
 <style>
+
+	 #sidebar {
+        width: 212px; /* 사이드바 너비를 300px로 설정 */
+        }
+        
     body {
         margin-bottom: 200px;
         font-family: 'Noto Sans KR', sans-serif;
@@ -252,6 +257,8 @@
     .swal2-cancel:hover {
         color: #ffffff !important;
     }
+    
+    
 
 </style>
 </head>

@@ -272,7 +272,7 @@
                            <div class="flex-box ">
                                <div class="row left">
                                    <button type="button" class="btn btn-write " ><a class="a1" href="insert">예약 추가</a></button>
-                                   <button type="button" class="btn btn-write " ><a class="a1" href="insert">예약 수정</a></button>
+                                   <button type="button" class="btn btn-write " ><a class="a1" href="edit">예약 수정</a></button>
                                </div>
                                <div class="row center">
 			                    <!-- 페이지 네비게이션 처리 -->

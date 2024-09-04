@@ -258,7 +258,7 @@ public class TbEmpController {
 	        model.addAttribute("tbEmpDto",tbEmpDto);
 	        List<ReservationDto> allReservations = reservationDao.selectAllReservations();
 	        model.addAttribute("allReservations", allReservations);
-	        return "/WEB-INF/views/erp/mian8292.jsp";
+	        return "/WEB-INF/views/erp/main1.jsp";
 	    }
 	
 }

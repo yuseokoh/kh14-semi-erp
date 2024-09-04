@@ -294,42 +294,12 @@
             <div id="content">
 
 
-
-				<!-- 휴가 신청서 작성 -->
-				<body>
-					<div class="container w-900">
-						<div class="title">휴가신청서</div>
-						<div class="table-container">
-							<table class="table">
-								<label>결재자</label>
-								<thead>
-									<tr>
-										<th>직급</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>서명칸</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="row">
-							<label>제목</label> <input type="text" class="form title1" name="vacaTitle">
-						</div>
-						<div class="row">
-							<div class="row">
-								<label>사원명</label> <input type="text" class="filed form disabled" name="applicantId" value="${tbEmpDto.name}" readonly>
-							</div>
-						</div>
-
                 <!-- 휴가 신청서 작성 -->
 
                 <body>
                     <form action="insert" method="post" autocomplete="off" class="check-form">
                         <div class="container w-900">
                             <div class="title">휴가신청서</div>
-
 
                             <div class="table-container">
                                 <table class="table">
@@ -375,17 +345,6 @@
                                 </div>
                             </div>
 
-
-						<div class="row flex-box" style="position: relative;">
-							<div>
-								<label>휴가 사유</label>
-								<textarea class="field w-100 form" rows="3" style="padding-right: 100px;" name="vacaReason"></textarea>
-								<button type="submit" class="btn btn-positive">휴가신청</button>
-							</div>
-						</div>
-					</div>
-				</body>
-
                             <div class="row flex-box">
                                 <div class="w-50">
                                     <label>휴가 시작일</label> <input type="text" class="field w-100 test7-1 form" name="vacaSdate">
@@ -405,7 +364,6 @@
                                     </select>
                                 </div>
                             </div>
-
 
                             <div class="row flex-box" style="position: relative;">
                                 <div>

@@ -10,11 +10,6 @@ $(function() {
             var checkInTime = response.checkInTime;
             var checkOutTime = response.checkOutTime;
 
-            // 콘솔에 출력 --> 내일은 꼭 지울것!
-            console.log('Login ID:', loginId);
-            console.log('Check In Time:', checkInTime);
-            console.log('Check Out Time:', checkOutTime);
-			console.log('서버 응답:', response);
 
             // 출근 및 퇴근 버튼 상태 업데이트
             if (checkInTime) {

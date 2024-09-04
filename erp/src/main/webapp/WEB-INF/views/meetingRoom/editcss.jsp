@@ -32,11 +32,11 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 <!-- my css -->
-<link rel="stylesheet" type="text/css" href="/css/commons.css">
+<link rel="stylesheet" type="text/css" href="./commons.css">
 <!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
-<link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-<link rel="stylesheet" type="text/css" href="/css/vacation.css">
-<link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
+<link rel="stylesheet" type="text/css" href="./sidebar.css">
+<link rel="stylesheet" type="text/css" href="./vacation.css">
+<link rel="stylesheet" type="text/css" href="./alertBtn.css">
 <style>
 /* From Uiverse.io by mi-series */ 
 .container1 {
@@ -162,7 +162,7 @@
 
 
 </style>
-<link rel="stylesheet" type="text/css" href="/css/gotowork.css">
+
 <!-- lightpick cdn -->
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -173,9 +173,9 @@
 <!-- jquery cdn -->
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/js/checkbox.js"></script>
-<script src="/js/confirm-link.js"></script>
-<script src="/js/multipage.js"></script>
+<script src=".checkbox.js"></script>
+<script src=".confirm-link.js"></script>
+<script src=".multipage.js"></script>
 
     <!-- fullcalendar cdn-->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
@@ -186,13 +186,13 @@
   <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
   <!-- jquery cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="/js/checkbox.js"></script>
-  <script src="/js/confirm-link.js"></script>
+  <script src="./checkbox.js"></script>
+  <script src="./confirm-link.js"></script>
   <!-- <script src="multipage.js"></script> -->
   <!-- 프로젝트 js-->
-<script src="/js/gotoworkbtn.js"></script>
-<script src="/js/menuToggle.js"></script>
-<script src="/js/delete.js"></script>
+<script src="./gotoworkbtn.js"></script>
+<script src="./menuToggle.js"></script>
+<script src="./delete.js"></script>
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -337,88 +337,67 @@
             </a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
         </div>
     </header>
+
     <aside id="sidebar">
         <nav id="menu">
             <div class="container">
-                <!-- 출퇴근 -->
-				<div id="commute-wrap">
-					<div id="date-wrap">
-						<span id="cur-date"></span><br>
-						<span id="cur-time"></span>
-					</div>
-					<div id="start-time">
-						<i>출근 시간</i>
-						<!-- 출근 여부에 따른 표시 -->
-						<span id="start-time-display">미등록</span>
-					</div>
-					<div id="end-time">
-						<i>퇴근 시간</i>
-						<!-- 퇴근 여부에 따른 표시 -->
-						<span id="end-time-display">미등록</span>
-					</div>
-					<div id="attendance-btns">
-						<button id="start-btn" class="on">출근</button>
-						<button id="end-btn" class="on">퇴근</button>
-					</div>
-				</div>
-			</div>
-		</div>
+                <div class="row center">
+                    <h1>ERP</h1>
+                </div>
 
-                <!-- 사이드바-->
                 <div class="row">
                     <ul class="menu-hover-fill">
-                        <li><a href="/home" data-text="home">HOME</a></li>
+                        <li><a href="/" data-text="home">HOME</a></li>
 
-                        <li><a href="/poketmon/list" data-text="">
-                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
-                            <ul>
-                                <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-                                <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-                            	<li><a href="/res/list">회의실 예약</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/emp/list" data-text="">
-                            <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
+                        <li><a href="/poketmon/list" data-text=""> <i
+                                class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
+                        </a>
                             <ul>
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
+                            </ul></li>
 
-                        <li><a href="/book/list" data-text="">
-                            <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
+                        <li><a href="/emp/list" data-text=""> <i
+                                class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
+                        </a>
                             <ul>
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
+                            </ul></li>
 
-                        <li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text="">
-                            <i class="fa-solid fa-id-card"></i> mypage</a>
+                        <li><a href="/book/list" data-text=""> <i
+                                class="fa-solid fa-people-group"></i> 인사관리(book)
+                        </a>
                             <ul>
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
+                            </ul></li>
 
-                        <li><a href="/board/list" data-text="">
-                            <i class="fa-solid fa-comment"></i> 예비용</a>
+                        <li><a href="/member/mypage" data-text=""> <i
+                                class="fa-solid fa-id-card"></i> mypage
+                        </a>
                             <ul>
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
+                            </ul></li>
 
-                        <c:if test="${sessionScope.userType == 'A'}">
-                            <li><a href="/admin/home" data-text="">
-                                <i class="fa-solid fa-gears"></i> 관리자</a>
-                            </li>
+                        <li><a href="/board/list" data-text=""> <i
+                                class="fa-solid fa-comment"></i> 예비용
+                        </a>
+                            <ul>
+                                <li><a href="#">서브메뉴1</a></li>
+                                <li><a href="#">서브메뉴2</a></li>
+                            </ul></li>
+
+                        <c:if test="${sessionScope.createdLevel == '관리자'}">
+                            <li><a href="/admin" data-text=""> <i
+                                    class="fa-solid fa-gears"></i> 관리자
+                            </a></li>
                         </c:if>
 
-                        <li><a href="/tb/logout" data-text="">
-                            <i class="fa-solid fa-power-off"></i> 로그아웃</a>
-                        </li>
+                        <li><a href="/logout" data-text=""> <i
+                                class="fa-solid fa-power-off"></i> 로그아웃
+                        </a></li>
                     </ul>
                 </div>
             </div>
@@ -431,11 +410,11 @@
                
             <section class="container1">
                 <header>예약수정 본인확인</header>
-                <form class="form"  action="edit" method="post">
+                <form class="form"  action="insert" method="post">
                     
                     <div class="input-box">
                         <label>예약 번호 </label>
-                        <input type="text" name="resId"> <br>
+                        <input type="text" name="guestName"> <br>
                     </div>
 
                     <div class="input-box">
@@ -446,7 +425,7 @@
 
    
 
-                    <button type="submit">Submit</button>
+                    <button type="button" onclick="showAlert()">Submit</button>
                 </form>
               </section>
         </main>

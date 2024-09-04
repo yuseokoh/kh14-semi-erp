@@ -206,7 +206,7 @@
     <div class="row">
         <select name="column" class="field">
             <option value="name" <c:if test="${param.column == 'name'}">selected</c:if>>사원명</option>
-            <option value="emp_dept" <c:if test="${param.column == 'emp_dept'}">selected</c:if>>부서</option>
+            <option value="emp_level" <c:if test="${param.column == 'emp_level'}">selected</c:if>>직급</option>
         </select>
         <input type="text" name="keyword" value="${param.keyword}" class="field">
         <button class="btn btn-neutral">검색</button>

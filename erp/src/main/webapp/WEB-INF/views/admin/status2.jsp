@@ -35,6 +35,7 @@
 <script src="/js/confirm-link.js"></script>
 <script src="/js/multipage.js"></script>
 
+
 <!-- summernote cdn -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
@@ -105,7 +106,12 @@ $(function(){
     createChart("http://localhost:8080/rest/emp/status/hi",".emp-new-chart","입사자 수", "bar");
     createChart("http://localhost:8080/rest/emp/status/bye",".emp-bye-chart","퇴사자 수", "bar");
 });
+<<<<<<< HEAD
      </script>
+=======
+     </script> 
+
+>>>>>>> refs/remotes/origin/main
 
 </head>
 <body>

@@ -67,27 +67,22 @@ public class ReservatoinController {
 
 
 	// 예약 취소
-	@GetMapping("/delete")
-	public String delete() {
-		return "/WEB-INF/views/meetingRoom/deleteChk.jsp";
-	}
 	
-	@PostMapping("/delete")
-	public String delete(@RequestParam("inputPw") int inputPw, 
-			@ModelAttribute ReservationDto reservationDto, Model model) {
-	    
-	    int dbPw = reservationDao.myPw(reservationDto.getResId());
-	    if (dbPw != inputPw) {
-	        model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
-	        System.out.println("비밀번호가 일치하지 않습니다");
-	        return "redirect:list"; 
+	@RequestMapping("/delete")
+	public String delete(@RequestParam(value = "resIds", required = false) List<Integer> resIds, Model model) {
+	    if (resIds != null && !resIds.isEmpty()) {
+	        System.out.println("Received IDs: " + resIds);  // 수신된 ID를 콘솔에 출력
+	        for (Integer resId : resIds) {
+	            reservationDao.delete(resId);
+	        }
+	    } else {
+	        System.out.println("No IDs received");
 	    }
-	    
-	    reservationDao.delete(reservationDto.getResId());
-	    reservationDto.setResYN("대여가능");
-	    
 	    return "redirect:list";
 	}
+
+
+
 
 	// ---------------
 	// 예약 수정

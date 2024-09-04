@@ -19,6 +19,8 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 <title>leave form</title>
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- google font cdn -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,7 +110,31 @@
 
 <!-- 자바스크립트 코드 작성 영역 -->
 <script type="text/javascript">
-
+function showDeleteConfirmation() {
+    Swal.fire({
+        title: '취소 하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true, 
+        confirmButtonColor: '#3085d6', 
+        cancelButtonColor: '#d33', 
+        confirmButtonText: '네, 취소하겠습니다!',
+        cancelButtonText: '아니요!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                '취소완료!',
+                '',
+                'success'
+            );
+        } else {
+            Swal.fire(
+                'Cancelled',
+                '',
+                'error'
+            );
+        }
+    });
+}
 
 </script>
 
@@ -186,6 +212,7 @@
 					</a>
 					</li>
 
+<<<<<<< HEAD
 					<c:if test="${sessionScope.userType == 'A'}">
 						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
 						</a>
@@ -196,6 +223,18 @@
 								<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
 							</ul></li>
 					</c:if>
+=======
+						<c:if test="${sessionScope.createdLevel == '관리자'}">
+                            <li><a href="/admin" data-text=""> <i
+                                    class="fa-solid fa-gears"></i> 관리자
+                            </a></li>
+                        </c:if>
+                        <%-- <c:if test="${sessionScope.userType == 'A'}">
+                            <li><a href="/admin/home" data-text="">
+                                <i class="fa-solid fa-gears"></i> 관리자</a>
+                            </li>
+                        </c:if> --%>
+>>>>>>> refs/remotes/origin/main
 
 					<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
 					</a></li>
@@ -208,56 +247,56 @@
     <div id="content" style="margin-top : 200px;">
         <main id="body">
        
+<!-- 회의실 예약 목록 -->
+<body>
+    <div class="noticbox w-1200">
+        <!-- 검색 폼 -->
+        <form id="searchForm" action="list" method="get" autocomplete="off">
+            <div class="row notice">
+                <div class="row noticname">회의실 예약</div>
+                <div class="actions" name="column">
+                    <select class="row actions1" name="column" style="flex-grow: 1;">
+                        <option value="guest_name">예약자 이름</option>
+                        <option value="room_name">회의실 이름</option>
+                    </select>
+                    <div class="row search" style="flex-grow: 1;">
+                        <input type="text" name="keyword" class="row" placeholder="검색어를 입력하세요">
+                    </div>
+                    <button type="submit" class="search button" style="flex-grow: 1;">검색</button>
+                </div>
+            </div>
+        </form>
 
-            <!-- 회의실 예약 목록 -->
-            <body>
-                <div class="noticbox w-1200">
-
-                    <form id="searchForm" action="list" method="get" autocomplete="off">
-
-
-                    <div class="row notice">
-                           <div class="row noticname">회의실 예약</div>
-                           <div class="actions" name="column">
-                               <select class="row actions1" style="flex-grow: 1;">
-                                <option value="guest_name">예약자 이름</option>
-                                <option value="room_name">회의실 이름</option>
-                               </select>
-                               <div class="row search" style="flex-grow: 1;">
-                                <input type="text" name="keyword" class="row">
-                               </div>
-                               <button type="submit" class="search button" style="flex-grow: 1;">검색</button>
-                           </div>
-                       </div>
-               
-               
-                       <div class="tb-box">
-                           <table class="">
-                               <thead>
-                                   <tr>
-                                    <th>예약 ID</th>
-                                    <th>회의실 이름</th>
-                                    <th>예약자 이름</th>
-                                    <th>대여 상태</th>
-                                    <th>예약 시간</th>
-                                   </tr>
-                               </thead>
-                               <tbody class="tbody">
-                                <c:forEach var="reservation" items="${list}">
-                                <tr data-room-id="${reservation.roomId}"
-                                    data-cal-date="${reservation.calDate}"
-                                    data-stime="${reservation.stime}"
-                                    data-etime="${reservation.etime}">
-                                    <td>${reservation.resId}</td>
-                                    <td>${reservation.roomName}</td>
-                                    <td>${reservation.guestName}</td>
-                                    <td>${reservation.resYN}</td>
-                                    <td>[${reservation.calDate}] ${reservation.stime} ~
-                                        ${reservation.etime}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+        <!-- 삭제 폼 -->
+        <form id="reservationForm" action="delete" method="post">
+            <div class="tb-box">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 3%;">선택</th>
+                            <th>예약 ID</th>
+                            <th>회의실 이름</th>
+                            <th>예약자 이름</th>
+                            <th>대여 상태</th>
+                            <th>예약 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody">
+                        <c:forEach var="reservation" items="${list}">
+                            <tr data-room-id="${reservation.roomId}"
+                                data-cal-date="${reservation.calDate}"
+                                data-stime="${reservation.stime}"
+                                data-etime="${reservation.etime}">
+                                <td><input type="checkbox" name="resIds" value="${reservation.resId}" class="check-item"></td>
+                                <td>${reservation.resId}</td>
+                                <td>${reservation.roomName}</td>
+                                <td>${reservation.guestName}</td>
+                                <td>${reservation.resYN}</td>
+                                <td>[${reservation.calDate}] ${reservation.stime} ~ ${reservation.etime}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
                
                            <div class="flex-box ">
                                <div class="row left">
@@ -270,12 +309,13 @@
 			                        <jsp:include page="/WEB-INF/views/template/navigator.jsp"></jsp:include>
 			                    </div>
                                </div>
-                               <div class="row right">
-                                   <button type="button" class="btn btn-delete" > <a class="a2"  href="delete">예약 취소</a></button>
-                               </div>
-                           </div>
-                       </div>
-
+                               <!-- 삭제 버튼 -->
+							        <div class="row right">
+							            <button type="submit" class="btn btn-delete">예약 취소</button>
+							        </div>
+							    </div>
+							</form>
+                         
                     <!-- <a href="list">검색 초기화</a> -->
 
             </div>

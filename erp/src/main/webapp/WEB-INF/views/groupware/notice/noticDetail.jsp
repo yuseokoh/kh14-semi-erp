@@ -1,226 +1,288 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-    
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항 상세보기</title>
 
-    <!-- google font cdn -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <!-- font awesome icon cdn -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!-- my css -->
-    <link rel="stylesheet" type="text/css" href="/css/commons.css">
-    <!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-     <!-- 프로젝트 스타일 --> 
-     <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
-     <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
-     <link rel="stylesheet" type="text/css" href="/css/vacation.css">
-     <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
-     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
-     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
-     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-    <style>
-        .title1{
-           width: 60% !important;
-           height: 40px;
-           margin-right: 40%;
-        }
-        .title2{
-            border: 1px solid;
-    border-radius: 6px;
-    margin-bottom: 25px;
-    padding: .60rem 1.25rem;
-    background-color: gainsboro;
-    border-color: #fff;
-    color: #495057;
-    font-weight: 800;
-    text-align: center !important;
-    width: 98%; 
-    box-sizing: border-box;
-        }
+<!-- Summernote CDN -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 
-        .readonly{
-            background-color: #f0f0f0; 
-           border: 1px solid #ccc;
-           pointer-events: none;
-        }
-    </style>
-  <!-- lightpick cdn -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
-  <!-- jquery cdn -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="/js/checkbox.js"></script>
-  <script src="/js/confirm-link.js"></script>
-  <script src="/js/multipage.js"></script>
+<!-- Google Fonts & Font Awesome -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-  <!-- 프로젝트 js-->
+<!-- Project CSS -->
+<link rel="stylesheet" type="text/css" href="/css/commons.css">
+<link rel="stylesheet" type="text/css" href="/css/gotowork.css">
+<link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+<link rel="stylesheet" type="text/css" href="/css/vacation.css">
+<link rel="stylesheet" type="text/css" href="/editor/editor.css">
+
+<!-- Custom Styles -->
+<style>
+    .title1 {
+        width: 60% !important;
+        height: 40px;
+        margin-right: 40%;
+    }
+    .title2 {
+        border: 1px solid;
+        border-radius: 6px;
+        margin-bottom: 25px;
+        padding: .60rem 1.25rem;
+        background-color: gainsboro;
+        border-color: #fff;
+        color: #495057;
+        font-weight: 800;
+        text-align: center !important;
+        width: 98%; 
+        box-sizing: border-box;
+    }
+    .readonly {
+        background-color: #f0f0f0; 
+        border: 1px solid #ccc;
+        pointer-events: none;
+    }
+    .reply-wrapper {
+        display: flex;
+    }
+    .reply-wrapper > .image-wrapper {
+        width: 100px;
+        min-width: 100px;
+        padding: 10px;
+    }
+    .reply-wrapper > .image-wrapper > img {
+        width: 100%;
+    }
+    .reply-wrapper > .content-wrapper {
+        flex-grow: 1;
+        font-size: 16px;
+    }
+    .reply-wrapper > .content-wrapper > .reply-title {
+        font-size: 1.25em;
+    }
+    .reply-wrapper > .content-wrapper > .reply-content {
+        font-size: 0.95em;
+        min-height: 50px;
+    }
+    .reply-wrapper > .content-wrapper > .reply-info {
+        font-size: 0.85em;
+        color: #666;
+    }
+    .fa-heart {
+        color: red;
+        cursor: pointer;
+    }
+</style>
+
+<!-- jQuery CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Custom JS -->
+<script src="/js/checkbox.js"></script>
+<script src="/js/confirm-link.js"></script>
+<script src="/js/multipage.js"></script>
 <script src="/js/gotoworkbtn.js"></script>
 <script src="/js/menuToggle.js"></script>
 <script src="/js/delete.js"></script>
-  <!-- chart js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- 자바스크립트 코드 작성 영역 -->
-  <script type="text/javascript">
 
-    </script>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</head>
-<body>  
-    <header id="header">
-        <div id="menuToggle"><i class="fa fa-bars"></i></div>
-        <div id="logo">
-            <a href="#" class="notif-alert">
-                <i class="fa-solid fa-envelope email"></i></i>
-                <span class="notif-count content">0</span>
-            </a>
-            <a href="#"><i class="fa-solid fa-circle-user user"></i></a> 
+<script type="text/javascript">
+    $(function() {
+        var editorOptions = {
+            height: 120,
+            minHeight: 120,
+            toolbar: [
+                ['font', ['style', 'fontname', 'fontsize', 'forecolor', 'backcolor']]
+            ],
+            disableDragAndDrop: true,
+            callbacks: {
+                onImageUpload: function(files) {},
+                onKeydown: function() {},
+                onKeyup: function() {
+                    var content = $(this).val();
+                    var byteCount = getByteLength(content);
+                    console.log("바이트 : " + byteCount);
+                },
+            },
+        };
+
+        function getByteLength(str) {
+            let byteLength = 0;
+            for (let i = 0; i < str.length; i++) {
+                const charCode = str.charCodeAt(i);
+                if (charCode <= 0x7F) {
+                    byteLength += 1;  
+                } else if (charCode <= 0x7FF) {
+                    byteLength += 2;  
+                } else if (charCode <= 0xFFFF) {
+                    byteLength += 3;  
+                } else {
+                    byteLength += 4;  
+                }
+            }
+            return byteLength;
+        }
+
+        // 댓글 등록
+        $(".reply-add-btn").click(function() {
+            var content = $(".reply-input").val();
+            if (content.length == 0) return;
+            $.ajax({
+                url: "/rest/reply/write",
+                method: "post",
+                data: {
+                    replyContent: content,
+                    replyOrigin: noticeNo
+                },
+                success: function(response) {
+                    $('.reply-input').summernote('code', '');
+                    loadList();
+                }
+            });
+        });
+
+        // 댓글 목록 처리
+        loadList();
+        function loadList(page = 1) {
+            $.ajax({
+                url: "/rest/reply/list/paging",
+                method: "post",
+                data: {
+                    replyOrigin: noticeNo,
+                    page: page
+                },
+                success: function(response) {
+                    var backup = null;
+                    if (page >= 2) {
+                        backup = $(".reply-list-wrapper").html();
+                    }
+                    $(".reply-list-wrapper").empty();
+                    if (response.currentPage < response.totalPage) {
+                        $("<button>").addClass("btn btn-neutral w-100 my-20 btn-more")
+                            .text("이전 댓글 더 보기 (" + (response.currentPage + 1) + " / " + response.totalPage + ")")
+                            .attr("data-page", page + 1)
+                            .appendTo(".reply-list-wrapper");
+                    }
+                    var list = response.list;
+                    for (var i = 0; i < list.length; i++) {
+                        var template = $("#reply-template").text();
+                        var html = $.parseHTML(template);
+                        $(html).find(".image-wrapper").children("img")
+                            .attr("src", "/member/image?memberId=" + list[i].replyWriter);
+                        $(html).find(".reply-title").text(list[i].replyWriter);
+                        $(html).find(".reply-content").html(list[i].replyContent);
+                        var time = moment(list[i].replyWtime).fromNow();
+                        $(html).find(".reply-info > .time").text(time);
+                        if (list[i].replyWriter == currentUser) {
+                            $(html).find(".reply-edit-btn, .reply-delete-btn")
+                                .attr("data-reply-no", list[i].replyNo);
+                        } else {
+                            $(html).find(".reply-edit-btn, .reply-delete-btn").remove();
+                        }
+                        $(".reply-list-wrapper").append(html);
+                    }
+                    if (page >= 2) {
+                        $(".reply-list-wrapper").append(backup);
+                    }
+                }
+            });
+        }
+
+        $(document).on("click", ".reply-delete-btn", function(e) {
+            e.preventDefault();
+            var choice = window.confirm("정말 삭제하시겠습니까?");
+            if (choice == false) return;
+            var replyNo = $(this).attr("data-reply-no");
+            $.ajax({
+                url: "/rest/reply/delete",
+                method: "post",
+                data: { replyNo: replyNo },
+                success: function(response) {
+                    loadList();
+                },
+            });
+        });
+
+        $(document).on("click", ".reply-edit-btn", function(e) {
+            e.preventDefault();
+            $(".reply-wrapper").show();
+            $(".reply-edit-wrapper").remove();
+            var template = $("#reply-edit-template").text();
+            var html = $.parseHTML(template);
+            $(this).parents(".reply-wrapper").after(html);
+            $(this).parents(".reply-wrapper").hide();
+            var src = $(this).parents(".reply-wrapper").find(".image-wrapper > img").attr("src");
+            $(html).find(".image-wrapper > img").attr("src", src);
+            var replyWriter = $(this).parents(".reply-wrapper").find(".reply-title").text();
+            $(html).find(".reply-title").text(replyWriter);
+            var replyContent = $(this).parents(".reply-wrapper").find(".reply-content").text();
+            $(html).find(".reply-edit-input").val(replyContent);
+            var replyNo = $(this).attr("data-reply-no");
+            $(html).find(".reply-edit-btn").attr("data-reply-no", replyNo);
+            $(".reply-edit-wrapper").find(".reply-edit-input").summernote(editorOptions);
+        });
+
+        $(document).on("click", ".reply-edit-save-btn", function(e) {
+            e.preventDefault();
+            var replyContent = $(".reply-edit-input").val();
+            var replyNo = $(this).attr("data-reply-no");
+            $.ajax({
+                url: "/rest/reply/edit",
+                method: "post",
+                data: {
+                    replyContent: replyContent,
+                    replyNo: replyNo
+                },
+                success: function(response) {
+                    $(".reply-edit-wrapper").remove();
+                    loadList();
+                }
+            });
+        });
+
+        $(document).on("click", ".reply-edit-cancel-btn", function(e) {
+            e.preventDefault();
+            $(".reply-edit-wrapper").remove();
+            $(".reply-wrapper").show();
+        });
+    });
+</script>
+
+<!-- Templates for Reply and Reply Edit -->
+<script type="text/template" id="reply-template">
+    <div class="reply-wrapper">
+        <div class="image-wrapper">
+            <img src="" alt="Profile Image">
         </div>
-    </header>
-
-    <aside id="sidebar">
-        <nav id="menu">
-            <div class="container">
-
-				<!-- 출퇴근 -->
-				<div id="commute-wrap">
-					<div id="date-wrap">
-						<span id="cur-date"></span><br>
-						<span id="cur-time"></span>
-					</div>
-					<div id="start-time">
-						<i>출근 시간</i>
-						<!-- 출근 여부에 따른 표시 -->
-						<span id="start-time-display">미등록</span>
-					</div>
-					<div id="end-time">
-						<i>퇴근 시간</i>
-						<!-- 퇴근 여부에 따른 표시 -->
-						<span id="end-time-display">미등록</span>
-					</div>
-					<div id="attendance-btns">
-						<button id="start-btn" class="on">출근</button>
-						<button id="end-btn" class="on">퇴근</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 출퇴근 여기까지-->
-
-                <!-- 사이드바-->
-                <div class="row">
-                    <ul class="menu-hover-fill">
-                        <li><a href="/" data-text="home">HOME</a></li>
-
-                        <li><a href="/poketmon/list" data-text="">
-                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
-                            <ul>
-                                <li><a href="#">휴가신청서</a></li>
-                                <li><a href="#">보고서(수인씨작성중)</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/emp/list" data-text="">
-                            <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/book/list" data-text="">
-                            <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/member/mypage" data-text="">
-                            <i class="fa-solid fa-id-card"></i> mypage</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="/board/list" data-text="">
-                            <i class="fa-solid fa-comment"></i> 예비용</a>
-                            <ul>
-                                <li><a href="#">서브메뉴1</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                            </ul>
-                        </li>
-
-                        <c:if test="${sessionScope.createdLevel == '관리자'}">
-                            <li><a href="/admin" data-text="">
-                                <i class="fa-solid fa-gears"></i> 관리자</a>
-                            </li>
-                        </c:if>
-
-                        <li><a href="/logout" data-text="">
-                            <i class="fa-solid fa-power-off"></i> 로그아웃</a>
-                        </li>
-                    </ul>
-                </div>
+        <div class="content-wrapper">
+            <div class="reply-title"></div>
+            <div class="reply-content"></div>
+            <div class="reply-info">
+                <span class="time"></span>
+                <i class="fa fa-heart"></i>
+                <button class="reply-edit-btn">Edit</button>
+                <button class="reply-delete-btn">Delete</button>
             </div>
-        </nav>
-    </aside>
-    
-    <div id="content">
-       <main id="body"> 
-           <div id="content">
-
-
-        <!-- 공지사항 상세보기 -->
-        <body>
-        	<form action="noticDetail" method="post" autocomplete="off">
-            <div class="container w-900">
-                <div class="title2">공지사항 상세보기</div>
-        
-                <div class="table-container">
-                    <table class="table form">
-                    </table>
-                </div>
-        
-                <div class="row flex-box" style="margin-top: 20px;">
-                        <div>
-                            <label>제목</label>
-                            <input type="text" class="form title1 readonly" name="noticeTitle">
-                        </div>
-                </div>
-                <div class="row flex-box" style="margin-top: 20px;">
-                    <div>
-                        <label>작성자</label>
-                        <input type="text" class="form w-20 readonly" name="noticeWriter">
-                    </div>
-            </div>
-           
-                <div class="row flex-box "  style="position: relative; margin-top: 50px;">
-                    <div>
-                        <label></label>
-                        <textarea class="field w-100 form readonly"  rows="3" style="padding-right: 100px;" name="noticeCont"></textarea>
-                    </div>
-                </form>
-                </div>
-            </div>
-            </form>
-        </body>
-    
-    <!-- 이곳에서부터 <footer>  -->
+        </div>
     </div>
-</main>
-</body>
-</html>
+</script>
+
+<script type="text/template" id="reply-edit-template">
+    <div class="reply-edit-wrapper">
+        <div class="image-wrapper">
+            <img src="" alt="Profile Image">
+        </div>
+        <div class="content-wrapper">
+            <div class="reply-title"></div>
+            <textarea class="reply-edit-input"></textarea>
+            <button class="reply-edit-save-btn">Save</button>
+            <button class="reply-edit-cancel-btn">Cancel</button>
+        </div>
+    </div>
+</script>

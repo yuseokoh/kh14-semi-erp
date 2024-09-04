@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +11,12 @@
 <!-- google font cdn -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 <!-- font awesome icon cdn -->
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <!-- my css -->
 <link rel="stylesheet" type="text/css" href="/css/commons.css">
 <link rel="stylesheet" type="text/css" href="/css/test.css">
@@ -210,17 +214,20 @@ p {
 	border-radius: 5px;
 }
 </style>
-<!-- FullCalendar CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css">
-<!-- FullCalendar JS -->
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-
+<!-- fullcalendar cdn-->
+<script
+	src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script
+	src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 <!-- lightpick cdn -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
 <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
 <!-- jquery cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="/js/checkbox.js"></script>
 <script src="/js/confirm-link.js"></script>
 <!-- <script src="multipage.js"></script> -->
@@ -233,6 +240,70 @@ p {
 
 
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/categoryQuantityData') // JSON 데이터를 제공하는 API 엔드포인트
+            .then(response => response.json())
+            .then(categoryMap => {
+                var labels = Object.keys(categoryMap);
+                var data = Object.values(categoryMap);
+                console.log(categoryMap);
+                // 바 차트 생성
+                var ctxBar = document.getElementById('barChart').getContext();
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '재고 수량',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading the JSON data:', error));
+    });
+</script>
+
+
+<script type='importmap'>
+    {
+      "imports": {
+        "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.15",
+        "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.15"
+      }
+    }
+  </script>
+<script type='module'>
+    import { Calendar } from '@fullcalendar/core'
+    import dayGridPlugin from '@fullcalendar/daygrid'
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.querySelector(".calendar")
+      const calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        }
+      })
+      calendar.render()
+    })
+  </script>
+
 </head>
 <body>
 	<header id="header">
@@ -240,7 +311,9 @@ p {
 			<i class="fa fa-bars"></i>
 		</div>
 		<div id="logo">
-			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i></i> <span class="notif-count content">0</span>
+			<a href="#" class="notif-alert"> <i
+				class="fa-solid fa-envelope email"></i></i> <span
+				class="notif-count content">0</span>
 			</a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
 		</div>
 	</header>
@@ -278,36 +351,42 @@ p {
 				<ul class="menu-hover-fill">
 					<li><a href="/home" data-text="home">HOME</a></li>
 
-					<li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
+					<li><a href="/poketmon/list" data-text=""> <i
+							class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
 					</a>
 						<ul>
-							<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-							<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-							<li><a href="/res/list">회의실 예약</a></li>
+							<li><a
+								href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+							<li><a
+								href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
 						</ul></li>
 
-					<li><a href="/emp/list" data-text=""> <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
-
-					<li><a href="/book/list" data-text=""> <i class="fa-solid fa-people-group"></i> 인사관리(book)
+					<li><a href="/emp/list" data-text=""> <i
+							class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
 					</a>
 						<ul>
 							<li><a href="#">서브메뉴1</a></li>
 							<li><a href="#">서브메뉴2</a></li>
 						</ul></li>
 
-					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+					<li><a href="/book/list" data-text=""> <i
+							class="fa-solid fa-people-group"></i> 인사관리(book)
 					</a>
 						<ul>
 							<li><a href="#">서브메뉴1</a></li>
 							<li><a href="#">서브메뉴2</a></li>
 						</ul></li>
 
-					<li><a href="/board/list" data-text=""> <i class="fa-solid fa-comment"></i> 예비용
+					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}"
+						data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+					</a>
+						<ul>
+							<li><a href="#">서브메뉴1</a></li>
+							<li><a href="#">서브메뉴2</a></li>
+						</ul></li>
+
+					<li><a href="/board/list" data-text=""> <i
+							class="fa-solid fa-comment"></i> 예비용
 					</a>
 						<ul>
 							<li><a href="#">서브메뉴1</a></li>
@@ -315,11 +394,13 @@ p {
 						</ul></li>
 
 					<c:if test="${sessionScope.userType == 'A'}">
-						<li><a href="/admin/home" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+						<li><a href="/admin/home" data-text=""> <i
+								class="fa-solid fa-gears"></i> 관리자
 						</a></li>
 					</c:if>
 
-					<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
+					<li><a href="/tb/logout" data-text=""> <i
+							class="fa-solid fa-power-off"></i> 로그아웃
 					</a></li>
 				</ul>
 			</div>
@@ -327,7 +408,7 @@ p {
 		</nav>
 	</aside>
 
-	<div id="content" style="margin-top: 500px;">
+	<div id="content" style="margin-top: 200px;">
 		<main id="body">
 			<!-- <div id="content" style="margin-top: 200px;"> -->
 			<!-- 여기서부터 메인 화면의 콘텐츠가 시작됩니다. -->
@@ -342,20 +423,24 @@ p {
 					<div class="card">
 						<div class="card-inner">
 							<div class="card-front">
-								<img class="target" src="https://picsum.photos/500/300" alt="Front Image" style="width: 570px; height: 300px;">
+								<img class="target" src="https://picsum.photos/500/300"
+									alt="Front Image" style="width: 570px; height: 300px;">
 							</div>
 							<div class="card-back">
 								<div class="info-item">
 									<i class="fa-solid fa-user-pen"></i> <span>이름: </span>${tbEmpDto.name}</div>
 								<div class="info-item">
-									<i class="fa-solid fa-clipboard-user"></i> <span class="span1">직급: </span>${tbEmpDto.empLevel}</div>
+									<i class="fa-solid fa-clipboard-user"></i> <span class="span1">직급:
+									</span>${tbEmpDto.empLevel}</div>
 								<div class="info-item">
 									<i class="fa-solid fa-people-group"></i> <span>부서: </span>${tbEmpDto.empDept}</div>
 								<div class="info-item">
-									<i class="fa-regular fa-clock"></i> <span class="span2">출근시간: </span> ${inTime}
+									<i class="fa-regular fa-clock"></i> <span class="span2">출근시간:
+									</span> ${inTime}
 								</div>
 								<div class="info-item">
-									<i class="fa-solid fa-clock"></i> <span class="span2">퇴근시간: </span> ${outTime}
+									<i class="fa-solid fa-clock"></i> <span class="span2">퇴근시간:
+									</span> ${outTime}
 								</div>
 							</div>
 						</div>
@@ -366,124 +451,10 @@ p {
 
 
 			<div class="row flex-box w-1200">
-
-
-				<!-- full Calendar -->
-				<div class="calendar w-80 center" id="calendar"></div>
-				<script type="text/javascript">
-                $(document).ready(function() {
-                    // 서버에서 전달된 예약 데이터를 캘린더에 표시
-                    var allReservations = [];
-                    <c:forEach var="reservation" items="${allReservations}">
-                        allReservations.push({
-                            title: "${reservation.roomName}",
-                            start: "${reservation.calDate}T${reservation.stime}",
-                            end: "${reservation.calDate}T${reservation.etime}",
-                            extendedProps: {
-                                guestName: "${reservation.guestName}"
-                            }
-                        });
-                    </c:forEach>
-
-                    // FullCalendar 초기화
-                    var calendarEl = document.getElementById('calendar');
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                        locale: 'ko',
-                        timeZone: 'Asia/Seoul',
-                        initialView: 'dayGridMonth',
-                        selectable: false, // 날짜 선택 비활성화
-                        validRange: {
-                            start: new Date().toISOString().split("T")[0]
-                        },
-                        events: allReservations,
-                        contentHeight: 'auto',
-                        aspectRatio: 2.0,
-                        displayEventTime: false,
-                        displayEventEnd: false,
-
-                        // Hover 이벤트 비활성화
-                        eventMouseEnter: function() {
-                            // 아무 작업도 하지 않음
-                        },
-                        eventMouseLeave: function() {
-                            // 아무 작업도 하지 않음
-                        },
-
-                        eventClick: function(info) {
-                            // 예약된 이벤트를 클릭하면 모달에 정보 표시
-                            $('#modalRoomName').text('회의실: ' + info.event.title);
-                            $('#modalGuestName').text('예약자: ' + info.event.extendedProps.guestName);
-                            $('#modalStartTime').text('시작 시간: ' + info.event.start.toISOString().slice(0, 16).replace('T', ' '));
-                            $('#modalEndTime').text('종료 시간: ' + info.event.end.toISOString().slice(0, 16).replace('T', ' '));
-
-                            // 모달 표시
-                            $('#reservationModal').show();
-                        }
-                    });
-
-                    calendar.render();
-
-                    // 모달 닫기 버튼
-                    $('#closeModal').click(function() {
-                        $('#reservationModal').hide();
-                    });
-                });
-
-
-				</script>
-				<!-- 예약 정보 모달 -->
-				<div id="reservationModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; padding: 20px; background-color: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); border-radius: 10px; z-index: 10000;">
-
-					<p id="modalRoomName"></p>
-					<p id="modalGuestName"></p>
-					<p id="modalStartTime"></p>
-					<p id="modalEndTime"></p>
-					<button id="closeModal">닫기</button>
-				</div>
-
+				<div class="calendar w-80 center"></div>
 				<div class="w-70 center">채팅?편지함?</div>
 			</div>
 	</div>
 	</main>
-	
-	
-	
-	
-	
-	<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('/api/categoryQuantityData') // JSON 데이터를 제공하는 API 엔드포인트
-            .then(response => response.json())
-            .then(categoryMap => {
-                var labels = Object.keys(categoryMap);
-                var data = Object.values(categoryMap);
-
-                // 바 차트 생성
-                var ctxBar = document.getElementById('barChart').getContext('2d');
-                new Chart(ctxBar, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: '재고 수량',
-                            data: data,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            })
-            .catch(error => console.error('Error loading the JSON data:', error));
-    });
-</script>
 </body>
 </html>

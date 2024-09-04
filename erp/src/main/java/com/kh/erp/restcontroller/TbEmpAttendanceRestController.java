@@ -72,5 +72,5 @@ public class TbEmpAttendanceRestController {
 		TbEmpAttendanceDto tbEmpAttendanceDto = tbEmpAttendanceDao.selectTodayRecordById(loginId);
 		return tbEmpAttendanceDto;
 	}
-
+	
 }

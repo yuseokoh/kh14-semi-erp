@@ -19,7 +19,6 @@
 
 <!-- my css -->
 <link rel="stylesheet" type="text/css" href="/css/commons.css">
-<link rel="stylesheet" type="text/css" href="/css/test.css">
 
 <!-- 프로젝트 스타일 -->
 <link rel="stylesheet" type="text/css" href="/css/gotowork.css">

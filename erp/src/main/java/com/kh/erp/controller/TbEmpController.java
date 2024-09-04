@@ -17,9 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.erp.VO.PageVO;
 import com.kh.erp.configuration.CustomCertProperties;
 import com.kh.erp.dao.CertDao;
+import com.kh.erp.dao.NoticeDao;
 import com.kh.erp.dao.ReservationDao;
 import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dto.CertDto;
+import com.kh.erp.dto.NoticeDto;
 import com.kh.erp.dto.ReservationDto;
 import com.kh.erp.dto.TbEmpDto;
 import com.kh.erp.error.TargetNotFoundException;
@@ -76,25 +78,25 @@ public class TbEmpController {
 	}
 
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute TbEmpDto tbEmpDto,
-	                   @RequestParam(required = false) MultipartFile attach) throws IllegalStateException, IOException {
-	    tbEmpDao.updateEmp(tbEmpDto);
+	public String edit(@ModelAttribute TbEmpDto tbEmpDto, @RequestParam(required = false) MultipartFile attach)
+			throws IllegalStateException, IOException {
+		tbEmpDao.updateEmp(tbEmpDto);
 
-	    if (attach != null && !attach.isEmpty()) 
-	        try {
-	            int beforeNo = tbEmpDao.findImage(tbEmpDto.getLoginId());
-	            if (beforeNo > 0) {
-	                documentService.delete(beforeNo);
-	            }
-	            int documentNo = documentService.save(attach);
-	            tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
-	        } catch (Exception e) {
-	        	int documentNo = documentService.save(attach);
-	            tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
-	        }
-	    return "redirect:/tb/mypage?loginId=" + tbEmpDto.getLoginId();
-	
-}
+		if (attach != null && !attach.isEmpty())
+			try {
+				int beforeNo = tbEmpDao.findImage(tbEmpDto.getLoginId());
+				if (beforeNo > 0) {
+					documentService.delete(beforeNo);
+				}
+				int documentNo = documentService.save(attach);
+				tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
+			} catch (Exception e) {
+				int documentNo = documentService.save(attach);
+				tbEmpDao.connect(tbEmpDto.getLoginId(), documentNo);
+			}
+		return "redirect:/tb/mypage?loginId=" + tbEmpDto.getLoginId();
+
+	}
 
 	// 마이페이지
 	@RequestMapping("/mypage")
@@ -104,10 +106,10 @@ public class TbEmpController {
 		long workingDays = dateService.dateChange(loginId);
 		String inTime = dateService.TimeChangeIn(loginId);
 		String outTime = dateService.TimeChangeOut(loginId);
-		
-		model.addAttribute("inTime",inTime);
-		model.addAttribute("outTime",outTime);
-		model.addAttribute("workingDays",workingDays);
+
+		model.addAttribute("inTime", inTime);
+		model.addAttribute("outTime", outTime);
+		model.addAttribute("workingDays", workingDays);
 		model.addAttribute("tbEmpDto", tbEmpDto);
 		return "/WEB-INF/views/tb/mypage.jsp";
 	}
@@ -132,16 +134,17 @@ public class TbEmpController {
 
 	@PostMapping("/login")
 	public String login(@RequestParam String loginId, @RequestParam String password, HttpSession session) {
-	//아이디에 해당하는 정보를 불러와서 없으면 에러
-	TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId,password);
-	if (tbEmpDto == null)return "redirect:login?error";
+		// 아이디에 해당하는 정보를 불러와서 없으면 에러
+		TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId, password);
+		if (tbEmpDto == null)
+			return "redirect:login?error";
 
-	session.setAttribute("createdUser", loginId);
-	session.setAttribute("userType", tbEmpDto.getUserType());// 관리자 인지 아닌지 구분용
-	// 부서 ->> 부서코드 테이블없이 아마 a00으로 들어갈듯 // 이거만 조절하면될듯
-	session.setAttribute("userLevel", tbEmpDto.getEmpDept());
-	//2024-08-27 17:09 조재혁 수정
-	return "redirect:/home";// 홈으로 이동
+		session.setAttribute("createdUser", loginId);
+		session.setAttribute("userType", tbEmpDto.getUserType());// 관리자 인지 아닌지 구분용
+		// 부서 ->> 부서코드 테이블없이 아마 a00으로 들어갈듯 // 이거만 조절하면될듯
+		session.setAttribute("userLevel", tbEmpDto.getEmpDept());
+		// 2024-08-27 17:09 조재혁 수정
+		return "redirect:/home";// 홈으로 이동
 //	return "/WEB-INF/views/groupware/truehome.jsp";
 	}
 
@@ -153,8 +156,8 @@ public class TbEmpController {
 		// 2024-09-02 22:36 로그아웃 시 /tb/login getmapping쪽으로 보내기(성공)
 		return "redirect:/tb/login";
 	}
-	
-	//상세 페이지
+
+	// 상세 페이지
 
 	// 상세 페이지
 	@RequestMapping("/detail")
@@ -164,13 +167,11 @@ public class TbEmpController {
 		model.addAttribute("tbEmpDto", tbEmpDto);
 		return "/WEB-INF/views/tb/detail.jsp";
 	}
-	
 
 	@GetMapping("/findPw")
 	public String findPw() {
 		return "/WEB-INF/views/erp/loginsendEmail0903.jsp";
 	}
-	
 
 	@PostMapping("/findPw")
 	public String findPw(@RequestParam String loginId, @RequestParam String EmpEmail)
@@ -233,32 +234,34 @@ public class TbEmpController {
 	@Transactional
 	public String addImage(@RequestParam MultipartFile attach, @RequestParam String loginId)
 			throws IllegalStateException, IOException {
-		if(attach.isEmpty())return "";
-		
+		if (attach.isEmpty())
+			return "";
+
 		try {
 			int beforeNo = tbEmpDao.findImage(loginId);
 			documentService.delete(beforeNo);
-		} catch (Exception e) {}
-		
+		} catch (Exception e) {
+		}
+
 		int documentNo = documentService.save(attach);
 		tbEmpDao.connect(loginId, documentNo);
 		return "redirect:mypage";
-		
+
 	}
-	//직급,이미지,이름
-	  @RequestMapping("/home")
-	    public String home(HttpSession session,Model model) {
-	        String loginId = (String) session.getAttribute("createdUser");
-	        TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
-	        tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
-	        String inTime = dateService.TimeChangeIn(loginId);
-	        String outTime = dateService.TimeChangeOut(loginId);
-	        model.addAttribute("inTime",inTime);
-	        model.addAttribute("outTime",outTime);
-	        model.addAttribute("tbEmpDto",tbEmpDto);
-	        List<ReservationDto> allReservations = reservationDao.selectAllReservations();
-	        model.addAttribute("allReservations", allReservations);
-	        return "/WEB-INF/views/erp/main1.jsp";
-	    }
-	
+
+	// 직급,이미지,이름
+	@RequestMapping("/home")
+	public String home(HttpSession session, Model model) {
+		String loginId = (String) session.getAttribute("createdUser");
+		TbEmpDto tbEmpDto = tbEmpDao.selectOne(loginId);
+		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
+		String inTime = dateService.TimeChangeIn(loginId);
+		String outTime = dateService.TimeChangeOut(loginId);
+		model.addAttribute("inTime", inTime);
+		model.addAttribute("outTime", outTime);
+		model.addAttribute("tbEmpDto", tbEmpDto);
+		List<ReservationDto> allReservations = reservationDao.selectAllReservations();
+		model.addAttribute("allReservations", allReservations);
+		return "/WEB-INF/views/erp/main1.jsp";
+	}
 }

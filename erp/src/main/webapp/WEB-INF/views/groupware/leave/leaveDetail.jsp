@@ -1,6 +1,6 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -129,14 +129,14 @@
 								vacaReason : $('[name=vacaReason]').val(),
 							},
 							success : function(response) { // 요청이 성공했을 때 호출되는 함수
-							console.log(response);
-							if(response){
-								alert("수정완료");
-								location.reload(); // 페이지 새로고침
-							}else{
-								alert("이미 승인된 페이지입니다");
-								location.href = '/vacation/list'; // 실패 시 페이지 리다이렉션
-							}
+								console.log(response);
+								if (response) {
+									alert("수정완료");
+									location.reload(); // 페이지 새로고침
+								} else {
+									alert("이미 승인된 페이지입니다");
+									location.href = '/vacation/list'; // 실패 시 페이지 리다이렉션
+								}
 							},
 							error : function(xhr, status, error) { // 요청이 실패했을 때 호출되는 함수
 								console.error('Error:', error);
@@ -216,49 +216,45 @@
 			<!-- 사이드바-->
 			<div class="row">
 				<ul class="menu-hover-fill">
-					<li><a href="/" data-text="home">HOME</a></li>
+					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
+					</a></li>
 
-					<li><a href="/poketmon/list" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon)
+					<li><a href="#" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어
 					</a>
 						<ul>
-							<li><a href="#">휴가신청서</a></li>
-							<li><a href="#">보고서(수인씨작성중)</a></li>
+							<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+							<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+							<li><a href="/res/list">회의실 예약</a></li>
 						</ul></li>
 
-					<li><a href="/emp/list" data-text=""> <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)
+					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
 					</a>
 						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
+							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
+							<li><a href="/stock/categoryQuantity">재고 그래프</a></li>
 						</ul></li>
 
-					<li><a href="/book/list" data-text=""> <i class="fa-solid fa-people-group"></i> 인사관리(book)
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
+					<li><a href="/tb/list" data-text=""> <i class="fa-solid fa-people-group"> </i> 인사관리
+					</a></li>
 
-					<li><a href="/member/mypage" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
+					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+					</a></li>
 
-					<li><a href="/board/list" data-text=""> <i class="fa-solid fa-comment"></i> 예비용
-					</a>
-						<ul>
-							<li><a href="#">서브메뉴1</a></li>
-							<li><a href="#">서브메뉴2</a></li>
-						</ul></li>
+					<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
+					</a></li>
 
-					<c:if test="${sessionScope.createdLevel == '관리자'}">
-						<li><a href="/admin" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
-						</a></li>
+					<c:if test="${sessionScope.userType == 'A'}">
+						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+						</a>
+							<ul>
+								<li><a href="/admin/emp/list">사원조회</a></li>
+								<li><a href="/admin/emp/status">사원현황</a></li>
+								<li><a href="/admin/emp/approvalList">결재현황</a></li>
+								<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
+							</ul></li>
 					</c:if>
 
-					<li><a href="/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
+					<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
 					</a></li>
 				</ul>
 			</div>
@@ -282,16 +278,14 @@
 								<label>결재자</label>
 								<thead>
 									<tr>
-										<th>
-											<c:choose>
-																					    <c:when test="${tbEmpApprovalDto.approBosName == null}">
+										<th><c:choose>
+												<c:when test="${tbEmpApprovalDto.approBosName == null}">
 																					        직급
 																					    </c:when>
-																					    <c:otherwise>
+												<c:otherwise>
 																					        ${tbEmpApprovalDto.approBosName}
 																					    </c:otherwise>
-																					</c:choose>
-										</th>
+											</c:choose></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -344,10 +338,10 @@
 						<div class="row">
 							<div>
 								<label>휴가 종류</label> <select class="form disabled hidden" disabled name="vacaType">
-								    <option value="" class="text-secondary">휴가 종류</option>
-								    <option value="개인사유" ${tbEmpVacaReqDto.vacaType == '개인사유' ? 'selected' : ''}>개인사유</option>
-								    <option value="연차" ${tbEmpVacaReqDto.vacaType == '연차' ? 'selected' : ''}>연차</option>
-								    <option value="병가" ${tbEmpVacaReqDto.vacaType == '병가' ? 'selected' : ''}>병가</option>
+									<option value="" class="text-secondary">휴가 종류</option>
+									<option value="개인사유" ${tbEmpVacaReqDto.vacaType == '개인사유' ? 'selected' : ''}>개인사유</option>
+									<option value="연차" ${tbEmpVacaReqDto.vacaType == '연차' ? 'selected' : ''}>연차</option>
+									<option value="병가" ${tbEmpVacaReqDto.vacaType == '병가' ? 'selected' : ''}>병가</option>
 								</select> <input class="form disabled" id="beforVacaType" value="${tbEmpVacaReqDto.vacaType}" disabled>
 							</div>
 						</div>
@@ -361,7 +355,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<!-- 이거도 전송해야댐 why? 수정위해서 -->
 					<input type="hidden" name="approNo" value="${tbEmpApprovalDto.approNo}">
 					<input type="hidden" name="approYN" value="${tbEmpApprovalDto.approYN}">

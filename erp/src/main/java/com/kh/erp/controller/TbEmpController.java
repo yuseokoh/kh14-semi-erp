@@ -115,10 +115,12 @@ public class TbEmpController {
 	// 회원 목록+조회
 	@RequestMapping("/list")
 	public String list(@ModelAttribute PageVO pageVO, Model model) {
+	
 		List<TbEmpDto> list = tbEmpDao.empListbyPaging(pageVO);
 		for (int i = 0; i < list.size(); i++) {
 			list.get(i).setEmpDept(nameChangeService.deptChange(list.get(i).getEmpDept()));
 		}
+		
 		model.addAttribute("list", list);
 		pageVO.setCount(tbEmpDao.countPage(pageVO));
 		return "/WEB-INF/views/tb/list.jsp";

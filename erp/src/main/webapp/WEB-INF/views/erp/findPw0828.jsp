@@ -488,13 +488,30 @@
 				</label>
 			</div>
 
-
-			<label> <input class="input1" name="empHp" type="text" placeholder="" required=""> <span class="span1">핸드폰번호</span>
-			</label> <label> <input class="input1" name="empEmail" type="email" placeholder="" required=""> <span class="span1">이메일</span>
-			</label> <label> <input class="address" name="empPost" type="text" placeholder=""> <span class="span1">우편번호</span>
+			<label> 
+			<input class="input1" name="empHp" type="text" placeholder="" required="">
+			<span class="span1">핸드폰번호</span>
+			</label>
+			
+			<label> 
+			<input class="input1" name="empEmail" type="email" placeholder="" required="">
+			<span class="span1">이메일</span>
+			</label>
+			
+			<label> 
+			<input class="address" name="empPost" type="text" placeholder="" required="">
+			<span class="span1">우편번호</span>
 				<button class="btn-address"></button>
-			</label> <label> <input class="address1" name="empAddress1" type="text" placeholder=""> <span class="span1">주소</span>
-			</label> <label> <input class="address1" name="empAddress2" type="text" placeholder=""> <span class="span1">상세주소</span>
+			</label>
+			
+			<label>
+			<input class="address1" name="empAddress1" type="text" placeholder="" required="">
+			<span class="span1">주소</span>
+			</label>
+			
+			<label>
+			<input class="address1" name="empAddress2" type="text" placeholder="" required="">
+			<span class="span1">상세주소</span>
 			</label>
 
 			<button class="submit1" type="submit">Submit</button>

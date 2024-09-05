@@ -23,7 +23,15 @@ public class NoticeDao {
 	
 	//목록
 	public List<NoticeDto> selectList(){
-		String sql = "select * from notice order by notice_no desc";
+
+		String sql = "select "
+						+ "notice_no, notice_writer, notice_title,notice_cont, "
+						+ "notice_wtime, notice_utime, notice_views, notice_likes, "
+						+ "notice_replies "
+					+ "from notice order by notice_no desc";
+
+	
+
 		return jdbcTemplate.query(sql, noticeListMapper);
 	}
 	//검색

@@ -225,6 +225,10 @@
     width: calc(100% - 160px); 
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 100%;
+}
+.select0{
+width: 100% !important;
 }
 
 </style>
@@ -341,64 +345,57 @@
 		<!-- 출퇴근 여기까지-->
 
                 <!-- 사이드바-->
-                <div class="row">
-                    <ul class="menu-hover-fill">
-                        <li><a href="#" data-text="">
-                            <i class="fa-solid fa-house-user"></i> HOME</a>
-                        </li>
-                        
+			<div class="row">
+				<ul class="menu-hover-fill">
+					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
+					</a></li>
 
-                        <li><a href="#" data-text="">
-                            <i class="fa-solid fa-file-signature"></i> 그룹웨어</a>
-                            <ul>
-                                <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-                                <li><a href="#">보고서</a></li>
-                            </ul>
-                        </li>
+					<li><a href="#" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어
+					</a>
+						<ul>
+							<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+							<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+							<li><a href="/res/list">회의실 예약</a></li>
+						</ul></li>
 
-                        <li><a href="#" data-text="">
-                            <i class="fa-solid fa-cart-flatbed"></i> 재고관리</a>
-                            <ul>
-                                <li><a href="#">재고리스트</a></li>
-                                <li><a href="#">재고등록</a></li>
-                                <li><a href="#">재고수정</a></li>
-                                <li><a href="#">재고목록</a></li>
-                            </ul>
-                        </li>
+					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+					</a>
+						<ul>
+							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
+							<li><a href="/stock/categoryQuantity">재고 그래프</a></li>
+						</ul></li>
 
+					<li><a href="/tb/list" data-text=""> <i class="fa-solid fa-people-group"> </i> 인사관리
+					</a></li>
 
-                        <li><a href="#" data-text="">
-                            <i class="fa-solid fa-id-card"></i> My Page</a>
-                            <ul>
-                                <li><a href="#">내 정보 확인</a></li>
-                                <li><a href="#">연차 확인</a></li>
-                            </ul>
-                        </li>
+					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+					</a>
+						</li>
 
-                        <li><a href="#" data-text="">
-                            <i class="fa-solid fa-comment"></i> 공지사항 </a>
-                            <ul>
-                                <!-- <li><a href="#">공지사항 리스트</a></li>
-                                <li><a href="#">서브메뉴2</a></li> -->
-                            </ul>
-                        </li>
+					<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
+					</a>
+					</li>
 
-                        <c:if test="${sessionScope.createdLevel == '관리자'}">
-                            <li><a href="#" data-text="">
-                                <i class="fa-solid fa-gears"></i> 관리자</a>
-                            </li>
-                        </c:if>
+					<c:if test="${sessionScope.userType == 'A'}">
+						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+						</a>
+							<ul>
+								<li><a href="/admin/emp/list">사원조회</a></li>
+								<li><a href="/admin/emp/status">사원현황</a></li>
+								<li><a href="/admin/emp/approvalList">결재현황</a></li>
+								<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
+							</ul></li>
+					</c:if>
 
-                        <li><a href="#" data-text="">
-                            <i class="fa-solid fa-power-off"></i> 로그아웃</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </aside>
+					<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
+					</a></li>
+				</ul>
+			</div>
+			</div>
+		</nav>
+	</aside>
     
-    <div id="content" style="margin-top: 50px;">
+    <div id="content" style="margin-top: 80px;">
         <main id="body"> 
          <h2><a href="list"><i class="fa-solid fa-left-long"></i></a></h2>
  <!-- 내정보-->
@@ -479,7 +476,7 @@
                   </div>
                   <!-- 수정 버튼 추가 -->
                 
-                
+               
 				<form action="/admin/emp/edit" method="post" autocomplete="off">
                   <div class="row flex-box w-1200">
                   <div id="editForm" class="edit-form">
@@ -491,8 +488,8 @@
                       </div>
                       
                       <div>
-                          <label for="editPosition">직급:</label>
-                          <select name="empLevel" class="select1" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);">
+                          <label for="editPosition" >직급:</label>
+                          <select name="empLevel" class="select0" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);">
                           	<option value="인턴" <c:if test="${tbEmpDto.empLevel == '인턴'}">selected</c:if>>인턴</option>
                           	<option value="사원" <c:if test="${tbEmpDto.empLevel == '사원'}">selected</c:if>>사원</option>
                         	<option value="주임" <c:if test="${tbEmpDto.empLevel == '주임'}">selected</c:if>>주임</option>
@@ -506,7 +503,7 @@
                       </div>
                       <div>
                           <label for="editDepartment">부서:</label>
-                          <select name="empDept" class="select1" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);" >
+                          <select name="empDept" class="select0" style="padding:10px;border:1px solid #ccc;border-radius:5px; width:calc(100% - 160px);" >
                           	<option value="a00" <c:if test="${tbEmpDto.empDept == '인사팀'}">selected</c:if>>인사팀</option>
                           	<option value="a01" <c:if test="${tbEmpDto.empDept == '총무팀'}">selected</c:if>>총무팀</option>
                           	<option value="a02" <c:if test="${tbEmpDto.empDept == '영업팀'}">selected</c:if>>영업팀</option>
@@ -557,12 +554,6 @@
                       </div>
                   </div>
               </div>
-          <hr style="width: 133%; border: 1px solid #858e8f;">
-          <div class="edit">
-            <button id="editButton" class="edit-btn" type="button">수정</button>
-            <button id="saveChanges" class="edit-btn hidden" type="submit">저장</button> 
-        </div>
-              </form>
           </div>
            <!-- 내정보 -->           
                         
@@ -570,6 +561,12 @@
 
                     </div>
                     
+          <hr style="width: 133%; border: 1px solid #858e8f;">
+          <div class="edit">
+            <button id="editButton" class="edit-btn" type="button">수정</button>
+            <button id="saveChanges" class="edit-btn hidden" type="submit">저장</button> 
+        </div>
+              </form>
                 </div>
             </main>
 </body>

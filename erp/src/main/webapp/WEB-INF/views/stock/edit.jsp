@@ -1,216 +1,227 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>재고 수정</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fce4ec; /* 부드러운 핑크색 배경 */
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<title>재고 수정</title>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto; /* 수평 가운데 정렬 */
-            padding: 20px;
-            background-color: #ffffff; /* 폼 배경색 흰색 */
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        h1 {
-            text-align: center;
-            color: #f8a5b0; /* 부드러운 핑크색 헤더 텍스트 */
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
+h1 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    background-color: #ffffff;
+    padding: 10px 0;
+    border-bottom: 2px solid #333333;
+}
 
-        form {
-            display: flex;
-            flex-direction: column;
-        }
+form {
+    display: flex;
+    flex-direction: column;
+}
 
-        .form-group {
-            margin-bottom: 20px; /* 필드 간의 여백을 늘려서 더 깔끔하게 */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* 모든 레이블과 필드를 왼쪽에 맞춤 */
-        }
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
-        .form-group label {
-            font-weight: bold;
-            color: #555; /* 레이블 색상 */
-            margin-bottom: 8px; /* 레이블과 입력 필드 사이의 여백 */
-            font-size: 16px;
-        }
+.form-group label {
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
 
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group input[type="date"],
-        .form-group input[type="file"] {
-            padding: 10px;
-            border: 1px solid #ddd; /* 연한 회색 테두리 */
-            border-radius: 5px;
-            font-size: 16px;
-            width: 100%; /* 입력 필드를 컨테이너의 전체 너비로 설정 */
-            box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
-        }
+.form-group input[type="text"], .form-group input[type="number"],
+.form-group input[type="date"], .form-group input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #f8a5b0; /* 부드러운 핑크색 배경 */
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            align-self: center; /* 버튼을 중앙에 배치 */
-        }
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333333;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+}
 
-        button:hover {
-            background-color: #f48fb1; /* 버튼 호버 시 약간 어두운 핑크색 */
-        }
+button:hover {
+    background-color: #555555;
+}
 
-        .image-preview {
-            max-width: 150px; /* 이미지 최대 너비를 늘려서 보기 쉽게 */
-            max-height: auto;
-            border-radius: 5px; /* 이미지 모서리를 둥글게 */
-            margin-bottom: 10px; /* 이미지와 다른 요소 간의 여백 */
-        }
+.image-preview {
+    max-width: 150px;
+    max-height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 
-        .current-expiration-date {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 10px;
-            text-align: left; /* 텍스트 왼쪽 정렬 */
-        }
+.current-expiration-date {
+    font-size: 16px;
+    color: #555555;
+    margin-bottom: 10px;
+    text-align: left;
+}
 
-        a {
-            display: block;
-            text-align: center;
-            color: #f8a5b0; /* 링크 색상 */
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px; /* 링크 위쪽 여백을 늘려 더 깔끔하게 */
-        }
+a {
+    display: block;
+    text-align: center;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #333333;
+    margin-top: 20px;
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
+a:hover {
+    background-color: #555555;
+}
 
-        /* 알람 창 스타일 */
-        .custom-title {
-            font-size: 30px !important; 
-        }
-        .custom-background {
-            background-color: #424242 !important;
-            color: wheat !important; 
-        }
-        .custom-button {
-            background-color: antiquewhite !important; 
-            color: #000 !important; 
-            border: 1px solid #000 !important; 
-        }
-        .swal2-success {
-            color: antiquewhite !important; 
-        }
-        .swal2-success .swal2-success-ring {
-            border-color: antiquewhite !important; 
-        }
-        .swal2-success [class^=swal2-success-line] {
-            background-color: rgb(253, 211, 155) !important; 
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function() {
-            // 사용자가 이미지를 업로드하면 즉시 미리보기 표시
-            $('#image').change(function() {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#imagePreview').attr('src', e.target.result); // 미리보기 이미지 설정
-                    $('#imagePreview').show(); // 미리보기 이미지 표시
-                }
-                reader.readAsDataURL(this.files[0]); // 파일 읽기
-            });
+/* SweetAlert2 custom styles */
+.swal2-popup {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+}
 
-            $('form').submit(function(event) {
-                event.preventDefault(); // 기본 폼 제출 방지
+.swal2-title {
+    font-size: 26px !important;
+    font-weight: bold;
+}
 
-                Swal.fire({
-                    title: '수정 확인',
-                    text: '변동 사항을 잘 확인하세요. 정말 수정하시겠습니까?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '수정',
-                    cancelButtonText: '취소',
-                    customClass: {
-                        title: 'custom-title',
-                        popup: 'custom-background',
-                        confirmButton: 'custom-button',
-                        cancelButton: 'custom-button'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // AJAX로 폼 데이터 제출
-                        $.ajax({
-                            url: '${pageContext.request.contextPath}/stock/edit',
-                            type: 'POST',
-                            data: new FormData(this),
-                            contentType: false,
-                            processData: false,
-                            success: function(response) {
-                                // 성공 알림 표시
-                                Swal.fire({
-                                    title: '수정 완료!',
-                                    text: '재고 정보가 성공적으로 수정되었습니다.',
-                                    icon: 'success',
-                                    confirmButtonText: '확인',
-                                    customClass: {
-                                        title: 'custom-title',
-                                        popup: 'custom-background',
-                                        confirmButton: 'custom-button'
-                                    }
-                                }).then(() => {
-                                    // 알림이 끝난 후 리다이렉트
-                                    window.location.href = '${pageContext.request.contextPath}/stock/list';
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                Swal.fire({
-                                    title: '오류!',
-                                    text: '수정 중 오류가 발생했습니다.',
-                                    icon: 'error',
-                                    confirmButtonText: '확인',
-                                    customClass: {
-                                        title: 'custom-title',
-                                        popup: 'custom-background',
-                                        confirmButton: 'custom-button'
-                                    }
-                                });
-                            }
+.swal2-confirm, .swal2-cancel {
+    background-color: #333333 !important;
+    color: white !important;
+    border: 2px solid #333333 !important;
+    font-size: 14px;
+}
+
+.swal2-confirm:hover, .swal2-cancel:hover {
+    background-color: #555555 !important;
+    border-color: #555555 !important;
+}
+
+.swal2-cancel {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+}
+</style>
+<script>
+$(document).ready(function() {
+    // Image preview
+    $('#image').change(function() {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imagePreview').attr('src', e.target.result);
+            $('#imagePreview').show();
+        }
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    // Form submission with SweetAlert2
+    $('form').submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        let formData = new FormData(this);
+
+        Swal.fire({
+            title: '수정 확인',
+            text: '변동 사항을 잘 확인하세요. 정말 수정하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#333333',
+            cancelButtonColor: '#ffffff',
+            confirmButtonText: '수정',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/stock/edit',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.error) {
+                            Swal.fire({
+                                title: '오류!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: '확인'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: '수정 완료!',
+                                text: '재고 정보가 성공적으로 수정되었습니다.',
+                                icon: 'success',
+                                confirmButtonText: '확인'
+                            }).then(() => {
+                                window.location.href = '${pageContext.request.contextPath}/stock/detail?stockNo=' + response.stockNo;
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: '오류!',
+                            text: '수정 중 오류가 발생했습니다.',
+                            icon: 'error',
+                            confirmButtonText: '확인'
                         });
                     }
                 });
-            });
+            }
         });
-    </script>
+    });
+});
+</script>
 </head>
 <body>
     <div class="container">
         <h1>재고 수정</h1>
         <form action="${pageContext.request.contextPath}/stock/edit" method="post" enctype="multipart/form-data">
             <input type="hidden" name="stockNo" value="${dto.stockNo}">
-            <input type="hidden" id="imageUrl" name="imageUrl" value="${fn:escapeXml(dto.imageUrl)}"> <!-- 이미지 URL을 위한 히든 필드 -->
+            <input type="hidden" id="imageUrl" name="imageUrl" value="${fn:escapeXml(dto.imageUrl)}">
 
             <div class="form-group">
                 <label for="stockCategory">카테고리</label>
@@ -228,19 +239,18 @@
             </div>
 
             <div class="form-group">
-                <label for="expirationDate">수정할 유통기한을 입력하세요 (선택)</label>
+                <label for="expirationDate">수정할 유통기한을 입력하세요</label>
                 <input type="date" id="expirationDate" name="expirationDate" value="${dto.expirationDate != null ? fn:escapeXml(dto.expirationDate) : ''}">
             </div>
 
             <div class="form-group">
-                <label>현재 이미지(.png 권장) 업로드 사진을 미리 확인하세요</label>
-                <img src="${pageContext.request.contextPath}/stock/uploaded-images?filename=${fn:escapeXml(dto.imageUrl)}"
-                     alt="현재 이미지" class="image-preview" id="imagePreview">
+                <label>현재 이미지</label>
+                <img id="imagePreview" src="${pageContext.request.contextPath}/stock/uploaded-images?filename=${dto.imageUrl}" alt="Image Preview" class="image-preview" style="display: block;">
             </div>
 
             <div class="form-group">
-                <label for="image">새 이미지 업로드 (선택)</label>
-                <input type="file" id="image" name="image" accept="image/*">
+                <label for="image">새 이미지 업로드 (.png 권장) 현재 이미지를 확인하세요</label>
+                <input type="file" id="image" name="image">
             </div>
 
             <button type="submit">수정</button>

@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -225,6 +228,7 @@
         <!-- 공지사항 리스트 작성 -->
                     <body>
                         <div class="noticbox w-1200">
+
 							
 							<!-- 검색창 -->
 <form action="noticList" method="get" autocomplete="off">
@@ -275,8 +279,26 @@
 
     </div>
 
+
+                               <div class="row notice">
+                                   <div class="row noticname">공지사항</div>
+                                   
+                                   <div class="actions">
+                                       <select class="row actions1" style="flex-grow: 1;">
+                                           <option value="">작성일</option>
+                                           <option value="" class="row">제목</option>
+                                           <option value="">작성자</option>
+                                       </select>
+                                       <div class="row search" style="flex-grow: 1;">
+                                           <input class="row"/>
+                                       </div>
+                                       <button type="button" class="search button" style="flex-grow: 1;">검색</button>
+                                   </div>
+                               </div>
+
                        
                        
+
    <div class="tb-box">
       <table>
    	 <thead>
@@ -293,6 +315,7 @@
                 <td>${notice.noticeWtimeString}</td>
                <td class="name"><a href="noticDetail?noticeNo=${notice.noticeNo}"> ${notice.noticeTitle}</a></td>
                 <td>${notice.noticeWriterString}</td>
+
                 <td>${notice.noticeViews}</td>
             </tr>
         </c:forEach>
@@ -305,7 +328,9 @@
 												<a href="noticInsert" class="btn btn-neutral" style="color: rgba(255, 0, 0, 0); background-color: rgb(220, 220, 220) !important; border: 0px solid rgb(220, 220, 220) !important;" >글쓰기</a>	
                                     </div>
                                     <div class="row center">
+
                                 <jsp:include page="/WEB-INF/views/template/navigator5.jsp"></jsp:include> 
+
                                     </div>
                                     <div class="row right">
 												<a href="noticInsert" class="btn btn-neutral">글쓰기</a>	

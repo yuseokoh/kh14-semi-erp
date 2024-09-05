@@ -1,11 +1,204 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>회의실 예약</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--구글 폰트cdn-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+    rel="stylesheet">
+
+<!--폰트 어썸 icon cdn-->
+<link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<title>회의실예약</title>
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- google font cdn -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+    rel="stylesheet">
+    
+
+<!-- font awesome icon cdn -->
+<link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<!-- my css -->
+<link rel="stylesheet" type="text/css" href="/css/commons.css">
+<!-- <link rel="stylesheet" type="text/css" href="./test.css"> -->
+<link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+<link rel="stylesheet" type="text/css" href="/css/vacation.css">
+<link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
+<style>
+/* From Uiverse.io by mi-series */ 
+.container1 {
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  background: #FCEDDA;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  left: 30%;
+}
+
+.container1 header {
+  font-size: 1.2rem;
+  color: #000;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container1 .form {
+  margin-top: 15px;
+}
+
+.form .input-box {
+  width: 100%;
+  margin-top: 10px;
+}
+.form .select-box {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.input-box label {
+  color: #000;
+}
+
+.form :where(.input-box input, .select-box) {
+  position: relative;
+  height: 35px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #808080;
+  margin-top: 5px;
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 0 15px;
+  background: #FCEDDA;
+}
+
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form .column {
+  display: flex;
+  column-gap: 15px;
+}
+
+.form .gender-box {
+  margin-top: 10px;
+}
+
+.form :where(.gender-option, .gender) {
+  display: flex;
+  align-items: center;
+  column-gap: 50px;
+  flex-wrap: wrap;
+}
+
+.form .gender {
+  column-gap: 5px;
+}
+
+.gender input {
+  accent-color: #EE4E34;
+}
+
+.form :where(.gender input, .gender label) {
+  cursor: pointer;
+}
+
+.gender label {
+  color: #000;
+}
+
+.address :where(input, .select-box) {
+  margin-top: 10px;
+}
+
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #808080;
+  font-size: 1rem;
+  background: #FCEDDA;
+}
+
+.form button {
+  height: 40px;
+  width: 100%;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: wheat !important;
+  border: 1px solid antiquewhite !important;
+}
+
+.form button:hover {
+    background-color: rgb(252, 241, 228) !important;
+            color: rgb(252, 197, 94);
+}
+
+
+
+
+</style>
+<link rel="stylesheet" type="text/css" href="/css/gotowork.css">
+<!-- lightpick cdn -->
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+
+<!-- jquery cdn -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="/js/checkbox.js"></script>
+<script src="/js/confirm-link.js"></script>
+<script src="/js/multipage.js"></script>
+
+    <!-- fullcalendar cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+  <!-- lightpick cdn -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+  <!-- jquery cdn -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="/js/checkbox.js"></script>
+  <script src="/js/confirm-link.js"></script>
+  <!-- <script src="multipage.js"></script> -->
+  <!-- 프로젝트 js-->
+<script src="/js/gotoworkbtn.js"></script>
+<script src="/js/menuToggle.js"></script>
+<script src="/js/delete.js"></script>
+  <!-- chart js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(document).ready(function() {
             // 예약된 시간 정보를 부모 페이지에서 가져옴
@@ -130,39 +323,167 @@
                 }
             }
         });
+        
+        function showAlert() {
+            Swal.fire({
+                title: '<span class="custom-title">회의실 예약완료</span>',
+                icon: 'success',
+                customClass: {
+                    title: 'custom-title',
+                    popup: 'custom-background',
+                    confirmButton: 'custom-button' 
+                }
+            });
+        }
     </script>
 </head>
 <body>
-    <h1>회의실 예약</h1>
-    <form action="insert" method="post">
-        <p>1. 날짜 :</p>
-        <input type="date" id="date-input" name="calDate" required>
-        <p id="selected-date-display" style="font-weight: bold; color: blue;">선택한 날짜:</p>
+ <header id="header">
+        <div id="menuToggle">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div id="logo">
+            <a href="#" class="notif-alert"> <i
+                class="fa-solid fa-envelope email"></i> <span
+                class="notif-count content">0</span>
+            </a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
+        </div>
+    </header>
 
-        <p>2. 회의실 :</p>
-        <select id="room-select" name="roomId" required>
-            <option value="">회의실 선택</option>
-            <option value="1" data-room-name="대회의실">회의실1(대회의실)</option>
-            <option value="2" data-room-name="소회의실">회의실2(소회의실)</option>
-            <option value="3" data-room-name="중회의실">회의실3(중회의실)</option>
-            <option value="4" data-room-name="VIP회의실">회의실4(VIP회의실)</option>
-            <option value="5" data-room-name="세미나실">회의실5(세미나실)</option>
-        </select>
+<aside id="sidebar">
+        <nav id="menu">
+            <div class="container">
 
-        <p>3. 시작 시간:</p>
-        <select id="start-time-select" name="stime" required>
-            <option value="">시작 시간 선택</option>
-        </select>
+				<!-- 출퇴근 -->
+				<div id="commute-wrap">
+					<div id="date-wrap">
+						<span id="cur-date"></span><br>
+						<span id="cur-time"></span>
+					</div>
+					<div id="start-time">
+						<i>출근 시간</i>
+						<!-- 출근 여부에 따른 표시 -->
+						<span id="start-time-display">미등록</span>
+					</div>
+					<div id="end-time">
+						<i>퇴근 시간</i>
+						<!-- 퇴근 여부에 따른 표시 -->
+						<span id="end-time-display">미등록</span>
+					</div>
+					<div id="attendance-btns">
+						<button id="start-btn" class="on">출근</button>
+						<button id="end-btn" class="on">퇴근</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 출퇴근 여기까지-->
 
-        <p>종료 시간:</p>
-        <select id="end-time-select" name="etime" required>
-            <option value="">종료 시간 선택</option>
-        </select>
+                <!-- 사이드바-->
+                <div class="row">
+                    <ul class="menu-hover-fill">
+                        <li><a href="/home" data-text="home">HOME</a></li>
 
-        <p>4. 예약자 이름 : <input type="text" name="guestName" required></p>
-        <p>5. 비밀번호(6자리 숫자) : <input type="password" name="pw" required></p>
+                        <li><a href="/poketmon/list" data-text="">
+                            <i class="fa-solid fa-file-signature"></i> 그룹웨어(poketmon) </a>
+                            <ul>
+                                <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+                                <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+                            	<li><a href="/res/list">회의실 예약</a></li>
+                            </ul>
+                        </li>
 
-        <button type="submit">예약하기</button>
+                        <li><a href="/emp/list" data-text="">
+                            <i class="fa-solid fa-cart-flatbed"></i> 재고관리(emp)</a>
+                            <ul>
+                                <li><a href="#">서브메뉴1</a></li>
+                                <li><a href="#">서브메뉴2</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="/book/list" data-text="">
+                            <i class="fa-solid fa-people-group"></i> 인사관리(book)</a>
+                            <ul>
+                                <li><a href="#">서브메뉴1</a></li>
+                                <li><a href="#">서브메뉴2</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text="">
+                            <i class="fa-solid fa-id-card"></i> mypage</a>
+                            <ul>
+                                <li><a href="#">서브메뉴1</a></li>
+                                <li><a href="#">서브메뉴2</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="/board/list" data-text="">
+                            <i class="fa-solid fa-comment"></i> 예비용</a>
+                            <ul>
+                                <li><a href="#">서브메뉴1</a></li>
+                                <li><a href="#">서브메뉴2</a></li>
+                            </ul>
+                        </li>
+
+                        <c:if test="${sessionScope.userType == 'A'}">
+                            <li><a href="/admin/home" data-text="">
+                                <i class="fa-solid fa-gears"></i> 관리자</a>
+                            </li>
+                        </c:if>
+
+                        <li><a href="/tb/logout" data-text="">
+                            <i class="fa-solid fa-power-off"></i> 로그아웃</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </aside>
+    <main id="body">
+    <!-- 회의실 예약 추가 -->
+    <section class="container1">
+    <header>회의실 예약</header>
+    <form class="form"  action="insert" method="post">
+    <div class="input-box">
+	    <label>예약자이름 </label>
+	    <input required="" name="guestName" placeholder="예약자 이름" type="text">
+    </div>
+    
+     <label>회의실 선택</label>
+       <select class="select-box" id="room-select" name="roomId" required>
+           <option value="">회의실 선택</option>
+           <option value="1" data-room-name="대회의실">회의실1(대회의실)</option>
+           <option value="2" data-room-name="소회의실">회의실2(소회의실)</option>
+           <option value="3" data-room-name="중회의실">회의실3(중회의실)</option>
+           <option value="4" data-room-name="VIP회의실">회의실4(VIP회의실)</option>
+           <option value="5" data-room-name="세미나실">회의실5(세미나실)</option>
+       </select>
+       <div class="input-box">
+    <label>날짜 </label>
+    <input required="" type="date" id="date-input" name="calDate" placeholder="예약자 이름" type="text">
+</div>
+
+<div class="input-box">
+    <label>시작시간</label>
+    <select id="start-time-select" name="stime" required>
+        <option value="">시작 시간 선택</option>
+    </select>
+</div>
+
+<div class="input-box">
+    <label>종료 시간</label>
+    <select id="end-time-select" name="etime" required>
+        <option value="">종료 시간 선택</option>
+    </select>
+</div>
+
+<div class="input-box">
+    <label>비밀번호(6자리 숫자)</label>
+    <input type="password" name="pw" required>
+</div>
+
+
+        <button type="submit" onclick="showAlert()">Submit</button>     
     </form>
 </body>
 </html>

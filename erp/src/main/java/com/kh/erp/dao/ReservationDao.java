@@ -109,28 +109,27 @@ public class ReservationDao {
 	    if (pageVO.isSearch()) { // 검색
 	        String column = pageVO.getColumn();
 
-	        String sql = "select * from ("
-	                        + "select rownum rn, TMP.* from ("
-	                            + "select * from reservation where instr(" + column + ", ?) > 0 "
-	                            + "order by " + column + " asc, res_id asc"
-	                        + ") TMP"
-	                    + ") where rn between ? and ?";
-	        
+	        String sql = "select * from (select rownum rn, TMP.* "
+	                + " from (select * from reservation "
+	                + " where instr(" + column + ", ?) > 0 " 
+	                + " order by calDate asc, stime asc, " + column + " asc, res_id asc) TMP) "  // 정렬 기준에 컬럼을 직접 삽입
+	                + " where rn between ? and ?";
+
+
 	        Object[] data = {
 	            pageVO.getKeyword(), 
 	            pageVO.getBeginRow(), pageVO.getEndRow()
 	        };
 	        return jdbcTemplate.query(sql, reservationMapper, data);
 	    } else { // 목록 조회 (검색 조건이 없을 때)
-	        String sql = "select * from ("
-	                        + "select rownum rn, TMP.* from ("
-	                            + " select * from reservation order by res_id asc"
-	                        + " ) TMP"
-	                    + ") where rn between ? and ?";
+	        String sql = "select * from (select rownum rn, TMP.* "
+	                    + " from (select * from reservation order by calDate asc, stime asc) "
+	                    + " TMP) where rn between ? and ?";
 	        Object[] data = {pageVO.getBeginRow(), pageVO.getEndRow()};
 	        return jdbcTemplate.query(sql, reservationMapper, data);
 	    }
 	}
+
 
 	//캘린더에 표시할 전체 조회 내역
 	public List<ReservationDto> selectAllReservations() {

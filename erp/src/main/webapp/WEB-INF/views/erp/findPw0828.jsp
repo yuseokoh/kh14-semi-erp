@@ -4,8 +4,6 @@
 <html lang="ko">
 
 
-<jsp:include page="/WEB-INF/views/template/header999.jsp"></jsp:include>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +55,7 @@
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+	<jsp:include page="/WEB-INF/views/template/header1000.jsp"></jsp:include>
     <!-- 자바스크립트 코드 작성 영역 -->
     <script type="text/javascript">
     </script>
@@ -395,7 +393,7 @@
 
 <body>
     <div class="container" style="margin-top: 100px">
-        <form class="form" action="login" method="post">
+        <form class="form" action="login" method="post" autocomplete="off">
             <p class="title">Login</p>
             <input placeholder="Username" class="username input" type="text" name="loginId">
             <input placeholder="Password" class="password input" type="password" name="password">
@@ -442,7 +440,7 @@
         </form>
 
         <!-- 회원가입-->
-        <form class="form1" action="join" method="post">
+        <form class="form1" action="join" method="post" autocomplete="off">
             <p class="title1">ERP </p>
             <p class="message1">ERP 가입을 위해 정보를 적으세요</p>
 
@@ -530,15 +528,10 @@
                 <span class="span1">상세주소</span>
             </label>
 
-
-
-
-
             <button class="submit1" type="submit">Submit</button>
             <p class="signin1">Already have an account ? <a href="#">Sign in</a> </p>
         </form>
 
-    </div>
     </div>
 </body>
 

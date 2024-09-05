@@ -1,5 +1,6 @@
 package com.kh.erp.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.erp.VO.AttendanceSummaryVO;
 import com.kh.erp.VO.PageVO;
 import com.kh.erp.dao.TbEmpApprovalDao;
+import com.kh.erp.dao.TbEmpAttendanceDao;
 import com.kh.erp.dao.TbEmpDao;
 import com.kh.erp.dao.TbEmpReportDao;
 import com.kh.erp.dao.TbEmpVacaReqDao;
@@ -35,6 +38,8 @@ public class AdminEmpController {
 	private TbEmpVacaReqDao tbEmpVacaReqDao;
 	@Autowired
 	private TbEmpApprovalDao tbEmpApprovalDao;
+	@Autowired
+	private TbEmpAttendanceDao tbEmpAttendanceDao;
 	@Autowired
 	private NameChangeService nameChangeService;
 
@@ -141,5 +146,27 @@ public class AdminEmpController {
 		model.addAttribute("empEdateList", tbEmpDao.statusByEmpEdate());
 		model.addAttribute("workingDayList", tbEmpDao.workingDay());
 		return "/WEB-INF/views/admin/status2.jsp";
+	}
+
+	@GetMapping("/hoursMgmt")
+	public String hoursMgmt(Model model, HttpSession session, PageVO pageVO,
+			@RequestParam(required = false) Integer tbyear, @RequestParam(required = false) Integer tbmonth) {
+
+		// 현재 날짜와 시간 가져오기
+		LocalDateTime now = LocalDateTime.now();
+
+		if (tbyear == null && tbmonth == null) {
+			// 현재 년도와 월 추출
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			List<AttendanceSummaryVO> list = tbEmpAttendanceDao.getAttendanceSummary(pageVO, year, month);
+			model.addAttribute("list", list);
+			pageVO.setCount(tbEmpAttendanceDao.countSummaryPageWithVO(pageVO, year, month));
+		} else {
+			List<AttendanceSummaryVO> list = tbEmpAttendanceDao.getAttendanceSummary(pageVO, tbyear, tbmonth);
+			model.addAttribute("list", list);
+			pageVO.setCount(tbEmpAttendanceDao.countSummaryPageWithVO(pageVO, tbyear, tbmonth));
+		}
+		return "/WEB-INF/views/groupware/admin/workHours.jsp";
 	}
 }

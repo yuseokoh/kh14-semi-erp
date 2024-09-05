@@ -229,13 +229,6 @@
                 Rich Text Editor를 쓸 경우는 할 필요가 없다 -->
         ${noticeDto.noticeCont}
     </div>
-    <!-- 정보 -->
-	<div class="row">
-		조회 
-		<fmt:formatNumber value="${noticeDto.noticeViews}"
-										pattern="#,##0"/>
-
-	</div>
 
 
 

@@ -335,18 +335,8 @@
 			<i class="fa fa-bars"></i>
 		</div>
 		<div id="logo">
-
-			<div class="bell-container">
-				<i class="fa-regular fa-bell bell-icon" id="bellIcon"></i>
-				<div class="notification-count" id="notificationCount">44</div>
-			</div>
-			<div class="notification" id="notification">
-				<button id="closeButton">×</button>
-				<p>보고서 알림 어쩌고 값</p>
-				<p>휴가신청서 알림 저쩌고 값</p>
-			</div>
-
-			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i></i> <span class="notif-count content">0</span>
+			<a href="#" class="notif-alert"> <i class="fa-solid fa-envelope email"></i></i>
+				<span class="notif-count content">0</span>
 			</a> <a href="#"><i class="fa-solid fa-circle-user user"></i></a>
 		</div>
 	</header>
@@ -430,7 +420,7 @@
 		</nav>
 	</aside>
 
-	<div id="content" style="margin-top: 50px;">
+	<div id="content" style="margin-top: 8%;">
 		<main id="body">
 
 			<!-- 내정보-->

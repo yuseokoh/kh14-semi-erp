@@ -41,18 +41,22 @@ public class TbEmpVacReqRestController {
 	) {
 		String loginId = (String) session.getAttribute("createdUser");
 		tbEmpVacaReqDto.setApplicantId(loginId);
+		System.out.println(tbEmpVacaReqDto);
+		
+		System.out.println("approYN = " + approYN);
 
 		// 선검증
 		TbEmpApprovalDto tbEmpApprovalDto = tbEmpApprovalDao.selectOneByApproNo(tbEmpVacaReqDto.getApproNo());
 		if (tbEmpApprovalDto.getApplicantId().equals(loginId) && tbEmpApprovalDto.getApproYN().equals(approYN)
-				&& approYN.equals("N") && tbEmpVacaReqDto.getVacaType() != null && tbEmpVacaReqDto.getVacaReason().isEmpty()) {
+				&& approYN.equals("N") && tbEmpVacaReqDto.getVacaType() != null && tbEmpVacaReqDto.getVacaReason() != null) {
 			// 검증 완료되면 업데이트
 			tbEmpVacaReqDao.updateContent(tbEmpVacaReqDto);
 			// 타입때문에 하나 더뱉어야댐..
 			tbEmpApprovalDao.updateType(tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getApproNo());
 			return true;
-		} else
+		} else {
 			return false;
+		}
 	}
 
 	//admin 레스트 컨트롤러에서 실행해야 될거같은데..?
@@ -64,7 +68,6 @@ public class TbEmpVacReqRestController {
 		TbEmpVacaReqDto tbEmpVacaReqDto = tbEmpVacaReqDao.selectOneWithApproNoAndId(approNoInt, tbEmpApprovalDto.getApplicantId());
 		int days =  tbEmpApprovalDao.getVacationApproCount(tbEmpVacaReqDto.getApplicantId(), tbEmpVacaReqDto.getVacaNo());
 	
-		System.out.println(days);
 		// 만약 승인 됐는데
 		if (tbEmpApprovalDto.getApproYN().equals("Y")) {
 			// 잔여 연차보다 사용일수가 적으면 갱신

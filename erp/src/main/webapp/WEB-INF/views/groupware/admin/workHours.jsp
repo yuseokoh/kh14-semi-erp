@@ -53,7 +53,7 @@
 	font-size: 16px;
 	padding: 0.5em 0.75em;
 	color: white;
-	background-color: #80bdff;
+	background-color: wheat;
 	border: 1px solid #7f8c8d;
 	border-radius: 0.2em;
 	cursor: pointer;

@@ -27,6 +27,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
+    <link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
 
 
     <style>
@@ -47,6 +48,8 @@
     <!-- 프로젝트 js-->
     <script src="/js/gotoworkbtn.js"></script>
     <script src="/js/menuToggle.js"></script>
+    <script src="/js/alert.js"></script>
+    
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -220,7 +223,7 @@
 
                             <div class="flex-box">
                                 <div class="row">
-                                    <button type="button" class="btn write">글작성</button>
+                                    <button type="button" class="btn write" on>글작성</button>
                                 </div>
                             </div>
                             <div class="row center">

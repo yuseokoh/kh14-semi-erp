@@ -26,7 +26,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
-    <link rel="stylesheet" type="text/css" href="/css/alertA.css">
+    <link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
 
     <style>
         .btn-container {

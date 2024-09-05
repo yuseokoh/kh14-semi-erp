@@ -27,6 +27,8 @@
     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
+    <link rel="stylesheet" type="text/css" href="/css/alertA.css">
+    <link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
 
 
     <style>
@@ -68,7 +70,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
         $(function() {
@@ -145,33 +148,83 @@
                 var vacaEdate = $("[name=vacaEdate]").val();
                 var vacaType = $("[name=vacaType]").val();
                 var vacaTel = $("[name=vacaTel]").val();
-				var vacaReason = $("[name=vacaReason]").val();
-				
+                var vacaReason = $("[name=vacaReason]").val();
+
                 var telPattern = /^010[0-9]{8}$/;
                 if (!vacaTitle) {
-                    alert("제목을 입력해 주세요.");
+                    Swal.fire({
+                        title: '공란 확인!',
+                        text: '제목을 입력해 주세요.',
+                        icon: 'warning',
+                        confirmButtonText: '확인',
+                        customClass: {
+                            title: 'custom-title',
+                            popup: 'custom-background',
+                            confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
+                        }
+                    });
                     return;
                 }
 
                 if (!status.vacaSdateValid || !status.vacaEdateValid) {
-                    alert("휴가 시작일과 종료일을 확인해 주세요.");
+                    Swal.fire({
+                        title: '공란 확인!',
+                        text: '휴가 시작일과 종료일을 확인해 주세요.',
+                        icon: 'warning',
+                        confirmButtonText: '확인',
+                        customClass: {
+                            title: 'custom-title',
+                            popup: 'custom-background',
+                            confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
+                        }
+                    });
                     return;
                 }
 
                 if (!vacaType) {
-                    alert("휴가 종류를 선택해 주세요.");
+                    Swal.fire({
+                        title: '공란 확인!',
+                        text: '휴가 종류를 선택해 주세요.',
+                        icon: 'warning',
+                        confirmButtonText: '확인',
+                        customClass: {
+                            title: 'custom-title',
+                            popup: 'custom-background',
+                            confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
+                        }
+                    });
                     return;
                 }
 
                 if (!telPattern.test(vacaTel)) {
-                    alert("비상 연락처의 형식이 올바르지 않습니다. 올바른 형식을 입력해 주세요.");
+                    Swal.fire({
+                        title: '형식 에러!',
+                        text: '비상 연락처의 형식이 올바르지 않습니다. 올바른 형식을 입력해 주세요.',
+                        icon: 'warning',
+                        confirmButtonText: '확인',
+                        customClass: {
+                            title: 'custom-title',
+                            popup: 'custom-background',
+                            confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
+                        }
+                    });
                     return;
                 }
-				
-				if (!vacaReason) {
-				        alert("휴가 사유를 입력해 주세요.");
-				        return;
-				    }
+
+                if (!vacaReason) {
+                    Swal.fire({
+                        title: '공란 확인!',
+                        text: '휴가 사유를 입력해 주세요.',
+                        icon: 'warning',
+                        confirmButtonText: '확인',
+                        customClass: {
+                            title: 'custom-title',
+                            popup: 'custom-background',
+                            confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
+                        }
+                    });
+                    return;
+                }
 
                 this.submit(); // Submit the form if both dates are valid
             });
@@ -231,55 +284,58 @@
 
 
             <!-- 사이드바-->
-			<div class="row">
-				<ul class="menu-hover-fill">
-					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
-					</a></li>
+            <div class="row" style="display:initial ;">
+                <ul class="menu-hover-fill">
+                    <li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
+                        </a></li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어
-					</a>
-						<ul>
-							<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-							<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-							<li><a href="/res/list">회의실 예약</a></li>
-						</ul></li>
+                    <li><a href="#" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어
+                        </a>
+                        <ul>
+                            <li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+                            <li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+                            <li><a href="/res/list">회의실 예약</a></li>
+                        </ul>
+                    </li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
-					</a>
-						<ul>
-							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
-							<li><a href="/stock/categoryQuantity">재고 그래프</a></li>
-						</ul></li>
+                    <li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+                        </a>
+                        <ul>
+                            <li><a href="/stock/changeLogList">재고 변경 내역</a></li>
+                            <li><a href="/stock/categoryQuantity">재고 그래프</a></li>
+                        </ul>
+                    </li>
 
-					<li><a href="/tb/list" data-text=""> <i class="fa-solid fa-people-group"> </i> 인사관리
-					</a></li>
+                    <li><a href="/tb/list" data-text=""> <i class="fa-solid fa-people-group"> </i> 인사관리
+                        </a></li>
 
-					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
-					</a>
-						</li>
+                    <li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+                        </a>
+                    </li>
 
-					<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
-					</a>
-					</li>
+                    <li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
+                        </a>
+                    </li>
 
-					<c:if test="${sessionScope.userType == 'A'}">
-						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
-						</a>
-							<ul>
-								<li><a href="/admin/emp/list">사원조회</a></li>
-								<li><a href="/admin/emp/status">사원현황</a></li>
-								<li><a href="/admin/emp/approvalList">결재현황</a></li>
-								<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
-							</ul></li>
-					</c:if>
+                    <c:if test="${sessionScope.userType == 'A'}">
+                        <li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+                            </a>
+                            <ul>
+                                <li><a href="/admin/emp/list">사원조회</a></li>
+                                <li><a href="/admin/emp/status">사원현황</a></li>
+                                <li><a href="/admin/emp/approvalList">결재현황</a></li>
+                                <li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
 
-					<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
-					</a></li>
-				</ul>
-			</div>
-			</div>
-		</nav>
-	</aside>
+                    <li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
+                        </a></li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+    </aside>
 
     <div id="content">
 

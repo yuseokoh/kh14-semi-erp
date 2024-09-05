@@ -55,12 +55,11 @@ public class TbEmpVacaReqController {
 	@RequestMapping("/mylist")
 	public String list(HttpSession session, @RequestParam String loginId, Model model, @ModelAttribute PageVO pageVO) {
 		String sessionloginId = (String) session.getAttribute("createdUser");
-		System.out.println(pageVO);
 		// 세션Id와 접근하려는 Id가 동일한 경우
 		if (sessionloginId.equals(loginId)) {
-			List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaLogListByPaging(pageVO);
+			List<TbVacRecVO> list = tbEmpVacaReqDao.selectVacaListByPaging(pageVO, loginId);
 			model.addAttribute("list", list);
-			pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO));
+			pageVO.setCount(tbEmpVacaReqDao.countPage(pageVO, loginId));
 			return "/WEB-INF/views/groupware/leave/leaveList.jsp";
 		} else {
 			return "redirect:/home";

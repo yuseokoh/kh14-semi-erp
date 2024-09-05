@@ -345,7 +345,7 @@ width: 100% !important;
 		<!-- 출퇴근 여기까지-->
 
                 <!-- 사이드바-->
-			<div class="row">
+			<div class="row" style="display:initial !important;">
 				<ul class="menu-hover-fill">
 					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
 					</a></li>

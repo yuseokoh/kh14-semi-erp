@@ -147,91 +147,111 @@
 	</header>
 
 	<aside id="sidebar">
-		<nav id="menu">
-			<div class="container">
-				<!--출퇴근-->
-				<div id="commute-wrap">
-					<div id="date-wrap">
-						<span id="cur-date"></span><br> <span id="cur-time"></span>
-					</div>
-					<div id="start-time">
-						<i>출근 시간</i> <span id="start-time-display">미등록</span>
-					</div>
-					<div id="end-time">
-						<i>퇴근 시간</i> <span id="end-time-display">미등록</span>
-					</div>
-					<div id="attendance-btns">
-						<button id="start-btn" class="on">출근</button>
-						<button id="end-btn" class="on">퇴근</button>
-					</div>
-				</div>
-				<!-- 출퇴근 여기까지-->
+	        <nav id="menu">
+	            <div class="container">
 
-				<!-- 사이드바-->
-			<div class="row">
-				<ul class="menu-hover-fill">
-					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
-					</a></li>
+	                <!-- 이미지? -->
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어
-					</a>
-						<ul>
-							<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
-							<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-							<li><a href="/res/list">회의실 예약</a></li>
-						</ul></li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
-					</a>
-						<ul>
-							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
-							<li><a href="/stock/categoryQuantity">재고 그래프</a></li>
-						</ul></li>
+	                <!-- 여기까지 이미지?-->
 
-					<li><a href="/tb/list" data-text=""> <i class="fa-solid fa-people-group"> </i> 인사관리
-					</a></li>
 
-					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
-					</a>
-						</li>
+	                <!--출퇴근-->
+	                <div id="commute-wrap">
+	                    <div id="date-wrap">
+	                        <span id="cur-date"></span><br> <span id="cur-time"></span>
+	                    </div>
+	                    <div id="start-time">
+	                        <i>출근 시간</i>
+	                        <!-- 출근 여부에 따른 표시 -->
+	                        <span id="start-time-display">미등록</span>
+	                    </div>
+	                    <div id="end-time">
+	                        <i>퇴근 시간</i>
+	                        <!-- 퇴근 여부에 따른 표시 -->
+	                        <span id="end-time-display">미등록</span>
+	                    </div>
+	                    <div id="attendance-btns">
+	                        <button id="start-btn" class="on">출근</button>
+	                        <button id="end-btn" class="on">퇴근</button>
+	                    </div>
+	                </div>
+	            </div>
+	            </div>
+	            <!-- 출퇴근 여기까지-->
 
-					<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
-					</a>
-					</li>
 
-					<c:if test="${sessionScope.userType == 'A'}">
-						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+
+	           <!-- 사이드바-->
+				<div class="row" style="display:initial important!;">
+					<ul class="menu-hover-fill">
+						<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
+						</a></li>
+
+						<li><a href="#" data-text=""> <i class="fa-solid fa-file-signature"></i> 그룹웨어
 						</a>
 							<ul>
-								<li><a href="/admin/emp/list">사원조회</a></li>
-								<li><a href="/admin/emp/status">사원현황</a></li>
-								<li><a href="/admin/emp/approvalList">결재현황</a></li>
-								<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
+								<li><a href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+								<li><a href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+								<li><a href="/res/list">회의실 예약</a></li>
 							</ul></li>
-					</c:if>
 
-					<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
-					</a></li>
-				</ul>
-			</div>
-			</div>
-		</nav>
-	</aside>
+						<li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+						</a>
+							<ul>
+								<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
+								<li><a href="/stock/categoryQuantity">재고 그래프</a></li>
+							</ul></li>
 
-	<div id="content">
-		<main id="body">
-			<div id="content">
-				<div class="container w-800">
-					<div class="row attendance">
+						<li><a href="/tb/list" data-text=""> <i class="fa-solid fa-people-group"> </i> 인사관리
+						</a></li>
+
+						<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
+						</a>
+							</li>
+
+						<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
+						</a>
+						</li>
+
+						<c:if test="${sessionScope.userType == 'A'}">
+							<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
+							</a>
+								<ul>
+									<li><a href="/admin/emp/list">사원조회</a></li>
+									<li><a href="/admin/emp/status">사원현황</a></li>
+									<li><a href="/admin/emp/approvalList">결재현황</a></li>
+									<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
+								</ul></li>
+						</c:if>
+
+						<li><a href="/tb/logout" data-text=""> <i class="fa-solid fa-power-off"></i> 로그아웃
+						</a></li>
+					</ul>
+				</div>
+				</div>
+			</nav>
+		</aside>
+
+	    <div id="content">
+
+	        <main id="body">
+	            <div id="content">
+				
+				<body>
+				<div class="noticbox w-800">
+					<div class="row">
+						
 						<!-- Calendar container -->
 						<div class="calendar-header" style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-							<button class="button" id="prevBtn" style="margin: 0 5px;">
-								<i class="fa-solid fa-chevron-left"></i>
-							</button>
-							<h2 id="calendarTitle" style="margin: 0 10px; font-size: 1.5em; display:none;"></h2>
-							<button class="button" id="nextBtn" style="margin: 0 5px;">
-								<i class="fa-solid fa-chevron-right"></i>
-							</button>
+						    <button class="button" id="prevBtn" style="margin: 0 5px;">
+						        <i class="fa-solid fa-chevron-left"></i>
+						    </button>
+						    <div class="row noticname">사원 근무 시간 기록 현황</div>
+						    <h2 id="calendarTitle" style="margin: 0 10px; font-size: 1.5em; display: none;"></h2>
+						    <button class="button" id="nextBtn" style="margin: 0 5px;">
+						        <i class="fa-solid fa-chevron-right"></i>
+						    </button>
 						</div>
 					</div>
 					<hr class="row mt-15 mb-50">
@@ -247,33 +267,26 @@
 								</tr>
 							</thead>
 							<tbody class="tbody">
-								<c:choose>
-									<c:when test="${list.isEmpty()}">
-										<tr class="row center">
-											<td colspan="4">결과가 존재하지 않습니다</td>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach var="AttendanceSummaryVO" items="${list}">
-											<tr class="center">
-												<td>${AttendanceSummaryVO.loginID}</td>
-												<td>${AttendanceSummaryVO.daysWorked}</td>
-												<td>
-													<table style="all: unset; border: none;">
-														<tbody>
-															<c:forEach var="day" items="${AttendanceSummaryVO.checkInDates}">
-																<tr>
-																	<td style="padding: 4px;">${day}</td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-												</td>
-												<td>${AttendanceSummaryVO.totalWorkTime}</td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose>
+								<c:if test="${list != null}">
+								    <c:forEach var="AttendanceSummaryVO" items="${list}">
+								        <tr class="center">
+								            <td>${AttendanceSummaryVO.loginID}</td>
+								            <td>${AttendanceSummaryVO.daysWorked}</td>
+								            <td>
+								                <table style="all: unset; border: none;">
+								                    <tbody>
+								                        <c:forEach var="day" items="${AttendanceSummaryVO.checkInDates}">
+								                            <tr>
+								                                <td style="padding: 4px;">${day}</td>
+								                            </tr>
+								                        </c:forEach>
+								                    </tbody>
+								                </table>
+								            </td>
+								            <td>${AttendanceSummaryVO.totalWorkTime}</td>
+								        </tr>
+								    </c:forEach>
+								</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -309,7 +322,7 @@
 				function() {
 					calendar.prev();
 					const currentDate = calendar.getDate(); // 현재 날짜 객체를 얻습니다
-					const month = currentDate.getMonth()+1; // 월은 0부터 시작하므로 1을 추가합니다.
+					const month = currentDate.getMonth() + 1; // 월은 0부터 시작하므로 1을 추가합니다.
 					const year = currentDate.getFullYear();
 					console.log(month);
 					console.log(year);

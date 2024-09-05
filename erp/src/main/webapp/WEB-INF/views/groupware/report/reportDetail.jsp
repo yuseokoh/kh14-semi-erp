@@ -153,7 +153,7 @@
                                                 Swal.showLoading();
                                             },
                                             willClose: () => {
-                                                location.href = '/home';
+                                                location.href = '/report/mylist?loginId=${sessionScope.createdUser}';
                                             },
                                             customClass: {
                                                 title: 'custom-title',

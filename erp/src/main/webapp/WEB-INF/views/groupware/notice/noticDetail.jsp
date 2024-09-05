@@ -255,7 +255,7 @@
 
 		<c:if test="${isLogin}">
 			<c:if test="${isOwner}">
-				<a class="btn btn-negative btn-edit " href="noitcEdit?noticeNo=${noticeDto.noticeNo}" >수정</a>
+				<a class="btn btn-negative btn-edit " href="noticEdit?noticeNo=${noticeDto.noticeNo}" >수정</a>
 			</c:if>
 			<c:if test="${isOwner || isAdmin}">
 				<a class="btn btn-negative btn-delete"  href="delete?noticeNo=${noticeDto.noticeNo}">삭제</a>

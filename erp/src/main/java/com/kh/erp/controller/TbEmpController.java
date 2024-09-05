@@ -135,7 +135,10 @@ public class TbEmpController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestParam String loginId, @RequestParam String password, HttpSession session) {
+	public String login(@RequestParam(required = false) String loginId, @RequestParam(required = false) String password, HttpSession session) {
+		if(loginId == null || password == null) {
+			return "redirect:login?error";
+		}
 		// 아이디에 해당하는 정보를 불러와서 없으면 에러
 		TbEmpDto tbEmpDto = tbEmpDao.selectOneWithPW(loginId, password);
 		if (tbEmpDto == null)

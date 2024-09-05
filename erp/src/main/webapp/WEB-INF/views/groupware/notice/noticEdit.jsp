@@ -28,9 +28,9 @@
      <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
      <link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
 	
-	<form action="noticEdit" method="post" autocomplete="off">
-		<input type="hidden" name="noticeNo" value="${noticeDto.noticeNo }">
-	</form>
+<!-- 	<form action="noticEdit" method="post" autocomplete="off"> -->
+<%-- 		<input type="hidden" name="noticeNo" value="${noticeDto.noticeNo }"> --%>
+<!-- 	</form> -->
 	
     <style>
           .note-editable {
@@ -101,6 +101,9 @@
     <!-- <script src="alert.js"></script> -->
   
     <!-- chart js -->
+    <form action="noticEdit" method="post" autocomplete="off">
+		<input type="hidden" name="noticeNo" value="${noticeDto.noticeNo }">
+	</form>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 자바스크립트 코드 작성 영역 -->
     <script type="text/javascript">

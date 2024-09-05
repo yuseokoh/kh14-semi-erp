@@ -286,34 +286,7 @@
                                     <input type="text" class="form title1" name="noticeTitle">
                                 </div>
                         </div>
-                        <div class="row flex-box" style="margin-top: 20px;">
-                            <div>
-                                <label>작성자</label>
-                                <input type="text" class="form w-20" name="noticeWriter">
-                            </div>
-                    </div>
-                       
-                        <div class="row" style="margin-top: 20px;">
-                            <div>
-                                <label>직급</label>
-                                <select class="form w-60" >
-                                    <option value="" class="text-secondary" >직급</option>
-                                    <option value="어쩌고">어쩌고</option>
-                                    <option value="저쩌고">저쩌고</option>
-                                    <option value="직급">직급</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label>부서</label>
-                                <select class="form w-60" >
-                                    <option value="" class="text-secondary" >부서</option>
-                                    <option value="어쩌고">어쩌고</option>
-                                    <option value="저쩌고">저쩌고</option>
-                                    <option value="부서">부서</option>
-                                </select>
-                            </div>
-                        </div>
-               
+
                        
                         <div class="row flex-box"  style="position: relative; margin-top: 50px;">
                             <div>

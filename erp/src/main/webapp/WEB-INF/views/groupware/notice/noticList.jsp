@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항</title>
-
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,6 +87,8 @@
 
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+
   
   <!-- 자바스크립트 코드 작성 영역 -->
   <script type="text/javascript">
@@ -219,31 +224,67 @@
 
 
 
+
         <!-- 공지사항 리스트 작성 -->
                     <body>
                         <div class="noticbox w-1200">
-                               <div class="row notice">
-                                   <div class="row noticname">공지사항</div>
-                                   
-                                   <div class="actions">
-                                       <select class="row actions1" style="flex-grow: 1;">
-                                           <option value="">작성일</option>
-                                           <option value="" class="row">제목</option>
-                                           <option value="">작성자</option>
-                                       </select>
-                                       <div class="row search" style="flex-grow: 1;">
-                                           <input class="row"/>
-                                       </div>
-                                       <button type="button" class="search button" style="flex-grow: 1;">검색</button>
-                                   </div>
-                               </div>
-                       
-                       
-                               <div class="tb-box">
-                                   <table>
-    <thead>
+
+							
+							<!-- 검색창 -->
+<form action="noticList" method="get" autocomplete="off">
+									   
+	<div class="row notice">
+	<div class="row noticname">공지사항</div>
+	<div class="actions" name="column">
+		<select name="column" class="row actions1"  style="flex-grow: 1;">
+			<option value="notice_Title" <c:if test="${param.column == 'notice_Title'}">selected</c:if>>제목</option>
+            <option value="notice_Writer" <c:if test="${param.column == 'notice_Writer'}">selected</c:if>>작성자</option>
+        </select>
+		<div class="row search" style="flex-grow: 1;">
+			<input type="text" name="keyword" value="${param.keyword}" class="row">
+		</div>
+		<button type="submit" class="search button" style="flex-grow: 1;">검색</button>
+    </div>
+</div>
+
+	
+</form>
+<!-- 결과 화면 -->
+    <div class="tb-box">
+        <table class="tb">
+       
+            <tbody class="tbody">
+                <c:choose>
+                    <c:when test="${noticList.isEmpty()}">
+                        <%-- 결과가 없을 때 --%>
+                        <tr>
+                            <td colspan="5">결과가 존재하지 않습니다</td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <%-- 결과가 있을 때 --%>
+                        <c:forEach var="noticeDto" items="${noticList}">
+                        <tr class="row center">
+                        	
+                        
+                            <td>${noticeDto.noticeWriter}</td>
+                            <td>${noticeDto.noticeTitle}</td>
+                        </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                
+            </tbody>
+        </table>
+
+    </div>
+
+           
+
+   <div class="tb-box">
+      <table>
+   	 <thead>
         <tr>
-            <th>선택</th>
             <th>작성일</th>
             <th>제목</th>
             <th>작성자</th>
@@ -252,11 +293,11 @@
     </thead>
     <tbody class="tbody">
         <c:forEach var="notice" items="${noticeList}">
-            <tr class="row center">
-                <td><input type="checkbox" class="check-item"></td>
-                <td>${notice.noticeWtime}</td>
-                <td class="name">${notice.noticeTitle}</td>
-                <td>${notice.noticeWriter}</td>
+            <tr class="row center">   
+                <td>${notice.noticeWtimeString}</td>
+               <td class="name"><a href="noticDetail?noticeNo=${notice.noticeNo}"> ${notice.noticeTitle}</a></td>
+                <td>${notice.noticeWriterString}</td>
+
                 <td>${notice.noticeViews}</td>
             </tr>
         </c:forEach>
@@ -265,14 +306,16 @@
                                    
                        
                                    <div class="flex-box ">
-                                    <div class="row left">
-                                        <button type="button" class="btn btn-delete " onclick="showDeleteConfirmation()" >삭제</button>
+                                                               <div class="row left">
+												<a href="noticInsert" class="btn btn-neutral" style="color: rgba(255, 0, 0, 0); background-color: rgb(220, 220, 220) !important; border: 0px solid rgb(220, 220, 220) !important;" >글쓰기</a>	
                                     </div>
                                     <div class="row center">
-                                                                 <jsp:include page="/WEB-INF/views/template/navigator2.jsp"></jsp:include> 
+
+                                <jsp:include page="/WEB-INF/views/template/navigator5.jsp"></jsp:include> 
+
                                     </div>
                                     <div class="row right">
-                                        <button type="button" class="btn btn-write" onclick="showAlert()">글작성</button>
+												<a href="noticInsert" class="btn btn-neutral">글쓰기</a>	
                                     </div>
                                 </div>
                        
@@ -280,7 +323,7 @@
                        
                        
                                </div>
-                       
+                       			</div>
                                </div>
                            </div>
                        </body>

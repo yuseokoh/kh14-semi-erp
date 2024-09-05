@@ -492,35 +492,48 @@
                        <hr class="row mt-15 mb-50">
                        
                                <div class="tb-box">
-                                   <table class="tb">
-                                       <thead>
-                                           <tr>
-                                               <th>선택</th>
-                                               <th>작성일</th>
-                                               <th>제목</th>
-                                               <th>작성자</th>
-                                               <th>조회수</th>
-                                           </tr>
-                                       </thead>
-                                       <tbody class="tbody">
-                                        <tr class="row center">
-                                               <td><input type="checkbox" class="check-item"></td>
-                                               <td>${게시판Dto.게시판작성자}</td>
-                                               <td class="name">${게시판Dtto.게시판제목}</td>
-                                               <td>${게시판Dto.게시판작성자}</td>
-                                               <td>${게시판Dto.게시판조회수}</td>
-                                           </tr>
-                                       </tbody>
-                                       <tbody lass="tbody">
-                                        <tr class="row center">
-                                               <td><input type="checkbox" class="check-item"></td>
-                                               <td>연습용</td>
-                                               <td class="name">실제적용시</td>
-                                               <td>위에 tbody부터 </td>
-                                               <td>아래tbody까지 지워야함</td>
-                                           </tr>
-                                       </tbody>
-                                   </table>
+                                  <!-- 글목록 -->
+<table border="1" width="800">
+	<thead>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>조회수</th>
+			<th>좋아요</th>
+		</tr>
+	</thead>
+	<tbody align="center">
+		<c:forEach var="boardDto" items="${boardList}">
+		<tr>
+			<td>${boardDto.boardNo}</td>
+			<td align="left">
+				<!-- 제목에 링크를 부여해서 상세 페이지로 이동하도록 구현 -->
+				<a href="detail?boardNo=${boardDto.boardNo}">${boardDto.boardTitle}</a>
+			</td>
+			<td>
+				<%--
+				<c:choose>
+					<c:when test="${boardDto.boardWriter == null}">
+						탈퇴한사용자
+					</c:when>
+					<c:otherwise>${boardDto.boardWriter}</c:otherwise>
+				</c:choose>
+				 --%>
+				 ${boardDto.boardWriterString}
+			</td>
+			<td>${boardDto.boardWtimeString}</td>
+			<td align="right">
+				<fmt:formatNumber value="${boardDto.boardViews}" pattern="#,##0"/>
+			</td>
+			<td align="right">
+				<fmt:formatNumber value="${boardDto.boardLikes}" pattern="#,##0"/>
+			</td>
+		</tr>
+		</c:forEach>
+	</tbody>
+</table>
                        
                                    <div class="flex-box ">
                                        <div class="row left">

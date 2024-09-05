@@ -279,25 +279,7 @@
 
     </div>
 
-
-                               <div class="row notice">
-                                   <div class="row noticname">공지사항</div>
-                                   
-                                   <div class="actions">
-                                       <select class="row actions1" style="flex-grow: 1;">
-                                           <option value="">작성일</option>
-                                           <option value="" class="row">제목</option>
-                                           <option value="">작성자</option>
-                                       </select>
-                                       <div class="row search" style="flex-grow: 1;">
-                                           <input class="row"/>
-                                       </div>
-                                       <button type="button" class="search button" style="flex-grow: 1;">검색</button>
-                                   </div>
-                               </div>
-
-                       
-                       
+           
 
    <div class="tb-box">
       <table>

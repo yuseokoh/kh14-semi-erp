@@ -39,8 +39,7 @@ public class HomeController {
 	// 로그인 페이지로 리디렉션
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String redirectToLogin(HttpSession session) {
-		String loginId = (String) session.getAttribute("createdUser");
-		if(loginId!=null)return "redirect:/home";
+		
 		return "redirect:/tb/login";
 	}
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -428,7 +429,11 @@
 <!--             </div> -->
 
             <!-- 비밀번호 찾기 여기까지-->
-
+<c:if test="${param.error!=null}">
+    	<div class="row center">
+        <h3 style="color:red" class="field">아이디 또는 비밀번호가 잘못되었습니다</h3>
+    </div>
+ </c:if> 
             <button class="btn" type="submit">Login</button>
 
             <!-- 회원가입 모달 시작-->
@@ -531,7 +536,7 @@
             <button class="submit1" type="submit">Submit</button>
             <p class="signin1">Already have an account ? <a href="#">Sign in</a> </p>
         </form>
-
+		
     </div>
 </body>
 

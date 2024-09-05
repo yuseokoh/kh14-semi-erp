@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kh.erp.interceptor.AdminInterceptor;
 import com.kh.erp.interceptor.EmpInterceptor;
+import com.kh.erp.interceptor.LoginInterceptor;
 
 
 @Configuration
@@ -15,6 +16,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer  {
 	private AdminInterceptor adminInterceptor;
 	@Autowired
 	private EmpInterceptor empInterceptor;
+	@Autowired
+	private LoginInterceptor loginInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -33,6 +36,13 @@ public class InterceptorConfiguration implements WebMvcConfigurer  {
 		registry.addInterceptor(adminInterceptor)
 				.addPathPatterns(
 							"/admin/**"//모든 admin 페이지
+						);
+		registry.addInterceptor(loginInterceptor)
+				.addPathPatterns(
+							"/"//로그인페이지
+						)
+				.excludePathPatterns(
+							"/tb/*"//모든 tb페이지
 						);
 	}
 	

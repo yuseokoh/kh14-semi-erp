@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항 상세보기</title>
+    <title>메인홈페이지</title>
 
     <!-- google font cdn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
      <!-- 프로젝트 스타일 --> 
      <link rel="stylesheet" type="text/css" href="/css/gotowork.css">
      <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
+     <link rel="stylesheet" type="text/css" href="/css/notic.css">
      <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
      <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
@@ -230,40 +230,6 @@ p{
 <script src="/js/delete.js"></script>
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="text/javascript">
-
-  //메인화면 차트 
-    $(function(){
-            //차트를 그릴 대상 선택
-            var ctx = document.querySelector(".my-chart");
-            //차트 생성 코드
-            //new Chart(캔버스태그, {옵션객체});
-            new Chart(ctx, {
-                type: 'bar',//차트 유형(bar/pie/doughnut/line)
-                data: {//차트에 표시될 데이터
-
-                    //label은 차트에 표시되는 항목(x축)
-                    labels: ['재고', '관리', '그래프', '자리'],
-
-                    //실제로 차트에 표시될 값
-                    datasets: [
-                        {
-                            label: '재고 수',//범례
-                            data: [2, 2, 2, 1],//데이터
-                            borderWidth: 1//디자인 속성(테두리 두께)
-                        },
-                    ]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true//차트를 0부터 표기
-                        }
-                    }
-                }
-            });
-        });
-    </script>
 
 </head>
 <body>  
@@ -321,7 +287,7 @@ p{
 							<li><a href="/res/list">회의실 예약</a></li>
 						</ul></li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+					<li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
 					</a>
 						<ul>
 							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>

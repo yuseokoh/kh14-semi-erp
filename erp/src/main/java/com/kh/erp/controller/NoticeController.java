@@ -119,7 +119,7 @@ public class NoticeController {
             documentService.delete(documentNo);
         }
         boolean result = noticeDao.delete(noticeNo);
-        return "redirect:notic";
+        return "redirect:noticList";
     }
 
     // 수정 페이지

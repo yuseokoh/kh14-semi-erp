@@ -1,8 +1,8 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +27,9 @@
 <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
+<link rel="stylesheet" type="text/css" href="/css/alertA.css">
+<link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
+
 
 <style>
 /* 비활성화된 스타일 */
@@ -83,15 +86,20 @@
 }
 
 .reject {
-	text-decoration: none; /* 밑줄 제거 */
-	display: inline-block; /* 한줄에 여러개 배치 + 폭 설정 가능하게 */
-	font-size: 16px; /* 입력창과 동일하게 */
-	padding: 0.5em 0.75em; /*입력창과 동일하게*/
+	text-decoration: none;
+	/* 밑줄 제거 */
+	display: inline-block;
+	/* 한줄에 여러개 배치 + 폭 설정 가능하게 */
+	font-size: 16px;
+	/* 입력창과 동일하게 */
+	padding: 0.5em 0.75em;
+	/*입력창과 동일하게*/
 	color: #2d3436;
 	background-color: #dfe6e9;
 	border: 1px solid #2d3436;
 	border-radius: 0.2em;
-	cursor: pointer; /* 커서모양 변경 */
+	cursor: pointer;
+	/* 커서모양 변경 */
 	text-align: center;
 	line-height: 1.2;
 	border-color: #636e72;
@@ -133,49 +141,52 @@
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- 전자 서명 -->
 <script type="text/javascript">
-	    	 $(function () {
-				
-				//여기서 정리를 해야할거 같은데 어떻게할지.. 아마 이걸로 정리해야할 듯
-				if(document.getElementById("canvas")){
-	             var canvas = document.getElementById("canvas");
-	             var context = canvas.getContext("2d");
-				 var clearButton = document.getElementById("clearButton");
-	             var signatureImage = document.getElementById("signatureImage");
+        $(function() {
 
-	             var drawing = false;
+            //여기서 정리를 해야할거 같은데 어떻게할지.. 아마 이걸로 정리해야할 듯
+            if (document.getElementById("canvas")) {
+                var canvas = document.getElementById("canvas");
+                var context = canvas.getContext("2d");
+                var clearButton = document.getElementById("clearButton");
+                var signatureImage = document.getElementById("signatureImage");
 
-	             canvas.addEventListener("mousedown", () => {
-	             drawing = true;
-	             context.beginPath();
-	             });
+                var drawing = false;
 
-	             canvas.addEventListener("mousemove", (event) => {
-	             if (!drawing) return;
+                canvas.addEventListener("mousedown", () => {
+                    drawing = true;
+                    context.beginPath();
+                });
 
-	   var x = event.clientX - canvas.getBoundingClientRect().left;
-	   var y = event.clientY - canvas.getBoundingClientRect().top;
-	   context.lineTo(x, y);
-	   context.stroke();
-	 });
+                canvas.addEventListener("mousemove", (event) => {
+                    if (!drawing) return;
 
-	 canvas.addEventListener("mouseup", () => {
-	   drawing = false;
-	   context.closePath();
-	 });
+                    var x = event.clientX - canvas.getBoundingClientRect().left;
+                    var y = event.clientY - canvas.getBoundingClientRect().top;
+                    context.lineTo(x, y);
+                    context.stroke();
+                });
 
-	 clearButton.addEventListener("click", () => {
-	   context.clearRect(0, 0, canvas.width, canvas.height);
-	 });
+                canvas.addEventListener("mouseup", () => {
+                    drawing = false;
+                    context.closePath();
+                });
 
-	 
-	 
-	 }else{
-		$('#clearButton').hide();
-	 }
-	         });
-	</script>
+                clearButton.addEventListener("click", () => {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                });
+
+
+
+            } else {
+                $('#clearButton').hide();
+            }
+        });
+    </script>
 
 
 <!-- 자바스크립트 코드 작성 영역 -->
@@ -191,111 +202,134 @@
                 numberOfColumns: 2, //한줄에 표시할 월의 수
             });
 
-			
-			const approNo = $('[name=approNo]').val();
-			
+
+            const approNo = $('[name=approNo]').val();
+
             // 반려 버튼 클릭 시 동작
             $('.reject').on('click', function() {
                 // 휴가 사유 라벨을 반려 사유 라벨로 변경
                 $('.reason-label').text('반려 사유');
-                
+
                 // 휴가 사유 textarea 숨기고 반려 사유 textarea 보이기
                 $('.reason-textarea').addClass('hidden').prop('disabled', true);
                 $('.reject-reason-textarea').removeClass('hidden').prop('disabled', false);
 
                 // 휴가신청 버튼을 수정완료 버튼으로 변경
-				$(this).hide();
-				$('#rejectComplete').removeClass('hidden');
-				$('.submit').addClass('hidden'); // 기안 버튼 숨기기
+                $(this).hide();
+                $('#rejectComplete').removeClass('hidden');
+                $('.submit').addClass('hidden'); // 기안 버튼 숨기기
             });
-			
-			
-			
-			
-			
-			// 반려완료 버튼 클릭 시 동작
-				    $('#rejectComplete').on('click', function() {
-				        var signatureDataURL = canvas.toDataURL("image/png");
-				        signatureImage.src = signatureDataURL;
-				        const isConfirmed = window.confirm('정말로 반려하시겠습니까?');
 
-				        // textarea가 제대로 표시되고 있는지 확인
-				        if (!$('.reject-reason-textarea').hasClass('hidden')) {
-				            const rejectReason = $('.reject-reason-textarea').val();
-				            console.log(rejectReason);
 
-				            if (isConfirmed) {
-				                $.ajax({
-				                    url: "/rest/document/sign",
-				                    method: "POST",
-				                    data: {
-				                        signatureDataURL: signatureDataURL,
-				                        rejectReason: rejectReason,
-				                        approNo: approNo
-				                    },
-				                    success: function(response) {
-				                        alert("저장했습니다");
-				                        $.ajax({
-											//아마여기수정하면될듯?
-				                            url: "/rest/vacation/reject",
-				                            method: "POST",
-				                            data: {
-				                                rejectReason: rejectReason,
-				                                approNo: approNo
-				                            },
-				                            success: function() {
-												location.reload(); // 페이지 새로고침
-				                            }
-				                        });
-				                    }
-				                });
-				            }
-				        }
-				    });
-			
-			
-			
-			
-			
-			
-			
-			
-			// 기안 버튼 클릭 시 동작
-				    $(".submit").on("click", function() {
-							var signatureDataURL = canvas.toDataURL("image/png");
-							signatureImage.src = signatureDataURL;
-							console.log(signatureDataURL);
-				        
-						$.ajax({
-						    url: "/rest/document/sign",
-						    method: "POST",
-						    data: {
-						        signatureDataURL: signatureDataURL,
-						        rejectReason: rejectReason,
-						        approNo: approNo
-						    },
-						    success: function(response) {
-						        alert("저장했습니다");
-						        $.ajax({
-						            url: "/rest/vacation/reject",
-						            method: "POST",
-						            data: {
-						                rejectReason: rejectReason,
-						                approNo: approNo
-						            },
-						            success: function() {
-										alert("승인 완료!");
-						                location.reload(); // 페이지 새로고침
-						            },
-						        });
-						    },
-						});
-				    });
-			
-			
+
+
+
+            // 반려완료 버튼 클릭 시 동작
+            $('#rejectComplete').on('click', function() {
+                var signatureDataURL = canvas.toDataURL("image/png");
+                signatureImage.src = signatureDataURL;
+                const isConfirmed = window.confirm('정말로 반려하시겠습니까?');
+
+                // textarea가 제대로 표시되고 있는지 확인
+                if (!$('.reject-reason-textarea').hasClass('hidden')) {
+                    const rejectReason = $('.reject-reason-textarea').val(); // 입력값
+
+                    if (isConfirmed && rejectReason != null) { // 확인을 눌렀고 반려 사유가 입력된 경우
+                        $.ajax({
+                            url: "/rest/document/sign",
+                            method: "POST",
+                            data: {
+                                signatureDataURL: signatureDataURL,
+                                rejectReason: rejectReason,
+                                approNo: approNo
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    title: '저장 완료',
+                                    text: '서명이 저장되었습니다.',
+                                    icon: 'success',
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    customClass: {
+                                        title: 'custom-title',
+                                        popup: 'custom-background',
+                                        confirmButton: 'custom-button'
+                                    }
+                                }).then(() => {
+                                    $.ajax({
+                                        url: "/rest/vacation/reject",
+                                        method: "POST",
+                                        data: {
+                                            rejectReason: rejectReason,
+                                            approNo: approNo
+                                        },
+										success: function() {
+										    location.reload(); // 페이지 새로고침
+										}
+                                    });
+                                });
+                            }
+                        });
+                    } else { // 반려 사유가 입력되지 않은 경우
+                        Swal.fire({
+                            title: '입력 오류',
+                            text: '반려 사유를 입력해 주세요.',
+                            icon: 'warning',
+                            customClass: {
+                                title: 'custom-title',
+                                popup: 'custom-background',
+                                confirmButton: 'custom-button'
+                            }
+                        });
+                    }
+                }
+            });
+
+            // 기안 버튼 클릭 시 동작
+            $(".submit").on("click", function() {
+                var signatureDataURL = canvas.toDataURL("image/png");
+                            signatureImage.src = signatureDataURL;
+
+                var signatureDataURL = canvas.toDataURL("image/png");
+                signatureImage.src = signatureDataURL;
+                console.log(signatureDataURL);
+
+                $.ajax({
+                    url: "/rest/document/sign",
+                    method: "POST",
+                    data: {
+                        signatureDataURL: signatureDataURL,
+                        approNo: approNo
+                    },
+                    success: function(response) {
+                        // 첫 번째 AJAX 요청이 성공한 후
+                        $.ajax({
+                            url: "/rest/vacation/deducted",
+                            method: "POST",
+                            data: {
+                                approNo: approNo
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                Swal.fire({
+                                	title: '저장했습니다',
+                                    icon: 'success',
+                                    timer: 1500, // 1500ms (1.5초) 후에 자동으로 닫힘
+                                    timerProgressBar: true, // 타이머 진행 바 표시
+                                    willClose: () => {
+                                        // 타이머가 끝난 후 페이지 새로 고침
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 </head>
+
 <body>
 	<header id="header">
 		<div id="menuToggle">
@@ -344,7 +378,7 @@
 
 
 			<!-- 사이드바-->
-			<div class="row">
+			<div class="row" style="display: initial !important;">
 				<ul class="menu-hover-fill">
 					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
 					</a></li>
@@ -357,7 +391,7 @@
 							<li><a href="/res/list">회의실 예약</a></li>
 						</ul></li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+					<li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
 					</a>
 						<ul>
 							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
@@ -368,12 +402,10 @@
 					</a></li>
 
 					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}" data-text=""> <i class="fa-solid fa-id-card"></i> mypage
-					</a>
-						</li>
+					</a></li>
 
 					<li><a href="/groupware/notice/noticList" data-text=""> <i class="fa-solid fa-comment"></i> 공지사항
-					</a>
-					</li>
+					</a></li>
 
 					<c:if test="${sessionScope.userType == 'A'}">
 						<li><a href="#" data-text=""> <i class="fa-solid fa-gears"></i> 관리자
@@ -411,11 +443,11 @@
 								<tr>
 									<th><c:choose>
 											<c:when test="${tbEmpApprovalDto.approBosName == null}">
-																			        직급
-																			    </c:when>
+                                                직급
+                                            </c:when>
 											<c:otherwise>
-																			        ${tbEmpApprovalDto.approBosName}
-																			    </c:otherwise>
+                                                ${tbEmpApprovalDto.approBosName}
+                                            </c:otherwise>
 										</c:choose></th>
 								</tr>
 							</thead>
@@ -485,9 +517,11 @@
 							<label class="reason-label">휴가 사유</label>
 							<textarea class="field w-100 form reason-textarea" disabled rows="3" style="padding-right: 100px;">${tbEmpVacaReqDto.vacaReason}</textarea>
 							<textarea class="field w-100 form hidden reject-reason-textarea" name="rejectReason" disabled rows="3" style="padding-right: 100px;" placeholder="반려 사유를 입력하세요."></textarea>
-							<button type="button" class="reject flex-core">반려</button>
-							<button type="button" class="flex-core btn-warning hidden " id="rejectComplete">반려완료</button>
-							<button type="button" class="btn btn-positive submit flex-core">휴가승인</button>
+							<c:if test="${tbEmpApprovalDto.approBosName == null || tbEmpApprovalDto.approBosId == null}">
+								<button type="button" id="reject" class="reject flex-core">반려</button>
+								<button type="button" class="flex-core btn-warning hidden" id="rejectComplete" style="padding: 0.5em 0.75em;">반려완료</button>
+								<button type="button" class="btn btn-positive submit flex-core">휴가 승인</button>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -497,4 +531,5 @@
 		</main>
 	</div>
 </body>
+
 </html>

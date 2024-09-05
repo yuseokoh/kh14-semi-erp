@@ -29,7 +29,6 @@
     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
 
-
     <style>
         .btn-write {
             background-color: #99c2ff !important;
@@ -73,6 +72,9 @@
     <script src="/js/menuToggle.js"></script>
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
+	<!-- SweetAlert2 CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -126,8 +128,8 @@
 
 
             <!-- 사이드바-->
-			<div class="row">
-				<ul class="menu-hover-fill">
+			<div class="row" style="display:initial !important;">
+				<ul class="menu-hover-fill" style="display:initial !important;">
 					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
 					</a></li>
 
@@ -139,7 +141,7 @@
 							<li><a href="/res/list">회의실 예약</a></li>
 						</ul></li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+					<li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
 					</a>
 						<ul>
 							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>

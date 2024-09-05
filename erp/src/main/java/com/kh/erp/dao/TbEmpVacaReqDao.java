@@ -34,50 +34,49 @@ public class TbEmpVacaReqDao {
 	public void insert(TbEmpVacaReqDto tbEmpVacaReqDto) {
 		String sql = "INSERT INTO tb_VacaReq (vaca_No, applicantId, vaca_Tel, vaca_Title, vaca_Sdate, vaca_Edate, vaca_Type, vaca_Reason, appro_No) "
 				+ "VALUES (tb_VAcaReq_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] data = { tbEmpVacaReqDto.getApplicantId(), tbEmpVacaReqDto.getVacaTel(),
-				tbEmpVacaReqDto.getVacaTitle(), tbEmpVacaReqDto.getVacaSdate(), tbEmpVacaReqDto.getVacaEdate(),
-				tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaReason(), tbEmpVacaReqDto.getApproNo() };
+		Object[] data = { tbEmpVacaReqDto.getApplicantId(), tbEmpVacaReqDto.getVacaTel(), tbEmpVacaReqDto.getVacaTitle(),
+				tbEmpVacaReqDto.getVacaSdate(), tbEmpVacaReqDto.getVacaEdate(), tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaReason(),
+				tbEmpVacaReqDto.getApproNo() };
 		jdbcTemplate.update(sql, data);
 	}
 
 	// 휴가 신청서 검색(R) - 페이징 적용 // 정렬순서 pageVO 컬럼, vaca_No, vaca_Sdate(휴가 시작일) 기준
 	public List<TbEmpVacaReqDto> vacaReqListByPaging(PageVO pageVO) {
 		if (pageVO.isSearch()) {// 검색
-			String sql = "select * from (" + "select rownum rn, TMP.* from ("
-					+ "select * from tb_VacaReq where instr(#1, ?) > 0 "
+			String sql = "select * from (" + "select rownum rn, TMP.* from (" + "select * from tb_VacaReq where instr(#1, ?) > 0 "
 					+ "order by #1 asc, vaca_No asc, vaca_Sdate asc" + ")TMP" + ") where rn between ? and ?";
 			sql = sql.replace("#1", pageVO.getColumn());
 			Object[] data = { pageVO.getKeyword(), pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbEmpVacaReqMapper, data);
 		} else {// 목록
-			String sql = "select * from (" + "select rownum rn, TMP.* from ("
-					+ "select * from tb_VacaReq order by vaca_No asc, vaca_Sdate asc" + ")TMP"
-					+ ") where rn between ? and ?";
+			String sql = "select * from (" + "select rownum rn, TMP.* from (" + "select * from tb_VacaReq order by vaca_No asc, vaca_Sdate asc"
+					+ ")TMP" + ") where rn between ? and ?";
 			Object[] data = { pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbEmpVacaReqMapper, data);
 		}
 	}
 
-	// 수정(완)
-	public List<TbVacRecVO> selectVacaLogListByPaging(PageVO pageVO) {
-		if (pageVO.isSearch()) {// 검색
+	// 새로운 메소드
+	public List<TbVacRecVO> selectVacaListByPaging(PageVO pageVO, String loginId) {
+		if (pageVO.isSearch()) {
 			String sql = "SELECT * FROM ( " + "    SELECT rownum rn, TMP.* FROM ( "
 					+ "        SELECT v.vaca_ReqDate, v.vaca_Title, v.vaca_Type, v.vaca_No, "
-					+ "               a.appro_no, v.applicantId, a.appro_BosId, a.appro_BosName, a.appro_YN "
-					+ "        FROM tb_VacaReq v " + "        JOIN tb_Approval a ON v.appro_No = a.appro_No "
-					+ "        WHERE instr(#1, ?) > 0 " + " ORDER BY v.vaca_ReqDate desc, #1 ASC "
-					+ "    ) TMP " + ") WHERE rn BETWEEN ? AND ?";
+					+ "               a.appro_no, v.applicantId, a.appro_BosId, a.appro_BosName, a.appro_YN " + "        FROM tb_VacaReq v "
+					+ "        JOIN tb_Approval a ON v.appro_No = a.appro_No " + "        WHERE instr(#1, ?) > 0 " + "        AND v.applicantId = ? "
+					+ "        ORDER BY v.vaca_ReqDate DESC, #1 ASC " + "    ) TMP " + ") WHERE rn BETWEEN ? AND ?";
+
 			sql = sql.replace("#1", pageVO.getColumn());
-			Object[] data = { pageVO.getKeyword(), pageVO.getBeginRow(), pageVO.getEndRow() };
+
+			Object[] data = { pageVO.getKeyword(), loginId, pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbVacRecMapper, data);
-		} else {// 목록
+		} else {
 			String sql = "SELECT * FROM ( " + "    SELECT rownum rn, TMP.* FROM ( "
 					+ "        SELECT v.vaca_ReqDate, v.vaca_Title, v.vaca_Type, v.vaca_No, "
-					+ "               a.appro_no, v.applicantId, a.appro_BosId, a.appro_BosName, a.appro_YN "
-					+ "        FROM tb_VacaReq v " + "        JOIN tb_Approval a ON v.appro_No = a.appro_No "
-					+ "        ORDER BY v.vaca_ReqDate desc " + "   ) TMP "
-					+ ") WHERE rn BETWEEN ? AND ?";
-			Object[] data = { pageVO.getBeginRow(), pageVO.getEndRow() };
+					+ "               a.appro_no, v.applicantId, a.appro_BosId, a.appro_BosName, a.appro_YN " + "        FROM tb_VacaReq v "
+					+ "        JOIN tb_Approval a ON v.appro_No = a.appro_No " + "        WHERE v.applicantId = ? "
+					+ "        ORDER BY v.vaca_ReqDate DESC " + "   ) TMP " + ") WHERE rn BETWEEN ? AND ?";
+
+			Object[] data = { loginId, pageVO.getBeginRow(), pageVO.getEndRow() };
 			return jdbcTemplate.query(sql, tbVacRecMapper, data);
 		}
 	}
@@ -96,14 +95,16 @@ public class TbEmpVacaReqDao {
 //
 //	}
 
-	public int countPage(PageVO pageVO) {
+	public int countPage(PageVO pageVO, String loginId) {
 		if (pageVO.isSearch()) {
-			String sql = "select count(*) from tb_VacaReq where instr(" + pageVO.getColumn() + ",?) > 0";
-			Object[] data = { pageVO.getKeyword() };
+			String sql = "SELECT COUNT(*) FROM tb_VacaReq v " + "JOIN tb_Approval a ON v.appro_No = a.appro_No " + "WHERE v.applicantId = ? "
+					+ "AND instr(" + pageVO.getColumn() + " , ?) > 0";
+			Object[] data = { loginId, pageVO.getKeyword() };
 			return jdbcTemplate.queryForObject(sql, int.class, data);
 		} else {
-			String sql = "select count(*) from tb_VacaReq";
-			return jdbcTemplate.queryForObject(sql, int.class);
+			String sql = "SELECT COUNT(*) FROM tb_VacaReq v " + "JOIN tb_Approval a ON v.appro_No = a.appro_No " + "WHERE v.applicantId = ?";
+			Object[] data = { loginId };
+			return jdbcTemplate.queryForObject(sql, int.class, data);
 		}
 	}
 
@@ -117,9 +118,8 @@ public class TbEmpVacaReqDao {
 	public boolean updateContent(TbEmpVacaReqDto tbEmpVacaReqDto) {
 
 		String sql = "update tb_VacaReq set vaca_Reason = ?, vaca_Title = ?, vaca_type = ?, vaca_tel = ?, vaca_sdate = ?, vaca_edate = ?, vaca_ReqDate = sysdate where vaca_no = ? ";
-		Object[] data = { tbEmpVacaReqDto.getVacaReason(), tbEmpVacaReqDto.getVacaTitle(),
-				tbEmpVacaReqDto.getVacaType(), tbEmpVacaReqDto.getVacaTel(), tbEmpVacaReqDto.getVacaSdate(),
-				tbEmpVacaReqDto.getVacaEdate(), tbEmpVacaReqDto.getVacaNo() };
+		Object[] data = { tbEmpVacaReqDto.getVacaReason(), tbEmpVacaReqDto.getVacaTitle(), tbEmpVacaReqDto.getVacaType(),
+				tbEmpVacaReqDto.getVacaTel(), tbEmpVacaReqDto.getVacaSdate(), tbEmpVacaReqDto.getVacaEdate(), tbEmpVacaReqDto.getVacaNo() };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 

@@ -10,6 +10,7 @@ import com.kh.erp.VO.PageVO;
 import com.kh.erp.dto.NoticeDto;
 import com.kh.erp.mapper.NoticeDetailMapper;
 import com.kh.erp.mapper.NoticeListMapper;
+import com.kh.erp.mapper.NoticeMapper;
 
 @Repository
 public class NoticeDao {
@@ -21,18 +22,14 @@ public class NoticeDao {
 	@Autowired
 	private NoticeDetailMapper noticeDetailMapper;
 	
+	@Autowired
+	private NoticeMapper noticeMapper;
+	
 	//목록
 	public List<NoticeDto> selectList(){
 
-		String sql = "select "
-						+ "notice_no, notice_writer, notice_title,notice_cont, "
-						+ "notice_wtime, notice_utime, notice_views, notice_likes, "
-						+ "notice_replies "
-					+ "from notice order by notice_no desc";
-
-	
-
-		return jdbcTemplate.query(sql, noticeListMapper);
+		String sql = "select * from notice order by notice_no desc";
+		return jdbcTemplate.query(sql, noticeMapper);
 	}
 	//검색
 	public List<NoticeDto> selectList(String column, String keyword) {

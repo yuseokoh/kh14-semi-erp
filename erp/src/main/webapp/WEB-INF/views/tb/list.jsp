@@ -133,7 +133,7 @@
 
 
                 <!-- 사이드바-->
-			<div class="row">
+			<div class="row" style="display:initial !important;">
 				<ul class="menu-hover-fill">
 					<li><a href="/home" data-text="home"> <i class="fa-solid fa-house-user"></i> HOME
 					</a></li>
@@ -146,7 +146,7 @@
 							<li><a href="/res/list">회의실 예약</a></li>
 						</ul></li>
 
-					<li><a href="#" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
+					<li><a href="/stock/list" data-text=""> <i class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
 					</a>
 						<ul>
 							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>

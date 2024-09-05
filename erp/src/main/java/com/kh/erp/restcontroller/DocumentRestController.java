@@ -44,10 +44,6 @@ public class DocumentRestController {
 			@RequestParam String signatureDataURL) {
 		int documentNo = documentDao.sequence();
 		String loginId = (String) session.getAttribute("createdUser");
-		// 최종때에 지울 출력문 두개
-		System.out.println(loginId);
-		System.out.println(signatureDataURL);
-		System.out.println("앙기모띠 : "+rejectReason);
 		String base64Image = signatureDataURL;
 		DocumentDto documentDto = new DocumentDto();
 		documentDto.setDocumentName(loginId + documentNo);

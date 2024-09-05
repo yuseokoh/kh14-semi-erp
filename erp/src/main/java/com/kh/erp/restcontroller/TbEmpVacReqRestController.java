@@ -45,7 +45,7 @@ public class TbEmpVacReqRestController {
 		// 선검증
 		TbEmpApprovalDto tbEmpApprovalDto = tbEmpApprovalDao.selectOneByApproNo(tbEmpVacaReqDto.getApproNo());
 		if (tbEmpApprovalDto.getApplicantId().equals(loginId) && tbEmpApprovalDto.getApproYN().equals(approYN)
-				&& approYN.equals("N") && tbEmpVacaReqDto.getVacaType() != null) {
+				&& approYN.equals("N") && tbEmpVacaReqDto.getVacaType() != null && tbEmpVacaReqDto.getVacaReason().isEmpty()) {
 			// 검증 완료되면 업데이트
 			tbEmpVacaReqDao.updateContent(tbEmpVacaReqDto);
 			// 타입때문에 하나 더뱉어야댐..

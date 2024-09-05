@@ -109,34 +109,35 @@ $(document).ready(function() {
 });
     </script>
 
-<script type="text/javascript">
-    async function showAlert() {
-               // 첫 번째 알림창
-               const result = await Swal.fire({
-                   title: '<span class="custom-title">이메일 발송완료</span>',
-                   icon: 'success',
-                   customClass: {
-                       title: 'custom-title',
-                       popup: 'custom-background',
-                       confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
-                   }
-               });
-   			
-               // 첫 번째 알림창의 "확인" 버튼 클릭 시 두 번째 알림창 표시
-               if (result.isConfirmed) {
-                   await Swal.fire({
-                       title: '<span class="custom-title">이메일을 확인해주세요</span>',
-                       text: ' ',
-                       icon: 'success',
-                       customClass: {
-                           title: 'custom-title',
-                           popup: 'custom-background',
-                           confirmButton: 'custom-button' // "확인" 버튼 스타일 적용
-                       }
-                   });
-               }
-           }
-       </script>
+	<script type="text/javascript">
+	    async function showAlert() {
+	        // 첫 번째 알림창
+	        await Swal.fire({
+	            title: '<span class="custom-title">이메일 발송중</span>',
+	            icon: 'success',
+	            timer: 1500, // 1.5초 후 자동으로 닫힘
+	            timerProgressBar: true,
+	            customClass: {
+	                title: 'custom-title',
+	                popup: 'custom-background',
+	                confirmButton: 'custom-button'
+	            }
+	        }).then(() => {
+	            // 첫 번째 알림창이 닫힌 후 두 번째 알림창 표시
+	            Swal.fire({
+	                title: '<span class="custom-title">이메일을 확인해주세요</span>',
+	                text: ' ',
+	                icon: 'success',
+	                customClass: {
+	                    title: 'custom-title',
+	                    popup: 'custom-background',
+	                    confirmButton: 'custom-button'
+	                }
+	            });
+	        });
+	    }
+	</script>
+
 
 </head>
 

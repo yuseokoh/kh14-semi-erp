@@ -297,15 +297,7 @@ width: 100% !important;
         <div id="menuToggle"><i class="fa fa-bars"></i></div>
         <div id="logo">
 
-            <div class="bell-container">
-                <i class="fa-regular fa-bell bell-icon" id="bellIcon"></i>
-                <div class="notification-count" id="notificationCount">44</div>
-            </div>
-            <div class="notification" id="notification">
-                <button id="closeButton">×</button>
-                <p> 보고서 알림 어쩌고 값</p>
-                <p> 휴가신청서 알림 저쩌고 값</p>
-            </div>
+        
 
             <a href="#" class="notif-alert">
                 <i class="fa-solid fa-envelope email"></i></i>
@@ -395,7 +387,7 @@ width: 100% !important;
 		</nav>
 	</aside>
     
-    <div id="content" style="margin-top: 80px;">
+    <div id="content" style="margin-top: 8%;">
         <main id="body"> 
          <h2><a href="list"><i class="fa-solid fa-left-long"></i></a></h2>
  <!-- 내정보-->
@@ -478,7 +470,7 @@ width: 100% !important;
                 
                
 				<form action="/admin/emp/edit" method="post" autocomplete="off">
-                  <div class="row flex-box w-1200">
+                  <div class="row flex-box w-1200" >
                   <div id="editForm" class="edit-form">
                  	<input type="hidden" value="${tbEmpDto.loginId}" name="loginId">
                       <h3>정보 수정</h3>

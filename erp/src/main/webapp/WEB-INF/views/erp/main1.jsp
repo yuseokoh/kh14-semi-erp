@@ -231,15 +231,44 @@ p{
   <!-- chart js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+<script>
+        $(function() {
+            $('#bellIcon').on('click', function() {
+                $('#notification').toggleClass('show');
+            });
+            $('#closeButton').on('click', function() {
+                $('#notification').removeClass('show');
+            });
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#notification, #bellIcon').length) {
+                    $('#notification').removeClass('show');
+                }
+            });
+            function updateNotificationCount(count) {
+                $('#notificationCount').text(count);
+                $('#notificationCount').toggle(count > 0); 
+            }
+            updateNotificationCount(10); 
+        });
+    </script>
 </head>
 <body>  
     <header id="header">
         <div id="menuToggle"><i class="fa fa-bars"></i></div>
         <div id="logo">
-            <a href="#" class="notif-alert">
-                <i class="fa-solid fa-envelope email"></i></i>
-                <span class="notif-count content">0</span>
-            </a>
+        
+        
+        
+            <div class="bell-container">
+				<i class="fa-solid fa-envelope email" id="bellIcon"></i>
+				<div class="notification-count" id="notificationCount">5</div>
+			</div>
+			<div class="notification" id="notification">
+				<button id="closeButton">×</button>
+				<p>미구현 입니다.</p>
+			</div>
+            
             <a href="#"><i class="fa-solid fa-circle-user user"></i></a> 
         </div>
     </header>
@@ -326,7 +355,7 @@ p{
 		<main id="body">
 			<!-- <div id="content" style="margin-top: 200px;"> -->
 			<!-- 여기서부터 메인 화면의 콘텐츠가 시작됩니다. -->
-			<h2>${tbEmpDto.name}님환영합니다일하십쇼</h2>
+			<h2>${tbEmpDto.name}님환영합니다</h2>
 
 			<div class="row flex-box w-1200">
 				<div class="w-50 center">

@@ -160,8 +160,8 @@
                                 } else {
                                     Swal.fire({
                                         icon: 'error',
-                                        title: '서명된 페이지',
-                                        text: '이 페이지는 이미 서명되었습니다.',
+                                        title: '에러',
+                                        text: '이 페이지는 이미 서명되었거나 공란이 존재합니다',
                                         timer: 1500, // 1500ms = 1.5초 후 자동으로 닫힘
                                         timerProgressBar: true, // 타이머 진행 바 표시
                                         didOpen: () => {

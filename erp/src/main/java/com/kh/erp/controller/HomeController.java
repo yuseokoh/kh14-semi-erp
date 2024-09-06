@@ -18,6 +18,9 @@ import com.kh.erp.service.DateService;
 import com.kh.erp.service.NameChangeService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class HomeController {
@@ -37,8 +40,8 @@ public class HomeController {
 	private NoticeDao noticeDao;
 
 	// 로그인 페이지로 리디렉션
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String redirectToLogin(HttpSession session) {
+	@RequestMapping("/")
+	public String redirectToLogin() {
 		
 		return "redirect:/tb/login";
 	}

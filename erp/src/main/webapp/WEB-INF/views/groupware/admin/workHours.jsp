@@ -324,12 +324,9 @@
 					const currentDate = calendar.getDate(); // 현재 날짜 객체를 얻습니다
 					const month = currentDate.getMonth() + 1; // 월은 0부터 시작하므로 1을 추가합니다.
 					const year = currentDate.getFullYear();
-					console.log(month);
-					console.log(year);
 					if (month == null || year == null) {
 						const newUrl = new URL(
 								window.location.href.split('?')[0]);
-						console.log(newUrl);
 						window.location.href = newUrl.toString();
 					} else {
 						const newUrl = new URL(

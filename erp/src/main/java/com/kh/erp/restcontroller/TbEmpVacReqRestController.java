@@ -41,9 +41,7 @@ public class TbEmpVacReqRestController {
 	) {
 		String loginId = (String) session.getAttribute("createdUser");
 		tbEmpVacaReqDto.setApplicantId(loginId);
-		System.out.println(tbEmpVacaReqDto);
 		
-		System.out.println("approYN = " + approYN);
 
 		// 선검증
 		TbEmpApprovalDto tbEmpApprovalDto = tbEmpApprovalDao.selectOneByApproNo(tbEmpVacaReqDto.getApproNo());

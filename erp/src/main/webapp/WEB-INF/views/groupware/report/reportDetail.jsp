@@ -104,14 +104,7 @@
                         function() {
 
                             var reportContent = $('.reason-textarea').val();
-                            // 								console.log(reportContent);
-                            // 								$('.reason-textarea').addClass('hidden').prop(
-                            // 										'disabled', true);
-                            // 								$('#preview').removeClass('hidden').addClass(
-                            // 										'show').prop('disabled', true);
-                            // 								$(this).text('수정완료').addClass('hidden');
-
-                            //비동기통신해서 내용만 바꾸기
+                           
                             $.ajax({
                                 url: '/rest/report/update', // 요청할 URL
                                 type: 'POST', // 요청 방법 (GET, POST, PUT, DELETE 등)

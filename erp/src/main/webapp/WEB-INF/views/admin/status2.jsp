@@ -58,7 +58,6 @@ $.ajax({
     method:"post",
     success:function(response){
         //response는 객체 배열 형태[{...},{...}]
-        // console.log(response);
 
         //response를 두개로 분리
         var names = [];

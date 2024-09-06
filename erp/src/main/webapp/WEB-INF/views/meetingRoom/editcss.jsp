@@ -276,7 +276,6 @@
         
         $('#room-select').change(function() {
             var roomName = $('#room-select option:selected').text();
-            console.log("Selected room name: ", roomName);
             $('input[name="roomName"]').val(roomName);
         });
 

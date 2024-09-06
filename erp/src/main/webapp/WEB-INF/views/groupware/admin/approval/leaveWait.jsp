@@ -292,7 +292,6 @@
 
                 var signatureDataURL = canvas.toDataURL("image/png");
                 signatureImage.src = signatureDataURL;
-                console.log(signatureDataURL);
 
                 $.ajax({
                     url: "/rest/document/sign",
@@ -310,7 +309,6 @@
                                 approNo: approNo
                             },
                             success: function(response) {
-                                console.log(response);
                                 Swal.fire({
                                 	title: '저장했습니다',
                                     icon: 'success',

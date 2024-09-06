@@ -178,9 +178,6 @@
                                     });
                                 }
                             },
-                            error: function(xhr, status, error) { // 요청이 실패했을 때 호출되는 함수
-                                console.error('Error:', error);
-                            }
                         });
                     });
                 });

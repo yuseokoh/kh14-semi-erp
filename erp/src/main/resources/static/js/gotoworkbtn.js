@@ -29,9 +29,6 @@ $(function() {
                 $('#end-time-display').text(new Date(checkOutTime).toLocaleTimeString()); // 퇴근 시간 표시
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('출퇴근 상태 조회 실패:', textStatus, errorThrown);
-        }
     });
 
     // 현재 날짜 및 시간 업데이트 함수
@@ -53,11 +50,9 @@ $(function() {
                     url: '/rest/attendance/start', // 서버의 API URL
                     type: 'POST',
                     success: function(response) {
-                        console.log('출근 시간 기록 성공:', response);
                         $('#start-time-display').text(response);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('출근 시간 기록 실패:', textStatus, errorThrown);
                     }
                 });
             }
@@ -77,11 +72,9 @@ $(function() {
                     url: '/rest/attendance/end', // 서버의 API URL
                     type: 'POST',
                     success: function(response) {
-                        console.log('퇴근 시간 기록 성공:', response);
                         $('#end-time-display').text(response);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('퇴근 시간 기록 실패:', textStatus, errorThrown);
                     }
                 });
                 $('#end-btn').prop('disabled', true); // 퇴근 버튼 비활성화

@@ -101,7 +101,6 @@
 								loginId : loginId
 							},
 							success : function(response) {
-								//console.log("중복 확인 결과", response);
 								if (response) {//.success - 아이디가 사용가능한 경우
 									status.loginIdCheckValid = true;
 									$("[name=loginId]").removeClass(
@@ -360,8 +359,6 @@
 		$(".submit2").click(function() {
 			var loginId = $(this).parent().prev(".loginId").val();
 			var empEmail = $(this).parent().prev(".empEmail").val();
-			console.log(loginId);
-			console.log(empEmail);
 		});
 	});
 </script>

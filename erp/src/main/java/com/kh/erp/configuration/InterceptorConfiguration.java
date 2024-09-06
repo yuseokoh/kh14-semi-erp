@@ -23,27 +23,34 @@ public class InterceptorConfiguration implements WebMvcConfigurer  {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(empInterceptor)
 				.addPathPatterns(
-							"/tb/*",//모든 tb 페이지
-							"/home"
+						 "/home",
+                         "/groupware/",
+                         "/stock/",
+                         "/res/",
+                         "/vacation/",
+                         "/report/**",
+                         "/rest/**",
+                         "/api/**"
 									)
 				.excludePathPatterns(
 							"/tb/login",//로그인페이지
 							"/",//메인페이지
 							"/tb/findPw",//비밀번호찾기
 							"/tb/join",//가입
-							"/tb/resetPw"//비밀번호찾기 링크
+							"/tb/resetPw",//비밀번호찾기 링크
+							"/rest/emp/checkId"
 						);
 		registry.addInterceptor(adminInterceptor)
 				.addPathPatterns(
-							"/admin/**"//모든 admin 페이지
+							"/admin/**",//모든 admin 페이지
+							"/rest/vacation/deducted",
+							"/rest/report/reject",
+							"/rest/document/sign"
 						);
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns(
 							"/"//로그인페이지
-						)
-				.excludePathPatterns(
-							"/tb/*"//모든 tb페이지
+							
 						);
 	}
-	
 }

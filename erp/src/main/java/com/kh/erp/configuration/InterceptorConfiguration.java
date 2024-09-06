@@ -24,7 +24,12 @@ public class InterceptorConfiguration implements WebMvcConfigurer  {
 		registry.addInterceptor(empInterceptor)
 				.addPathPatterns(
 							"/tb/*",//모든 tb 페이지
-							"/home"
+							"/home",
+							"/groupware/**",
+							"/stock/**",
+							"/res/**",
+							"/vacation/**",
+							"/report/**"
 									)
 				.excludePathPatterns(
 							"/tb/login",//로그인페이지
@@ -40,10 +45,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer  {
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns(
 							"/"//로그인페이지
-						)
-				.excludePathPatterns(
-							"/tb/*"//모든 tb페이지
 						);
+				
 	}
 	
 }

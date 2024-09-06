@@ -37,8 +37,8 @@ public class HomeController {
 	private NoticeDao noticeDao;
 
 	// 로그인 페이지로 리디렉션
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String redirectToLogin(HttpSession session) {
+	@RequestMapping("/")
+	public String redirectToLogin() {
 		
 		return "redirect:/tb/login";
 	}

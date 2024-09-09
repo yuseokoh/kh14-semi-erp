@@ -1,7 +1,7 @@
 $(function() {
     // 페이지 로드 시 출퇴근 상태를 서버에서 가져오기
     $.ajax({
-        url: '/rest/attendance/check', // 서버의 엔드포인트 URL
+        url: contextPath+'/rest/attendance/check', // 서버의 엔드포인트 URL
         type: 'POST',
         success: function(response) {
             
@@ -47,7 +47,7 @@ $(function() {
                 $('#end-btn').prop('disabled', false).removeClass('off').addClass('on'); // 퇴근 버튼 활성화
                 // 출근 시간을 서버로 전송
                 $.ajax({
-                    url: '/rest/attendance/start', // 서버의 API URL
+                    url: contextPath+'/rest/attendance/start', // 서버의 API URL
                     type: 'POST',
                     success: function(response) {
                         $('#start-time-display').text(response);
@@ -69,7 +69,7 @@ $(function() {
                 $this.removeClass('on').addClass('off').text('퇴근 완료');
                 // 퇴근 시간을 서버로 전송
                 $.ajax({
-                    url: '/rest/attendance/end', // 서버의 API URL
+                    url: contextPath+'/rest/attendance/end', // 서버의 API URL
                     type: 'POST',
                     success: function(response) {
                         $('#end-time-display').text(response);

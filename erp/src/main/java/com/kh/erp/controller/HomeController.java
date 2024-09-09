@@ -3,6 +3,7 @@ package com.kh.erp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.kh.erp.service.DateService;
 import com.kh.erp.service.NameChangeService;
 
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,10 +41,13 @@ public class HomeController {
 	@Autowired
 	private NoticeDao noticeDao;
 
+	
+	@Value("${server.servlet.context-path}")
+    private String contextPath;
+	
 	// 로그인 페이지로 리디렉션
 	@RequestMapping("/")
 	public String redirectToLogin() {
-		
 		return "redirect:/tb/login";
 	}
 

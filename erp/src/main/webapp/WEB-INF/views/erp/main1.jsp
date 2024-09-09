@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>메인홈페이지</title>
+<script type="text/javascript">
+	var contextPath = "${pageContext.request.contextPath}";
+</script>
 
 <!-- google font cdn -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,12 +21,12 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <!-- my css -->
-<link rel="stylesheet" type="text/css" href="/css/commons.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons.css">
 
 <!-- 프로젝트 스타일 -->
-<link rel="stylesheet" type="text/css" href="/css/gotowork.css">
-<link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-<link rel="stylesheet" type="text/css" href="/css/notic.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/gotowork.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/sidebar.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/notic.css">
 <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
@@ -229,13 +232,13 @@ p {
 <!-- jquery cdn -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/js/checkbox.js"></script>
-<script src="/js/confirm-link.js"></script>
+<script src="${pageContext.request.contextPath}/js/checkbox.js"></script>
+<script src="${pageContext.request.contextPath}/js/confirm-link.js"></script>
 <!-- <script src="multipage.js"></script> -->
 <!-- 프로젝트 js-->
-<script src="/js/gotoworkbtn.js"></script>
-<script src="/js/menuToggle.js"></script>
-<script src="/js/delete.js"></script>
+<script src="${pageContext.request.contextPath}/js/gotoworkbtn.js"></script>
+<script src="${pageContext.request.contextPath}/js/menuToggle.js"></script>
+<script src="${pageContext.request.contextPath}/js/delete.js"></script>
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -314,7 +317,7 @@ p {
 			<!-- 사이드바-->
 			<div class="row">
 				<ul class="menu-hover-fill">
-					<li><a href="/home" data-text="home"> <i
+					<li><a href="${pageContext.request.contextPath}/home" data-text="home"> <i
 							class="fa-solid fa-house-user"></i> HOME
 					</a></li>
 
@@ -323,29 +326,29 @@ p {
 					</a>
 						<ul>
 							<li><a
-								href="/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
+								href="${pageContext.request.contextPath}/vacation/mylist?loginId=${sessionScope.createdUser}">휴가신청서</a></li>
 							<li><a
-								href="/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
-							<li><a href="/res/list">회의실 예약</a></li>
+								href="${pageContext.request.contextPath}/report/mylist?loginId=${sessionScope.createdUser}">보고서</a></li>
+							<li><a href="${pageContext.request.contextPath}/res/list">회의실 예약</a></li>
 						</ul></li>
 
-					<li><a href="/stock/list" data-text=""> <i
+					<li><a href="${pageContext.request.contextPath}/stock/list" data-text=""> <i
 							class="fa-solid fa-cart-flatbed"> </i> 재고관리(emp)
 					</a>
 						<ul>
-							<li><a href="/stock/changeLogList">재고 변경 내역</a></li>
-							<li><a href="/stock/categoryQuantity">재고 그래프</a></li>
+							<li><a href="${pageContext.request.contextPath}/stock/changeLogList">재고 변경 내역</a></li>
+							<li><a href="${pageContext.request.contextPath}/stock/categoryQuantity">재고 그래프</a></li>
 						</ul></li>
 
-					<li><a href="/tb/list" data-text=""> <i
+					<li><a href="${pageContext.request.contextPath}/tb/list" data-text=""> <i
 							class="fa-solid fa-people-group"> </i> 인사관리
 					</a></li>
 
-					<li><a href="/tb/mypage?loginId=${sessionScope.createdUser}"
+					<li><a href="${pageContext.request.contextPath}/tb/mypage?loginId=${sessionScope.createdUser}"
 						data-text=""> <i class="fa-solid fa-id-card"></i> mypage
 					</a></li>
 
-					<li><a href="/groupware/notice/noticList" data-text=""> <i
+					<li><a href="${pageContext.request.contextPath}/groupware/notice/noticList" data-text=""> <i
 							class="fa-solid fa-comment"></i> 공지사항
 					</a></li>
 
@@ -354,14 +357,14 @@ p {
 								class="fa-solid fa-gears"></i> 관리자
 						</a>
 							<ul>
-								<li><a href="/admin/emp/list">사원조회</a></li>
-								<li><a href="/admin/emp/status">사원현황</a></li>
-								<li><a href="/admin/emp/approvalList">결재현황</a></li>
-								<li><a href="/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/emp/list">사원조회</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/emp/status">사원현황</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/emp/approvalList">결재현황</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/emp/hoursMgmt">사원근무기록 현황</a></li>
 							</ul></li>
 					</c:if>
 
-					<li><a href="/tb/logout" data-text=""> <i
+					<li><a href="${pageContext.request.contextPath}/tb/logout" data-text=""> <i
 							class="fa-solid fa-power-off"></i> 로그아웃
 					</a></li>
 				</ul>
@@ -529,7 +532,7 @@ p {
 
 	<script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
-        fetch('/api/categoryQuantityData') // JSON 데이터를 제공하는 API 엔드포인트
+        fetch('${pageContext.request.contextPath}/api/categoryQuantityData') // JSON 데이터를 제공하는 API 엔드포인트
             .then(response => response.json())
             .then(categoryMap => {
                 var labels = Object.keys(categoryMap);

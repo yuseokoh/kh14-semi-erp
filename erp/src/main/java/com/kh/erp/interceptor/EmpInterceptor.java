@@ -1,5 +1,6 @@
 package com.kh.erp.interceptor;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -9,6 +10,10 @@ import jakarta.servlet.http.HttpSession;
 
 @Service
 public class EmpInterceptor implements HandlerInterceptor{
+	
+	@Value("${server.servlet.context-path}")
+    private String contextPath;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -21,7 +26,7 @@ public class EmpInterceptor implements HandlerInterceptor{
 			return true;//통과		
 		}
 		else {//로그인 안한 사람이라면
-			response.sendRedirect("/");//로그인페이지로 추방
+			response.sendRedirect(contextPath);//로그인페이지로 추방
 			return false;//차단
 		}
 		

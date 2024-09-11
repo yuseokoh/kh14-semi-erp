@@ -21,14 +21,14 @@
 <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./attendancemystatus.css"> -->
-<link rel="stylesheet" type="text/css" href="/css/commons.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons.css">
 <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./gotowork.css"> -->
-<link rel="stylesheet" type="text/css" href="/css/join.css">
-<link rel="stylesheet" type="text/css" href="/css/join2.css">
-<link rel="stylesheet" type="text/css" href="/css/login.css">
-<link rel="stylesheet" type="text/css" href="/css/modal.css">
-<link rel="stylesheet" type="text/css" href="/css/modal2.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/join.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/join2.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/modal.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/modal2.css">
 <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="./sidebar.css"> -->
@@ -49,7 +49,7 @@
 <!-- <script src="gotoworkbtn.js"></script> -->
 <!-- <script src="menuToggle.js"></script> -->
 <!-- <script src="delete.js"></script> -->
-<script src="/js/modal.js"></script>
+<script src="${pageContext.request.contextPath}/js/modal.js"></script>
 <!-- chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -101,7 +101,6 @@
 								loginId : loginId
 							},
 							success : function(response) {
-								//console.log("중복 확인 결과", response);
 								if (response) {//.success - 아이디가 사용가능한 경우
 									status.loginIdCheckValid = true;
 									$("[name=loginId]").removeClass(
@@ -360,8 +359,6 @@
 		$(".submit2").click(function() {
 			var loginId = $(this).parent().prev(".loginId").val();
 			var empEmail = $(this).parent().prev(".empEmail").val();
-			console.log(loginId);
-			console.log(empEmail);
 		});
 	});
 </script>

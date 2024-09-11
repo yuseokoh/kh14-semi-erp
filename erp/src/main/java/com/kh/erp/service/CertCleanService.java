@@ -24,7 +24,6 @@ public class CertCleanService {
 	
 	@Scheduled(cron = "0 0 * * * *")
 	public void clean() {
-//		System.out.println("청소 시작!"+LocalDateTime.now());
 		certDao.clean(customCertProperties.getExpire());
 	}
 	

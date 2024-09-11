@@ -124,9 +124,7 @@ public class ErdController {
                 throw new IOException("파일 저장에 실패했습니다.");
             }
 
-            System.out.println("파일이 성공적으로 저장되었습니다: " + destinationFile.getAbsolutePath());
         } catch (IOException e) {
-            System.err.println("파일 저장 중 예외 발생: " + e.getMessage());
             throw e;
         }
 

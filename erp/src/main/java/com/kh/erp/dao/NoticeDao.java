@@ -30,7 +30,7 @@ public class NoticeDao {
 						+ "notice_replies "
 					+ "from notice order by notice_no desc";
 
-	
+		
 
 		return jdbcTemplate.query(sql, noticeListMapper);
 	}

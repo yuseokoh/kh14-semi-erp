@@ -51,8 +51,8 @@ public class HomeController {
 		tbEmpDto.setEmpDept(nameChangeService.deptChange(tbEmpDto.getEmpDept()));
 		String inTime = dateService.TimeChangeIn(loginId);
 		String outTime = dateService.TimeChangeOut(loginId);
-		List<NoticeDto> noticeList = noticeDao.selectList();
-		model.addAttribute("noticeList", noticeList);
+//		List<NoticeDto> noticeList = noticeDao.selectList();
+//		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("inTime",inTime);
 		model.addAttribute("outTime",outTime);
 		model.addAttribute("tbEmpDto",tbEmpDto);

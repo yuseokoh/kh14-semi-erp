@@ -18,6 +18,7 @@ public class NoticeListMapper implements RowMapper<NoticeDto>{
         noticeDto.setNoticeTitle(rs.getString("notice_title"));
         noticeDto.setNoticeCont(rs.getString("notice_cont"));
         noticeDto.setNoticeWtime(rs.getDate("notice_Wtime"));
+	
 
 
         //항목 3개 추가

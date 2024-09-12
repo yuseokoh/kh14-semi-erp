@@ -298,7 +298,9 @@
                <td class="name"><a href="noticDetail?noticeNo=${notice.noticeNo}"> ${notice.noticeTitle}</a></td>
                 <td>${notice.noticeWriterString}</td>
 
-                <td>${notice.noticeViews}</td>
+                <td>
+                ${notice.noticeViews}
+                </td>
             </tr>
         </c:forEach>
     </tbody>

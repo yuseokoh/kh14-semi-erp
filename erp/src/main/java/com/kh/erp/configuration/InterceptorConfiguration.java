@@ -24,10 +24,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer  {
 		registry.addInterceptor(empInterceptor)
 				.addPathPatterns(
 						 "/home",
-                         "/groupware/",
-                         "/stock/",
-                         "/res/",
-                         "/vacation/",
+                         "/groupware/**",
+                         "/stock/**",
+                         "/res/**",
+                         "/vacation/**",
                          "/report/**",
                          "/rest/**",
                          "/api/**"
@@ -49,8 +49,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer  {
 						);
 		registry.addInterceptor(loginInterceptor)
 				.addPathPatterns(
-							"/"//로그인페이지
-							
+							"/",//로그인페이지
+							"/tb/login"
 						);
 	}
 }

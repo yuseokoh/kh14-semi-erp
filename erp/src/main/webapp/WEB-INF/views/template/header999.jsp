@@ -15,9 +15,6 @@
     <!-- Font Awesome Icons CDN -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="/css/commons.css">
-
     <style>
         body {
             margin: 0;

@@ -38,7 +38,6 @@ public class TbEmpReportMapper implements RowMapper<TbEmpReportDto> {
                 tbEmpReportDto.setReportContent(writer.toString());
             } catch (IOException e) {
                 // IO 예외 발생 시 처리
-                e.printStackTrace(); // 로그를 남기거나 다른 예외 처리 로직을 추가할 수 있습니다.
             }
         } else {
             tbEmpReportDto.setReportContent(""); // CLOB이 null인 경우 빈 문자열로 설정

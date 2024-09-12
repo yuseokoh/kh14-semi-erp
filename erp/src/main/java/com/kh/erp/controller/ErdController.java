@@ -98,7 +98,6 @@ public class ErdController {
             response.put("message", "재고가 성공적으로 등록되었습니다!");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            e.printStackTrace();  // 로그에 에러 기록
             response.put("status", "error");
             response.put("message", "재고 등록에 실패했습니다. 다시 시도해주세요.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
@@ -185,7 +184,6 @@ public class ErdController {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();  // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
 
@@ -210,7 +208,6 @@ public class ErdController {
         try {
             dto = erdDao.selectOne(stockNo);
         } catch (Exception e) {
-            e.printStackTrace();  // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
 
@@ -228,7 +225,6 @@ public class ErdController {
         try {
             erdDao.delete(stockNo);
         } catch (Exception e) {
-            e.printStackTrace();  // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
         return "redirect:/stock/list";
@@ -241,7 +237,6 @@ public class ErdController {
         try {
             dto = erdDao.selectOne(stockNo);
         } catch (Exception e) {
-            e.printStackTrace();  // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
 
@@ -281,7 +276,6 @@ public class ErdController {
                 response.put("stockNo", dto.getStockNo());
             }
         } catch (Exception e) {
-            e.printStackTrace();  // 로그에 에러 기록
             response.put("error", true);
             response.put("message", "예기치 않은 오류가 발생했습니다.");
         }
@@ -312,7 +306,6 @@ public class ErdController {
             // 변경 로그를 추가합니다.
             changeLogDao.insertChangeLog(stockNo, changedFields, oldValues, newValues);
         } catch (Exception e) {
-            e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "입고 처리 중 오류가 발생했습니다.");
             return "redirect:/stock/detail?stockNo=" + stockNo;
         }
@@ -348,7 +341,6 @@ public class ErdController {
             // 변경 로그를 추가합니다.
             changeLogDao.insertChangeLog(stockNo, changedFields, oldValues, newValues);
         } catch (Exception e) {
-            e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "출고 처리 중 오류가 발생했습니다.");
             return "redirect:/stock/detail?stockNo=" + stockNo;
         }
@@ -364,7 +356,6 @@ public class ErdController {
             List<ChangeLogDto> changeLogList = changeLogService.getAllChangeLogs();
             model.addAttribute("changeLogList", changeLogList);
         } catch (Exception e) {
-            e.printStackTrace();
             return "redirect:/stock/list?error=true";
         }
         return "/WEB-INF/views/stock/changeLogList.jsp";
@@ -389,7 +380,6 @@ public class ErdController {
             String categoryMapJson = new ObjectMapper().writeValueAsString(categoryMap);
             model.addAttribute("categoryMapJson", categoryMapJson);
         } catch (Exception e) {
-            e.printStackTrace(); // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
         return "/WEB-INF/views/stock/categoryQuantity.jsp";
@@ -413,7 +403,6 @@ public class ErdController {
             String categoryMapJson = new ObjectMapper().writeValueAsString(categoryMap);
             model.addAttribute("categoryMapJson", categoryMapJson);
         } catch (Exception e) {
-            e.printStackTrace(); // 로그에 에러 기록
             return "redirect:/stock/list?error=true";
         }
         return "/WEB-INF/views/erp/mian0828.jsp";

@@ -44,7 +44,6 @@ public class DateService {
 
 			return daysBetween;
 		} catch (DateTimeParseException e) {
-			e.printStackTrace();
 			return -1; // 에러 발생 시 -1 반환
 		}
 	}

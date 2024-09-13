@@ -23,19 +23,19 @@
     <!-- <link rel="stylesheet" type="text/css" href="./attcommons.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./attendancelist.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./attendancemystatus.css"> -->
-    <link rel="stylesheet" type="text/css" href="/css/commons.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/commons.css">
     <!-- <link rel="stylesheet" type="text/css" href="./commons1.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./gotowork.css"> -->
-    <link rel="stylesheet" type="text/css" href="/css/join.css">
-    <link rel="stylesheet" type="text/css" href="/css/join2.css">
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
-    <link rel="stylesheet" type="text/css" href="/css/modal.css">
-    <link rel="stylesheet" type="text/css" href="/css/modal2.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/join.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/join2.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/modal2.css">
     <!-- <link rel="stylesheet" type="text/css" href="./myStatus.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./notic.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./sidebar.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="./vacation.css"> -->
-    <link rel="stylesheet" type="text/css" href="/css/alertBtn.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/alertBtn.css">
    <style>
 .a1 {
     display: flex; 
@@ -82,7 +82,7 @@
     <!-- <script src="gotoworkbtn.js"></script> -->
     <!-- <script src="menuToggle.js"></script> -->
     <!-- <script src="delete.js"></script> -->
-    <script src="/js/modal.js"></script>
+    <script src="${pageContext.request.contextPath}/js/modal.js"></script>
     <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -145,7 +145,7 @@ $(document).ready(function() {
     <!-- 모달 창 구조 -->
     <div id="myModal2" class="modal2">
         <div class="modal2-content2">
-            <a href="/"><span class="close">&times;</span></a>
+            <a href="${pageContext.request.contextPath}/"><span class="close">&times;</span></a>
             
             <form class="form2" action="findPw" method="post" autocomplete="off">
                 <p class="title2">비밀번호 찾기</p>

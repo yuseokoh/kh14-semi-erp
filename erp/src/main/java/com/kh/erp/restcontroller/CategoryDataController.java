@@ -35,7 +35,6 @@ public class CategoryDataController {
             // Map을 JSON으로 변환하여 반환
             return categoryMap;
         } catch (Exception e) {
-            e.printStackTrace(); // 로그에 에러 기록
             return new HashMap<>(); // 빈 맵 반환
         }
     }

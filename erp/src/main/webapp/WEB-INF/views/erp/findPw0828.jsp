@@ -95,7 +95,7 @@
 					if (isValid) {
 						//비동기 통신으로 중복 검사 수행
 						$.ajax({
-							url : "/rest/emp/checkId",
+							url : "${pageContext.request.contextPath}/rest/emp/checkId",
 							method : "post",
 							data : {
 								loginId : loginId
@@ -103,19 +103,19 @@
 							success : function(response) {
 								if (response) {//.success - 아이디가 사용가능한 경우
 									status.loginIdCheckValid = true;
-									$("[name=loginId]").removeClass(
+									$("#loginId").removeClass(
 											"success fail fail2").addClass(
 											"success");
 								} else {//.fail2 - 아이디가 이미 사용중인 경우
 									status.loginIdCheckValid = false;
-									$("[name=loginId]").removeClass(
+									$("#loginId").removeClass(
 											"success fail fail2").addClass(
 											"fail2");
 								}
 							},
 						});
 					} else {//.fail - 아이디가 형식에 맞지 않는 경우
-						$("[name=loginId]").removeClass("success fail fail2")
+						$("#loginId").removeClass("success fail fail2")
 								.addClass("fail");
 					}
 					status.loginIdValid = isValid;
